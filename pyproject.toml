@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hackforge"
-version = "0.1.0"
+version = "0.2.0"
 description = "HackForge: reproducible hackathon research and idea-selection laboratory"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -16,6 +16,7 @@ dependencies = [
   "pydantic>=2.7",
   "pyyaml>=6.0",
   "rich>=13.7",
+  "tenacity>=8.0",
   "eval_type_backport>=0.2; python_version<'3.10'",
 ]
 
@@ -26,7 +27,18 @@ dev = [
 ]
 openai = ["openai>=1.40"]
 anthropic = ["anthropic>=0.34"]
-all = ["hackforge[dev,openai,anthropic]"]
+collision = [
+  "litellm>=1.50",
+  "datasets>=2.19",
+  "huggingface_hub>=0.23",
+  "sentence-transformers>=3.0",
+  "faiss-cpu>=1.8",
+  "beautifulsoup4>=4.12",
+  "lxml>=5.0",
+  "langfuse>=2.0",
+  "numpy>=1.26",
+]
+all = ["hackforge[dev,openai,anthropic,collision]"]
 
 [project.scripts]
 hackforge = "hackforge.cli:main"

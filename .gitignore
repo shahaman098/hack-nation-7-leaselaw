@@ -38,3 +38,11 @@ private/
 
 # Optional local model caches
 .cache/
+corpora/indexes/
+corpora/cache/
+corpora/hackrep/raw/
+corpora/**/*.parquet
+corpora/**/*.faiss
+corpora/**/*.npy
+*.faiss
+promptfoo-results/

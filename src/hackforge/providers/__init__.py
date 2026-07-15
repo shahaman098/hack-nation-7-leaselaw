@@ -192,13 +192,25 @@ def load_providers(*, dry_run: bool = False, fixture_bundle: dict[str, Any] | No
         )
 
     providers: list[LLMProvider] = []
-    if os.getenv("OPENAI_API_KEY"):
-        providers.append(OpenAIProvider())
-    if os.getenv("ANTHROPIC_API_KEY"):
-        providers.append(AnthropicProvider())
+    use_litellm = env_flag("HACKFORGE_USE_LITELLM", default=True)
+    if use_litellm:
+        try:
+            from hackforge.providers.litellm_provider import LiteLLMProvider, litellm_models_from_env
+
+            for model in litellm_models_from_env():
+                providers.append(LiteLLMProvider(model))
+        except Exception:
+            providers = []
+
+    if not providers:
+        if os.getenv("OPENAI_API_KEY"):
+            providers.append(OpenAIProvider())
+        if os.getenv("ANTHROPIC_API_KEY"):
+            providers.append(AnthropicProvider())
     if not providers:
         raise RuntimeError(
-            "No LLM providers configured. Set OPENAI_API_KEY and/or ANTHROPIC_API_KEY, or pass --dry-run."
+            "No LLM providers configured. Set OPENAI_API_KEY and/or ANTHROPIC_API_KEY, "
+            "install collision extras for LiteLLM, or pass --dry-run."
         )
 
     # Alternate providers across ideation lanes for isolation when both exist

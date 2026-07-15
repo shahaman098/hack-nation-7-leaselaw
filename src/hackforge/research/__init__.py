@@ -132,6 +132,34 @@ def build_competition_brief(
     return brief
 
 
+def enrich_brief_with_live_crowding(
+    brief: CompetitionBrief,
+    *,
+    force: bool = False,
+) -> CompetitionBrief:
+    """Merge Devpost crowd signals into blacklist labels only (no winner prose)."""
+    from hackforge.utils import env_flag
+
+    if not force and not env_flag("HACKFORGE_LIVE_RESEARCH"):
+        return brief
+    try:
+        from hackforge.integrations.devpost_live import crowding_hints_for_query
+
+        q = brief.theme or brief.name
+        hints = crowding_hints_for_query(q)
+        for title in hints.get("high_collision_seen_on_devpost") or []:
+            label = f"Devpost-similar: {title}"
+            if label not in brief.crowding.high_collision:
+                brief.crowding.high_collision.append(label)
+        for title in hints.get("recent_similar_titles") or []:
+            label = f"Recent similar title: {title}"
+            if label and label not in brief.crowding.medium_collision:
+                brief.crowding.medium_collision.append(label)
+    except Exception:
+        pass
+    return brief
+
+
 def _guess_name(raw_text: str, source_urls: list[str] | None) -> str:
     for line in raw_text.splitlines()[:20]:
         line = line.strip().lstrip("#").strip()

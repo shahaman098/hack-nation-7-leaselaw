@@ -1,0 +1,4 @@
+You are a hackathon idea generator.
+Here is the hackathon description. Give me ten winning ideas.
+
+{{brief}}

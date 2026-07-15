@@ -15,14 +15,16 @@ from hackforge.exports import build_decision_dossier
 from hackforge.ideation import cluster_ideas, run_isolated_ideation, select_diversified
 from hackforge.memory import build_run_manifest
 from hackforge.models import CandidateIdea
-from hackforge.providers import ProviderBundle, load_providers
+from hackforge.providers import load_providers
 from hackforge.research import (
     build_competition_brief,
+    enrich_brief_with_live_crowding,
     ingest_file,
     ingest_url,
     research_markdown,
 )
-from hackforge.utils import make_run_dir, sha256_text, write_json, write_text
+from hackforge.telemetry import trace_stage
+from hackforge.utils import env_flag, make_run_dir, sha256_text, write_json, write_text
 
 
 def run_analyse(
@@ -37,11 +39,13 @@ def run_analyse(
     skills: str | None = None,
     seeds_per_lane: int = 8,
     runs_root: Path | None = None,
+    live_research: bool | None = None,
 ) -> Path:
     if not any([input_path, url, text]):
         raise ValueError("Provide input_path, url, or text")
 
     providers = load_providers(dry_run=dry_run, fixture_bundle=fixture_bundle)
+    do_live = live_research if live_research is not None else (not dry_run and env_flag("HACKFORGE_LIVE_RESEARCH"))
     source_urls: list[str] = []
     if input_path:
         raw, sources = ingest_file(input_path)
@@ -56,16 +60,19 @@ def run_analyse(
     timings: dict[str, float] = {}
     rejections: list[dict[str, str]] = []
 
-    t0 = time.perf_counter()
-    brief = build_competition_brief(
-        providers.research,
-        raw,
-        source_urls=source_urls,
-        team_size=team_size,
-        deadline=deadline,
-        skills=skills,
-    )
-    timings["competition_research"] = time.perf_counter() - t0
+    with trace_stage("competition_research", {"dry_run": dry_run}):
+        t0 = time.perf_counter()
+        brief = build_competition_brief(
+            providers.research,
+            raw,
+            source_urls=source_urls,
+            team_size=team_size,
+            deadline=deadline,
+            skills=skills,
+        )
+        if do_live:
+            enrich_brief_with_live_crowding(brief, force=True)
+        timings["competition_research"] = time.perf_counter() - t0
 
     run_dir = make_run_dir(brief.slug or brief.name, runs_root=runs_root)
     write_json(run_dir / "competition-brief.json", brief.model_dump())
@@ -80,13 +87,14 @@ def run_analyse(
         },
     )
 
-    t0 = time.perf_counter()
-    raw_ideas = run_isolated_ideation(
-        providers.ideation_lanes,
-        brief,
-        seeds_per_lane=seeds_per_lane,
-    )
-    timings["ideation"] = time.perf_counter() - t0
+    with trace_stage("ideation"):
+        t0 = time.perf_counter()
+        raw_ideas = run_isolated_ideation(
+            providers.ideation_lanes,
+            brief,
+            seeds_per_lane=seeds_per_lane,
+        )
+        timings["ideation"] = time.perf_counter() - t0
     write_json(run_dir / "raw-concepts.json", [i.model_dump() for i in raw_ideas])
 
     t0 = time.perf_counter()
@@ -102,11 +110,12 @@ def run_analyse(
         if idea.id not in {s.id for s in shortlist}:
             rejections.append({"id": idea.id, "reason": idea.kill_reason or "not selected for collision audit"})
 
-    t0 = time.perf_counter()
-    collisions = audit_collisions(providers.collision, shortlist)
+    with trace_stage("collision", {"live": do_live}):
+        t0 = time.perf_counter()
+        collisions = audit_collisions(providers.collision, shortlist, live_enrich=do_live)
+        timings["collision"] = time.perf_counter() - t0
     write_text(run_dir / "collision-analysis.md", collision_markdown(collisions))
     write_json(run_dir / "collision-reports.json", [c.model_dump() for c in collisions])
-    timings["collision"] = time.perf_counter() - t0
 
     # Drop hard kills from collision
     survivors = []

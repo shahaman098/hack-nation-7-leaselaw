@@ -1,12 +1,12 @@
 # HackForge
 
-**A reproducible hackathon research and idea-selection laboratory — not an AI idea chatbot.**
+**A reproducible hackathon research and collision laboratory — not an AI idea chatbot.**
 
 Private decision system for:
 
 - Competition intelligence and crowding blacklists
 - Isolated cross-domain ideation lanes
-- Structural collision detection
+- **FAISS + Devpost corpus collision detection**
 - Independent feasibility review
 - Blind multi-role judging with disagreement surfaced
 - Experimental memory across runs
@@ -16,53 +16,74 @@ Private decision system for:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -e ".[dev]"
+pip install -e ".[dev,collision]"
 
-# Optional: wire providers for live LLM passes
 cp .env.example .env
-# edit .env with OPENAI_API_KEY and/or ANTHROPIC_API_KEY
+# add OPENAI_API_KEY / ANTHROPIC_API_KEY for live LLM passes
 
-# Dry-run (fixtures / no API keys)
+# Offline dry-run
 hackforge analyse fixtures/sample-hackathon.md --dry-run
 
-# Live analysis
-hackforge analyse path/to/hackathon.md
-hackforge analyse --url https://example.com/hackathon
+# Build local collision corpus + FAISS index (does not commit dumps)
+hackforge corpus pull --source local
+hackforge corpus build-index --max-records 2000
+
+# Optional large HF pulls (Alpha-Hack / twango / alvanlii / HackRep metadata)
+hackforge corpus pull --source all --limit 5000
+hackforge corpus build-index
+
+# Collision-only on an existing run
+hackforge collide runs/<slug>/ 
+hackforge collide runs/<slug>/ --live --llm
 ```
 
 Outputs land in `runs/YYYY-MM-DD-<slug>/`.
 
-## Pipeline
+## Collision product surface
 
-1. **Ingest** — markdown file, pasted brief, or URL
-2. **Competition intelligence** — facts vs inference; crowding map; blacklist
-3. **Isolated ideation** — four disciplinary lenses, no cross-lane leakage
-4. **Normalize + cluster** — compare structures, not marketing names
-5. **Collision audit** — same user / problem / mechanism / data / action / demo
-6. **Feasibility** — independent of the ideation model’s self-assessment
-7. **Blind judging** — Candidates A/B/C; surface role disagreement
-8. **Export** — primary + backup decision dossier + `run-manifest.json`
+| Command | Purpose |
+|---------|---------|
+| `hackforge corpus pull` | Normalize HF Devpost corpora into `corpora/cache/` |
+| `hackforge corpus build-index` | FAISS index under `corpora/indexes/` |
+| `hackforge collide` | Dimensional + FAISS (+ optional live) audit |
+| `hackforge research winners \| exists` | Live Devpost (Python client) |
+| `hackforge eval` | Promptfoo config + baseline benchmark |
 
-## Baseline benchmark
+**Hard rule:** Alpha-Hack is used as **corpus fuel only**. Its strategy generator is not wired into ideation.
+
+## Providers
+
+Live LLM calls route through **LiteLLM** when `hackforge[collision]` is installed (`HACKFORGE_USE_LITELLM=1`). Dry-run fixtures still work without keys.
+
+## Promptfoo (optional Node)
 
 ```bash
-hackforge benchmark evals/benchmark-hackathons/ --dry-run
+brew install node   # once
+hackforge eval      # writes evals/promptfoo/ and runs npx promptfoo when available
 ```
 
-Compares a naïve “give me ten winning ideas” baseline against the full pipeline.
+## Langfuse (optional)
 
-## Layout
+```bash
+docker compose -f docker-compose.langfuse.yml up -d
+# set LANGFUSE_PUBLIC_KEY / LANGFUSE_SECRET_KEY / LANGFUSE_HOST
+```
 
-See repository tree: `src/hackforge/`, `prompts/`, `schemas/`, `corpora/`, `evals/`, `runs/`.
+## Pipeline
 
-## Non-goals (v1)
-
-No auth, billing, teams, or polished SaaS UI. Thin local viewer only after the pipeline beats the baseline.
+1. Ingest brief / URL  
+2. Competition intelligence + crowding blacklist  
+3. Isolated ideation (4 disciplinary lenses)  
+4. Normalize + cluster  
+5. **Collision engine** — FAISS prefilter → dimensional scores → LLM auditor  
+6. Feasibility (+ HackRep stack priors)  
+7. Blind multi-role judge  
+8. Decision dossier + `run-manifest.json`
 
 ## Docs
 
-- [`docs/finalist-evaluation-handbook.md`](docs/finalist-evaluation-handbook.md) — post-shortlist evaluation only
-- [`docs/deferred-ui.md`](docs/deferred-ui.md) — web UI deferral note
+- [`docs/finalist-evaluation-handbook.md`](docs/finalist-evaluation-handbook.md)
+- [`docs/deferred-ui.md`](docs/deferred-ui.md)
 
 ## License
 

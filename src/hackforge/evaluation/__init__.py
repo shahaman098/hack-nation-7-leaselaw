@@ -23,10 +23,12 @@ def review_feasibility(
     brief: CompetitionBrief,
 ) -> list[FeasibilityReport]:
     template, _ = load_prompt("feasibility")
+    priors = _hackrep_priors()
     payload = {
         "deadline": brief.deadline,
         "team_size": brief.team_size,
         "required_tech": brief.required_or_encouraged_tech,
+        "hackrep_48h_stack_priors": priors,
         "candidates": [c.model_dump() for c in candidates],
     }
     raw = provider.complete_json(template, str(payload))
@@ -50,6 +52,9 @@ def review_feasibility(
     covered = {r.candidate_id for r in reports}
     for c in candidates:
         if c.id not in covered:
+            note = "fallback feasibility stub"
+            if priors.get("common_48h_stacks"):
+                note += f" | HackRep common stacks: {', '.join(priors['common_48h_stacks'][:6])}"
             reports.append(
                 FeasibilityReport(
                     candidate_id=c.id,
@@ -57,10 +62,26 @@ def review_feasibility(
                     critical_dependencies=[c.sponsor_dependency] if c.sponsor_dependency else [],
                     non_fakeable_core=c.core_computation,
                     minimum_demonstrable_loop=c.killer_demo,
-                    notes="fallback feasibility stub",
+                    notes=note,
                 )
             )
     return reports
+
+
+def _hackrep_priors() -> dict[str, Any]:
+    from hackforge.paths import HACKREP_DIR
+    from hackforge.utils import read_json
+
+    path = HACKREP_DIR / "feasibility_priors.json"
+    if path.exists():
+        try:
+            return read_json(path)
+        except Exception:
+            return {}
+    return {
+        "common_48h_stacks": ["javascript", "python", "react", "node", "firebase", "flask"],
+        "notes": "default priors; run hackforge corpus pull --source hackrep for HackRep metadata",
+    }
 
 
 def feasibility_markdown(reports: list[FeasibilityReport]) -> str:
