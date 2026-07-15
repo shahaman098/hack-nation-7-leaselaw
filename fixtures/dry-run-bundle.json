@@ -1,0 +1,237 @@
+{
+  "competition_research": {
+    "name": "Sample Civic Resilience Hackathon 2026",
+    "slug": "sample-civic-resilience-2026",
+    "theme": "Civic tech and public service reliability",
+    "tracks": ["Civic Data", "Accessibility", "Public Admin Tooling"],
+    "sponsors": ["Example Cloud", "Open Data Alliance"],
+    "deadline": "48 hours",
+    "team_size": "1-4",
+    "required_or_encouraged_tech": ["Example Cloud APIs optional"],
+    "prizes": ["Grand prize", "Best civic impact"],
+    "facts": [
+      {
+        "claim": "Judging weighs real-world applicability, technical implementation, and demo clarity.",
+        "source": "fixtures/sample-hackathon.md",
+        "confidence": "high"
+      },
+      {
+        "claim": "Open government datasets are encouraged.",
+        "source": "fixtures/sample-hackathon.md",
+        "confidence": "high"
+      }
+    ],
+    "inference": [
+      {
+        "claim": "Judges will punish chatbot wrappers and dashboard-only demos.",
+        "rationale": "Criteria emphasize working application footage and original architecture."
+      }
+    ],
+    "missing": ["Exact percentage weights for each criterion"],
+    "potentially_stale": [],
+    "judging_criteria": [
+      {"name": "Technical implementation", "weight_or_priority": "high", "notes": ""},
+      {"name": "Real-world applicability", "weight_or_priority": "high", "notes": ""},
+      {"name": "Originality", "weight_or_priority": "medium", "notes": ""},
+      {"name": "Design / demo clarity", "weight_or_priority": "medium", "notes": ""}
+    ],
+    "sponsor_capabilities": ["Managed Postgres", "Object storage", "Serverless functions"],
+    "available_datasets": ["Local planning applications CSV", "FOI request logs", "Service outage reports"],
+    "crowding": {
+      "high_collision": [
+        "AI study tutor",
+        "Generic mental-health companion",
+        "Document summariser",
+        "Carbon footprint dashboard"
+      ],
+      "medium_collision": [
+        "Scholarship navigator",
+        "Emergency tip assistant",
+        "Automated sales outreach"
+      ],
+      "potentially_underexplored": [
+        "Appeal-pathway reconstruction",
+        "Administrative error prevention",
+        "Constraint-based council resource allocation"
+      ],
+      "do_not_build": [
+        "Retrieve-check-draft opportunity navigators",
+        "Personal crisis action navigators from risk maps",
+        "Ops fatigue CSV doctors"
+      ]
+    },
+    "sanitized_brief": "Sample Civic Resilience Hackathon 2026. Tracks: Civic Data, Accessibility, Public Admin Tooling. Judging: technical implementation (high), real-world applicability (high), originality (medium), design/demo clarity (medium). Sponsor capabilities: managed DB, storage, serverless. Encourage open gov data. Blacklist: tutors, summarisers, wellness bots, opportunity navigators, crisis navigators, ops fatigue doctors. Prefer under-explored admin failure modes and allocation under constraint."
+  },
+  "ideation": [
+    {
+      "working_title": "Appeal Path Diff",
+      "primary_user": "Social-care caseworkers filing benefit appeal packs",
+      "painful_workflow": "Reconstructing which form version, deadline clock, and evidence checklist applied on the decision date",
+      "current_workaround": "Scattered PDFs, email threads, and tribal knowledge in WhatsApp groups",
+      "imported_mechanism": "Configuration drift detection + temporal fault trees",
+      "mechanism_origin": "Reliability engineering / change management",
+      "data_sources": ["Historical benefits guidance pages (dated snapshots)", "Decision letter corpus (demo)", "Appeals timetable rules CSV"],
+      "core_computation": "Diff official rule versions between decision date and today; emit missing-evidence set required for a valid appeal",
+      "last_mile_action": "Generate a dated appeal checklist + filing calendar holds",
+      "visible_transformation": "From 2 hours of version archaeology to a dated, auditable appeal pack outline in under a minute",
+      "why_now": "Public guidance pages mutate silently; scrapable change histories make drift detectable",
+      "collision_risk": "low",
+      "kill_reason": "May require careful sourcing of archived guidance pages",
+      "killer_demo": "Paste decision date + letter → show guidance diff → emit required evidence list with timestamps",
+      "hard_to_fake_advantage": "Auditable version-diff trail with timestamps",
+      "sponsor_dependency": "Object storage for guidance snapshots (optional)",
+      "technical_risk": "Archive coverage gaps"
+    },
+    {
+      "working_title": "Permit Queue Fairness Simulator",
+      "primary_user": "Borough planning officers prioritizing inspection slots",
+      "painful_workflow": "Manually reordering inspection queues under statutory deadlines and staff sickness",
+      "current_workaround": "Spreadsheet with colored cells and hallway negotiations",
+      "imported_mechanism": "Constraint optimization with procedural fairness constraints",
+      "mechanism_origin": "Operations research / public administration",
+      "data_sources": ["Planning applications open data", "Staff roster CSV", "Statutory response deadlines"],
+      "core_computation": "Solve queue assignment optimizing overdue risk subject to fairness and skill constraints",
+      "last_mile_action": "Publish next-day roster + citizen-facing delay notices draft",
+      "visible_transformation": "Chaotic board → constraint-satisfying roster with overdue-risk score",
+      "why_now": "Open planning datasets + cheap MILP/heuristic solvers",
+      "collision_risk": "medium",
+      "kill_reason": "Solver demo may feel abstract without UX polish",
+      "killer_demo": "Upload week's applications → show before/after overdue risk and fairness metric",
+      "hard_to_fake_advantage": "Numeric optimization delta judges can recompute",
+      "sponsor_dependency": "none required",
+      "technical_risk": "Model fidelity of fairness metric"
+    },
+    {
+      "working_title": "FOI Failure Chain Tracer",
+      "primary_user": "Council FOI officers before statutory breach",
+      "painful_workflow": "Hunting which handoff stalled a request across teams",
+      "current_workaround": "Email archaeology after the breach clock",
+      "imported_mechanism": "Failure-chain / fault-tree reconstruction",
+      "mechanism_origin": "Reliability engineering",
+      "data_sources": ["Anonymized FOI case log CSV", "Team ownership map"],
+      "core_computation": "Infer most likely stalled edge in the process graph from timestamps",
+      "last_mile_action": "Create escalation ticket with evidence timeline",
+      "visible_transformation": "Blind inbox → pinpointed bottleneck + escalation draft",
+      "why_now": "Case logs are exportable; graph reasoning is cheap",
+      "collision_risk": "low",
+      "kill_reason": "Needs a plausible synthetic log for demo",
+      "killer_demo": "Show live clock near breach → highlight failing handoff → draft escalation",
+      "hard_to_fake_advantage": "Stateful case timeline with computed bottleneck",
+      "sponsor_dependency": "Managed Postgres for case state",
+      "technical_risk": "Synthetic data believability"
+    },
+    {
+      "working_title": "Grant Match Abuse Detector",
+      "primary_user": "Charity finance officers reconciling restricted funds",
+      "painful_workflow": "Matching spend lines to grant conditions before audit",
+      "current_workaround": "Manual spreadsheet reconciliation",
+      "imported_mechanism": "Reconciliation trails + anomaly detection",
+      "mechanism_origin": "Forensic accounting",
+      "data_sources": ["Grant condition PDFs", "Bank CSV", "Ledger export"],
+      "core_computation": "Score spend lines against encoded conditions; surface mismatched allocations",
+      "last_mile_action": "Produce auditor-ready exception report",
+      "visible_transformation": "Unscoped ledger → ranked exceptions with condition citations",
+      "why_now": "Structured bank CSVs + better document parsing",
+      "collision_risk": "medium",
+      "kill_reason": "Document parsing quality risk",
+      "killer_demo": "Upload ledger + one grant PDF → red exceptions with citations",
+      "hard_to_fake_advantage": "Deterministic reconciliation exceptions",
+      "sponsor_dependency": "none required",
+      "technical_risk": "Condition encoding completeness"
+    },
+    {
+      "working_title": "Clinic No-Show Pool",
+      "primary_user": "NHS outpatient admin leads",
+      "painful_workflow": "Last-minute slot recovery when patients cancel",
+      "current_workaround": "Phone blasting waiting list in arbitrary order",
+      "imported_mechanism": "Risk pooling + priority incentives",
+      "mechanism_origin": "Insurance science / mechanism design",
+      "data_sources": ["Historical attendance CSV", "Waiting list export"],
+      "core_computation": "Rank call order maximizing fill probability under notice-time constraints",
+      "last_mile_action": "Generate ordered outreach list + SMS drafts",
+      "visible_transformation": "Random calling → ranked recovery plan with expected fill lift",
+      "why_now": "Attendance history is routinely exportable",
+      "collision_risk": "medium",
+      "kill_reason": "Health data sensitivity in live settings",
+      "killer_demo": "Simulate 3 cancellations → show ranked backups and expected seats filled",
+      "hard_to_fake_advantage": "Scored ordering with simulated fill lift",
+      "sponsor_dependency": "none required",
+      "technical_risk": "Privacy constraints"
+    }
+  ],
+  "collision": [],
+  "feasibility": [],
+  "judge_technical": {
+    "role": "technical",
+    "preferred_blind_id": "A",
+    "rationale": "Clearest hard-to-fake computation with auditable trail",
+    "scores_by_official_criteria": {
+      "Technical implementation": 9,
+      "Real-world applicability": 8,
+      "Originality": 8,
+      "Design / demo clarity": 8
+    },
+    "hard_gate_failures": [],
+    "demo_failure_risk": "low"
+  },
+  "judge_product": {
+    "role": "product",
+    "preferred_blind_id": "A",
+    "rationale": "Immediate workflow collapse for a constrained user",
+    "scores_by_official_criteria": {},
+    "hard_gate_failures": [],
+    "demo_failure_risk": "low"
+  },
+  "judge_sponsor": {
+    "role": "sponsor",
+    "preferred_blind_id": "B",
+    "rationale": "Stronger optional use of managed data store for state",
+    "scores_by_official_criteria": {},
+    "hard_gate_failures": [],
+    "demo_failure_risk": "medium"
+  },
+  "judge_domain": {
+    "role": "domain",
+    "preferred_blind_id": "A",
+    "rationale": "Addresses a real administrative failure mode",
+    "scores_by_official_criteria": {},
+    "hard_gate_failures": [],
+    "demo_failure_risk": "low"
+  },
+  "judge_demo-risk": {
+    "role": "demo-risk",
+    "preferred_blind_id": "A",
+    "rationale": "Offline fixture-friendly demo loop",
+    "scores_by_official_criteria": {},
+    "hard_gate_failures": [],
+    "demo_failure_risk": "low"
+  },
+  "judge_contrarian": {
+    "role": "contrarian",
+    "preferred_blind_id": "C",
+    "rationale": "Preserves an outlier optimization story",
+    "scores_by_official_criteria": {},
+    "hard_gate_failures": [],
+    "demo_failure_risk": "medium"
+  },
+  "red_team": {
+    "primary_id": "A",
+    "fatal_flaws": [],
+    "survive_if": ["Guidance snapshot fixtures remain convincing"],
+    "prefer_backup_instead": false,
+    "backup_reason": "",
+    "conditional_acceptance": true
+  },
+  "baseline_ten": [
+    "AI tutor for civic education",
+    "Mental health chatbot for council staff",
+    "Resume optimiser for public sector jobs",
+    "FOI document summariser",
+    "Carbon dashboard for borough buildings",
+    "Scholarship navigator for students",
+    "Emergency action tip chatbot",
+    "Automated grant outreach agent",
+    "Meeting notes for committee hearings",
+    "Accessibility contrast checker plugin"
+  ]
+}

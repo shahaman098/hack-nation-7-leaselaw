@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hackforge.local/schemas/evaluation.json",
+  "title": "EvaluationResult",
+  "type": "object",
+  "required": ["candidates", "hard_gates", "judge_votes", "disagreements", "pairwise", "recommendation"],
+  "properties": {
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["blind_id", "internal_id"],
+        "properties": {
+          "blind_id": { "type": "string" },
+          "internal_id": { "type": "string" }
+        }
+      }
+    },
+    "hard_gates": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["passed", "notes"],
+        "properties": {
+          "passed": { "type": "boolean" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "judge_votes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "preferred_blind_id", "rationale"],
+        "properties": {
+          "role": { "type": "string" },
+          "preferred_blind_id": { "type": "string" },
+          "rationale": { "type": "string" },
+          "scores_by_official_criteria": { "type": "object" }
+        }
+      }
+    },
+    "disagreements": { "type": "array", "items": { "type": "string" } },
+    "pairwise": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["pair", "winner", "reason"],
+        "properties": {
+          "pair": { "type": "array", "items": { "type": "string" }, "minItems": 2, "maxItems": 2 },
+          "winner": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "required": ["primary_blind_id", "backup_blind_id", "why"],
+      "properties": {
+        "primary_blind_id": { "type": "string" },
+        "backup_blind_id": { "type": "string" },
+        "why": { "type": "string" }
+      }
+    }
+  }
+}
