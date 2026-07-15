@@ -65,8 +65,24 @@ def score_arm(ideas: list[Any], blacklist: dict[str, Any]) -> dict[str, Any]:
     tags: set[str] = set()
     for t in texts:
         tags |= _archetype_tags(t)
-    crowded = list(blacklist.get("high_collision", []))
-    crowded_hits = sum(1 for t in texts if any(c.split()[0].lower() in t.lower() for c in crowded if c))
+    crowded_needles = [
+        "tutor",
+        "mental-health",
+        "mental health",
+        "wellness",
+        "resume",
+        "summaris",
+        "summariz",
+        "carbon-footprint",
+        "carbon footprint",
+        "chatbot",
+        "meeting notes",
+        "opportunity board",
+        "eligibility navigator",
+        "crisis navigator",
+        "campaign fatigue",
+    ]
+    crowded_hits = sum(1 for t in texts if any(n in t.lower() for n in crowded_needles))
 
     return {
         "count": len(texts),

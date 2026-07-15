@@ -30,13 +30,13 @@
             "wellness"
           ],
           "archetype_diversity": 10,
-          "crowded_keyword_hits": 4,
+          "crowded_keyword_hits": 6,
           "named_data_source_ideas": 0,
           "unsupported_claim_proxy": 1
         }
       },
       "pipeline": {
-        "run_dir": "/Users/krishshah/Hackathon Projects/Idea Generation/evals/baseline-results/_runs/2026-07-15-sample-civic-resilience-2026",
+        "run_dir": "/Users/krishshah/Hackathon Projects/Idea Generation/evals/baseline-results/_runs/2026-07-15-sample-civic-resilience-2026-4",
         "metrics": {
           "count": 20,
           "archetype_tag_set": [
@@ -44,7 +44,7 @@
             "tutor"
           ],
           "archetype_diversity": 2,
-          "crowded_keyword_hits": 12,
+          "crowded_keyword_hits": 4,
           "named_data_source_ideas": 20,
           "unsupported_claim_proxy": 12
         },
@@ -52,7 +52,7 @@
       },
       "comparison": {
         "pipeline_more_diverse_tags": false,
-        "pipeline_fewer_crowded_hits": false,
+        "pipeline_fewer_crowded_hits": true,
         "pipeline_more_named_data": true
       }
     },
@@ -86,13 +86,13 @@
             "wellness"
           ],
           "archetype_diversity": 10,
-          "crowded_keyword_hits": 4,
+          "crowded_keyword_hits": 6,
           "named_data_source_ideas": 0,
           "unsupported_claim_proxy": 1
         }
       },
       "pipeline": {
-        "run_dir": "/Users/krishshah/Hackathon Projects/Idea Generation/evals/baseline-results/_runs/2026-07-15-sample-civic-resilience-2026-2",
+        "run_dir": "/Users/krishshah/Hackathon Projects/Idea Generation/evals/baseline-results/_runs/2026-07-15-sample-civic-resilience-2026-5",
         "metrics": {
           "count": 20,
           "archetype_tag_set": [
@@ -100,7 +100,7 @@
             "tutor"
           ],
           "archetype_diversity": 2,
-          "crowded_keyword_hits": 12,
+          "crowded_keyword_hits": 4,
           "named_data_source_ideas": 20,
           "unsupported_claim_proxy": 12
         },
@@ -108,7 +108,7 @@
       },
       "comparison": {
         "pipeline_more_diverse_tags": false,
-        "pipeline_fewer_crowded_hits": false,
+        "pipeline_fewer_crowded_hits": true,
         "pipeline_more_named_data": true
       }
     },
@@ -142,13 +142,13 @@
             "wellness"
           ],
           "archetype_diversity": 10,
-          "crowded_keyword_hits": 4,
+          "crowded_keyword_hits": 6,
           "named_data_source_ideas": 0,
           "unsupported_claim_proxy": 1
         }
       },
       "pipeline": {
-        "run_dir": "/Users/krishshah/Hackathon Projects/Idea Generation/evals/baseline-results/_runs/2026-07-15-sample-civic-resilience-2026-3",
+        "run_dir": "/Users/krishshah/Hackathon Projects/Idea Generation/evals/baseline-results/_runs/2026-07-15-sample-civic-resilience-2026-6",
         "metrics": {
           "count": 20,
           "archetype_tag_set": [
@@ -156,7 +156,7 @@
             "tutor"
           ],
           "archetype_diversity": 2,
-          "crowded_keyword_hits": 12,
+          "crowded_keyword_hits": 4,
           "named_data_source_ideas": 20,
           "unsupported_claim_proxy": 12
         },
@@ -164,7 +164,7 @@
       },
       "comparison": {
         "pipeline_more_diverse_tags": false,
-        "pipeline_fewer_crowded_hits": false,
+        "pipeline_fewer_crowded_hits": true,
         "pipeline_more_named_data": true
       }
     }
