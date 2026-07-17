@@ -136,9 +136,15 @@ restricted to tests and benchmarks and are not exposed by `hackforge analyse`.
 
 Set `DEEPSEEK_API_KEY`; `HACKFORGE_DEEPSEEK_MODEL` defaults to `deepseek-v4-pro`.
 `HACKFORGE_DEEPSEEK_REASONING=adaptive` uses `high` effort for evidence extraction and `max`
-for compact judging and red-team stages. Broad opportunity, mechanism, concept, and mutation
-generation uses constrained non-thinking decoding by default so a large structured response does
-not monopolise the run; set `HACKFORGE_DEEPSEEK_GENERATION_THINKING=1` to opt in. The default path never reads
+for the final pairwise decision and red-team stages (capped at 4,096 tokens by default). Broad
+opportunity, mechanism, concept, mutation, collision, feasibility, and independent role-vote
+stages use constrained non-thinking decoding by default so a large structured response does not
+monopolise the run; set `HACKFORGE_DEEPSEEK_GENERATION_THINKING=1`,
+`HACKFORGE_DEEPSEEK_REVIEW_THINKING=1`, or `HACKFORGE_DEEPSEEK_JUDGE_VOTE_THINKING=1` to opt in.
+Collision and feasibility replies are capped at 4,096 tokens by default.
+Streaming calls also honor the configured
+`HACKFORGE_STREAM_TIMEOUT` wall-clock deadline (300 seconds by default) even while reasoning
+chunks arrive. The default path never reads
 OpenAI/Anthropic keys and never substitutes another provider or model after a failure.
 
 HackForge's model is independent from the technology required in the concept it recommends.

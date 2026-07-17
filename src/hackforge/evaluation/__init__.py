@@ -514,8 +514,16 @@ def _feasibility_schema(count: int) -> dict[str, Any]:
                     "properties": {
                         "candidate_id": {"type": "string"},
                         "delivery_risk": {"type": "string", "enum": ["low", "medium", "high"]},
-                        "critical_dependencies": {"type": "array", "items": {"type": "string"}},
-                        "fakeable_parts": {"type": "array", "items": {"type": "string"}},
+                        "critical_dependencies": {
+                            "type": "array",
+                            "maxItems": 3,
+                            "items": {"type": "string"},
+                        },
+                        "fakeable_parts": {
+                            "type": "array",
+                            "maxItems": 3,
+                            "items": {"type": "string"},
+                        },
                         "non_fakeable_core": {"type": "string"},
                         "minimum_demonstrable_loop": {"type": "string"},
                         "kill_recommendation": {"type": "boolean"},

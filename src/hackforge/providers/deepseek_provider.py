@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import threading
+import time
 from typing import Any
 
 import httpx
@@ -25,6 +26,11 @@ _GENERATION_MARKERS = (
     "concept-crossing-engine",
     "reflective-mutation-engine",
 )
+_CONSTRAINED_REVIEW_MARKERS = (
+    "collision auditor",
+    "feasibility reviewer",
+)
+_CONSTRAINED_JUDGE_MARKERS = ("blind hackathon judge",)
 
 
 class _DeepSeekTransientError(RuntimeError):
@@ -75,9 +81,14 @@ class DeepSeekProvider(LLMProvider):
             api_base or os.getenv("HACKFORGE_DEEPSEEK_BASE_URL") or "https://api.deepseek.com"
         ).rstrip("/")
         self.timeout = float(os.getenv("HACKFORGE_LLM_TIMEOUT", "90"))
+        self.stream_timeout = self._positive_float("HACKFORGE_STREAM_TIMEOUT", 300.0)
         self.max_tokens = int(os.getenv("HACKFORGE_DEEPSEEK_MAX_TOKENS", "16384"))
         if self.max_tokens < 1:
             raise ProviderConfigurationError("HACKFORGE_DEEPSEEK_MAX_TOKENS must be positive")
+        self.constrained_max_tokens = self._positive_int(
+            "HACKFORGE_DEEPSEEK_CONSTRAINED_MAX_TOKENS", 4096
+        )
+        self.judging_max_tokens = self._positive_int("HACKFORGE_DEEPSEEK_JUDGING_MAX_TOKENS", 4096)
         self.max_calls = self._positive_int("HACKFORGE_MAX_LLM_CALLS", 40)
         self.max_total_tokens = self._positive_int("HACKFORGE_MAX_TOTAL_TOKENS", 750_000)
         self.max_cost_usd = self._positive_float("HACKFORGE_MAX_COST_USD", 2.0)
@@ -108,7 +119,7 @@ class DeepSeekProvider(LLMProvider):
                 {"role": "user", "content": user},
             ],
             "thinking": {"type": "enabled" if thinking_enabled else "disabled"},
-            "max_tokens": self.max_tokens,
+            "max_tokens": self._max_tokens_for(system),
             # Thinking-mode responses can take longer than a normal HTTP read
             # timeout before their final JSON arrives. Streaming reasoning
             # chunks keeps the connection active without exposing CoT in any
@@ -245,24 +256,50 @@ class DeepSeekProvider(LLMProvider):
         normalized = system.lower()
         return "max" if any(marker in normalized for marker in _MAX_REASONING_MARKERS) else "high"
 
+    def _max_tokens_for(self, system: str) -> int:
+        normalized = system.lower()
+        if any(marker in normalized for marker in _MAX_REASONING_MARKERS):
+            return min(self.max_tokens, self.judging_max_tokens)
+        if any(marker in normalized for marker in _CONSTRAINED_REVIEW_MARKERS):
+            return min(self.max_tokens, self.constrained_max_tokens)
+        return self.max_tokens
+
     @staticmethod
     def _thinking_enabled(system: str) -> bool:
-        """Use fast constrained decoding for broad generation, not final judgment.
+        """Use fast constrained decoding where a fixed schema bounds the task.
 
         These stages produce many schema-checked alternatives which are then
-        evidence-gated and independently reviewed. Disabling hidden reasoning
-        here prevents a single large array from monopolising a live run.
-        Set HACKFORGE_DEEPSEEK_GENERATION_THINKING=1 to opt back in.
+        evidence-gated and independently reviewed. Collision and feasibility
+        reviews also operate over retrieved evidence with compact, fixed output
+        schemas, so hidden reasoning adds disproportionate latency there.
+        Final judging and red-team stages keep reasoning enabled. Set
+        HACKFORGE_DEEPSEEK_GENERATION_THINKING=1 or
+        HACKFORGE_DEEPSEEK_REVIEW_THINKING=1 to opt back in.
         """
-        if os.getenv("HACKFORGE_DEEPSEEK_GENERATION_THINKING", "0").strip().lower() in {
+        enabled_values = {
             "1",
             "true",
             "yes",
             "on",
-        }:
-            return True
+        }
         normalized = system.lower()
-        return not any(marker in normalized for marker in _GENERATION_MARKERS)
+        if any(marker in normalized for marker in _GENERATION_MARKERS):
+            return os.getenv("HACKFORGE_DEEPSEEK_GENERATION_THINKING", "0").strip().lower() in enabled_values
+        if any(marker in normalized for marker in _CONSTRAINED_REVIEW_MARKERS):
+            return os.getenv("HACKFORGE_DEEPSEEK_REVIEW_THINKING", "0").strip().lower() in enabled_values
+        if (
+            any(marker in normalized for marker in _CONSTRAINED_JUDGE_MARKERS)
+            and "pairwise-comparator" not in normalized
+        ):
+            return os.getenv("HACKFORGE_DEEPSEEK_JUDGE_VOTE_THINKING", "0").strip().lower() in enabled_values
+        return True
+
+    def _stream_deadline(self) -> float:
+        """Bound a streaming response even when reasoning chunks keep arriving."""
+        return time.monotonic() + self.stream_timeout
+
+    def _stream_timed_out(self, deadline: float) -> bool:
+        return time.monotonic() > deadline
 
     @retry(
         reraise=True,
@@ -350,17 +387,18 @@ class DeepSeekProvider(LLMProvider):
         requests.
         """
         url = f"{self.api_base}/chat/completions"
+        deadline = self._stream_deadline()
         try:
             if self._client is not None:
                 with self._client.stream("POST", url, headers=headers, json=payload, timeout=self.timeout) as response:
-                    return self._consume_stream(response)
+                    return self._consume_stream(response, deadline=deadline)
             with httpx.Client(timeout=self.timeout) as client:
                 with client.stream("POST", url, headers=headers, json=payload) as response:
-                    return self._consume_stream(response)
+                    return self._consume_stream(response, deadline=deadline)
         except httpx.HTTPError as exc:
             raise _DeepSeekTransientError(f"DeepSeek transport failed: {exc}") from exc
 
-    def _consume_stream(self, response: httpx.Response) -> dict[str, Any]:
+    def _consume_stream(self, response: httpx.Response, *, deadline: float) -> dict[str, Any]:
         if response.status_code >= 400:
             message = self._safe_detail(response)
             detail = f"DeepSeek request failed with HTTP {response.status_code}: {message}"
@@ -387,6 +425,10 @@ class DeepSeekProvider(LLMProvider):
         usage: Any = None
         try:
             for line in response.iter_lines():
+                if self._stream_timed_out(deadline):
+                    raise _DeepSeekTransientError(
+                        f"DeepSeek stream exceeded the configured {self.stream_timeout:g}s total deadline"
+                    )
                 if not line or not line.startswith("data:"):
                     continue
                 raw = line[5:].strip()

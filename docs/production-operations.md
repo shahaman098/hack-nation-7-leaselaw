@@ -57,9 +57,15 @@ materially to pass competition-specific gates.
 Default safeguards stop a run after 40 attempted model calls, 750,000 total tokens, or a
 conservative $2 estimated cost. Completed usage and pricing assumptions are recorded in
 `run-manifest.json`. Adjust the `HACKFORGE_MAX_*` variables only after reviewing a fast run.
-Adaptive reasoning uses `high` for research and `max` for compact judging and red-team decisions.
-Broad structured generation uses non-thinking decoding by default so long arrays do not consume
-the run; set `HACKFORGE_DEEPSEEK_GENERATION_THINKING=1` to opt in.
+Adaptive reasoning uses `high` for research and `max` for the final pairwise decision/red-team
+checks (capped at 4,096 tokens by default). Broad structured generation, collision/feasibility
+reviews, and independent role votes use non-thinking decoding by default so long arrays do not
+consume the run; set `HACKFORGE_DEEPSEEK_GENERATION_THINKING=1`,
+`HACKFORGE_DEEPSEEK_REVIEW_THINKING=1`, or `HACKFORGE_DEEPSEEK_JUDGE_VOTE_THINKING=1` to opt in.
+Collision and feasibility replies are capped at 4,096 tokens by default.
+Streaming calls also enforce the configured
+`HACKFORGE_STREAM_TIMEOUT` wall-clock deadline (300 seconds by default) while reasoning chunks
+arrive; `HACKFORGE_LLM_TIMEOUT` remains the idle network-read timeout.
 
 ## Recommended live invocation
 

@@ -6,6 +6,7 @@ import pytest
 
 from hackforge.collision.embed_index import EmbedIndex, structural_text
 from hackforge.collision.engine import (
+    _collision_schema,
     dimensional_similarity,
     risk_from_dims,
     run_collide_on_ideas,
@@ -84,6 +85,13 @@ def test_structural_text():
     idea = _idea()
     text = structural_text(idea)
     assert "caseworkers" in text.lower() or "fault" in text.lower()
+
+
+def test_collision_schema_bounds_detail_per_candidate():
+    report = _collision_schema(2)["properties"]["reports"]["items"]
+    analogue = report["properties"]["nearest_analogues"]
+    assert analogue["maxItems"] == 3
+    assert analogue["items"]["properties"]["differences"]["maxItems"] == 2
 
 
 def test_promptfoo_config_writable():

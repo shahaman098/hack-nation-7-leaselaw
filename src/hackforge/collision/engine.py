@@ -276,6 +276,7 @@ def _collision_schema(count: int) -> dict[str, Any]:
             "candidate_id": {"type": "string"},
             "nearest_analogues": {
                 "type": "array",
+                "maxItems": 3,
                 "items": {
                     "type": "object",
                     "properties": {
@@ -283,7 +284,11 @@ def _collision_schema(count: int) -> dict[str, Any]:
                         "source": {"type": "string"},
                         "url": {"type": "string"},
                         "similarities": similarities,
-                        "differences": {"type": "array", "items": {"type": "string"}},
+                        "differences": {
+                            "type": "array",
+                            "maxItems": 2,
+                            "items": {"type": "string"},
+                        },
                     },
                     "required": ["name", "source", "url", "similarities", "differences"],
                     "additionalProperties": False,

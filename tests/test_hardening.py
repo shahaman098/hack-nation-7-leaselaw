@@ -200,7 +200,11 @@ def test_deepseek_direct_provider_uses_adaptive_thinking_without_temperature():
 
     with httpx.Client(transport=httpx.MockTransport(handler)) as client:
         provider = DeepSeekProvider(api_key="test-key", model="deepseek-v4-pro", client=client)
-        result = provider.complete("You are a blind hackathon judge.", "Choose one", temperature=0.9)
+        result = provider.complete(
+            "You are a blind hackathon judge with role: pairwise-comparator.",
+            "Choose one",
+            temperature=0.9,
+        )
 
     assert result.model == "deepseek-v4-pro"
     assert result.raw == {
@@ -210,16 +214,25 @@ def test_deepseek_direct_provider_uses_adaptive_thinking_without_temperature():
     }
     assert requests[0]["thinking"] == {"type": "enabled"}
     assert requests[0]["reasoning_effort"] == "max"
+    assert requests[0]["max_tokens"] == 4096
     assert "temperature" not in requests[0]
 
 
-def test_deepseek_adaptive_profile_uses_high_for_extraction():
+def test_deepseek_adaptive_profile_uses_high_for_extraction(monkeypatch: pytest.MonkeyPatch):
     provider = DeepSeekProvider(api_key="test-key", model="deepseek-v4-pro")
     assert provider._reasoning_effort("You are the competition-intelligence researcher.") == "high"
     assert provider._reasoning_effort("You are a concept-crossing-engine.") == "high"
     assert provider._reasoning_effort("You are a blind hackathon judge.") == "max"
     assert not provider._thinking_enabled("You are an opportunity-card-generator.")
-    assert provider._thinking_enabled("You are a blind hackathon judge.")
+    assert not provider._thinking_enabled("You are the collision auditor.")
+    assert not provider._thinking_enabled("You are the feasibility reviewer.")
+    assert not provider._thinking_enabled("You are a blind hackathon judge with role: technical.")
+    assert provider._thinking_enabled("You are a blind hackathon judge with role: pairwise-comparator.")
+    monkeypatch.setenv("HACKFORGE_DEEPSEEK_REVIEW_THINKING", "1")
+    assert provider._thinking_enabled("You are the collision auditor.")
+    monkeypatch.setenv("HACKFORGE_DEEPSEEK_JUDGE_VOTE_THINKING", "1")
+    assert provider._thinking_enabled("You are a blind hackathon judge with role: technical.")
+    assert provider._max_tokens_for("You are the collision auditor.") == 4096
 
 
 def test_deepseek_streaming_completion_collects_final_content_and_usage():
@@ -248,6 +261,19 @@ def test_deepseek_streaming_completion_collects_final_content_and_usage():
 
     assert result.text == '{"ok":true}'
     assert provider.usage_snapshot()["total_tokens"] == 12
+
+
+def test_deepseek_stream_enforces_total_deadline():
+    from hackforge.providers.deepseek_provider import _DeepSeekTransientError
+
+    response = httpx.Response(
+        200,
+        headers={"content-type": "text/event-stream"},
+        content=b'data: {"choices": []}\n\ndata: [DONE]\n\n',
+    )
+    provider = DeepSeekProvider(api_key="test-key", model="deepseek-v4-pro")
+    with pytest.raises(_DeepSeekTransientError, match="total deadline"):
+        provider._consume_stream(response, deadline=0)
 
 
 def test_deepseek_permanent_error_fails_once_without_fallback():
