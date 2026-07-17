@@ -2,15 +2,16 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
+from hackforge.collision.embed_index import EmbedIndex, structural_text
 from hackforge.collision.engine import (
     dimensional_similarity,
     risk_from_dims,
     run_collide_on_ideas,
 )
-from hackforge.collision.embed_index import EmbedIndex, structural_text
 from hackforge.models import CandidateIdea, SimilarityDims
 from hackforge.paths import FIXTURES_DIR
-from hackforge.utils import read_json
 
 
 def _idea(**kwargs) -> CandidateIdea:
@@ -50,7 +51,8 @@ def test_dimensional_similarity_and_risk():
     assert risk in {"low", "medium", "high"}
 
 
-def test_collide_offline_no_index(tmp_path: Path):
+def test_collide_offline_no_index(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setenv("HACKFORGE_INDEX_DIR", str(tmp_path / "empty-index"))
     ideas = [_idea(), _idea(id="idea-2", working_title="Other", primary_user="planners")]
     reports, md = run_collide_on_ideas(ideas, live_enrich=False, use_llm=False)
     assert len(reports) == 2
@@ -58,18 +60,19 @@ def test_collide_offline_no_index(tmp_path: Path):
     assert reports[0].candidate_id == "idea-1"
 
 
+@pytest.mark.slow
 def test_build_tiny_faiss_index(tmp_path: Path):
+    import json
+
     records = []
     for line in (FIXTURES_DIR / "tiny-corpus.jsonl").read_text(encoding="utf-8").splitlines():
         if line.strip():
-            records.append(__import__("json").loads(line))
+            records.append(json.loads(line))
     idx = EmbedIndex(tmp_path / "idx")
     try:
         path = idx.build(records)
     except Exception as exc:
         # Allow environments without sentence-transformers / faiss wheels
-        import pytest
-
         pytest.skip(f"collision extras unavailable: {exc}")
     assert path.exists()
     hits = idx.search("caseworkers appeal guidance checklist", k=2)

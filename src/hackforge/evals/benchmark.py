@@ -58,9 +58,14 @@ def score_arm(ideas: list[Any], blacklist: dict[str, Any]) -> dict[str, Any]:
             for i in ideas
         ]
         named_data = sum(1 for i in ideas if i.get("data_sources"))
+        users = {str(i.get("primary_user") or "") for i in ideas if i.get("primary_user")}
+        mechanisms = {str(i.get("mechanism_family") or i.get("imported_mechanism") or "") for i in ideas}
+        actions = {str(i.get("last_mile_action") or "") for i in ideas if i.get("last_mile_action")}
+        demos = {str(i.get("demo_type") or i.get("killer_demo") or "") for i in ideas}
     else:
         texts = [str(i) for i in ideas]
         named_data = 0
+        users, mechanisms, actions, demos = set(), set(), set(), set()
 
     tags: set[str] = set()
     for t in texts:
@@ -91,7 +96,28 @@ def score_arm(ideas: list[Any], blacklist: dict[str, Any]) -> dict[str, Any]:
         "crowded_keyword_hits": crowded_hits,
         "named_data_source_ideas": named_data,
         "unsupported_claim_proxy": sum(1 for t in texts if "ai" in t.lower() and "data" not in t.lower()),
+        "semantic_duplicate_rate": _duplicate_rate(texts),
+        "coverage": {
+            "users": len(users),
+            "mechanisms": len(mechanisms),
+            "actions": len(actions),
+            "demos": len(demos),
+        },
     }
+
+
+def _duplicate_rate(texts: list[str]) -> float:
+    if len(texts) < 2:
+        return 0.0
+    duplicate_pairs = 0
+    pairs = 0
+    token_sets = [{token for token in text.lower().split() if len(token) > 3} for text in texts]
+    for index, left in enumerate(token_sets):
+        for right in token_sets[index + 1 :]:
+            pairs += 1
+            similarity = len(left & right) / max(1, len(left | right))
+            duplicate_pairs += int(similarity >= 0.82)
+    return duplicate_pairs / pairs
 
 
 def run_benchmark(benchmark_dir: Path, *, dry_run: bool = True) -> Path:
@@ -105,7 +131,7 @@ def run_benchmark(benchmark_dir: Path, *, dry_run: bool = True) -> Path:
     if not cases:
         cases = [FIXTURES_DIR / "sample-hackathon.md"]
 
-    report_rows = []
+    report_rows: list[dict[str, Any]] = []
     for case in cases:
         text = case.read_text(encoding="utf-8")
         baseline_ideas = naive_baseline(text, fixture_bundle)
@@ -120,6 +146,16 @@ def run_benchmark(benchmark_dir: Path, *, dry_run: bool = True) -> Path:
         )
         raw = read_json(run_dir / "raw-concepts.json")
         pipeline_scores = score_arm(raw, blacklist)
+        manifest = read_json(run_dir / "run-manifest.json")
+        final_ids = set(manifest.get("final_output_ids") or [])
+        finalists = [idea for idea in raw if idea.get("id") in final_ids]
+        collisions = read_json(run_dir / "collision-reports.json")
+        collision_by = {report.get("candidate_id"): report for report in collisions}
+        finalist_evidence = all(idea.get("evidence_ids") for idea in finalists) and bool(finalists)
+        differentiated = all(
+            collision_by.get(idea.get("id"), {}).get("differentiator_is_substantive", False)
+            for idea in finalists
+        )
 
         report_rows.append(
             {
@@ -128,7 +164,7 @@ def run_benchmark(benchmark_dir: Path, *, dry_run: bool = True) -> Path:
                 "pipeline": {
                     "run_dir": str(run_dir),
                     "metrics": pipeline_scores,
-                    "primary": read_json(run_dir / "run-manifest.json").get("final_primary_id"),
+                    "primary": manifest.get("final_primary_id"),
                 },
                 "comparison": {
                     "pipeline_more_diverse_tags": pipeline_scores["archetype_diversity"]
@@ -137,6 +173,15 @@ def run_benchmark(benchmark_dir: Path, *, dry_run: bool = True) -> Path:
                     <= baseline_scores["crowded_keyword_hits"],
                     "pipeline_more_named_data": pipeline_scores["named_data_source_ideas"]
                     >= baseline_scores["named_data_source_ideas"],
+                    "lower_semantic_duplicate_rate": pipeline_scores["semantic_duplicate_rate"]
+                    < baseline_scores["semantic_duplicate_rate"],
+                    "broad_dimension_coverage": all(
+                        pipeline_scores["coverage"][dimension] >= 3
+                        for dimension in ("users", "mechanisms", "actions", "demos")
+                    ),
+                    "every_finalist_has_cited_evidence": finalist_evidence,
+                    "no_banned_structural_archetypes": pipeline_scores["crowded_keyword_hits"] == 0,
+                    "finalists_differ_from_nearest_analogue": differentiated,
                 },
             }
         )
@@ -149,6 +194,8 @@ def run_benchmark(benchmark_dir: Path, *, dry_run: bool = True) -> Path:
         md_lines.append(f"- Baseline crowded hits: {row['baseline']['metrics']['crowded_keyword_hits']}")
         md_lines.append(f"- Pipeline crowded hits: {row['pipeline']['metrics']['crowded_keyword_hits']}")
         md_lines.append(f"- Pipeline named data ideas: {row['pipeline']['metrics']['named_data_source_ideas']}")
+        md_lines.append(f"- Pipeline semantic duplicate rate: {row['pipeline']['metrics']['semantic_duplicate_rate']:.3f}")
+        md_lines.append(f"- Pipeline dimension coverage: {row['pipeline']['metrics']['coverage']}")
         md_lines.append(f"- Comparison flags: {row['comparison']}")
         md_lines.append("")
     write_text(results_dir / "latest-benchmark.md", "\n".join(md_lines))

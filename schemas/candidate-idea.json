@@ -36,6 +36,24 @@
     "kill_reason": { "type": "string" },
     "killer_demo": { "type": "string" },
     "hard_to_fake_advantage": { "type": "string" },
-    "cluster_id": { "type": ["string", "null"] }
+    "cluster_id": { "type": ["string", "null"] },
+    "evidence_ids": { "type": "array", "items": { "type": "string" } },
+    "opportunity_id": { "type": "string" },
+    "mechanism_id": { "type": "string" },
+    "mutation_history": { "type": "array", "items": { "type": "string" } },
+    "track_fit": { "type": "string" },
+    "gpt_5_6_role": { "type": "string" },
+    "codex_build_role": { "type": "string" },
+    "data_access_status": { "type": "string" },
+    "data_access_plan": { "type": "string" },
+    "testable_claim": { "type": "string" },
+    "demo_proof": { "type": "string" },
+    "minimum_demonstrable_loop": { "type": "string" },
+    "mechanism_family": { "type": "string" },
+    "demo_type": { "type": "string" },
+    "external_evaluation_scores": {
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    }
   }
 }

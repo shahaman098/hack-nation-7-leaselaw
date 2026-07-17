@@ -3,13 +3,26 @@ from __future__ import annotations
 import json
 import os
 import re
+import shutil
+import subprocess
+import tempfile
+import time
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any
 
+import jsonschema
 from dotenv import load_dotenv
+from tenacity import retry, stop_after_attempt, wait_exponential
 
 from hackforge.utils import env_flag
+
+_RETRY = retry(
+    reraise=True,
+    stop=stop_after_attempt(3),
+    wait=wait_exponential(multiplier=1, min=1, max=20),
+)
 
 
 @dataclass
@@ -22,6 +35,14 @@ class LLMResponse:
     raw: dict[str, Any] = field(default_factory=dict)
 
 
+class ProviderConfigurationError(RuntimeError):
+    """A permanent provider/auth/model error that must not consume retries."""
+
+
+class _CodexTransientError(RuntimeError):
+    """A short-lived local Codex CLI, MCP, or network failure."""
+
+
 class LLMProvider(ABC):
     name: str
 
@@ -29,13 +50,44 @@ class LLMProvider(ABC):
     def complete(self, system: str, user: str, *, temperature: float = 0.4) -> LLMResponse:
         raise NotImplementedError
 
-    def complete_json(self, system: str, user: str, *, temperature: float = 0.3) -> Any:
-        resp = self.complete(
-            system + "\n\nReturn valid JSON only. No markdown fences.",
-            user,
-            temperature=temperature,
-        )
-        return extract_json(resp.text)
+    def complete_json(
+        self,
+        system: str,
+        user: str,
+        *,
+        temperature: float = 0.3,
+        retries: int = 2,
+        schema: dict[str, Any] | None = None,
+    ) -> Any:
+        """Request JSON, retrying with a stricter instruction if parsing fails."""
+        instruction = "\n\nReturn valid JSON only. No markdown fences, no prose."
+        if schema:
+            instruction += (
+                "\nYour response MUST validate against this exact JSON Schema. Use the exact property "
+                "names, types, and required fields; do not rename, merge, or add properties:\n"
+                + json.dumps(schema, separators=(",", ":"))
+            )
+        last_error: Exception | None = None
+        for attempt in range(retries + 1):
+            suffix = instruction
+            if attempt > 0 and last_error is not None:
+                suffix += (
+                    "\n\nYour previous reply failed parsing or schema validation. Correct this exact "
+                    f"problem: {str(last_error)[:2000]}\nReply with ONLY the corrected JSON value."
+                )
+            try:
+                resp = self.complete(system + suffix, user, temperature=max(0.0, temperature - 0.1 * attempt))
+                parsed = extract_json(resp.text)
+                if schema:
+                    jsonschema.validate(parsed, schema)
+                return parsed
+            except (json.JSONDecodeError, ValueError, jsonschema.ValidationError) as exc:
+                last_error = exc
+        detail = f": {str(last_error)[:500]}" if last_error else ""
+        raise ValueError(
+            f"{self.name}: could not obtain valid JSON matching the schema after "
+            f"{retries + 1} attempts{detail}"
+        ) from last_error
 
 
 def extract_json(text: str) -> Any:
@@ -59,7 +111,7 @@ def extract_json(text: str) -> Any:
 
 
 class DryRunProvider(LLMProvider):
-    """Deterministic fixture responses for offline pipeline runs."""
+    """Deterministic fixture responses for tests and benchmarks only."""
 
     name = "dry-run"
 
@@ -73,7 +125,7 @@ class DryRunProvider(LLMProvider):
         key = self._route_key(system, user)
         payload = self.fixture_bundle.get(key)
         if payload is None:
-            payload = {"note": "unhandled dry-run route", "key": key}
+            raise RuntimeError(f"Test fixture bundle has no response for route {key!r}")
         text = payload if isinstance(payload, str) else json.dumps(payload, indent=2)
         return LLMResponse(text=text, provider=self.name, model=self.model)
 
@@ -83,6 +135,14 @@ class DryRunProvider(LLMProvider):
             return "competition_research"
         if "contrarian product researcher" in blob:
             return "ideation"
+        if "opportunity-card-generator" in blob:
+            return "opportunity_cards"
+        if "mechanism-card-generator" in blob:
+            return "mechanism_cards"
+        if "concept-crossing-engine" in blob:
+            return "idea_crossing"
+        if "reflective-mutation-engine" in blob:
+            return "mutations"
         if "collision auditor" in blob:
             return "collision"
         if "feasibility reviewer" in blob:
@@ -99,19 +159,259 @@ class DryRunProvider(LLMProvider):
         return "default"
 
 
+class CodexExecProvider(LLMProvider):
+    """Use the locally authenticated Codex CLI without requiring an API key."""
+
+    name = "codex"
+
+    def __init__(
+        self,
+        *,
+        binary: str | None = None,
+        model: str | None = None,
+        timeout: float | None = None,
+    ):
+        self.binary: str = binary or os.getenv("HACKFORGE_CODEX_BINARY") or shutil.which("codex") or ""
+        # ChatGPT-backed Codex accounts do not necessarily expose every API
+        # model name. Leave the model flag unset by default so Codex selects the
+        # authenticated account's supported default. Set HACKFORGE_CODEX_MODEL
+        # only when the account explicitly supports that model.
+        self.requested_model: str | None = model or os.getenv("HACKFORGE_CODEX_MODEL") or None
+        self.model: str = self.requested_model or "codex-default"
+        self.timeout = timeout or float(os.getenv("HACKFORGE_CODEX_TIMEOUT", "300"))
+        if not self.binary:
+            raise RuntimeError("Codex CLI was not found. Install Codex or choose a configured live provider.")
+
+    def complete(self, system: str, user: str, *, temperature: float = 0.4) -> LLMResponse:
+        del temperature  # Codex controls reasoning/search policy for exec sessions.
+        return self._execute(system, user, schema=None)
+
+    def complete_json(
+        self,
+        system: str,
+        user: str,
+        *,
+        temperature: float = 0.3,
+        retries: int = 2,
+        schema: dict[str, Any] | None = None,
+    ) -> Any:
+        del temperature
+        output_schema = schema
+        last_error: Exception | None = None
+        for attempt in range(retries + 1):
+            suffix = (
+                "\nReturn only data conforming to the supplied JSON schema."
+                if output_schema
+                else "\nReturn one valid JSON object only, with no Markdown or commentary."
+            )
+            if attempt:
+                suffix += " Your last response was invalid; correct the structure without commentary."
+            try:
+                response = self._execute(system + suffix, user, schema=output_schema)
+                parsed = extract_json(response.text)
+                if output_schema:
+                    jsonschema.validate(parsed, output_schema)
+                return parsed
+            except ProviderConfigurationError:
+                raise
+            except _CodexTransientError:
+                # The provider boundary already used its bounded transport retry.
+                # Do not mislabel an exhausted service failure as malformed JSON.
+                raise
+            except (ValueError, json.JSONDecodeError, jsonschema.ValidationError) as exc:
+                last_error = exc
+        raise ValueError(f"codex: invalid structured output after {retries + 1} attempts") from last_error
+
+    def _execute(self, system: str, user: str, *, schema: dict[str, Any] | None) -> LLMResponse:
+        for attempt in range(3):
+            try:
+                return self._execute_once(system, user, schema=schema)
+            except _CodexTransientError:
+                if attempt == 2:
+                    raise
+                time.sleep(2**attempt)
+        raise AssertionError("unreachable")
+
+    def _execute_once(self, system: str, user: str, *, schema: dict[str, Any] | None) -> LLMResponse:
+        prompt = f"SYSTEM INSTRUCTIONS:\n{system}\n\nTASK:\n{user}"
+        with tempfile.TemporaryDirectory(prefix="hackforge-codex-") as temp:
+            temp_dir = Path(temp)
+            last_path = temp_dir / "last-message.txt"
+            command = [
+                self.binary,
+                "exec",
+                # HackForge needs only the authenticated Codex model, not the
+                # operator's arbitrary MCP servers. Ignore those project/user
+                # integrations while retaining the Codex login in CODEX_HOME.
+                "--ignore-user-config",
+                "--sandbox",
+                "read-only",
+                "--ephemeral",
+                "--skip-git-repo-check",
+                "--json",
+                "--output-last-message",
+                str(last_path),
+            ]
+            if self.requested_model:
+                command[2:2] = ["--model", self.requested_model]
+            if schema:
+                schema_path = temp_dir / "output-schema.json"
+                schema_path.write_text(json.dumps(_codex_strict_schema(schema)), encoding="utf-8")
+                command.extend(["--output-schema", str(schema_path)])
+            command.append("-")
+            try:
+                completed = subprocess.run(
+                    command,
+                    input=prompt,
+                    text=True,
+                    capture_output=True,
+                    timeout=self.timeout,
+                    cwd=temp,
+                    check=False,
+                )
+            except subprocess.TimeoutExpired as exc:
+                raise _CodexTransientError(f"Codex exec timed out after {self.timeout:g}s") from exc
+            if completed.returncode != 0:
+                stderr = completed.stderr.strip()
+                detail = "\n".join(
+                    part.strip() for part in (completed.stdout, completed.stderr) if part.strip()
+                ) or "unknown Codex error"
+                # Stderr is the CLI/runtime diagnostic; stdout may contain an
+                # agent response that happens to mention authentication.
+                diagnostic = stderr or detail
+                if "model is not supported" in diagnostic.lower():
+                    raise ProviderConfigurationError(
+                        f"Requested Codex model {self.requested_model!r} is not supported by this "
+                        f"account. No fallback was attempted. Provider output: {detail[-1000:]}"
+                    )
+                if _is_codex_auth_failure(diagnostic):
+                    raise ProviderConfigurationError(
+                        f"Codex authentication is unavailable: {detail[-500:]}"
+                    )
+                if _is_codex_transient_failure(diagnostic):
+                    raise _CodexTransientError(f"Codex exec transient failure: {detail[-2000:]}")
+                raise RuntimeError(f"Codex exec failed ({completed.returncode}): {detail[-2000:]}")
+            text = last_path.read_text(encoding="utf-8").strip() if last_path.exists() else ""
+            if not text:
+                text = self._extract_jsonl_message(completed.stdout)
+            if not text:
+                raise RuntimeError("Codex exec completed without a final message")
+            return LLMResponse(
+                text=text,
+                provider=self.name,
+                model=self.model,
+                raw={"jsonl": completed.stdout[-4000:]},
+            )
+
+    @staticmethod
+    def _extract_jsonl_message(stdout: str) -> str:
+        candidates: list[str] = []
+
+        def visit(value: Any, key: str = "") -> None:
+            if isinstance(value, dict):
+                for child_key, child in value.items():
+                    visit(child, child_key)
+            elif isinstance(value, list):
+                for child in value:
+                    visit(child, key)
+            elif isinstance(value, str) and key in {"text", "content", "message", "output_text"}:
+                candidates.append(value)
+
+        for line in stdout.splitlines():
+            try:
+                visit(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+        for candidate in reversed(candidates):
+            try:
+                extract_json(candidate)
+                return candidate
+            except (ValueError, json.JSONDecodeError):
+                continue
+        return candidates[-1] if candidates else ""
+
+
+def _is_codex_auth_failure(detail: str) -> bool:
+    """Return true only for actionable credential/login failures.
+
+    Codex can mention authentication while reporting a transient MCP transport
+    failure during startup or shutdown. Treating every ``auth`` substring as a
+    permanent configuration fault bypasses ``complete_json``'s bounded retry
+    loop and needlessly aborts long-running searches.
+    """
+    text = detail.lower()
+    markers = (
+        "not logged in",
+        "authentication required",
+        "login required",
+        "please log in",
+        "please login",
+        "run `codex login`",
+        "run codex login",
+        "invalid api key",
+        "invalid credentials",
+        "unauthorized (401)",
+        "http 401",
+        "status code: 401",
+    )
+    return any(marker in text for marker in markers)
+
+
+def _is_codex_transient_failure(detail: str) -> bool:
+    """Recognize transient Codex startup, MCP, and transport failures."""
+    text = detail.lower()
+    markers = (
+        "mcp startup failed",
+        "failed to initialize mcp",
+        "handshaking with mcp",
+        "error sending request",
+        "http/request failed",
+        "connection refused",
+        "connection reset",
+        "network is unreachable",
+        "temporary failure in name resolution",
+        "dns lookup failed",
+    )
+    return any(marker in text for marker in markers)
+
+
+def _codex_strict_schema(schema: dict[str, Any]) -> dict[str, Any]:
+    """Normalize JSON Schema to the strict object subset accepted by Codex."""
+    normalized: dict[str, Any] = {}
+    for key, value in schema.items():
+        if key in {"$schema", "$id", "title"}:
+            continue
+        if key == "additionalProperties":
+            continue
+        if isinstance(value, dict):
+            normalized[key] = _codex_strict_schema(value)
+        elif isinstance(value, list):
+            normalized[key] = [
+                _codex_strict_schema(item) if isinstance(item, dict) else item for item in value
+            ]
+        else:
+            normalized[key] = value
+    if normalized.get("type") == "object" or "properties" in normalized:
+        properties = normalized.get("properties") or {}
+        normalized["additionalProperties"] = False
+        normalized["required"] = list(properties.keys())
+    return normalized
+
+
 class OpenAIProvider(LLMProvider):
     name = "openai"
 
     def __init__(self, api_key: str | None = None, model: str | None = None):
         self.api_key = api_key or os.getenv("OPENAI_API_KEY", "")
-        self.model = model or os.getenv("HACKFORGE_OPENAI_MODEL", "gpt-4o")
+        self.model: str = model or os.getenv("HACKFORGE_OPENAI_MODEL") or "gpt-4o"
         if not self.api_key:
             raise RuntimeError("OPENAI_API_KEY not set")
 
+    @_RETRY
     def complete(self, system: str, user: str, *, temperature: float = 0.4) -> LLMResponse:
         from openai import OpenAI
 
-        client = OpenAI(api_key=self.api_key)
+        client = OpenAI(api_key=self.api_key, timeout=float(os.getenv("HACKFORGE_LLM_TIMEOUT", "90")))
         resp = client.chat.completions.create(
             model=self.model,
             temperature=temperature,
@@ -137,14 +437,18 @@ class AnthropicProvider(LLMProvider):
 
     def __init__(self, api_key: str | None = None, model: str | None = None):
         self.api_key = api_key or os.getenv("ANTHROPIC_API_KEY", "")
-        self.model = model or os.getenv("HACKFORGE_ANTHROPIC_MODEL", "claude-sonnet-4-20250514")
+        self.model: str = model or os.getenv("HACKFORGE_ANTHROPIC_MODEL") or "claude-sonnet-4-20250514"
         if not self.api_key:
             raise RuntimeError("ANTHROPIC_API_KEY not set")
 
+    @_RETRY
     def complete(self, system: str, user: str, *, temperature: float = 0.4) -> LLMResponse:
         import anthropic
 
-        client = anthropic.Anthropic(api_key=self.api_key)
+        client = anthropic.Anthropic(
+            api_key=self.api_key,
+            timeout=float(os.getenv("HACKFORGE_LLM_TIMEOUT", "90")),
+        )
         resp = client.messages.create(
             model=self.model,
             max_tokens=8192,
@@ -175,9 +479,14 @@ class ProviderBundle:
     dry_run: bool = False
 
 
-def load_providers(*, dry_run: bool = False, fixture_bundle: dict[str, Any] | None = None) -> ProviderBundle:
+def load_providers(
+    *,
+    dry_run: bool = False,
+    fixture_bundle: dict[str, Any] | None = None,
+    provider: str = "deepseek",
+) -> ProviderBundle:
     load_dotenv()
-    dry = dry_run or env_flag("HACKFORGE_DRY_RUN")
+    dry = dry_run or provider == "dry-run"
 
     if dry:
         dry_p = DryRunProvider(fixture_bundle)
@@ -192,25 +501,25 @@ def load_providers(*, dry_run: bool = False, fixture_bundle: dict[str, Any] | No
         )
 
     providers: list[LLMProvider] = []
-    use_litellm = env_flag("HACKFORGE_USE_LITELLM", default=True)
-    if use_litellm:
-        try:
-            from hackforge.providers.litellm_provider import LiteLLMProvider, litellm_models_from_env
+    if provider in {"deepseek", "auto"}:
+        # `auto` is retained as a backwards-compatible alias, but intentionally
+        # resolves to DeepSeek only. It never probes or falls back to Codex.
+        from hackforge.providers.deepseek_provider import DeepSeekProvider
 
-            for model in litellm_models_from_env():
-                providers.append(LiteLLMProvider(model))
-        except Exception:
-            providers = []
+        providers = [DeepSeekProvider()]
+    elif provider == "codex":
+        providers = [CodexExecProvider()]
+    elif provider == "litellm" and env_flag("HACKFORGE_USE_LITELLM", default=True):
+        from hackforge.providers.litellm_provider import LiteLLMProvider, litellm_models_from_env
 
-    if not providers:
-        if os.getenv("OPENAI_API_KEY"):
-            providers.append(OpenAIProvider())
-        if os.getenv("ANTHROPIC_API_KEY"):
-            providers.append(AnthropicProvider())
+        models = litellm_models_from_env()
+        if not models:
+            raise RuntimeError("LiteLLM was selected but no supported provider API key is configured")
+        for model in models:
+            providers.append(LiteLLMProvider(model))
     if not providers:
         raise RuntimeError(
-            "No LLM providers configured. Set OPENAI_API_KEY and/or ANTHROPIC_API_KEY, "
-            "install collision extras for LiteLLM, or pass --dry-run."
+            f"Requested provider {provider!r} is unavailable or disabled. No provider fallback was attempted."
         )
 
     # Alternate providers across ideation lanes for isolation when both exist

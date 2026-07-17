@@ -3,11 +3,13 @@ from __future__ import annotations
 import os
 from typing import Any
 
+from tenacity import retry, stop_after_attempt, wait_exponential
+
 from hackforge.providers import LLMProvider, LLMResponse
 
 
 class LiteLLMProvider(LLMProvider):
-    """Unified multi-provider calls via LiteLLM (OpenAI / Anthropic / …)."""
+    """Unified multi-provider calls via LiteLLM (DeepSeek / OpenAI / Anthropic / …)."""
 
     name = "litellm"
 
@@ -17,15 +19,19 @@ class LiteLLMProvider(LLMProvider):
         # Label lane with underlying family for manifests
         if model.startswith("claude") or "anthropic" in model:
             self.name = "litellm-anthropic"
+        elif model.startswith("deepseek/") or model.startswith("deepseek-"):
+            self.name = "litellm-deepseek"
         elif model.startswith("gpt") or "openai" in model:
             self.name = "litellm-openai"
 
+    @retry(reraise=True, stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=1, max=20))
     def complete(self, system: str, user: str, *, temperature: float = 0.4) -> LLMResponse:
         from litellm import completion
 
         kwargs: dict[str, Any] = {
             "model": self.model,
             "temperature": temperature,
+            "timeout": float(os.getenv("HACKFORGE_LLM_TIMEOUT", "90")),
             "messages": [
                 {"role": "system", "content": system},
                 {"role": "user", "content": user},
@@ -49,6 +55,9 @@ class LiteLLMProvider(LLMProvider):
 
 def litellm_models_from_env() -> list[str]:
     models: list[str] = []
+    if os.getenv("DEEPSEEK_API_KEY"):
+        raw = os.getenv("HACKFORGE_DEEPSEEK_MODEL", "deepseek-v4-pro")
+        models.append(raw if raw.startswith("deepseek/") else f"deepseek/{raw}")
     if os.getenv("OPENAI_API_KEY"):
         models.append(os.getenv("HACKFORGE_OPENAI_MODEL", "gpt-4o"))
     if os.getenv("ANTHROPIC_API_KEY"):

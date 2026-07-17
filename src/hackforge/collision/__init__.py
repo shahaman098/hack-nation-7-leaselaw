@@ -6,6 +6,7 @@ from hackforge.collision.corpus_loader import collision_markdown, load_analogue_
 from hackforge.collision.engine import audit_collisions_engine
 from hackforge.models import CandidateIdea, CollisionReport
 from hackforge.providers import LLMProvider
+from hackforge.utils import env_flag
 
 
 def audit_collisions(
@@ -15,13 +16,14 @@ def audit_collisions(
     *,
     live_enrich: bool = True,
 ) -> list[CollisionReport]:
-    """FAISS prefilter + dimensional scores + LLM auditor (corpus arg kept for API compat)."""
-    del corpus  # engine retrieves nearest itself
+    """FAISS prefilter + dimensional scores + LLM auditor."""
     return audit_collisions_engine(
         provider,
         candidates,
         live_enrich=live_enrich,
         use_llm=True,
+        supplemental_analogues=corpus,
+        require_semantic=env_flag("HACKFORGE_REQUIRE_SEMANTIC_COLLISION", default=True),
     )
 
 

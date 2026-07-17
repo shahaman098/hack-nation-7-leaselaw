@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+import random
 from collections import Counter
 from typing import Any
 
@@ -13,8 +15,21 @@ from hackforge.models import (
     PairwiseResult,
 )
 from hackforge.paths import HARD_GATES, JUDGE_ROLES
-from hackforge.providers import LLMProvider
+from hackforge.providers import DryRunProvider, LLMProvider
 from hackforge.utils import load_prompt, render_prompt
+
+from .gates import (
+    REQUIRED_GATES as REQUIRED_GATES,
+)
+from .gates import (
+    evaluate_gates as evaluate_gates,
+)
+from .gates import (
+    gate_failures as gate_failures,
+)
+from .gates import (
+    passes_gates as passes_gates,
+)
 
 
 def review_feasibility(
@@ -23,20 +38,39 @@ def review_feasibility(
     brief: CompetitionBrief,
 ) -> list[FeasibilityReport]:
     template, _ = load_prompt("feasibility")
-    priors = _hackrep_priors()
     payload = {
         "deadline": brief.deadline,
         "team_size": brief.team_size,
         "required_tech": brief.required_or_encouraged_tech,
-        "hackrep_48h_stack_priors": priors,
         "candidates": [c.model_dump() for c in candidates],
     }
-    raw = provider.complete_json(template, str(payload))
+    schema = None if isinstance(provider, DryRunProvider) else _feasibility_schema(len(candidates))
+    raw = provider.complete_json(template, str(payload), schema=schema)
     items = raw if isinstance(raw, list) else raw.get("reports") or []
+    if not isinstance(items, list):
+        raise RuntimeError("feasibility review returned a non-list reports payload")
     reports: list[FeasibilityReport] = []
-    for item in items:
+    required_fields = {
+        "candidate_id",
+        "delivery_risk",
+        "critical_dependencies",
+        "fakeable_parts",
+        "non_fakeable_core",
+        "minimum_demonstrable_loop",
+        "kill_recommendation",
+        "notes",
+    }
+    for index, item in enumerate(items):
         if not isinstance(item, dict):
+            if not isinstance(provider, DryRunProvider):
+                raise RuntimeError(f"feasibility review row {index} was not an object")
             continue
+        missing_fields = required_fields - set(item)
+        if missing_fields and not isinstance(provider, DryRunProvider):
+            raise RuntimeError(
+                f"feasibility review row {index} omitted fields {sorted(missing_fields)}; "
+                "no default values were inserted"
+            )
         reports.append(
             FeasibilityReport(
                 candidate_id=str(item.get("candidate_id") or ""),
@@ -50,11 +84,20 @@ def review_feasibility(
             )
         )
     covered = {r.candidate_id for r in reports}
+    if len(covered) != len(reports) and not isinstance(provider, DryRunProvider):
+        raise RuntimeError("feasibility review returned duplicate candidate ids")
+    expected = {candidate.id for candidate in candidates}
+    unexpected = covered - expected
+    if unexpected and not isinstance(provider, DryRunProvider):
+        raise RuntimeError(f"feasibility review returned unknown candidate ids: {sorted(unexpected)}")
+    missing = expected - covered
+    if missing and not isinstance(provider, DryRunProvider):
+        raise RuntimeError(
+            f"feasibility review omitted candidate ids {sorted(missing)}; no fallback reports were generated"
+        )
     for c in candidates:
         if c.id not in covered:
             note = "fallback feasibility stub"
-            if priors.get("common_48h_stacks"):
-                note += f" | HackRep common stacks: {', '.join(priors['common_48h_stacks'][:6])}"
             reports.append(
                 FeasibilityReport(
                     candidate_id=c.id,
@@ -66,23 +109,6 @@ def review_feasibility(
                 )
             )
     return reports
-
-
-def _hackrep_priors() -> dict[str, Any]:
-    from hackforge.paths import HACKREP_DIR
-    from hackforge.utils import read_json
-
-    path = HACKREP_DIR / "feasibility_priors.json"
-    if path.exists():
-        try:
-            return read_json(path)
-        except Exception:
-            return {}
-    return {
-        "common_48h_stacks": ["javascript", "python", "react", "node", "firebase", "flask"],
-        "notes": "default priors; run hackforge corpus pull --source hackrep for HackRep metadata",
-    }
-
 
 def feasibility_markdown(reports: list[FeasibilityReport]) -> str:
     lines = ["# Feasibility analysis", ""]
@@ -105,7 +131,11 @@ def blind_judge(
     collisions: list[CollisionReport],
     feasibility: list[FeasibilityReport],
 ) -> EvaluationResult:
-    blind_map = {chr(ord("A") + i): c for i, c in enumerate(finalists)}
+    # Randomize presentation without making winner selection depend on caller ordering.
+    shuffled = sorted(finalists, key=lambda candidate: candidate.id)
+    seed_material = brief.name + "|" + "|".join(candidate.id for candidate in shuffled)
+    random.Random(int(hashlib.sha256(seed_material.encode()).hexdigest()[:16], 16)).shuffle(shuffled)
+    blind_map = {chr(ord("A") + i): c for i, c in enumerate(shuffled)}
     reverse = {c.id: bid for bid, c in blind_map.items()}
     coll_by = {r.candidate_id: r for r in collisions}
     feas_by = {r.candidate_id: r for r in feasibility}
@@ -124,8 +154,8 @@ def blind_judge(
                 "visible_transformation": c.visible_transformation,
                 "killer_demo": c.killer_demo,
                 "hard_to_fake_advantage": c.hard_to_fake_advantage,
-                "collision_risk": (coll_by.get(c.id).collision_risk if c.id in coll_by else c.collision_risk),
-                "delivery_risk": (feas_by.get(c.id).delivery_risk if c.id in feas_by else "unknown"),
+                "collision_risk": (coll_by[c.id].collision_risk if c.id in coll_by else c.collision_risk),
+                "delivery_risk": (feas_by[c.id].delivery_risk if c.id in feas_by else "unknown"),
                 "track_hints": brief.tracks,
             }
         )
@@ -135,15 +165,46 @@ def blind_judge(
     votes: list[JudgeVote] = []
     for role in JUDGE_ROLES:
         system = render_prompt(template, {"JUDGE_ROLE": role})
+        vote_schema = {
+            "type": "object",
+            "properties": {
+                "role": {"type": "string"},
+                "preferred_blind_id": {"type": "string", "enum": list(blind_map)},
+                "rationale": {"type": "string"},
+                "scores_by_official_criteria": {"type": "object"},
+                "hard_gate_failures": {"type": "array", "items": {"type": "string"}},
+                "demo_failure_risk": {"type": "string", "enum": ["low", "medium", "high"]},
+            },
+            "required": [
+                "role",
+                "preferred_blind_id",
+                "rationale",
+                "scores_by_official_criteria",
+                "hard_gate_failures",
+                "demo_failure_risk",
+            ],
+            "additionalProperties": False,
+        }
         raw = provider.complete_json(
             system,
             f"Official criteria: {criteria}\nCandidates: {anonymized}",
+            schema=None if isinstance(provider, DryRunProvider) else vote_schema,
         )
         if not isinstance(raw, dict):
-            raw = {"preferred_blind_id": "A", "rationale": "malformed judge output", "role": role}
+            raise RuntimeError(f"{role} judge returned a non-object response")
+        required_vote_fields = {
+            "preferred_blind_id",
+            "rationale",
+            "scores_by_official_criteria",
+            "hard_gate_failures",
+            "demo_failure_risk",
+        }
+        missing_vote_fields = required_vote_fields - set(raw)
+        if missing_vote_fields and not isinstance(provider, DryRunProvider):
+            raise RuntimeError(f"{role} judge omitted fields {sorted(missing_vote_fields)}")
         preferred = str(raw.get("preferred_blind_id") or "A").upper()
         if preferred not in blind_map:
-            preferred = next(iter(blind_map))
+            raise RuntimeError(f"{role} judge selected unknown blind id {preferred!r}")
         votes.append(
             JudgeVote(
                 role=role,
@@ -157,10 +218,20 @@ def blind_judge(
 
     hard_gates = _evaluate_hard_gates(finalists, coll_by, feas_by, reverse)
     disagreements = _surface_disagreements(votes)
-    pairwise = _pairwise(votes, list(blind_map.keys()))
+    pairwise = _real_pairwise(provider, template, criteria, anonymized, votes, list(blind_map.keys()))
     counts = Counter(v.preferred_blind_id for v in votes)
-    # Prefer candidate with most votes that also passes hard gates; preserve outliers if tied
-    ordered = sorted(blind_map.keys(), key=lambda b: (-counts[b], b))
+    pairwise_wins = Counter(result.winner for result in pairwise)
+    # Official criteria determine ordering; pairwise wins lead, technical implementation breaks ties.
+    ordered = sorted(
+        blind_map.keys(),
+        key=lambda bid: (
+            -pairwise_wins[bid],
+            -_weighted_official_score(votes, bid, brief),
+            -_technical_score(votes, bid),
+            -counts[bid],
+            bid,
+        ),
+    )
     primary = ordered[0]
     for bid in ordered:
         gates = hard_gates.get(bid, {})
@@ -178,7 +249,11 @@ def blind_judge(
         recommendation={
             "primary_blind_id": primary,
             "backup_blind_id": backup,
-            "why": f"Votes={dict(counts)}; disagreements={len(disagreements)}",
+            "why": (
+                f"Pairwise wins={dict(pairwise_wins)}; votes={dict(counts)}; "
+                "official weighted criteria applied with technical implementation as tie-breaker; "
+                f"disagreements={len(disagreements)}"
+            ),
         },
     )
 
@@ -248,28 +323,218 @@ def _surface_disagreements(votes: list[JudgeVote]) -> list[str]:
     ]
 
 
-def _pairwise(votes: list[JudgeVote], ids: list[str]) -> list[PairwiseResult]:
+def _real_pairwise(
+    provider: LLMProvider,
+    template: str,
+    criteria: list[dict[str, Any]],
+    anonymized: list[dict[str, Any]],
+    votes: list[JudgeVote],
+    ids: list[str],
+) -> list[PairwiseResult]:
+    pairs = [[a, b] for index, a in enumerate(ids) for b in ids[index + 1 :]]
+    schema = {
+        "type": "object",
+        "properties": {
+            "comparisons": {
+                "type": "array",
+                "minItems": len(pairs),
+                "maxItems": len(pairs),
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "pair": {"type": "array", "items": {"type": "string"}, "minItems": 2, "maxItems": 2},
+                        "winner": {"type": "string"},
+                        "reason": {"type": "string"},
+                    },
+                    "required": ["pair", "winner", "reason"],
+                    "additionalProperties": False,
+                },
+            }
+        },
+        "required": ["comparisons"],
+        "additionalProperties": False,
+    }
+    system = (
+        template.replace("{{JUDGE_ROLE}}", "pairwise-comparator")
+        + "\nCompare every supplied pair directly. Do not infer pair winners from an overall ranking. "
+        "For OpenAI Build Week use 25% each for implementation, design, impact, and idea quality; "
+        "break exact ties on technological implementation. Return {comparisons:[...]} only."
+    )
+    try:
+        raw = provider.complete_json(
+            system,
+            str({"official_criteria": criteria, "candidates": anonymized, "pairs": pairs}),
+            schema=schema,
+            retries=1,
+        )
+        rows = raw.get("comparisons") if isinstance(raw, dict) else []
+    except Exception:
+        if not isinstance(provider, DryRunProvider):
+            raise
+        rows = []
+    results: list[PairwiseResult] = []
+    expected = {tuple(pair) for pair in pairs}
+    seen: set[tuple[str, str]] = set()
+    for row in rows or []:
+        pair = [str(item).upper() for item in row.get("pair") or []]
+        if len(pair) != 2 or tuple(pair) not in expected or tuple(pair) in seen:
+            continue
+        winner = str(row.get("winner") or "").upper()
+        if winner not in pair:
+            continue
+        seen.add((pair[0], pair[1]))
+        results.append(PairwiseResult(pair=pair, winner=winner, reason=str(row.get("reason") or "")))
+    if len(results) == len(pairs):
+        return results
+
+    if not isinstance(provider, DryRunProvider):
+        missing = [list(pair) for pair in expected - seen]
+        raise RuntimeError(
+            f"pairwise judge returned {len(results)} valid comparisons; required {len(pairs)}; "
+            f"missing={missing}; no deterministic fallback was used"
+        )
+
+    # Credential-free fallback is a deterministic comparison of independent judge outputs.
     counts = Counter(v.preferred_blind_id for v in votes)
-    results = []
-    for i, a in enumerate(ids):
-        for b in ids[i + 1 :]:
-            winner = a if counts[a] >= counts[b] else b
-            results.append(
-                PairwiseResult(
-                    pair=[a, b],
-                    winner=winner,
-                    reason=f"Vote tally {a}={counts[a]} vs {b}={counts[b]}",
-                )
+    for a, b in pairs:
+        if (a, b) in seen:
+            continue
+        a_key = (counts[a], _technical_score(votes, a), -ord(a[0]))
+        b_key = (counts[b], _technical_score(votes, b), -ord(b[0]))
+        winner = a if a_key >= b_key else b
+        results.append(
+            PairwiseResult(
+                pair=[a, b],
+                winner=winner,
+                reason=f"Deterministic fallback: independent votes {a}={counts[a]} vs {b}={counts[b]}",
             )
+        )
     return results
+
+
+def _weighted_official_score(votes: list[JudgeVote], blind_id: str, brief: CompetitionBrief) -> float:
+    score_sets = [_scores_for_candidate(vote, blind_id) for vote in votes]
+    score_sets = [scores for scores in score_sets if scores]
+    if not score_sets:
+        return 0.0
+    build_week = "build week" in (brief.name + " " + " ".join(brief.source_urls)).lower()
+    categories = ("implementation", "design", "impact", "idea") if build_week else ()
+    totals = []
+    for scores in score_sets:
+        if categories:
+            values = [_criterion_value(scores, category) for category in categories]
+            totals.append(sum(values) / 4)
+        else:
+            numeric = [float(value) for value in scores.values() if isinstance(value, (int, float))]
+            if numeric:
+                totals.append(sum(numeric) / len(numeric))
+    return sum(totals) / len(totals) if totals else 0.0
+
+
+def _technical_score(votes: list[JudgeVote], blind_id: str) -> float:
+    values = [_criterion_value(_scores_for_candidate(vote, blind_id), "implementation") for vote in votes]
+    nonzero = [value for value in values if value]
+    return sum(nonzero) / len(nonzero) if nonzero else 0.0
+
+
+def _scores_for_candidate(vote: JudgeVote, blind_id: str) -> dict[str, Any]:
+    raw = vote.scores_by_official_criteria
+    nested = raw.get(blind_id)
+    if isinstance(nested, dict):
+        return nested
+    return raw if vote.preferred_blind_id == blind_id else {}
+
+
+def _criterion_value(scores: dict[str, Any], category: str) -> float:
+    aliases = {
+        "implementation": ("implementation", "technical"),
+        "design": ("design", "demo", "experience"),
+        "impact": ("impact", "applicability", "real-world"),
+        "idea": ("idea", "originality", "quality"),
+    }
+    for key, value in scores.items():
+        if any(alias in key.lower() for alias in aliases[category]) and isinstance(value, (int, float)):
+            return float(value)
+    return 0.0
 
 
 def red_team_check(provider: LLMProvider, primary: CandidateIdea, backup: CandidateIdea) -> dict[str, Any]:
     template, _ = load_prompt("red-team")
+    schema = {
+        "type": "object",
+        "properties": {
+            "primary_id": {"type": "string"},
+            "fatal_flaws": {"type": "array", "items": {"type": "string"}},
+            "survive_if": {"type": "array", "items": {"type": "string"}},
+            "prefer_backup_instead": {"type": "boolean"},
+            "backup_reason": {"type": "string"},
+            "severity_acceptance": {"type": "boolean"},
+        },
+        "required": [
+            "primary_id",
+            "fatal_flaws",
+            "survive_if",
+            "prefer_backup_instead",
+            "backup_reason",
+            "severity_acceptance",
+        ],
+        "additionalProperties": False,
+    }
     raw = provider.complete_json(
         template,
         f"Primary: {primary.model_dump()}\nBackup: {backup.model_dump()}",
+        schema=None if isinstance(provider, DryRunProvider) else schema,
     )
     if not isinstance(raw, dict):
-        return {"primary_id": primary.id, "fatal_flaws": [], "conditional_acceptance": True}
+        raise RuntimeError("red-team review returned a non-object response")
+    required = {
+        "primary_id",
+        "fatal_flaws",
+        "survive_if",
+        "prefer_backup_instead",
+        "backup_reason",
+        "severity_acceptance",
+    }
+    missing = required - set(raw)
+    if missing and not isinstance(provider, DryRunProvider):
+        raise RuntimeError(f"red-team review omitted fields {sorted(missing)}")
     return raw
+
+
+def _feasibility_schema(count: int) -> dict[str, Any]:
+    return {
+        "type": "object",
+        "properties": {
+            "reports": {
+                "type": "array",
+                "minItems": count,
+                "maxItems": count,
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "candidate_id": {"type": "string"},
+                        "delivery_risk": {"type": "string", "enum": ["low", "medium", "high"]},
+                        "critical_dependencies": {"type": "array", "items": {"type": "string"}},
+                        "fakeable_parts": {"type": "array", "items": {"type": "string"}},
+                        "non_fakeable_core": {"type": "string"},
+                        "minimum_demonstrable_loop": {"type": "string"},
+                        "kill_recommendation": {"type": "boolean"},
+                        "notes": {"type": "string"},
+                    },
+                    "required": [
+                        "candidate_id",
+                        "delivery_risk",
+                        "critical_dependencies",
+                        "fakeable_parts",
+                        "non_fakeable_core",
+                        "minimum_demonstrable_loop",
+                        "kill_recommendation",
+                        "notes",
+                    ],
+                    "additionalProperties": False,
+                },
+            }
+        },
+        "required": ["reports"],
+        "additionalProperties": False,
+    }

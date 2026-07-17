@@ -5,7 +5,6 @@ from typing import Any
 
 import httpx
 
-
 API = "https://api.producthunt.com/v2/api/graphql"
 
 
@@ -17,7 +16,7 @@ def search_posts(query: str, *, count: int = 5) -> list[dict[str, Any]]:
     token = _token()
     if not token or not query.strip():
         return []
-    # Product Hunt GraphQL has limited search; use posts + topic-less filter via featured query as fallback
+    # Product Hunt GraphQL has limited search; rank the live posts response locally.
     gql = """
     query Search($q: String) {
       posts(first: 10, order: VOTES) {
@@ -36,8 +35,7 @@ def search_posts(query: str, *, count: int = 5) -> list[dict[str, Any]]:
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
     with httpx.Client(timeout=30.0) as client:
         resp = client.post(API, headers=headers, json={"query": gql, "variables": {"q": query}})
-        if resp.status_code != 200:
-            return []
+        resp.raise_for_status()
         data = resp.json()
     edges = (((data.get("data") or {}).get("posts") or {}).get("edges")) or []
     q = query.lower()

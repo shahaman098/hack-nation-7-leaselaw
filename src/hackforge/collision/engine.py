@@ -5,7 +5,7 @@ from typing import Any
 from hackforge.collision.corpus_loader import collision_markdown, load_analogue_corpus
 from hackforge.collision.embed_index import EmbedIndex, structural_text
 from hackforge.models import Analogue, CandidateIdea, CollisionReport, SimilarityDims
-from hackforge.providers import LLMProvider
+from hackforge.providers import DryRunProvider, LLMProvider
 from hackforge.utils import load_prompt
 
 
@@ -64,13 +64,24 @@ def retrieve_analogues(
     k: int = 8,
     index: EmbedIndex | None = None,
     live_enrich: bool = True,
+    require_semantic: bool = False,
 ) -> list[dict[str, Any]]:
     index = index or EmbedIndex()
     hits: list[dict[str, Any]] = []
     if index.available():
         hits = index.search(candidate, k=k)
+        if require_semantic and not hits:
+            raise RuntimeError(
+                f"Semantic collision index returned no analogues for {candidate.id}; "
+                "no lexical fallback was used"
+            )
+    elif require_semantic:
+        raise RuntimeError(
+            f"Semantic collision index is unavailable at {index.index_dir}; "
+            "run `hackforge corpus build-index`. No lexical fallback was used."
+        )
     if not hits:
-        # Fallback: keyword scan local analogue corpus
+        # Explicit lexical mode over the real local corpus when the semantic index has no hits.
         corpus = load_analogue_corpus()
         blob = structural_text(candidate).lower()
         scored = []
@@ -88,49 +99,42 @@ def retrieve_analogues(
 
 
 def _enrich_live(candidate: CandidateIdea, hits: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    try:
-        from hackforge.integrations.devpost_live import check_idea_exists
+    from hackforge.integrations.devpost_live import check_idea_exists
+    from hackforge.integrations.producthunt import search_posts
 
-        query = f"{candidate.working_title} {candidate.painful_workflow}"[:180]
-        live = check_idea_exists(query, max_results=5)
-        for item in live:
-            hits.append(
-                {
-                    "name": item.get("title") or item.get("name"),
-                    "source": "devpost-live",
-                    "url": item.get("url") or "",
-                    "user": "hackathon team",
-                    "problem": item.get("tagline") or "",
-                    "mechanism": " ".join(item.get("built_with") or []),
-                    "data": "",
-                    "action": "submission",
-                    "demo": item.get("tagline") or "",
-                    "similarity": 0.55,
-                }
-            )
-    except Exception:
-        pass
-    try:
-        from hackforge.integrations.producthunt import search_posts
-
-        ph = search_posts(candidate.painful_workflow[:80] or candidate.working_title, count=3)
-        for item in ph:
-            hits.append(
-                {
-                    "name": item.get("name"),
-                    "source": "producthunt",
-                    "url": item.get("url") or "",
-                    "user": "startup users",
-                    "problem": item.get("tagline") or "",
-                    "mechanism": "",
-                    "data": "",
-                    "action": "product",
-                    "demo": item.get("tagline") or "",
-                    "similarity": 0.5,
-                }
-            )
-    except Exception:
-        pass
+    query = f"{candidate.working_title} {candidate.painful_workflow}"[:180]
+    live = check_idea_exists(query, max_results=5)
+    for item in live:
+        hits.append(
+            {
+                "name": item.get("title") or item.get("name"),
+                "source": "devpost-live",
+                "url": item.get("url") or "",
+                "user": "hackathon team",
+                "problem": item.get("tagline") or "",
+                "mechanism": " ".join(item.get("built_with") or []),
+                "data": "",
+                "action": "submission",
+                "demo": item.get("tagline") or "",
+                "similarity": 0.55,
+            }
+        )
+    ph = search_posts(candidate.painful_workflow[:80] or candidate.working_title, count=3)
+    for item in ph:
+        hits.append(
+            {
+                "name": item.get("name"),
+                "source": "producthunt",
+                "url": item.get("url") or "",
+                "user": "startup users",
+                "problem": item.get("tagline") or "",
+                "mechanism": "",
+                "data": "",
+                "action": "product",
+                "demo": item.get("tagline") or "",
+                "similarity": 0.5,
+            }
+        )
     # Dedup by name
     seen = set()
     uniq = []
@@ -144,12 +148,14 @@ def _enrich_live(candidate: CandidateIdea, hits: list[dict[str, Any]]) -> list[d
 
 
 def audit_collisions_engine(
-    provider: LLMProvider,
+    provider: LLMProvider | None,
     candidates: list[CandidateIdea],
     *,
     k: int = 8,
     live_enrich: bool = True,
     use_llm: bool = True,
+    supplemental_analogues: list[dict[str, Any]] | None = None,
+    require_semantic: bool = False,
 ) -> list[CollisionReport]:
     index = EmbedIndex()
     template, _ = load_prompt("collision-audit")
@@ -157,29 +163,70 @@ def audit_collisions_engine(
 
     retrieved_map: dict[str, list[dict[str, Any]]] = {}
     for c in candidates:
-        retrieved_map[c.id] = retrieve_analogues(c, k=k, index=index, live_enrich=live_enrich)
+        retrieved_map[c.id] = retrieve_analogues(
+            c,
+            k=k,
+            index=index,
+            live_enrich=live_enrich,
+            require_semantic=require_semantic,
+        )
+        if supplemental_analogues:
+            retrieved_map[c.id].extend(_rank_supplemental(c, supplemental_analogues, k=5))
 
     if use_llm:
+        if provider is None:
+            raise RuntimeError("LLM collision audit was requested without a live provider")
         payload = {
             "candidates": [c.model_dump() for c in candidates],
             "nearest_by_candidate": retrieved_map,
         }
         try:
-            raw = provider.complete_json(template, str(payload)[:120_000])
+            schema = None if isinstance(provider, DryRunProvider) else _collision_schema(len(candidates))
+            raw = provider.complete_json(template, str(payload)[:120_000], schema=schema)
             items = raw if isinstance(raw, list) else (raw.get("reports") if isinstance(raw, dict) else [])
         except Exception:
+            if not isinstance(provider, DryRunProvider):
+                raise
             items = []
     else:
         items = []
 
     by_id: dict[str, CollisionReport] = {}
-    for item in items or []:
+    required_fields = {
+        "candidate_id",
+        "nearest_analogues",
+        "collision_risk",
+        "observable_differentiator",
+        "differentiator_is_substantive",
+        "kill_recommendation",
+        "notes",
+    }
+    for row_index, item in enumerate(items or []):
         if not isinstance(item, dict):
+            if use_llm and not isinstance(provider, DryRunProvider):
+                raise RuntimeError(f"collision auditor row {row_index} was not an object")
             continue
+        missing_fields = required_fields - set(item)
+        if missing_fields and use_llm and not isinstance(provider, DryRunProvider):
+            raise RuntimeError(
+                f"collision auditor row {row_index} omitted fields {sorted(missing_fields)}; "
+                "no heuristic values were inserted"
+            )
         cid = str(item.get("candidate_id") or "")
         if not cid:
             continue
         by_id[cid] = _parse_llm_report(item)
+
+    if use_llm and not isinstance(provider, DryRunProvider):
+        expected = {candidate.id for candidate in candidates}
+        missing = expected - set(by_id)
+        unexpected = set(by_id) - expected
+        if missing or unexpected:
+            raise RuntimeError(
+                "collision auditor returned incomplete real results: "
+                f"missing={sorted(missing)} unexpected={sorted(unexpected)}; "
+                "no heuristic fallback was used"
+            )
 
     for c in candidates:
         if c.id in by_id:
@@ -187,6 +234,91 @@ def audit_collisions_engine(
             continue
         reports.append(_heuristic_report(c, retrieved_map.get(c.id, [])))
     return reports
+
+
+def _rank_supplemental(
+    candidate: CandidateIdea,
+    analogues: list[dict[str, Any]],
+    *,
+    k: int,
+) -> list[dict[str, Any]]:
+    candidate_tokens = {token for token in structural_text(candidate).lower().split() if len(token) > 3}
+    ranked = []
+    for analogue in analogues:
+        target = " ".join(str(analogue.get(key) or "") for key in ("name", "problem", "mechanism", "action"))
+        target_tokens = {token for token in target.lower().split() if len(token) > 3}
+        similarity = len(candidate_tokens & target_tokens) / max(1, len(candidate_tokens | target_tokens))
+        ranked.append((similarity, {**analogue, "similarity": similarity}))
+    ranked.sort(key=lambda item: item[0], reverse=True)
+    return [item for score, item in ranked[:k] if score > 0]
+
+
+def _collision_schema(count: int) -> dict[str, Any]:
+    similarities = {
+        "type": "object",
+        "properties": {
+            key: {"type": "boolean"}
+            for key in ("same_user", "same_problem", "same_mechanism", "same_data", "same_action", "same_demo")
+        },
+        "required": [
+            "same_user",
+            "same_problem",
+            "same_mechanism",
+            "same_data",
+            "same_action",
+            "same_demo",
+        ],
+        "additionalProperties": False,
+    }
+    report = {
+        "type": "object",
+        "properties": {
+            "candidate_id": {"type": "string"},
+            "nearest_analogues": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": {"type": "string"},
+                        "source": {"type": "string"},
+                        "url": {"type": "string"},
+                        "similarities": similarities,
+                        "differences": {"type": "array", "items": {"type": "string"}},
+                    },
+                    "required": ["name", "source", "url", "similarities", "differences"],
+                    "additionalProperties": False,
+                },
+            },
+            "collision_risk": {"type": "string", "enum": ["low", "medium", "high"]},
+            "observable_differentiator": {"type": "string"},
+            "differentiator_is_substantive": {"type": "boolean"},
+            "kill_recommendation": {"type": "boolean"},
+            "notes": {"type": "string"},
+        },
+        "required": [
+            "candidate_id",
+            "nearest_analogues",
+            "collision_risk",
+            "observable_differentiator",
+            "differentiator_is_substantive",
+            "kill_recommendation",
+            "notes",
+        ],
+        "additionalProperties": False,
+    }
+    return {
+        "type": "object",
+        "properties": {
+            "reports": {
+                "type": "array",
+                "minItems": count,
+                "maxItems": count,
+                "items": report,
+            }
+        },
+        "required": ["reports"],
+        "additionalProperties": False,
+    }
 
 
 def _parse_llm_report(item: dict[str, Any]) -> CollisionReport:
@@ -261,13 +393,10 @@ def run_collide_on_ideas(
     live_enrich: bool = False,
     use_llm: bool = False,
 ) -> tuple[list[CollisionReport], str]:
-    from hackforge.providers import DryRunProvider
-
-    provider = provider or DryRunProvider({"collision": []})
     reports = audit_collisions_engine(
         provider,
         ideas,
         live_enrich=live_enrich,
-        use_llm=use_llm and not isinstance(provider, DryRunProvider),
+        use_llm=use_llm,
     )
     return reports, collision_markdown(reports)

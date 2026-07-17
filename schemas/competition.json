@@ -3,7 +3,12 @@
   "$id": "https://hackforge.local/schemas/competition.json",
   "title": "CompetitionBrief",
   "type": "object",
-  "required": ["name", "facts", "inference", "missing", "judging_criteria", "crowding"],
+  "required": [
+    "name", "slug", "source_urls", "theme", "tracks", "sponsors", "deadline", "team_size",
+    "required_or_encouraged_tech", "prizes", "facts", "inference", "missing", "potentially_stale",
+    "judging_criteria", "sponsor_capabilities", "available_datasets", "crowding", "sanitized_brief"
+  ],
+  "additionalProperties": false,
   "properties": {
     "name": { "type": "string" },
     "slug": { "type": "string" },
@@ -20,6 +25,7 @@
       "items": {
         "type": "object",
         "required": ["claim", "source"],
+        "additionalProperties": false,
         "properties": {
           "claim": { "type": "string" },
           "source": { "type": "string" },
@@ -32,6 +38,7 @@
       "items": {
         "type": "object",
         "required": ["claim", "rationale"],
+        "additionalProperties": false,
         "properties": {
           "claim": { "type": "string" },
           "rationale": { "type": "string" }
@@ -45,6 +52,7 @@
       "items": {
         "type": "object",
         "required": ["name", "weight_or_priority"],
+        "additionalProperties": false,
         "properties": {
           "name": { "type": "string" },
           "weight_or_priority": { "type": "string" },
@@ -57,6 +65,7 @@
     "crowding": {
       "type": "object",
       "required": ["high_collision", "medium_collision", "potentially_underexplored", "do_not_build"],
+      "additionalProperties": false,
       "properties": {
         "high_collision": { "type": "array", "items": { "type": "string" } },
         "medium_collision": { "type": "array", "items": { "type": "string" } },

@@ -4,10 +4,77 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
-
 ClaimConfidence = Literal["high", "medium", "low"]
 CollisionRisk = Literal["low", "medium", "high", "unknown"]
 DeliveryRisk = Literal["low", "medium", "high"]
+EvidenceKind = Literal["official", "devpost", "github", "corpus", "web", "input"]
+EvidenceStatus = Literal["ok", "failed", "rate_limited", "blocked"]
+GateStatus = Literal["pass", "fail", "unverified", "not_applicable"]
+
+
+class EvidenceSource(BaseModel):
+    id: str
+    url: str
+    title: str = ""
+    source_kind: EvidenceKind = "web"
+    retrieved_at: str
+    excerpt: str = ""
+    fetch_status: EvidenceStatus = "ok"
+    http_status: int | None = None
+    error: str = ""
+    content_hash: str = ""
+    verified: bool = False
+
+
+class OpportunityCard(BaseModel):
+    id: str
+    user_class: str
+    painful_workflow: str
+    unmet_need: str
+    evidence_ids: list[str] = Field(default_factory=list)
+    track: str = ""
+    why_now: str = ""
+    unresolved_claims: list[str] = Field(default_factory=list)
+
+
+class MechanismCard(BaseModel):
+    id: str
+    mechanism_family: str
+    mechanism: str
+    origin_domain: str
+    inputs: list[str] = Field(default_factory=list)
+    transformation: str
+    outputs: list[str] = Field(default_factory=list)
+    constraints: list[str] = Field(default_factory=list)
+
+
+class IdeaLineage(BaseModel):
+    idea_id: str
+    parent_ids: list[str] = Field(default_factory=list)
+    opportunity_id: str = ""
+    mechanism_id: str = ""
+    mutation_round: int = 0
+    mutation_target: str = "initial_cross"
+    mutation_notes: str = ""
+
+
+class NoveltyVector(BaseModel):
+    track: str = ""
+    user_class: str = ""
+    workflow: str = ""
+    mechanism_family: str = ""
+    data: str = ""
+    last_mile_action: str = ""
+    demo_type: str = ""
+    embedding_distances: dict[str, float] = Field(default_factory=dict)
+
+
+class GateResult(BaseModel):
+    gate: str
+    status: GateStatus
+    reason: str
+    evidence_ids: list[str] = Field(default_factory=list)
+    validator: str = "deterministic"
 
 
 class FactClaim(BaseModel):
@@ -78,6 +145,23 @@ class CandidateIdea(BaseModel):
     killer_demo: str
     hard_to_fake_advantage: str = ""
     cluster_id: str | None = None
+    evidence_ids: list[str] = Field(default_factory=list)
+    opportunity_id: str = ""
+    mechanism_id: str = ""
+    mutation_history: list[str] = Field(default_factory=list)
+    track_fit: str = ""
+    gpt_5_6_role: str = ""
+    codex_build_role: str = ""
+    data_access_status: str = "unverified"
+    data_access_plan: str = ""
+    testable_claim: str = ""
+    demo_proof: str = ""
+    minimum_demonstrable_loop: str = ""
+    mechanism_family: str = ""
+    demo_type: str = ""
+    external_evaluation_scores: dict[str, float] = Field(default_factory=dict)
+    novelty_vector: NoveltyVector | None = None
+    gate_results: list[GateResult] = Field(default_factory=list)
 
 
 class SimilarityDims(BaseModel):

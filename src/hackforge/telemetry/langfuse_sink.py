@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import os
+from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import Any, Iterator
+from typing import Any
 
 
 def langfuse_enabled() -> bool:
@@ -15,18 +16,18 @@ def trace_stage(name: str, metadata: dict[str, Any] | None = None) -> Iterator[A
     if not langfuse_enabled():
         yield None
         return
-    try:
-        from langfuse import Langfuse
+    from langfuse import Langfuse
 
-        client = Langfuse(
-            public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
-            secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
-            host=os.getenv("LANGFUSE_HOST", "http://localhost:3000"),
-        )
-        trace = client.trace(name=f"hackforge.{name}", metadata=metadata or {})
-        span = trace.span(name=name)
+    client = Langfuse(
+        public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
+        secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
+        host=os.getenv("LANGFUSE_HOST", "http://localhost:3000"),
+    )
+    trace_factory = client.trace  # type: ignore[attr-defined]
+    trace = trace_factory(name=f"hackforge.{name}", metadata=metadata or {})
+    span = trace.span(name=name)
+    try:
         yield span
+    finally:
         span.end()
         client.flush()
-    except Exception:
-        yield None

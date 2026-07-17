@@ -8,7 +8,7 @@ import click
 from rich.console import Console
 
 from hackforge import __version__
-from hackforge.paths import FIXTURES_DIR, REPO_ROOT
+from hackforge.paths import REPO_ROOT
 from hackforge.pipeline import run_analyse
 from hackforge.utils import env_flag, read_json, write_json, write_text
 
@@ -24,58 +24,86 @@ def main() -> None:
 @main.command("analyse")
 @click.argument("input_file", required=False, type=click.Path(exists=True, dir_okay=False, path_type=Path))
 @click.option("--url", "url", default=None, help="Fetch competition page URL.")
-@click.option("--dry-run", is_flag=True, help="Use fixture LLM responses (no API keys).")
-@click.option("--live-research", is_flag=True, help="Enable Devpost/Product Hunt enrichment.")
+@click.option(
+    "--provider",
+    "provider_name",
+    type=click.Choice(["deepseek", "codex", "litellm"]),
+    default="deepseek",
+    show_default=True,
+    help="Model backend; DeepSeek is fail-closed and never falls back to Codex or another model.",
+)
+@click.option(
+    "--search-profile",
+    type=click.Choice(["fast", "balanced", "exhaustive"]),
+    default="balanced",
+    show_default=True,
+)
+@click.option("--finalists", default=3, show_default=True, type=click.IntRange(min=3))
+@click.option("--visual-report/--no-visual-report", default=True, show_default=True)
+@click.option(
+    "--output-root",
+    type=click.Path(file_okay=False, path_type=Path),
+    default=None,
+    help="Directory for private run artifacts (defaults to HACKFORGE_RUNS_DIR).",
+)
+@click.option(
+    "--live-research/--no-live-research",
+    default=None,
+    help="Control public-project enrichment (automatic for live runs).",
+)
 @click.option("--team-size", default=None, help="Team size constraint.")
 @click.option("--deadline", default=None, help="Deadline constraint.")
 @click.option("--skills", default=None, help="Available skills / infrastructure.")
 @click.option("--seeds-per-lane", default=8, show_default=True, type=int)
-@click.option(
-    "--fixture-bundle",
-    type=click.Path(exists=True, dir_okay=False, path_type=Path),
-    default=None,
-    help="JSON fixture responses for dry-run.",
-)
 def analyse_cmd(
     input_file: Optional[Path],
     url: Optional[str],
-    dry_run: bool,
-    live_research: bool,
+    provider_name: str,
+    search_profile: str,
+    finalists: int,
+    visual_report: bool,
+    output_root: Optional[Path],
+    live_research: Optional[bool],
     team_size: Optional[str],
     deadline: Optional[str],
     skills: Optional[str],
     seeds_per_lane: int,
-    fixture_bundle: Optional[Path],
 ) -> None:
     """Run research → ideation → collision → judge pipeline."""
     if not input_file and not url:
         raise click.UsageError("Provide INPUT_FILE or --url")
 
-    dry = dry_run or env_flag("HACKFORGE_DRY_RUN")
-    bundle = None
-    if dry:
-        default_fixture = FIXTURES_DIR / "dry-run-bundle.json"
-        path = fixture_bundle or default_fixture
-        if path.exists():
-            bundle = read_json(path)
-        else:
-            console.print("[yellow]No fixture bundle found; dry-run provider will use stubs.[/yellow]")
-
-    console.print("[bold]HackForge[/bold] starting analyse…")
-    run_dir = run_analyse(
-        input_path=input_file,
-        url=url,
-        dry_run=dry,
-        fixture_bundle=bundle,
-        team_size=team_size,
-        deadline=deadline,
-        skills=skills,
-        seeds_per_lane=seeds_per_lane if not dry else min(seeds_per_lane, 5),
-        live_research=live_research or env_flag("HACKFORGE_LIVE_RESEARCH"),
+    console.print(
+        f"[bold]HackForge[/bold] starting {search_profile} search… "
+        "[dim](progress is checkpointed to run-status.json)[/dim]"
     )
+    try:
+        run_dir = run_analyse(
+            input_path=input_file,
+            url=url,
+            dry_run=False,
+            team_size=team_size,
+            deadline=deadline,
+            skills=skills,
+            seeds_per_lane=seeds_per_lane,
+            live_research=(
+                live_research
+                if live_research is not None
+                else (True if env_flag("HACKFORGE_LIVE_RESEARCH") else None)
+            ),
+            provider=provider_name,
+            search_profile=search_profile,
+            finalists=finalists,
+            visual_report=visual_report,
+            runs_root=output_root,
+        )
+    except (RuntimeError, ValueError) as exc:
+        raise click.ClickException(str(exc)) from exc
     console.print(f"[green]Run complete:[/green] {run_dir}")
     console.print(f"  - {run_dir / 'final-recommendation.md'}")
     console.print(f"  - {run_dir / 'run-manifest.json'}")
+    if visual_report:
+        console.print(f"  - {run_dir / 'idea-landscape.html'}")
 
 
 @main.group("corpus")
@@ -119,12 +147,11 @@ def corpus_build_index_cmd(max_records: Optional[int]) -> None:
 @click.argument("target", type=click.Path(exists=True, path_type=Path))
 @click.option("--live", "live_enrich", is_flag=True, help="Query Devpost/Product Hunt.")
 @click.option("--llm", "use_llm", is_flag=True, help="Run LLM auditor (needs API keys).")
-@click.option("--dry-run", is_flag=True, help="Use dry-run LLM if --llm.")
-def collide_cmd(target: Path, live_enrich: bool, use_llm: bool, dry_run: bool) -> None:
+def collide_cmd(target: Path, live_enrich: bool, use_llm: bool) -> None:
     """Collision-audit concepts from a run dir or raw-concepts.json."""
     from hackforge.collision.engine import run_collide_on_ideas
     from hackforge.models import CandidateIdea
-    from hackforge.providers import DryRunProvider, load_providers
+    from hackforge.providers import load_providers
 
     if target.is_dir():
         concepts_path = target / "raw-concepts.json"
@@ -139,10 +166,8 @@ def collide_cmd(target: Path, live_enrich: bool, use_llm: bool, dry_run: bool) -
     ideas = [CandidateIdea(**row) for row in raw]
     provider = None
     if use_llm:
-        bundle = load_providers(dry_run=dry_run or env_flag("HACKFORGE_DRY_RUN"))
+        bundle = load_providers()
         provider = bundle.collision
-    else:
-        provider = DryRunProvider({"collision": []})
 
     reports, md = run_collide_on_ideas(
         ideas,
@@ -243,6 +268,111 @@ def record_outcome_cmd(run_dir: Path, result: str, note: str) -> None:
     write_json(manifest_path, data)
     append_human_override(run_dir, {"type": "hackathon_result", "result": result, "note": note})
     console.print(f"[green]Updated[/green] {manifest_path}")
+
+
+@main.command("doctor")
+@click.option("--strict", is_flag=True, help="Exit non-zero when live-run requirements are not met.")
+@click.option(
+    "--provider",
+    "provider_name",
+    type=click.Choice(["deepseek", "codex", "litellm"]),
+    default="deepseek",
+    show_default=True,
+    help="Validate the backend you plan to use for analysis.",
+)
+@click.option("--live", "live_probe", is_flag=True, help="Probe the selected provider plus public research services.")
+def doctor_cmd(strict: bool, provider_name: str, live_probe: bool) -> None:
+    """Verify environment, selected provider, corpus, and optional integrations."""
+    from rich.markup import escape
+    from rich.table import Table
+
+    from hackforge.diagnostics import doctor_ready_for_live, run_doctor
+
+    checks = run_doctor(live_probe=live_probe, provider=provider_name)
+    table = Table(title="HackForge doctor", show_lines=False)
+    table.add_column("Check", style="bold")
+    table.add_column("Status")
+    table.add_column("Detail")
+    for c in checks:
+        if c.ok:
+            status = "[green]OK[/green]"
+        elif c.level == "warn":
+            status = "[yellow]WARN[/yellow]"
+        else:
+            status = "[red]FAIL[/red]"
+        detail = c.detail
+        if c.hint and not c.ok:
+            detail += f"\n[dim]{escape(c.hint)}[/dim]"
+        table.add_row(c.name, status, detail)
+    console.print(table)
+
+    if doctor_ready_for_live(checks):
+        console.print("[green]Ready for live runs.[/green]")
+    else:
+        console.print(
+            "[yellow]Not fully configured for live runs.[/yellow] "
+            "Address FAIL rows before analysis."
+        )
+        if strict:
+            raise click.ClickException("Live-run preflight failed")
+
+
+@main.group("runs")
+def runs_group() -> None:
+    """Inspect and learn from past runs (experimental memory)."""
+
+
+@runs_group.command("list")
+def runs_list_cmd() -> None:
+    """List past runs newest-first with key stats."""
+    from rich.table import Table
+
+    from hackforge.memory import list_runs
+
+    rows = list_runs()
+    if not rows:
+        console.print("[yellow]No runs yet.[/yellow] Try `hackforge analyse competition.md --provider deepseek`.")
+        return
+    table = Table(title=f"{len(rows)} run(s)")
+    for col in ("run", "status", "competition", "raw", "finalists", "result", "seconds", "dry_run"):
+        table.add_column(col)
+    for r in rows:
+        table.add_row(
+            r["run"],
+            str(r["status"]),
+            str(r["competition"])[:32],
+            str(r["raw"]),
+            str(r["finalists"]),
+            str(r["result"] or "-"),
+            str(r["seconds"]),
+            "yes" if r["dry_run"] else "no",
+        )
+    console.print(table)
+
+
+@runs_group.command("show")
+@click.argument("run_dir", type=click.Path(exists=True, file_okay=False, path_type=Path))
+def runs_show_cmd(run_dir: Path) -> None:
+    """Print a run's manifest as JSON."""
+    manifest = run_dir / "run-manifest.json"
+    if not manifest.exists():
+        status = run_dir / "run-status.json"
+        if status.exists():
+            console.print_json(json.dumps(read_json(status), indent=2))
+            return
+        raise click.ClickException(f"No run-manifest.json or run-status.json in {run_dir}")
+    console.print_json(json.dumps(read_json(manifest), indent=2))
+
+
+@runs_group.command("learn")
+def runs_learn_cmd() -> None:
+    """Aggregate memory across runs: provider survival rates, outcomes, next steps."""
+    from hackforge.memory import learn_from_runs
+
+    report = learn_from_runs()
+    console.print_json(json.dumps(report, indent=2))
+    for rec in report.get("recommendations", []):
+        console.print(f"[cyan]•[/cyan] {rec}")
 
 
 if __name__ == "__main__":

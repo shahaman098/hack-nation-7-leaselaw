@@ -4,11 +4,12 @@ import hashlib
 import json
 import os
 import re
+import tempfile
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from hackforge.paths import PROMPTS_DIR, PROMPT_VERSIONS, REPO_ROOT
+from hackforge.paths import PROMPT_VERSIONS, PROMPTS_DIR, REPO_ROOT
 
 
 def utc_now_iso() -> str:
@@ -50,13 +51,28 @@ def sha256_file(path: Path) -> str:
 
 
 def write_json(path: Path, data: Any) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    _atomic_write(path, json.dumps(data, indent=2, ensure_ascii=False) + "\n")
 
 
 def write_text(path: Path, text: str) -> None:
+    _atomic_write(path, text if text.endswith("\n") else text + "\n")
+
+
+def _atomic_write(path: Path, text: str) -> None:
+    """Commit an artifact atomically so interrupted runs never leave truncated JSON/HTML."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(text if text.endswith("\n") else text + "\n", encoding="utf-8")
+    descriptor, temporary_name = tempfile.mkstemp(prefix=f".{path.name}.", dir=str(path.parent), text=True)
+    temporary = Path(temporary_name)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+            handle.write(text)
+            handle.flush()
+            os.fsync(handle.fileno())
+        temporary.chmod(0o600)
+        os.replace(temporary, path)
+    finally:
+        if temporary.exists():
+            temporary.unlink()
 
 
 def read_json(path: Path) -> Any:
@@ -82,6 +98,7 @@ def make_run_dir(name: str, runs_root: Path | None = None) -> Path:
         path = root / f"{slug}-{n}"
         n += 1
     path.mkdir(parents=True, exist_ok=False)
+    path.chmod(0o700)
     return path
 
 

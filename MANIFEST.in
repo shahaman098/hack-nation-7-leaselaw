@@ -1,0 +1,8 @@
+include CHANGELOG.md SECURITY.md .env.example Makefile
+recursive-include docs *.md
+recursive-include prompts *.md
+recursive-include schemas *.json
+recursive-include fixtures *.json *.jsonl *.md
+recursive-include corpora/crowded-archetypes *.json
+recursive-include corpora/past-winners *.json
+recursive-include evals/benchmark-hackathons *.md

@@ -3,13 +3,13 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-import numpy as np
+if TYPE_CHECKING:
+    import numpy as np
 
 from hackforge.paths import INDEX_DIR
 from hackforge.utils import write_json
-
 
 DEFAULT_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
@@ -36,8 +36,9 @@ def structural_text(obj: dict[str, Any] | Any) -> str:
 
 class EmbedIndex:
     def __init__(self, index_dir: Path | None = None, model_name: str | None = None):
-        self.index_dir = Path(index_dir or os.getenv("HACKFORGE_INDEX_DIR", INDEX_DIR))
-        self.model_name = model_name or os.getenv("HACKFORGE_EMBED_MODEL", DEFAULT_MODEL)
+        configured_dir = index_dir or os.getenv("HACKFORGE_INDEX_DIR") or INDEX_DIR
+        self.index_dir = Path(configured_dir)
+        self.model_name = model_name or os.getenv("HACKFORGE_EMBED_MODEL") or DEFAULT_MODEL
         self.index_dir.mkdir(parents=True, exist_ok=True)
         self._model = None
         self._index = None
@@ -66,12 +67,15 @@ class EmbedIndex:
         return self._model
 
     def encode(self, texts: list[str]) -> np.ndarray:
+        import numpy as np
+
         model = self._load_model()
         emb = model.encode(texts, normalize_embeddings=True, show_progress_bar=False)
         return np.asarray(emb, dtype=np.float32)
 
     def build(self, records: list[dict[str, Any]], batch_size: int = 64) -> Path:
         import faiss
+        import numpy as np
 
         if not records:
             raise ValueError("No records to index")
@@ -119,6 +123,8 @@ class EmbedIndex:
                 return []
         q = structural_text(query) if not isinstance(query, str) else query
         vec = self.encode([q])
+        if self._index is None:
+            return []
         scores, idxs = self._index.search(vec, min(k, len(self._meta) or k))
         out = []
         for score, idx in zip(scores[0], idxs[0]):

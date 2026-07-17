@@ -56,3 +56,132 @@ def append_human_override(run_dir: Path, override: dict[str, Any]) -> dict[str, 
     data.setdefault("human_overrides", []).append({**override, "at": utc_now_iso()})
     write_json(path, data)
     return data
+
+
+def _load_manifest(run_dir: Path) -> dict[str, Any] | None:
+    path = run_dir / "run-manifest.json"
+    if not path.exists():
+        return None
+    try:
+        import json
+
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (ValueError, OSError):
+        return None
+
+
+def _load_status(run_dir: Path) -> dict[str, Any] | None:
+    path = run_dir / "run-status.json"
+    if not path.exists():
+        return None
+    try:
+        import json
+
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (ValueError, OSError):
+        return None
+
+
+def list_runs(runs_root: Path | None = None) -> list[dict[str, Any]]:
+    """Return one summary row per run directory, newest first."""
+    from hackforge.paths import RUNS_DIR
+
+    root = runs_root or RUNS_DIR
+    if not root.exists():
+        return []
+    rows: list[dict[str, Any]] = []
+    for run_dir in sorted(root.iterdir()):
+        if not run_dir.is_dir():
+            continue
+        manifest = _load_manifest(run_dir)
+        status = _load_status(run_dir)
+        if manifest is None and status is None:
+            continue
+        manifest = manifest or {}
+        status = status or {}
+        counts = manifest.get("candidate_counts", {})
+        total_time = sum(float(v) for v in manifest.get("stage_timings_seconds", {}).values())
+        rows.append(
+            {
+                "run": run_dir.name,
+                "path": str(run_dir),
+                "competition": manifest.get("competition_name", run_dir.name),
+                "created_at": manifest.get("created_at", status.get("created_at", "")),
+                "dry_run": manifest.get("dry_run", False),
+                "raw": counts.get("raw", 0),
+                "finalists": counts.get("finalists", 0),
+                "primary": manifest.get("final_primary_id"),
+                "result": manifest.get("hackathon_result"),
+                "seconds": round(total_time, 2),
+                "status": status.get("status", "complete" if manifest else "unknown"),
+                "stage": status.get("stage", ""),
+                "error": status.get("error", ""),
+            }
+        )
+    rows.sort(key=lambda r: r["created_at"], reverse=True)
+    return rows
+
+
+def learn_from_runs(runs_root: Path | None = None) -> dict[str, Any]:
+    """Aggregate experimental memory across runs for continuous improvement.
+
+    Highlights which providers/prompt versions produced ideas that survived to the
+    finalist stage and which competitions produced recorded outcomes, so future runs
+    can be biased toward configurations that historically won.
+    """
+    from hackforge.paths import RUNS_DIR
+
+    root = runs_root or RUNS_DIR
+    rows: list[dict[str, Any]] = []
+    provider_stats: dict[str, dict[str, float]] = {}
+    outcome_stats: dict[str, int] = {}
+    prompt_versions_seen: dict[str, int] = {}
+
+    if root.exists():
+        for run_dir in sorted(root.iterdir()):
+            if not run_dir.is_dir():
+                continue
+            manifest = _load_manifest(run_dir)
+            if manifest is None:
+                continue
+            rows.append(manifest)
+            counts = manifest.get("candidate_counts", {})
+            raw = float(counts.get("raw", 0) or 0)
+            finalists = float(counts.get("finalists", 0) or 0)
+            research = (manifest.get("providers") or {}).get("research", "unknown")
+            stat = provider_stats.setdefault(research, {"runs": 0, "raw": 0, "finalists": 0})
+            stat["runs"] += 1
+            stat["raw"] += raw
+            stat["finalists"] += finalists
+            result = manifest.get("hackathon_result")
+            if result:
+                outcome_stats[result] = outcome_stats.get(result, 0) + 1
+            for pv in (manifest.get("prompt_versions") or {}):
+                prompt_versions_seen[pv] = prompt_versions_seen.get(pv, 0) + 1
+
+    for stat in provider_stats.values():
+        stat["survival_rate"] = round(stat["finalists"] / stat["raw"], 4) if stat["raw"] else 0.0
+
+    recorded = [r for r in rows if r.get("hackathon_result")]
+    recommendations: list[str] = []
+    if not rows:
+        recommendations.append("No runs found yet. Run `hackforge analyse` to start building memory.")
+    if rows and not recorded:
+        recommendations.append(
+            "No outcomes recorded. Use `hackforge record-outcome <run> --result winner|finalist|dnq` "
+            "so HackForge can learn which configurations win."
+        )
+    if provider_stats:
+        best = max(provider_stats.items(), key=lambda kv: kv[1]["survival_rate"])
+        recommendations.append(
+            f"Highest finalist survival rate: '{best[0]}' ({best[1]['survival_rate']:.1%} of raw ideas)."
+        )
+
+    return {
+        "total_runs": len(rows),
+        "runs_with_outcomes": len(recorded),
+        "provider_stats": provider_stats,
+        "outcome_counts": outcome_stats,
+        "prompt_versions_seen": prompt_versions_seen,
+        "recommendations": recommendations,
+    }

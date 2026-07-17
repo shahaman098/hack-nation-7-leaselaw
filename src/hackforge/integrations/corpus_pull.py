@@ -2,13 +2,14 @@ from __future__ import annotations
 
 import json
 import os
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Callable, Iterable
+from typing import Any, Callable
 
 import httpx
 
-from hackforge.paths import CORPUS_CACHE_DIR, HACKREP_DIR, REPO_ROOT
-from hackforge.utils import write_json, write_text
+from hackforge.paths import CORPUS_CACHE_DIR, HACKREP_DIR
+from hackforge.utils import write_json
 
 SOURCES = ("alpha", "twango", "alvanlii", "hackrep", "local")
 
@@ -59,7 +60,7 @@ def pull_alpha(limit: int = 5000, winners_only: bool = False) -> Path:
     from datasets import load_dataset
 
     out = _cache_dir() / "alpha_normalized.jsonl"
-    # Prefer curated exemplars + project sample; fall back to features parquet if present
+    # Pull both real remote shards when available; the project shard is mandatory.
     records: list[dict[str, Any]] = []
     try:
         ds = load_dataset(ALPHA_DATASET, data_files="exemplars/top_100_winners.json", split="train")
@@ -77,12 +78,7 @@ def pull_alpha(limit: int = 5000, winners_only: bool = False) -> Path:
                 continue
             records.append(rec)
     except Exception as exc:
-        # Minimal fallback from local reference if HF unavailable
-        write_text(_cache_dir() / "alpha_error.txt", str(exc))
-        ref = REPO_ROOT / "corpora" / "past-winners" / "reference-index.json"
-        if ref.exists():
-            for row in json.loads(ref.read_text(encoding="utf-8")):
-                records.append(_normalize_record(row, "alpha-local-ref"))
+        raise RuntimeError(f"Alpha-Hack remote project download failed; no local fallback was used: {exc}") from exc
 
     _write_jsonl(out, records)
     write_json(_cache_dir() / "alpha_meta.json", {"count": len(records), "path": str(out)})
@@ -146,14 +142,6 @@ def pull_hackrep() -> Path:
                 r = client.get(url)
                 r.raise_for_status()
                 dest.write_bytes(r.content)
-    # Feasibility priors stub from description
-    priors = {
-        "source": "hackrep",
-        "common_48h_stacks": ["javascript", "python", "react", "node", "firebase", "flask", "nextjs"],
-        "notes": "Use only as feasibility prior — not as ideation examples.",
-        "zenodo": "https://zenodo.org/records/17572684",
-    }
-    write_json(HACKREP_DIR / "feasibility_priors.json", priors)
     return meta_path
 
 
@@ -240,9 +228,10 @@ def build_index_from_cache(index_dir: Path | None = None, *, max_records: int | 
     if max_records is not None:
         records = records[:max_records]
     if not records:
-        # Ensure local at least
-        pull_local()
-        records = list(iter_cached_records())
+        raise RuntimeError(
+            "No cached corpus records were found. Run `hackforge corpus pull --source ...` first; "
+            "no local corpus was substituted automatically."
+        )
     return idx.build(records)
 
 

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import shutil
 import subprocess
 from pathlib import Path
@@ -52,7 +51,7 @@ def ensure_promptfoo_config() -> Path:
         ],
     }
     path = cfg_dir / "promptfooconfig.yaml"
-    import yaml
+    import yaml  # type: ignore[import-untyped]
 
     path.write_text(yaml.safe_dump(cfg, sort_keys=False), encoding="utf-8")
     return path
@@ -60,13 +59,15 @@ def ensure_promptfoo_config() -> Path:
 
 def run_promptfoo(*, dry_run: bool = False) -> dict[str, Any]:
     cfg = ensure_promptfoo_config()
-    if dry_run or not shutil.which("npx"):
+    if dry_run:
         return {
             "status": "skipped",
-            "reason": "npx/promptfoo unavailable or dry_run — config written only",
+            "reason": "explicit dry_run — config written only",
             "config": str(cfg),
             "hint": "brew install node && npx promptfoo@latest eval -c evals/promptfoo/promptfooconfig.yaml",
         }
+    if not shutil.which("npx"):
+        raise RuntimeError("Promptfoo evaluation requires npx, but npx was not found; nothing was mocked or skipped")
     out_dir = EVALS_DIR / "baseline-results" / "promptfoo"
     out_dir.mkdir(parents=True, exist_ok=True)
     cmd = [
@@ -80,8 +81,11 @@ def run_promptfoo(*, dry_run: bool = False) -> dict[str, Any]:
         str(out_dir / "results.json"),
     ]
     proc = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, text=True)
+    if proc.returncode != 0:
+        detail = "\n".join(part.strip() for part in (proc.stdout, proc.stderr) if part.strip())
+        raise RuntimeError(f"Promptfoo failed ({proc.returncode}): {detail[-4000:]}")
     return {
-        "status": "ok" if proc.returncode == 0 else "error",
+        "status": "ok",
         "returncode": proc.returncode,
         "stdout": proc.stdout[-2000:],
         "stderr": proc.stderr[-2000:],

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from hackforge.ideation import cluster_ideas, select_diversified
 from hackforge.models import CandidateIdea
 from hackforge.paths import FIXTURES_DIR, REPO_ROOT
@@ -64,28 +66,19 @@ def test_cluster_and_diversify():
     assert {s.id for s in selected} != {"a", "b"} or len(clusters) == 1
 
 
-def test_dry_run_pipeline(tmp_path: Path):
+def test_fixture_pipeline_cannot_pass_real_data_gate(tmp_path: Path):
     bundle = read_json(FIXTURES_DIR / "dry-run-bundle.json")
-    run_dir = run_analyse(
-        input_path=FIXTURES_DIR / "sample-hackathon.md",
-        dry_run=True,
-        fixture_bundle=bundle,
-        seeds_per_lane=5,
-        runs_root=tmp_path / "runs",
-    )
-    assert (run_dir / "competition-brief.json").exists()
-    assert (run_dir / "raw-concepts.json").exists()
-    assert (run_dir / "clustered-concepts.json").exists()
-    assert (run_dir / "collision-analysis.md").exists()
-    assert (run_dir / "feasibility-analysis.md").exists()
-    assert (run_dir / "blind-judge-results.json").exists()
-    assert (run_dir / "final-recommendation.md").exists()
-    assert (run_dir / "run-manifest.json").exists()
-    manifest = read_json(run_dir / "run-manifest.json")
-    assert manifest["dry_run"] is True
-    assert manifest["final_primary_id"]
-    assert manifest["prompt_versions"]
-    assert manifest["corpora_version"]
+    with pytest.raises(RuntimeError, match="Every candidate failed"):
+        run_analyse(
+            input_path=FIXTURES_DIR / "sample-hackathon.md",
+            dry_run=True,
+            fixture_bundle=bundle,
+            seeds_per_lane=5,
+            runs_root=tmp_path / "runs",
+        )
+    run_dir = next((tmp_path / "runs").iterdir())
+    assert read_json(run_dir / "run-status.json")["status"] == "failed"
+    assert "Traceback" in (run_dir / "run.log").read_text(encoding="utf-8")
 
 
 def test_repo_layout():

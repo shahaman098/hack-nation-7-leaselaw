@@ -1,6 +1,14 @@
 from __future__ import annotations
 
-from hackforge.models import CandidateIdea, CollisionReport, CompetitionBrief, EvaluationResult, FeasibilityReport
+from hackforge.models import (
+    CandidateIdea,
+    CollisionReport,
+    CompetitionBrief,
+    EvaluationResult,
+    FeasibilityReport,
+)
+
+from .landscape import build_idea_landscape as build_idea_landscape
 
 
 def build_decision_dossier(
@@ -38,7 +46,10 @@ def build_decision_dossier(
         "",
         "## Judge disagreement (do not average away)",
     ]
-    lines.extend(f"- {d}" for d in evaluation.disagreements) or lines.append("- None (inspect vote table anyway)")
+    if evaluation.disagreements:
+        lines.extend(f"- {d}" for d in evaluation.disagreements)
+    else:
+        lines.append("- None (inspect vote table anyway)")
     lines += ["", "### Judge votes"]
     for v in evaluation.judge_votes:
         lines.append(f"- **{v.role}** → {v.preferred_blind_id}: {v.rationale}")

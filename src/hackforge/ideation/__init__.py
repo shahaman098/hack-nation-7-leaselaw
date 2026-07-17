@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import hashlib
+import os
+from concurrent.futures import ThreadPoolExecutor
 from typing import Any
 
 from hackforge.models import CandidateIdea, CompetitionBrief
@@ -8,6 +10,36 @@ from hackforge.paths import IDEATION_LANES
 from hackforge.providers import LLMProvider
 from hackforge.utils import load_prompt, render_prompt, slugify
 
+from .search import (
+    SEARCH_PROFILES as SEARCH_PROFILES,
+)
+from .search import (
+    SparseIdeaArchive as SparseIdeaArchive,
+)
+from .search import (
+    cross_concepts as cross_concepts,
+)
+from .search import (
+    discover_opportunities as discover_opportunities,
+)
+from .search import (
+    external_quality as external_quality,
+)
+from .search import (
+    get_search_profile as get_search_profile,
+)
+from .search import (
+    mine_mechanisms as mine_mechanisms,
+)
+from .search import (
+    mmr_select as mmr_select,
+)
+from .search import (
+    mutate_concepts as mutate_concepts,
+)
+from .search import (
+    structural_distance as structural_distance,
+)
 
 NAVIGATOR_TOKENS = (
     "navigator",
@@ -27,13 +59,18 @@ def run_isolated_ideation(
     *,
     seeds_per_lane: int = 8,
 ) -> list[CandidateIdea]:
-    """Run lanes independently. Callers must not share prior lane outputs across providers."""
+    """Run lanes independently. Callers must not share prior lane outputs across providers.
+
+    Lanes are isolated by construction (each gets its own provider + prompt and never sees
+    another lane's output), so they can run concurrently. Results are reassembled in lane
+    order to keep runs reproducible. Set ``HACKFORGE_IDEATION_WORKERS`` to control parallelism
+    (tests can force serial execution; live runs default to four workers).
+    """
     template, _ = load_prompt("contrarian-ideation")
     blacklist = _format_blacklist(brief)
-    all_ideas: list[CandidateIdea] = []
 
-    for idx, lane in enumerate(IDEATION_LANES):
-        provider = providers[idx % len(providers)]
+    def _run_lane(lane_with_provider: tuple[int, dict[str, Any], LLMProvider]) -> list[CandidateIdea]:
+        _, lane, provider = lane_with_provider
         system = render_prompt(
             template,
             {
@@ -46,6 +83,7 @@ def run_isolated_ideation(
         )
         raw = provider.complete_json(system, f"Produce {seeds_per_lane} seeds for lane {lane['id']}.")
         items = raw if isinstance(raw, list) else raw.get("seeds") or raw.get("concepts") or []
+        lane_ideas: list[CandidateIdea] = []
         for n, item in enumerate(items):
             if not isinstance(item, dict):
                 continue
@@ -53,8 +91,28 @@ def run_isolated_ideation(
             if _violates_hard_bans(idea):
                 idea.kill_reason = (idea.kill_reason + " | hard-ban topology").strip(" |")
                 idea.collision_risk = "high"
-            all_ideas.append(idea)
+            lane_ideas.append(idea)
+        return lane_ideas
+
+    jobs = [(idx, lane, providers[idx % len(providers)]) for idx, lane in enumerate(IDEATION_LANES)]
+    workers = _ideation_workers(len(jobs))
+    if workers <= 1:
+        lane_results = [_run_lane(job) for job in jobs]
+    else:
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            lane_results = list(pool.map(_run_lane, jobs))
+
+    all_ideas: list[CandidateIdea] = []
+    for result in lane_results:
+        all_ideas.extend(result)
     return all_ideas
+
+
+def _ideation_workers(num_lanes: int) -> int:
+    raw = os.getenv("HACKFORGE_IDEATION_WORKERS")
+    if raw and raw.strip().isdigit():
+        return max(1, min(int(raw), num_lanes))
+    return min(4, num_lanes)
 
 
 def _format_blacklist(brief: CompetitionBrief) -> str:
@@ -122,7 +180,7 @@ def cluster_ideas(ideas: list[CandidateIdea]) -> list[dict[str, Any]]:
         fp = _structural_fingerprint(idea)
         buckets.setdefault(fp, []).append(idea)
 
-    clusters = []
+    clusters: list[dict[str, Any]] = []
     for i, (fp, members) in enumerate(buckets.items()):
         cid = f"cluster-{i+1}-{fp[:8]}"
         for m in members:
@@ -162,7 +220,7 @@ def _norm_tokens(text: str) -> list[str]:
 
 def select_diversified(ideas: list[CandidateIdea], clusters: list[dict[str, Any]], limit: int = 6) -> list[CandidateIdea]:
     """Pick strongest structurally different representatives for collision audit."""
-    by_id = {i.id: i for i in ideas}
+    del clusters  # ranking derives structure directly from ideas
     selected: list[CandidateIdea] = []
     used_fps: set[str] = set()
     # Prefer clusters with clearer hard-to-fake advantage and lower self-stated kill pressure
