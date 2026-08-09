@@ -4,8 +4,9 @@
   "title": "CompetitionBrief",
   "type": "object",
   "required": [
-    "name", "slug", "source_urls", "theme", "tracks", "sponsors", "deadline", "team_size",
-    "required_or_encouraged_tech", "prizes", "facts", "inference", "missing", "potentially_stale",
+    "name", "slug", "source_urls", "theme", "tracks", "sponsors", "deadline", "build_window", "team_size",
+    "required_tech", "encouraged_tech", "required_or_encouraged_tech", "requirements", "submission_artifacts",
+    "demo_requirements", "data_requirements", "prizes", "facts", "inference", "missing", "potentially_stale",
     "judging_criteria", "sponsor_capabilities", "available_datasets", "crowding", "sanitized_brief"
   ],
   "additionalProperties": false,
@@ -17,8 +18,32 @@
     "tracks": { "type": "array", "items": { "type": "string" } },
     "sponsors": { "type": "array", "items": { "type": "string" } },
     "deadline": { "type": ["string", "null"] },
+    "build_window": { "type": ["string", "null"] },
     "team_size": { "type": ["string", "null"] },
+    "required_tech": { "type": "array", "items": { "type": "string" } },
+    "encouraged_tech": { "type": "array", "items": { "type": "string" } },
     "required_or_encouraged_tech": { "type": "array", "items": { "type": "string" } },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "category", "description", "required", "evidence_ids"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "category": {
+            "type": "string",
+            "enum": ["technology", "platform", "data", "artifact", "demo", "timebox", "team", "eligibility", "track", "sponsor", "other"]
+          },
+          "description": { "type": "string" },
+          "required": { "type": "boolean" },
+          "evidence_ids": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "submission_artifacts": { "type": "array", "items": { "type": "string" } },
+    "demo_requirements": { "type": "array", "items": { "type": "string" } },
+    "data_requirements": { "type": "array", "items": { "type": "string" } },
     "prizes": { "type": "array", "items": { "type": "string" } },
     "facts": {
       "type": "array",
