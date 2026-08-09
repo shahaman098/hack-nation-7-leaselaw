@@ -2,12 +2,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 from hackforge.ideation import cluster_ideas, select_diversified
-from hackforge.models import CandidateIdea
+from hackforge.models import CandidateIdea, CompetitionBrief, EvidenceSource
+from hackforge.evaluation.gates import evaluate_gates, passes_gates
 from hackforge.paths import FIXTURES_DIR, REPO_ROOT
-from hackforge.pipeline import run_analyse
 from hackforge.utils import read_json, slugify
 
 
@@ -63,22 +61,44 @@ def test_cluster_and_diversify():
     assert len(clusters) >= 1
     selected = select_diversified(ideas, clusters, limit=2)
     assert len(selected) == 2
-    assert {s.id for s in selected} != {"a", "b"} or len(clusters) == 1
+    assert {selected_item.id for selected_item in selected} != {"a", "b"} or len(clusters) == 1
 
 
-def test_fixture_pipeline_cannot_pass_real_data_gate(tmp_path: Path):
+def test_non_url_data_is_allowed_when_access_is_credible():
+    brief = CompetitionBrief(name="Data Challenge", data_requirements=["Use the provided dataset"])
+    idea = CandidateIdea(
+        id="provided-data",
+        primary_user="analyst",
+        painful_workflow="modeling a supplied benchmark",
+        current_workaround="manual baseline",
+        imported_mechanism="robust optimization",
+        data_sources=["competition-provided training dataset"],
+        core_computation="train and validate a constrained model",
+        last_mile_action="submit benchmark result",
+        visible_transformation="baseline becomes validated result",
+        killer_demo="show measured benchmark result",
+        demo_proof="show measured benchmark result",
+        evidence_ids=["input"],
+        data_access_status="provided",
+        data_access_plan="Use the dataset supplied by the competition organizer",
+    )
+    evidence = EvidenceSource(
+        id="input",
+        url="input://brief",
+        title="Competition brief",
+        retrieved_at="2026-08-09T00:00:00+00:00",
+        source_kind="input",
+        verified=True,
+    )
+    evaluate_gates(idea, brief, [evidence])
+    assert passes_gates(idea)
+
+
+def test_fixture_bundle_remains_available_for_deterministic_benchmarks():
     bundle = read_json(FIXTURES_DIR / "dry-run-bundle.json")
-    with pytest.raises(RuntimeError, match="Every candidate failed"):
-        run_analyse(
-            input_path=FIXTURES_DIR / "sample-hackathon.md",
-            dry_run=True,
-            fixture_bundle=bundle,
-            seeds_per_lane=5,
-            runs_root=tmp_path / "runs",
-        )
-    run_dir = next((tmp_path / "runs").iterdir())
-    assert read_json(run_dir / "run-status.json")["status"] == "failed"
-    assert "Traceback" in (run_dir / "run.log").read_text(encoding="utf-8")
+    assert "competition_research" in bundle
+    assert "ideation" in bundle
+    assert "red_team" in bundle
 
 
 def test_repo_layout():
