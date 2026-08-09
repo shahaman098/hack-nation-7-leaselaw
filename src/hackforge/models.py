@@ -161,8 +161,8 @@ class CompetitionBrief(BaseModel):
         ]
         explicit.extend(structured)
         # Only legacy briefs that have none of the new requirement fields use
-        # the old combined list. A newly parsed encouraged technology must never
-        # become mandatory through compatibility fallback.
+        # the old combined list. Even then, clearly optional/recommended entries
+        # are filtered rather than silently upgraded to mandatory.
         if (
             not explicit
             and not self.required_tech
@@ -170,7 +170,12 @@ class CompetitionBrief(BaseModel):
             and not self.requirements
             and self.required_or_encouraged_tech
         ):
-            explicit.extend(self.required_or_encouraged_tech)
+            optional_markers = ("optional", "encouraged", "recommended", "bonus", "may use", "can use")
+            explicit.extend(
+                item
+                for item in self.required_or_encouraged_tech
+                if not any(marker in item.lower() for marker in optional_markers)
+            )
         return list(dict.fromkeys(item.strip() for item in explicit if item.strip()))
 
 
