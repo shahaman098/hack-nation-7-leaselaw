@@ -1,10 +1,8 @@
 from __future__ import annotations
 
-from pathlib import Path
-
+from hackforge.evaluation.gates import evaluate_gates, passes_gates
 from hackforge.ideation import cluster_ideas, select_diversified
 from hackforge.models import CandidateIdea, CompetitionBrief, EvidenceSource
-from hackforge.evaluation.gates import evaluate_gates, passes_gates
 from hackforge.paths import FIXTURES_DIR, REPO_ROOT
 from hackforge.utils import read_json, slugify
 
