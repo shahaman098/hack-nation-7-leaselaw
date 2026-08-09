@@ -11,12 +11,7 @@ from typing import Optional
 from dotenv import load_dotenv
 
 from hackforge import __version__
-from hackforge.paths import (
-    CORPUS_CACHE_DIR,
-    INDEX_DIR,
-    PROMPT_VERSIONS,
-    PROMPTS_DIR,
-)
+from hackforge.paths import CORPUS_CACHE_DIR, INDEX_DIR, PROMPT_VERSIONS, PROMPTS_DIR
 from hackforge.utils import env_flag
 
 
@@ -26,7 +21,7 @@ class Check:
     ok: bool
     detail: str
     hint: Optional[str] = None
-    level: str = "error"  # "error" (blocks live runs) or "warn" (optional feature)
+    level: str = "error"  # "error" blocks selected/strict functionality; "warn" is optional enrichment
 
 
 def _module_available(mod: str) -> bool:
@@ -34,7 +29,7 @@ def _module_available(mod: str) -> bool:
 
 
 def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[Check]:
-    """Verify the environment for the selected live provider."""
+    """Verify the selected runtime plus any explicitly strict optional capabilities."""
     if provider not in {"deepseek", "codex", "litellm"}:
         raise ValueError(f"Unsupported provider {provider!r}")
     load_dotenv()
@@ -55,13 +50,7 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
             from hackforge.providers.deepseek_provider import DeepSeekProvider
 
             probe = DeepSeekProvider().probe()
-            checks.append(
-                Check(
-                    "deepseek_live",
-                    True,
-                    f"chat completion succeeded: {probe['model']}",
-                )
-            )
+            checks.append(Check("deepseek_live", True, f"chat completion succeeded: {probe['model']}"))
         except Exception as exc:
             checks.append(
                 Check(
@@ -75,8 +64,9 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
     if live_probe:
         from hackforge.research import search_devpost_projects, search_github_projects
 
+        require_github = env_flag("HACKFORGE_REQUIRE_GITHUB_RESEARCH", default=False)
         github_sources = search_github_projects(
-            "hackathon",
+            "competition innovation challenge",
             max_results=1,
             token=os.getenv("GITHUB_TOKEN"),
         )
@@ -86,12 +76,21 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
             Check(
                 "github_live",
                 github_ok,
-                "public repository search succeeded" if github_ok else f"search failed: {github_error or 'no results'}",
-                hint=None if github_ok else "Set GITHUB_TOKEN if anonymous search is rate-limited.",
+                (
+                    "public repository enrichment succeeded"
+                    if github_ok
+                    else f"repository enrichment unavailable: {github_error or 'no results'}"
+                ),
+                hint=(
+                    None
+                    if github_ok
+                    else "Optional: set GITHUB_TOKEN, or HACKFORGE_REQUIRE_GITHUB_RESEARCH=1 to make this blocking."
+                ),
+                level="error" if require_github else "warn",
             )
         )
 
-        devpost_sources = search_devpost_projects("hackathon", max_results=1)
+        devpost_sources = search_devpost_projects("competition innovation challenge", max_results=1)
         devpost_ok = any(source.fetch_status == "ok" for source in devpost_sources)
         devpost_error = "; ".join(source.error for source in devpost_sources if source.error)
         require_live_devpost = env_flag("HACKFORGE_REQUIRE_LIVE_DEVPOST", default=False)
@@ -100,14 +99,14 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
                 "devpost_live",
                 devpost_ok,
                 (
-                    "public project search succeeded"
+                    "public project enrichment succeeded"
                     if devpost_ok
-                    else f"search unavailable: {devpost_error or 'no results'}; local semantic corpus will be used"
+                    else f"project enrichment unavailable: {devpost_error or 'no results'}"
                 ),
                 hint=(
                     None
                     if devpost_ok
-                    else "Refresh the local corpus, or set HACKFORGE_REQUIRE_LIVE_DEVPOST=1 to make this blocking."
+                    else "Optional: keep this as enrichment, or set HACKFORGE_REQUIRE_LIVE_DEVPOST=1 to make it blocking."
                 ),
                 level="error" if require_live_devpost else "warn",
             )
@@ -116,9 +115,9 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
     checks.append(Check("hackforge", True, f"version {__version__}"))
 
     missing_prompts = [
-        f"{fam}/{ver}"
-        for fam, ver in PROMPT_VERSIONS.items()
-        if not (PROMPTS_DIR / fam / f"{ver}.md").exists()
+        f"{family}/{version}"
+        for family, version in PROMPT_VERSIONS.items()
+        if not (PROMPTS_DIR / family / f"{version}.md").exists()
     ]
     checks.append(
         Check(
@@ -134,8 +133,8 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
     deepseek = bool(os.getenv("DEEPSEEK_API_KEY"))
     key_detail = ", ".join(
         [
-            n
-            for n, present in (
+            name
+            for name, present in (
                 ("DEEPSEEK", deepseek),
                 ("OPENAI", openai),
                 ("ANTHROPIC", anthropic),
@@ -143,6 +142,7 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
             if present
         ]
     ) or "none set"
+
     codex_binary = os.getenv("HACKFORGE_CODEX_BINARY") or shutil.which("codex")
     codex_authenticated = False
     codex_detail = "not installed"
@@ -158,7 +158,9 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
             codex_authenticated = status.returncode == 0 and "logged in" in (
                 status.stdout + status.stderr
             ).lower()
-            codex_detail = "authenticated" if codex_authenticated else "installed, authentication not confirmed"
+            codex_detail = (
+                "authenticated" if codex_authenticated else "installed, authentication not confirmed"
+            )
         except (OSError, subprocess.TimeoutExpired):
             codex_detail = "installed, status check failed"
     checks.append(
@@ -184,7 +186,9 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
             try:
                 from hackforge.providers import CodexExecProvider
 
-                result = CodexExecProvider(timeout=float(os.getenv("HACKFORGE_CODEX_DOCTOR_TIMEOUT", "90"))).complete_json(
+                result = CodexExecProvider(
+                    timeout=float(os.getenv("HACKFORGE_CODEX_DOCTOR_TIMEOUT", "90"))
+                ).complete_json(
                     "Return a health object.",
                     "Set ok to true.",
                     schema={
@@ -211,6 +215,7 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
                         hint="Check `codex login`, network access, and any configured Codex model.",
                     )
                 )
+
     deepseek_model = os.getenv("HACKFORGE_DEEPSEEK_MODEL", "deepseek-v4-pro").removeprefix(
         "deepseek/"
     )
@@ -268,6 +273,7 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
             level="error" if provider == "litellm" else "warn",
         )
     )
+
     if provider == "deepseek":
         selected_ready = deepseek_ready
         selected_detail = f"selected DeepSeek runtime: {'ready' if deepseek_ready else 'not ready'}"
@@ -289,26 +295,40 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
         )
     )
 
-    semantic_required = env_flag("HACKFORGE_REQUIRE_SEMANTIC_COLLISION", default=True)
+    semantic_required = env_flag("HACKFORGE_REQUIRE_SEMANTIC_COLLISION", default=False)
     collision_ok = _module_available("faiss") and _module_available("sentence_transformers")
     checks.append(
         Check(
             "collision_extras",
             collision_ok,
             "faiss + sentence-transformers installed" if collision_ok else "not installed",
-            hint=None if collision_ok else "pip install 'hackforge[collision]' for semantic collision detection.",
+            hint=(
+                None
+                if collision_ok
+                else "Optional: pip install 'hackforge[collision]' for semantic collision detection."
+            ),
             level="error" if semantic_required else "warn",
         )
     )
 
-    index_ready = (INDEX_DIR / "index.faiss").exists() or any(INDEX_DIR.glob("*.faiss")) if INDEX_DIR.exists() else False
+    index_ready = (
+        (INDEX_DIR / "index.faiss").exists() or any(INDEX_DIR.glob("*.faiss"))
+        if INDEX_DIR.exists()
+        else False
+    )
     cache_ready = CORPUS_CACHE_DIR.exists() and any(CORPUS_CACHE_DIR.glob("*.jsonl"))
     checks.append(
         Check(
             "corpus_index",
             index_ready,
-            "FAISS index built" if index_ready else ("cache present, index not built" if cache_ready else "no corpus"),
-            hint=None if index_ready else "Run `hackforge corpus pull` then `hackforge corpus build-index`.",
+            "FAISS index built"
+            if index_ready
+            else ("cache present, index not built" if cache_ready else "no corpus"),
+            hint=(
+                None
+                if index_ready
+                else "Optional: run `hackforge corpus pull` then `hackforge corpus build-index`, or set HACKFORGE_REQUIRE_SEMANTIC_COLLISION=1 for strict mode."
+            ),
             level="error" if semantic_required else "warn",
         )
     )
@@ -317,7 +337,7 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
         try:
             from hackforge.collision.embed_index import EmbedIndex
 
-            hits = EmbedIndex().search("hackathon evidence-backed workflow", k=1)
+            hits = EmbedIndex().search("competition evidence workflow mechanism", k=1)
             if not hits:
                 raise RuntimeError("index returned no records")
             checks.append(Check("semantic_live", True, "embedding model and FAISS query succeeded"))
@@ -357,4 +377,4 @@ def run_doctor(*, live_probe: bool = False, provider: str = "deepseek") -> list[
 
 
 def doctor_ready_for_live(checks: list[Check]) -> bool:
-    return all(c.ok for c in checks if c.level == "error")
+    return all(check.ok for check in checks if check.level == "error")
