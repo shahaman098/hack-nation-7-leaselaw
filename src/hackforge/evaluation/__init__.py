@@ -18,18 +18,10 @@ from hackforge.paths import HARD_GATES, JUDGE_ROLES
 from hackforge.providers import DryRunProvider, LLMProvider
 from hackforge.utils import load_prompt, render_prompt
 
-from .gates import (
-    REQUIRED_GATES as REQUIRED_GATES,
-)
-from .gates import (
-    evaluate_gates as evaluate_gates,
-)
-from .gates import (
-    gate_failures as gate_failures,
-)
-from .gates import (
-    passes_gates as passes_gates,
-)
+from .gates import REQUIRED_GATES as REQUIRED_GATES
+from .gates import evaluate_gates as evaluate_gates
+from .gates import gate_failures as gate_failures
+from .gates import passes_gates as passes_gates
 
 
 def review_feasibility(
@@ -97,7 +89,6 @@ def review_feasibility(
         )
     for c in candidates:
         if c.id not in covered:
-            note = "fallback feasibility stub"
             reports.append(
                 FeasibilityReport(
                     candidate_id=c.id,
@@ -105,10 +96,11 @@ def review_feasibility(
                     critical_dependencies=[c.sponsor_dependency] if c.sponsor_dependency else [],
                     non_fakeable_core=c.core_computation,
                     minimum_demonstrable_loop=c.killer_demo,
-                    notes=note,
+                    notes="fallback feasibility stub",
                 )
             )
     return reports
+
 
 def feasibility_markdown(reports: list[FeasibilityReport]) -> str:
     lines = ["# Feasibility analysis", ""]
@@ -131,7 +123,6 @@ def blind_judge(
     collisions: list[CollisionReport],
     feasibility: list[FeasibilityReport],
 ) -> EvaluationResult:
-    # Randomize presentation without making winner selection depend on caller ordering.
     shuffled = sorted(finalists, key=lambda candidate: candidate.id)
     seed_material = brief.name + "|" + "|".join(candidate.id for candidate in shuffled)
     random.Random(int(hashlib.sha256(seed_material.encode()).hexdigest()[:16], 16)).shuffle(shuffled)
@@ -154,8 +145,8 @@ def blind_judge(
                 "visible_transformation": c.visible_transformation,
                 "killer_demo": c.killer_demo,
                 "hard_to_fake_advantage": c.hard_to_fake_advantage,
-                "collision_risk": (coll_by[c.id].collision_risk if c.id in coll_by else c.collision_risk),
-                "delivery_risk": (feas_by[c.id].delivery_risk if c.id in feas_by else "unknown"),
+                "collision_risk": coll_by[c.id].collision_risk if c.id in coll_by else c.collision_risk,
+                "delivery_risk": feas_by[c.id].delivery_risk if c.id in feas_by else "unknown",
                 "track_hints": brief.tracks,
             }
         )
@@ -221,7 +212,6 @@ def blind_judge(
     pairwise = _real_pairwise(provider, template, criteria, anonymized, votes, list(blind_map.keys()))
     counts = Counter(v.preferred_blind_id for v in votes)
     pairwise_wins = Counter(result.winner for result in pairwise)
-    # Official criteria determine ordering; pairwise wins lead, technical implementation breaks ties.
     ordered = sorted(
         blind_map.keys(),
         key=lambda bid: (
@@ -251,7 +241,7 @@ def blind_judge(
             "backup_blind_id": backup,
             "why": (
                 f"Pairwise wins={dict(pairwise_wins)}; votes={dict(counts)}; "
-                "official weighted criteria applied with technical implementation as tie-breaker; "
+                "official criteria applied with technical implementation as tie-breaker; "
                 f"disagreements={len(disagreements)}"
             ),
         },
@@ -270,22 +260,13 @@ def _evaluate_hard_gates(
         coll = coll_by.get(c.id)
         feas = feas_by.get(c.id)
         gates = {
-            "demonstrable_core": {
-                "passed": bool(c.killer_demo),
-                "notes": c.killer_demo or "missing killer demo",
-            },
+            "demonstrable_core": {"passed": bool(c.killer_demo), "notes": c.killer_demo or "missing killer demo"},
             "real_computation_or_action": {
                 "passed": bool(c.core_computation and c.last_mile_action),
                 "notes": c.core_computation,
             },
-            "data_accessible": {
-                "passed": bool(c.data_sources),
-                "notes": ", ".join(c.data_sources) or "no named data",
-            },
-            "specific_track_fit": {
-                "passed": True,
-                "notes": "assessed against brief tracks in judge prompt",
-            },
+            "data_accessible": {"passed": bool(c.data_sources), "notes": ", ".join(c.data_sources) or "no named data"},
+            "specific_track_fit": {"passed": True, "notes": "assessed against brief tracks in judge prompt"},
             "sponsor_tech_material_or_explicitly_unnecessary": {
                 "passed": True,
                 "notes": c.sponsor_dependency or "explicitly none",
@@ -294,16 +275,12 @@ def _evaluate_hard_gates(
                 "passed": not (feas and feas.kill_recommendation),
                 "notes": feas.notes if feas else "",
             },
-            "clear_60s_transformation": {
-                "passed": bool(c.visible_transformation),
-                "notes": c.visible_transformation,
-            },
+            "clear_60s_transformation": {"passed": bool(c.visible_transformation), "notes": c.visible_transformation},
             "collision_risk_acceptable": {
                 "passed": not (coll and coll.collision_risk == "high" and coll.kill_recommendation),
                 "notes": coll.collision_risk if coll else c.collision_risk,
             },
         }
-        # Ensure all configured gates present
         for g in HARD_GATES:
             gates.setdefault(g, {"passed": True, "notes": ""})
         out[bid] = gates
@@ -356,9 +333,8 @@ def _real_pairwise(
     }
     system = (
         template.replace("{{JUDGE_ROLE}}", "pairwise-comparator")
-        + "\nCompare every supplied pair directly. Do not infer pair winners from an overall ranking. "
-        "For OpenAI Build Week use 25% each for implementation, design, impact, and idea quality; "
-        "break exact ties on technological implementation. Return {comparisons:[...]} only."
+        + "\nCompare every supplied pair directly using only the supplied official competition criteria. "
+        "Do not infer pair winners from an overall ranking. Return {comparisons:[...]} only."
     )
     try:
         raw = provider.complete_json(
@@ -394,7 +370,6 @@ def _real_pairwise(
             f"missing={missing}; no deterministic fallback was used"
         )
 
-    # Credential-free fallback is a deterministic comparison of independent judge outputs.
     counts = Counter(v.preferred_blind_id for v in votes)
     for a, b in pairs:
         if (a, b) in seen:
@@ -413,21 +388,16 @@ def _real_pairwise(
 
 
 def _weighted_official_score(votes: list[JudgeVote], blind_id: str, brief: CompetitionBrief) -> float:
+    del brief
     score_sets = [_scores_for_candidate(vote, blind_id) for vote in votes]
     score_sets = [scores for scores in score_sets if scores]
     if not score_sets:
         return 0.0
-    build_week = "build week" in (brief.name + " " + " ".join(brief.source_urls)).lower()
-    categories = ("implementation", "design", "impact", "idea") if build_week else ()
     totals = []
     for scores in score_sets:
-        if categories:
-            values = [_criterion_value(scores, category) for category in categories]
-            totals.append(sum(values) / 4)
-        else:
-            numeric = [float(value) for value in scores.values() if isinstance(value, (int, float))]
-            if numeric:
-                totals.append(sum(numeric) / len(numeric))
+        numeric = [float(value) for value in scores.values() if isinstance(value, (int, float))]
+        if numeric:
+            totals.append(sum(numeric) / len(numeric))
     return sum(totals) / len(totals) if totals else 0.0
 
 
@@ -514,16 +484,8 @@ def _feasibility_schema(count: int) -> dict[str, Any]:
                     "properties": {
                         "candidate_id": {"type": "string"},
                         "delivery_risk": {"type": "string", "enum": ["low", "medium", "high"]},
-                        "critical_dependencies": {
-                            "type": "array",
-                            "maxItems": 3,
-                            "items": {"type": "string"},
-                        },
-                        "fakeable_parts": {
-                            "type": "array",
-                            "maxItems": 3,
-                            "items": {"type": "string"},
-                        },
+                        "critical_dependencies": {"type": "array", "maxItems": 3, "items": {"type": "string"}},
+                        "fakeable_parts": {"type": "array", "maxItems": 3, "items": {"type": "string"}},
                         "non_fakeable_core": {"type": "string"},
                         "minimum_demonstrable_loop": {"type": "string"},
                         "kill_recommendation": {"type": "boolean"},
