@@ -29,7 +29,7 @@ hackforge corpus build-index
 
 # Verify the exact backend you will use, then run the private CLI workflow.
 hackforge doctor --provider codex --strict --live
-hackforge analyse --url https://openai.devpost.com/ --provider codex --search-profile fast
+hackforge analyse --url https://competition.example/ --provider codex --search-profile fast
 
 # Add a larger public Devpost corpus when you want stronger novelty coverage.
 hackforge corpus pull --source twango --limit 1000
@@ -147,9 +147,8 @@ Streaming calls also honor the configured
 chunks arrive. The default path never reads
 OpenAI/Anthropic keys and never substitutes another provider or model after a failure.
 
-HackForge's model is independent from the technology required in the concept it recommends.
-For example, Build Week concepts must still use GPT-5.6 and Codex materially because the
-competition requires them; HackForge itself remains a private DeepSeek-powered selection tool.
+HackForge's model is independent from technology required by a competition. Competition-specific
+technology requirements are taken from the parsed brief rather than being hard-coded to a named event.
 
 Default per-run safeguards are 40 model calls, 750,000 total tokens, and a conservative
 $2 estimated-cost ceiling. Set `HACKFORGE_MAX_LLM_CALLS`, `HACKFORGE_MAX_TOTAL_TOKENS`,
