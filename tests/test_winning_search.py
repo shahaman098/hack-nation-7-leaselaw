@@ -533,19 +533,19 @@ def test_absent_tech_data_track_and_demo_requirements_are_not_failures():
     assert by_name["specific_track_fit"] == "not_applicable"
 
 
-def test_fixture_pipeline_is_rejected_before_final_artifacts(tmp_path: Path):
+def test_fixture_pipeline_repairs_initial_gate_failures_and_completes(tmp_path: Path):
     bundle = read_json(FIXTURES_DIR / "dry-run-bundle.json")
-    with pytest.raises(RuntimeError, match="Every candidate failed"):
-        run_analyse(
-            input_path=FIXTURES_DIR / "sample-hackathon.md",
-            dry_run=True,
-            fixture_bundle=bundle,
-            runs_root=tmp_path / "runs",
-            search_profile="balanced",
-        )
-    run_dir = next((tmp_path / "runs").iterdir())
+    run_dir = run_analyse(
+        input_path=FIXTURES_DIR / "sample-hackathon.md",
+        dry_run=True,
+        fixture_bundle=bundle,
+        runs_root=tmp_path / "runs",
+        search_profile="balanced",
+    )
     assert (run_dir / "gate-results.json").exists()
-    assert not (run_dir / "final-recommendation.md").exists()
+    assert (run_dir / "final-recommendation.md").exists()
+    assert (run_dir / "run-manifest.json").exists()
+    assert (run_dir / "run-status.json").exists()
 
 
 def test_benchmark_covers_at_least_three_distinct_briefs():
