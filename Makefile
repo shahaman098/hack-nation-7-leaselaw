@@ -10,7 +10,7 @@ help:
 	@echo "  make test         Run full test suite"
 	@echo "  make test-fast    Run tests excluding slow (model/network) tests"
 	@echo "  make doctor       Verify environment"
-	@echo "  make demo         Run the live pipeline on the sample brief"
+	@echo "  make demo         Run the live pipeline using HACKFORGE_DEMO_URL"
 	@echo "  make release-check Build and validate release artifacts"
 
 install:
@@ -39,8 +39,9 @@ doctor:
 	hackforge doctor
 
 demo:
+	@test -n "$(HACKFORGE_DEMO_URL)" || (echo "Set HACKFORGE_DEMO_URL to a competition URL" && exit 1)
 	hackforge doctor --strict --live
-	hackforge analyse --url https://openai.devpost.com/ --provider deepseek --search-profile fast
+	hackforge analyse --url "$(HACKFORGE_DEMO_URL)" --provider deepseek --search-profile fast
 
 release-check: lint typecheck test-fast
 	python -m build
