@@ -1,15 +1,15 @@
 from __future__ import annotations
 
 import base64
+import html as html_lib
 import os
 import re
 from typing import Any
 from urllib.parse import quote_plus, urljoin
 
 import httpx
-from bs4 import BeautifulSoup
 
-HEADERS = {"User-Agent": "HackForge/0.2 (+private research; collision audit)"}
+HEADERS = {"User-Agent": "HackForge/0.5 (+private competition research; optional collision audit)"}
 BASE = "https://devpost.com"
 GITHUB_API = "https://api.github.com"
 _DEVPOST_PROJECT_URL = re.compile(
@@ -17,6 +17,10 @@ _DEVPOST_PROJECT_URL = re.compile(
     re.IGNORECASE,
 )
 _WAF_MARKERS = ("awswaf", "window.gokuprops", "awswafcookiedomainlist")
+_TAG_RE = re.compile(r"(?is)<[^>]+>")
+_SOFTWARE_LINK_RE = re.compile(
+    r'''(?is)<a\b[^>]*href=["']([^"']*/software/[A-Za-z0-9_-]+/?)["'][^>]*>(.*?)</a>'''
+)
 
 
 def _client() -> httpx.Client:
@@ -33,15 +37,15 @@ def search_hackathons(query: str, *, status: str = "open", max_results: int = 10
         data = resp.json()
     hackathons = data.get("hackathons") or data.get("results") or []
     out = []
-    for h in hackathons[:max_results]:
+    for hackathon in hackathons[:max_results]:
         out.append(
             {
-                "name": h.get("title") or h.get("name"),
-                "slug": h.get("id") or h.get("slug"),
-                "url": h.get("url") or h.get("submission_gallery_url"),
-                "participants": h.get("registrations_count"),
-                "open_state": h.get("open_state"),
-                "submission_count": h.get("submission_count"),
+                "name": hackathon.get("title") or hackathon.get("name"),
+                "slug": hackathon.get("id") or hackathon.get("slug"),
+                "url": hackathon.get("url") or hackathon.get("submission_gallery_url"),
+                "participants": hackathon.get("registrations_count"),
+                "open_state": hackathon.get("open_state"),
+                "submission_count": hackathon.get("submission_count"),
             }
         )
     return out
@@ -78,9 +82,12 @@ def search_projects(
 ) -> list[dict[str, Any]]:
     """Find real Devpost projects, with GitHub README discovery when Devpost serves WAF.
 
-    The fallback does not invent project records. It searches public repositories and
-    extracts literal Devpost project URLs from their READMEs, retaining the discovery
-    repository on every row for provenance.
+    HTML parsing has no mandatory third-party parser dependency. If BeautifulSoup is
+    installed via the optional collision extras it is used for richer extraction;
+    otherwise a conservative stdlib/regex parser extracts only literal project links.
+
+    The fallback never invents project records. It searches public repositories and
+    extracts literal Devpost project URLs from their READMEs, retaining provenance.
     """
     url = f"{BASE}/software/search?query={quote_plus(query)}"
     owned_client = client is None
@@ -128,12 +135,17 @@ def get_project(project_slug: str) -> dict[str, Any]:
     with _client() as client:
         resp = client.get(url)
         resp.raise_for_status()
-    soup = BeautifulSoup(resp.text, "lxml")
-    title_element = soup.find("h1") or soup.find("title")
-    title = title_element.get_text(strip=True) if title_element else project_slug
-    tagline_el = soup.select_one("#software-tagline, .software-tagline, p.large")
-    tagline = tagline_el.get_text(strip=True) if tagline_el else ""
-    built = [a.get_text(strip=True) for a in soup.select(".cp-tag, .software-tags a, #built-with a")]
+    soup = _optional_soup(resp.text)
+    if soup is not None:
+        title_element = soup.find("h1") or soup.find("title")
+        title = title_element.get_text(strip=True) if title_element else project_slug
+        tagline_el = soup.select_one("#software-tagline, .software-tagline, p.large")
+        tagline = tagline_el.get_text(strip=True) if tagline_el else ""
+        built = [anchor.get_text(strip=True) for anchor in soup.select(".cp-tag, .software-tags a, #built-with a")]
+    else:
+        title = _first_text_tag(resp.text, "h1") or _first_text_tag(resp.text, "title") or project_slug
+        tagline = ""
+        built = []
     return {
         "title": title,
         "tagline": tagline,
@@ -144,57 +156,98 @@ def get_project(project_slug: str) -> dict[str, Any]:
 
 
 def crowding_hints_for_query(query: str) -> dict[str, list[str]]:
-    """Lightweight crowd signals for Pass 1 (not winner prose dumps)."""
+    """Lightweight crowd signals for optional public-project enrichment."""
     projects = search_projects(query, max_results=15)
-    high = []
-    for p in projects:
-        title = (p.get("title") or "").lower()
-        if any(w in title for w in ("tutor", "chatbot", "summar", "resume", "mental")):
-            high.append(p.get("title") or title)
     return {
-        "high_collision_seen_on_devpost": high[:8],
-        "recent_similar_titles": [p.get("title") or "" for p in projects[:8]],
+        "high_collision_seen_on_devpost": [],
+        "recent_similar_titles": [project.get("title") or "" for project in projects[:8]],
     }
 
 
+def _optional_soup(html: str) -> Any | None:
+    """Return BeautifulSoup only when optional parser extras are installed."""
+    try:
+        from bs4 import BeautifulSoup
+    except ImportError:
+        return None
+    try:
+        return BeautifulSoup(html, "lxml")
+    except Exception:
+        return BeautifulSoup(html, "html.parser")
+
+
 def _parse_gallery(html: str, source_url: str = "") -> list[dict[str, Any]]:
-    soup = BeautifulSoup(html, "lxml")
-    cards = soup.select(".gallery-item, .software-entry, li.software, .block-wrapper")
-    out: list[dict[str, Any]] = []
-    if not cards:
-        # Fallback: any software links
-        for a in soup.select('a[href*="/software/"]')[:30]:
-            href_value = a.get("href")
-            href = str(href_value[0] if isinstance(href_value, list) and href_value else href_value or "")
-            if "/software/" not in href:
+    soup = _optional_soup(html)
+    if soup is not None:
+        cards = soup.select(".gallery-item, .software-entry, li.software, .block-wrapper")
+        out: list[dict[str, Any]] = []
+        if not cards:
+            for anchor in soup.select('a[href*="/software/"]')[:30]:
+                href_value = anchor.get("href")
+                href = str(
+                    href_value[0]
+                    if isinstance(href_value, list) and href_value
+                    else href_value or ""
+                )
+                if "/software/" not in href:
+                    continue
+                out.append(
+                    {
+                        "title": anchor.get_text(strip=True) or href.rstrip("/").rsplit("/", 1)[-1],
+                        "tagline": "",
+                        "url": urljoin(source_url or BASE, href),
+                        "built_with": [],
+                    }
+                )
+            return _dedupe(out)
+
+        for card in cards:
+            link = card.select_one('a[href*="/software/"]') or card.find("a")
+            if not link:
                 continue
+            href_value = link.get("href")
+            href = str(
+                href_value[0]
+                if isinstance(href_value, list) and href_value
+                else href_value or ""
+            )
+            title = link.get_text(strip=True) or card.get_text(" ", strip=True)[:80]
+            tag = card.select_one(".tagline, .software-entry-name + p, p")
             out.append(
                 {
-                    "title": a.get_text(strip=True) or href.rsplit("/", 1)[-1],
-                    "tagline": "",
-                    "url": urljoin(BASE, href),
-                    "built_with": [],
+                    "title": title,
+                    "tagline": tag.get_text(strip=True) if tag else "",
+                    "url": urljoin(source_url or BASE, href),
+                    "built_with": [tag_node.get_text(strip=True) for tag_node in card.select(".cp-tag, .tag")],
                 }
             )
         return _dedupe(out)
 
-    for card in cards:
-        link = card.select_one('a[href*="/software/"]') or card.find("a")
-        if not link:
-            continue
-        href_value = link.get("href")
-        href = str(href_value[0] if isinstance(href_value, list) and href_value else href_value or "")
-        title = link.get_text(strip=True) or card.get_text(" ", strip=True)[:80]
-        tag = card.select_one(".tagline, .software-entry-name + p, p")
+    # Conservative dependency-free fallback: only literal /software/ anchors.
+    out = []
+    for href, body in _SOFTWARE_LINK_RE.findall(html)[:30]:
+        text = _clean_html_text(body)
         out.append(
             {
-                "title": title,
-                "tagline": tag.get_text(strip=True) if tag else "",
+                "title": text or href.rstrip("/").rsplit("/", 1)[-1],
+                "tagline": "",
                 "url": urljoin(source_url or BASE, href),
-                "built_with": [t.get_text(strip=True) for t in card.select(".cp-tag, .tag")],
+                "built_with": [],
             }
         )
     return _dedupe(out)
+
+
+def _first_text_tag(document: str, tag: str) -> str:
+    match = re.search(
+        rf"(?is)<{re.escape(tag)}\b[^>]*>(.*?)</{re.escape(tag)}>",
+        document,
+    )
+    return _clean_html_text(match.group(1)) if match else ""
+
+
+def _clean_html_text(value: str) -> str:
+    return " ".join(html_lib.unescape(_TAG_RE.sub(" ", value)).split())
 
 
 def _is_waf_response(html: str) -> bool:
@@ -232,7 +285,11 @@ def _discover_projects_from_github_readmes(
     for search_query in searches:
         response = client.get(
             f"{GITHUB_API}/search/repositories",
-            params={"q": search_query, "sort": "updated", "per_page": min(max(max_results * 5, 30), 50)},
+            params={
+                "q": search_query,
+                "sort": "updated",
+                "per_page": min(max(max_results * 5, 30), 50),
+            },
             headers=headers,
         )
         if response.status_code in {403, 429}:
@@ -277,7 +334,9 @@ def _discover_projects_from_github_readmes(
                         "tagline": str(row.get("description") or ""),
                         "url": project_url,
                         "built_with": list(row.get("topics") or []),
-                        "discovered_via": str(row.get("html_url") or f"https://github.com/{repository}"),
+                        "discovered_via": str(
+                            row.get("html_url") or f"https://github.com/{repository}"
+                        ),
                         "discovery_method": "github-readme-literal-link",
                     }
                 )
@@ -293,11 +352,11 @@ def _discover_projects_from_github_readmes(
 
 def _dedupe(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     seen = set()
-    uniq = []
-    for it in items:
-        key = it.get("url") or it.get("title")
+    unique = []
+    for item in items:
+        key = item.get("url") or item.get("title")
         if not key or key in seen:
             continue
         seen.add(key)
-        uniq.append(it)
-    return uniq
+        unique.append(item)
+    return unique
