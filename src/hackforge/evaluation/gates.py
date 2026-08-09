@@ -92,13 +92,19 @@ def _technology_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResult
 
 
 def _requirement_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResult:
-    required = [requirement for requirement in brief.requirements if requirement.required]
+    # Participant eligibility is an operator/preflight concern, not a property of
+    # a generated idea. All other mandatory rules may require a concept/submission plan.
+    required = [
+        requirement
+        for requirement in brief.requirements
+        if requirement.required and requirement.category != "eligibility"
+    ]
     artifact_keys = [f"artifact:{artifact}" for artifact in brief.submission_artifacts]
     if not required and not artifact_keys:
         return GateResult(
             gate="requirement_compliance",
             status="not_applicable",
-            reason="No structured mandatory requirements or submission artifacts were parsed",
+            reason="No concept-level mandatory requirements or submission artifacts were parsed",
         )
 
     missing: list[str] = []
@@ -113,7 +119,7 @@ def _requirement_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResul
     return _result(
         "requirement_compliance",
         not missing,
-        "All structured mandatory requirements have an implementation/submission plan"
+        "All concept-level mandatory requirements have an implementation/submission plan"
         if not missing
         else "Missing requirement plans: " + ", ".join(missing),
     )
