@@ -10,6 +10,19 @@ DeliveryRisk = Literal["low", "medium", "high"]
 EvidenceKind = Literal["official", "devpost", "github", "corpus", "web", "input"]
 EvidenceStatus = Literal["ok", "failed", "rate_limited", "blocked"]
 GateStatus = Literal["pass", "fail", "unverified", "not_applicable"]
+RequirementCategory = Literal[
+    "technology",
+    "platform",
+    "data",
+    "artifact",
+    "demo",
+    "timebox",
+    "team",
+    "eligibility",
+    "track",
+    "sponsor",
+    "other",
+]
 
 
 class EvidenceSource(BaseModel):
@@ -94,6 +107,14 @@ class JudgingCriterion(BaseModel):
     notes: str = ""
 
 
+class CompetitionRequirement(BaseModel):
+    id: str
+    category: RequirementCategory = "other"
+    description: str
+    required: bool = True
+    evidence_ids: list[str] = Field(default_factory=list)
+
+
 class CrowdingMap(BaseModel):
     high_collision: list[str] = Field(default_factory=list)
     medium_collision: list[str] = Field(default_factory=list)
@@ -109,8 +130,17 @@ class CompetitionBrief(BaseModel):
     tracks: list[str] = Field(default_factory=list)
     sponsors: list[str] = Field(default_factory=list)
     deadline: str | None = None
+    build_window: str | None = None
     team_size: str | None = None
+    required_tech: list[str] = Field(default_factory=list)
+    encouraged_tech: list[str] = Field(default_factory=list)
+    # Compatibility input for older saved runs. New research should populate the
+    # required/encouraged fields above and the structured requirements below.
     required_or_encouraged_tech: list[str] = Field(default_factory=list)
+    requirements: list[CompetitionRequirement] = Field(default_factory=list)
+    submission_artifacts: list[str] = Field(default_factory=list)
+    demo_requirements: list[str] = Field(default_factory=list)
+    data_requirements: list[str] = Field(default_factory=list)
     prizes: list[str] = Field(default_factory=list)
     facts: list[FactClaim] = Field(default_factory=list)
     inference: list[InferenceClaim] = Field(default_factory=list)
@@ -121,6 +151,20 @@ class CompetitionBrief(BaseModel):
     available_datasets: list[str] = Field(default_factory=list)
     crowding: CrowdingMap = Field(default_factory=CrowdingMap)
     sanitized_brief: str = ""
+
+    def mandatory_technologies(self) -> list[str]:
+        explicit = list(self.required_tech)
+        explicit.extend(
+            requirement.description
+            for requirement in self.requirements
+            if requirement.required and requirement.category in {"technology", "platform"}
+        )
+        # Older briefs did not distinguish required from encouraged. Preserve
+        # compatibility, but only use this fallback when no structured required
+        # technology was extracted.
+        if not explicit and self.required_or_encouraged_tech:
+            explicit.extend(self.required_or_encouraged_tech)
+        return list(dict.fromkeys(item.strip() for item in explicit if item.strip()))
 
 
 class CandidateIdea(BaseModel):
@@ -150,8 +194,8 @@ class CandidateIdea(BaseModel):
     mechanism_id: str = ""
     mutation_history: list[str] = Field(default_factory=list)
     track_fit: str = ""
-    gpt_5_6_role: str = ""
-    codex_build_role: str = ""
+    technology_roles: dict[str, str] = Field(default_factory=dict)
+    requirement_satisfaction: dict[str, str] = Field(default_factory=dict)
     data_access_status: str = "unverified"
     data_access_plan: str = ""
     testable_claim: str = ""
