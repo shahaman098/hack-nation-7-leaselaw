@@ -102,14 +102,14 @@ IDEATION_LANES = [
     },
 ]
 
-# Competition-neutral review lenses. The prompt still receives the actual
-# official criteria/requirements, so a lens may not invent its own criterion.
+# Stable identifiers retained for fixture/API compatibility. These are review
+# lenses only: blind-judge prompts forbid them from inventing criteria or gates.
 JUDGE_ROLES = [
-    "criteria",
-    "requirements",
-    "feasibility",
+    "technical",
+    "product",
+    "sponsor",
     "domain",
-    "novelty",
+    "demo-risk",
     "contrarian",
 ]
 
