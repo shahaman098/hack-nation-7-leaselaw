@@ -50,9 +50,8 @@ when semantic search is unavailable; they never silently switch to lexical compa
 
 HackForge can use `deepseek-v4-pro` directly or your authenticated local Codex account for
 private idea search. Codex child sessions are ephemeral, read-only, and ignore optional user MCP
-configuration while preserving the Codex login. This is separate from the technology required in
-the recommended concept: generated Build Week concepts must still use GPT-5.6 and Codex
-materially to pass competition-specific gates.
+configuration while preserving the Codex login. Competition-specific technology requirements
+must come from the parsed competition brief and are not hard-coded to any named event.
 
 Default safeguards stop a run after 40 attempted model calls, 750,000 total tokens, or a
 conservative $2 estimated cost. Completed usage and pricing assumptions are recorded in
