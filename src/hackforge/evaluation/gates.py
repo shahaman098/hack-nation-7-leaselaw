@@ -24,7 +24,9 @@ def evaluate_gates(
     evidence_by_id = {source.id: source for source in evidence}
     cited = [evidence_by_id[source_id] for source_id in idea.evidence_ids if source_id in evidence_by_id]
     accessible_citations = [source for source in cited if source.fetch_status == "ok" and source.verified]
-    build_week = _is_build_week(brief)
+    required_tech = " ".join(brief.required_or_encouraged_tech).lower()
+    requires_gpt_5_6 = "gpt-5.6" in required_tech or "gpt 5.6" in required_tech
+    requires_codex = "codex" in required_tech
 
     results = [
         _result(
@@ -39,14 +41,14 @@ def evaluate_gates(
         _material_role_gate(
             "required_model_is_material",
             idea.gpt_5_6_role,
-            required=build_week,
+            required=requires_gpt_5_6,
             required_terms=("gpt-5.6", "reason", "infer", "transform", "evaluate", "classif", "extract"),
             label="GPT-5.6",
         ),
         _material_role_gate(
             "codex_role_is_material",
             idea.codex_build_role,
-            required=build_week,
+            required=requires_codex,
             required_terms=("codex", "build", "test", "implement", "session", "debug"),
             label="Codex",
         ),
@@ -143,13 +145,6 @@ def _observable(text: str) -> bool:
 def _testable(text: str) -> bool:
     blob = text.lower()
     return any(token in blob for token in ("than", "%", "measure", "accuracy", "time", "fewer", "more", "reduce", "increase", "baseline"))
-
-
-def _is_build_week(brief: CompetitionBrief) -> bool:
-    blob = " ".join(
-        [brief.name, brief.theme, *brief.source_urls, *brief.required_or_encouraged_tech]
-    ).lower()
-    return "build week" in blob or "openai.devpost.com" in blob
 
 
 def _result(gate: str, passed: bool, reason: str, evidence_ids: list[str] | None = None) -> GateResult:
