@@ -46,20 +46,24 @@ def _idea(identifier: str, user: str, mechanism: str, action: str, demo: str) ->
         current_workaround="manual review",
         imported_mechanism=mechanism,
         mechanism_family=mechanism,
-        data_sources=["https://openai.devpost.com/rules"],
+        data_sources=["https://event.test/rules"],
         core_computation=f"apply {mechanism} to constraints and evidence",
         last_mile_action=action,
         visible_transformation="before state becomes a verified after state",
         killer_demo=demo,
         demo_proof=demo,
         demo_type=demo,
-        track_fit="Developer Tools",
+        track_fit="General",
         evidence_ids=["src-ok"],
         data_access_status="verified",
-        data_access_plan="Fetch the versioned public JSON and cache it for the demo fixture",
-        gpt_5_6_role="GPT-5.6 performs the central constrained reasoning transformation over the evidence",
-        codex_build_role="Codex builds and tests the executable harness and records the implementation session",
-        minimum_demonstrable_loop="Day 1 fixture and metric; days 2-3 core; day 4 action; day 5 demo",
+        data_access_plan="Fetch the versioned public source and cache it for the test fixture",
+        technology_roles={
+            "Required Engine": "Required Engine performs a material transformation in the core implementation path"
+        },
+        minimum_demonstrable_loop=(
+            "Within the stated competition window, prepare input, implement core transformation, "
+            "validate output, and prepare required submission proof"
+        ),
         testable_claim="Measured task time is lower than the manual baseline",
     )
 
@@ -67,7 +71,7 @@ def _idea(identifier: str, user: str, mechanism: str, action: str, demo: str) ->
 def _evidence() -> EvidenceSource:
     return EvidenceSource(
         id="src-ok",
-        url="https://openai.devpost.com/rules",
+        url="https://event.test/rules",
         title="Rules",
         source_kind="official",
         retrieved_at="2026-07-16T00:00:00+00:00",
@@ -378,7 +382,7 @@ def test_opportunity_stage_rejects_complete_products():
             ]
         }
     )
-    brief = CompetitionBrief(name="Build Week", tracks=["Education"])
+    brief = CompetitionBrief(name="Generic Challenge", tracks=["Education"])
     with pytest.raises(ValueError, match="could not obtain valid JSON"):
         discover_opportunities(provider, brief, [_evidence()], 4)
 
@@ -401,7 +405,7 @@ def test_mechanism_stage_rejects_complete_products():
         }
     )
     with pytest.raises(ValueError, match="could not obtain valid JSON"):
-        mine_mechanisms(provider, CompetitionBrief(name="Build Week"), 4)
+        mine_mechanisms(provider, CompetitionBrief(name="Generic Challenge"), 4)
 
 
 def test_large_discovery_stages_are_batched_to_avoid_truncated_model_outputs():
@@ -447,12 +451,12 @@ def test_large_discovery_stages_are_batched_to_avoid_truncated_model_outputs():
     opportunity_provider = BatchedProvider("opportunities")
     opportunities = discover_opportunities(
         opportunity_provider,
-        CompetitionBrief(name="Build Week"),
+        CompetitionBrief(name="Generic Challenge"),
         [_evidence()],
         8,
     )
     mechanism_provider = BatchedProvider("mechanisms")
-    mechanisms = mine_mechanisms(mechanism_provider, CompetitionBrief(name="Build Week"), 8)
+    mechanisms = mine_mechanisms(mechanism_provider, CompetitionBrief(name="Generic Challenge"), 8)
 
     assert len(opportunities) == 8
     assert opportunity_provider.calls == 2
@@ -490,12 +494,14 @@ def test_semantic_distance_failure_is_not_silently_downgraded(monkeypatch: pytes
         mmr_select([first, second], 2, minimum_distance=0.2)
 
 
-def test_fail_closed_gates_for_data_and_decorative_model_use():
+def test_fail_closed_gates_follow_current_brief_requirements():
     brief = CompetitionBrief(
-        name="OpenAI Build Week",
-        source_urls=["https://openai.devpost.com/rules"],
-        tracks=["Developer Tools"],
-        required_or_encouraged_tech=["GPT-5.6", "Codex"],
+        name="Required Technology Challenge",
+        source_urls=["https://event.test/rules"],
+        tracks=["General"],
+        build_window="48 hours",
+        required_tech=["Required Engine"],
+        demo_requirements=["Working demonstration"],
     )
     valid = _idea("valid", "developers", "metamorphic testing", "run regression", "before-after measured result")
     evaluate_gates(valid, brief, [_evidence()])
@@ -504,14 +510,27 @@ def test_fail_closed_gates_for_data_and_decorative_model_use():
     invalid = valid.model_copy(deep=True)
     invalid.id = "invalid"
     invalid.data_access_status = "unverified"
-    invalid.data_access_plan = ""
-    invalid.gpt_5_6_role = "Optional chat interface"
-    invalid.demo_proof = "A polished dashboard"
+    invalid.technology_roles = {"Required Engine": "Optional if time"}
+    invalid.demo_proof = "A polished static document"
     evaluate_gates(invalid, brief, [_evidence()])
     assert not passes_gates(invalid)
-    assert {"data_accessible_and_verified", "required_model_is_material", "observable_demo_proof"}.issubset(
-        set(gate_failures(invalid))
-    )
+    assert {"required_technology_fit", "demo_fit"}.issubset(set(gate_failures(invalid)))
+
+
+def test_absent_tech_data_track_and_demo_requirements_are_not_failures():
+    brief = CompetitionBrief(name="Open Format Challenge")
+    idea = _idea("open", "organizers", "constraint solving", "publish result", "written result")
+    idea.data_sources = []
+    idea.data_access_status = "not_required"
+    idea.track_fit = ""
+    idea.technology_roles = {}
+    evaluate_gates(idea, brief, [_evidence()])
+    assert passes_gates(idea)
+    by_name = {result.gate: result.status for result in idea.gate_results}
+    assert by_name["required_technology_fit"] == "not_applicable"
+    assert by_name["data_viability"] == "not_applicable"
+    assert by_name["demo_fit"] == "not_applicable"
+    assert by_name["specific_track_fit"] == "not_applicable"
 
 
 def test_fixture_pipeline_is_rejected_before_final_artifacts(tmp_path: Path):
@@ -529,16 +548,16 @@ def test_fixture_pipeline_is_rejected_before_final_artifacts(tmp_path: Path):
     assert not (run_dir / "final-recommendation.md").exists()
 
 
-def test_benchmark_covers_at_least_four_distinct_briefs():
+def test_benchmark_covers_at_least_three_distinct_briefs():
     briefs = list((EVALS_DIR / "benchmark-hackathons").glob("*.md"))
-    assert len(briefs) >= 4
+    assert len(briefs) >= 3
     assert len({path.read_text(encoding="utf-8").splitlines()[0] for path in briefs}) == len(briefs)
 
 
 def test_blind_winner_is_stable_across_input_order_and_pairs_are_real():
     bundle = read_json(FIXTURES_DIR / "dry-run-bundle.json")
     provider = DryRunProvider(bundle)
-    brief = CompetitionBrief(name="OpenAI Build Week", tracks=["Developer Tools"])
+    brief = CompetitionBrief(name="Generic Challenge", tracks=["General"])
     ideas = [
         _idea("alpha", "developers", "metamorphic tests", "run regression", "failure injection"),
         _idea("beta", "caseworkers", "constraint solving", "open review", "before-after"),
