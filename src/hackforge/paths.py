@@ -13,11 +13,10 @@ PROMPTS_DIR = RESOURCE_ROOT / "prompts"
 SCHEMAS_DIR = RESOURCE_ROOT / "schemas"
 CORPORA_DIR = RESOURCE_ROOT / "corpora"
 _USER_HOME = Path(os.getenv("HACKFORGE_HOME") or (Path.home() / ".hackforge"))
-# Editable checkouts keep state beside the repo by default, which makes a quick
-# personal setup frictionless. An explicit HACKFORGE_HOME always wins, including
-# in a source checkout, so operators can keep every writable artifact elsewhere.
 _LOCAL_STATE_ROOT = (
-    _USER_HOME if os.getenv("HACKFORGE_HOME") else (_SOURCE_ROOT if RESOURCE_ROOT == _SOURCE_ROOT else _USER_HOME)
+    _USER_HOME
+    if os.getenv("HACKFORGE_HOME")
+    else (_SOURCE_ROOT if RESOURCE_ROOT == _SOURCE_ROOT else _USER_HOME)
 )
 CORPUS_CACHE_DIR = Path(
     os.getenv("HACKFORGE_CORPUS_CACHE") or (_LOCAL_STATE_ROOT / "corpora" / "cache")
@@ -43,41 +42,62 @@ PROMPT_VERSIONS = {
     "red-team": "v1",
 }
 
+# Broad mechanism-discovery lanes. They are intentionally format-neutral: a
+# competition may produce software, hardware, science, analysis, a pitch, a
+# service/process design, or another allowed artifact.
 IDEATION_LANES = [
     {
-        "id": "institutional",
-        "label": "Institutional and bureaucratic failures",
-        "disciplines": [
-            "Public administration",
-            "Procedural fairness",
-            "Administrative error prevention",
-        ],
-    },
-    {
-        "id": "systems_or",
-        "label": "Optimization and systems engineering",
+        "id": "systems",
+        "label": "Systems, reliability, and constrained operations",
         "disciplines": [
             "Operations research",
             "Control theory",
-            "Supply-chain engineering",
-        ],
-    },
-    {
-        "id": "edge_users",
-        "label": "Safety, accessibility, and edge users",
-        "disciplines": [
-            "Human factors",
-            "Epidemiology",
             "Reliability engineering",
         ],
     },
     {
-        "id": "incentives",
-        "label": "Economic incentives and market coordination",
+        "id": "human_context",
+        "label": "Human factors, accessibility, behavior, and field context",
+        "disciplines": [
+            "Human factors",
+            "Behavioral science",
+            "Accessibility and inclusive design",
+        ],
+    },
+    {
+        "id": "physical_science",
+        "label": "Physical systems, sensing, experimentation, and scientific mechanisms",
+        "disciplines": [
+            "Experimental design",
+            "Sensing and instrumentation",
+            "Materials / physical systems",
+        ],
+    },
+    {
+        "id": "markets_incentives",
+        "label": "Markets, incentives, finance, and resource coordination",
         "disciplines": [
             "Mechanism design",
-            "Insurance science",
-            "Forensic accounting",
+            "Market design",
+            "Finance and risk analysis",
+        ],
+    },
+    {
+        "id": "information_verification",
+        "label": "Information, evidence, verification, and decision quality",
+        "disciplines": [
+            "Information theory",
+            "Scientific reproducibility",
+            "Software / formal verification",
+        ],
+    },
+    {
+        "id": "creative_strategy",
+        "label": "Creative strategy, communication, service design, and adoption",
+        "disciplines": [
+            "Service design",
+            "Communication design",
+            "Strategy and organizational design",
         ],
     },
 ]
@@ -91,13 +111,16 @@ JUDGE_ROLES = [
     "contrarian",
 ]
 
+# Kept as a public constant for compatibility. Applicability is determined by
+# evaluation.gates at runtime; absent competition requirements become not_applicable.
 HARD_GATES = [
-    "demonstrable_core",
-    "real_computation_or_action",
-    "data_accessible",
+    "evidence_backed",
+    "required_technology_fit",
+    "requirement_compliance",
+    "data_viability",
+    "delivery_feasible",
+    "demo_fit",
     "specific_track_fit",
-    "sponsor_tech_material_or_explicitly_unnecessary",
-    "core_loop_deliverable",
-    "clear_60s_transformation",
     "collision_risk_acceptable",
+    "independent_feasibility",
 ]
