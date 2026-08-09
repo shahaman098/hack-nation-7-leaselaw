@@ -121,28 +121,31 @@ def build_competition_brief(
     )
 
     facts = [
-        FactClaim(**item) if isinstance(item, dict) else FactClaim(claim=str(item), source="unknown")
-        for item in data.get("facts", [])
+        FactClaim(**entry) if isinstance(entry, dict) else FactClaim(claim=str(entry), source="unknown")
+        for entry in data.get("facts", [])
     ]
     inference = [
-        InferenceClaim(**item) if isinstance(item, dict) else InferenceClaim(claim=str(item), rationale="")
-        for item in data.get("inference", [])
+        InferenceClaim(**entry) if isinstance(entry, dict) else InferenceClaim(claim=str(entry), rationale="")
+        for entry in data.get("inference", [])
     ]
     criteria = [
-        JudgingCriterion(**item)
-        if isinstance(item, dict)
-        else JudgingCriterion(name=str(item), weight_or_priority="unspecified")
-        for item in data.get("judging_criteria", [])
+        JudgingCriterion(**entry)
+        if isinstance(entry, dict)
+        else JudgingCriterion(name=str(entry), weight_or_priority="unspecified")
+        for entry in data.get("judging_criteria", [])
     ]
     requirements: list[CompetitionRequirement] = []
-    for index, item in enumerate(data.get("requirements", [])):
-        if isinstance(item, dict):
-            payload = dict(item)
+    for index, requirement_entry in enumerate(data.get("requirements", [])):
+        if isinstance(requirement_entry, dict):
+            payload = dict(requirement_entry)
             payload.setdefault("id", f"requirement-{index + 1}")
             requirements.append(CompetitionRequirement(**payload))
         else:
             requirements.append(
-                CompetitionRequirement(id=f"requirement-{index + 1}", description=str(item))
+                CompetitionRequirement(
+                    id=f"requirement-{index + 1}",
+                    description=str(requirement_entry),
+                )
             )
 
     required_tech = list(data.get("required_tech") or [])
@@ -231,11 +234,7 @@ def enrich_brief_with_live_crowding(
         recent_titles = list(hints.get("recent_similar_titles") or [])
     else:
         recent_titles = [source.title for source in sources if source.fetch_status == "ok"]
-        high_titles = [
-            title
-            for title in recent_titles
-            if any(word in title.lower() for word in ("tutor", "chatbot", "summar", "resume", "mental"))
-        ]
+        high_titles = []
     for title in high_titles:
         label = f"Devpost-similar: {title}"
         if label not in brief.crowding.high_collision:
@@ -271,7 +270,9 @@ def _fallback_sanitized_brief(brief: CompetitionBrief) -> str:
         f"Required artifacts: {', '.join(brief.submission_artifacts)}" if brief.submission_artifacts else "",
         f"Requirements: {'; '.join(required)}" if required else "",
         "Judging: "
-        + "; ".join(f"{criterion.name} ({criterion.weight_or_priority})" for criterion in brief.judging_criteria),
+        + "; ".join(
+            f"{criterion.name} ({criterion.weight_or_priority})" for criterion in brief.judging_criteria
+        ),
         "Do not build: " + "; ".join(brief.crowding.do_not_build[:12]),
         "High collision: " + "; ".join(brief.crowding.high_collision[:12]),
     ]
@@ -293,24 +294,24 @@ def research_markdown(brief: CompetitionBrief) -> str:
     for fact in brief.facts:
         lines.append(f"- [{fact.confidence}] {fact.claim} _(source: {fact.source})_")
     lines += ["", "## Inference"]
-    for item in brief.inference:
-        lines.append(f"- {item.claim} — {item.rationale}")
+    for inference_item in brief.inference:
+        lines.append(f"- {inference_item.claim} — {inference_item.rationale}")
     lines += ["", "## Missing"]
-    for item in brief.missing:
-        lines.append(f"- {item}")
+    for missing_item in brief.missing:
+        lines.append(f"- {missing_item}")
     lines += ["", "## Potentially stale"]
-    for item in brief.potentially_stale:
-        lines.append(f"- {item}")
+    for stale_item in brief.potentially_stale:
+        lines.append(f"- {stale_item}")
     lines += ["", "## Crowding map", "### High collision"]
-    for item in brief.crowding.high_collision:
-        lines.append(f"- {item}")
+    for collision_label in brief.crowding.high_collision:
+        lines.append(f"- {collision_label}")
     lines.append("### Medium collision")
-    for item in brief.crowding.medium_collision:
-        lines.append(f"- {item}")
+    for collision_label in brief.crowding.medium_collision:
+        lines.append(f"- {collision_label}")
     lines.append("### Potentially underexplored")
-    for item in brief.crowding.potentially_underexplored:
-        lines.append(f"- {item}")
+    for underexplored_label in brief.crowding.potentially_underexplored:
+        lines.append(f"- {underexplored_label}")
     lines.append("### Do not build")
-    for item in brief.crowding.do_not_build:
-        lines.append(f"- {item}")
+    for banned_label in brief.crowding.do_not_build:
+        lines.append(f"- {banned_label}")
     return "\n".join(lines)
