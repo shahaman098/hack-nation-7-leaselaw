@@ -1,3 +1,3 @@
-"""HackForge: hackathon research and idea-selection laboratory."""
+"""HackForge: evidence-backed competition strategy and idea-selection engine."""
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
