@@ -154,15 +154,22 @@ class CompetitionBrief(BaseModel):
 
     def mandatory_technologies(self) -> list[str]:
         explicit = list(self.required_tech)
-        explicit.extend(
+        structured = [
             requirement.description
             for requirement in self.requirements
             if requirement.required and requirement.category in {"technology", "platform"}
-        )
-        # Older briefs did not distinguish required from encouraged. Preserve
-        # compatibility, but only use this fallback when no structured required
-        # technology was extracted.
-        if not explicit and self.required_or_encouraged_tech:
+        ]
+        explicit.extend(structured)
+        # Only legacy briefs that have none of the new requirement fields use
+        # the old combined list. A newly parsed encouraged technology must never
+        # become mandatory through compatibility fallback.
+        if (
+            not explicit
+            and not self.required_tech
+            and not self.encouraged_tech
+            and not self.requirements
+            and self.required_or_encouraged_tech
+        ):
             explicit.extend(self.required_or_encouraged_tech)
         return list(dict.fromkeys(item.strip() for item in explicit if item.strip()))
 
