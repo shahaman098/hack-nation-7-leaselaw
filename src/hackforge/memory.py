@@ -21,8 +21,15 @@ def build_run_manifest(
     human_overrides: list[dict[str, Any]] | None = None,
     final_primary_id: str | None = None,
     final_backup_id: str | None = None,
+    competition_result: str | None = None,
     hackathon_result: str | None = None,
 ) -> dict[str, Any]:
+    """Build a run manifest.
+
+    `hackathon_result` remains an input alias for 0.4 callers. New manifests write
+    `competition_result`; readers continue to accept the legacy key in old runs.
+    """
+    result = competition_result or hackathon_result
     manifest = {
         "hackforge_version": __version__,
         "created_at": utc_now_iso(),
@@ -41,8 +48,8 @@ def build_run_manifest(
         "human_overrides": human_overrides or [],
         "final_primary_id": final_primary_id,
         "final_backup_id": final_backup_id,
-        "hackathon_result": hackathon_result,
-        "notes": "Update hackathon_result and human_overrides after the competition.",
+        "competition_result": result,
+        "notes": "Update competition_result and human_overrides after the competition.",
     }
     write_json(run_dir / "run-manifest.json", manifest)
     return manifest
@@ -82,6 +89,11 @@ def _load_status(run_dir: Path) -> dict[str, Any] | None:
         return None
 
 
+def _manifest_result(manifest: dict[str, Any]) -> Any:
+    """Read 0.5 competition outcome first, then the 0.4 legacy field."""
+    return manifest.get("competition_result") or manifest.get("hackathon_result")
+
+
 def list_runs(runs_root: Path | None = None) -> list[dict[str, Any]]:
     """Return one summary row per run directory, newest first."""
     from hackforge.paths import RUNS_DIR
@@ -100,7 +112,7 @@ def list_runs(runs_root: Path | None = None) -> list[dict[str, Any]]:
         manifest = manifest or {}
         status = status or {}
         counts = manifest.get("candidate_counts", {})
-        total_time = sum(float(v) for v in manifest.get("stage_timings_seconds", {}).values())
+        total_time = sum(float(value) for value in manifest.get("stage_timings_seconds", {}).values())
         rows.append(
             {
                 "run": run_dir.name,
@@ -111,24 +123,19 @@ def list_runs(runs_root: Path | None = None) -> list[dict[str, Any]]:
                 "raw": counts.get("raw", 0),
                 "finalists": counts.get("finalists", 0),
                 "primary": manifest.get("final_primary_id"),
-                "result": manifest.get("hackathon_result"),
+                "result": _manifest_result(manifest),
                 "seconds": round(total_time, 2),
                 "status": status.get("status", "complete" if manifest else "unknown"),
                 "stage": status.get("stage", ""),
                 "error": status.get("error", ""),
             }
         )
-    rows.sort(key=lambda r: r["created_at"], reverse=True)
+    rows.sort(key=lambda row: row["created_at"], reverse=True)
     return rows
 
 
 def learn_from_runs(runs_root: Path | None = None) -> dict[str, Any]:
-    """Aggregate experimental memory across runs for continuous improvement.
-
-    Highlights which providers/prompt versions produced ideas that survived to the
-    finalist stage and which competitions produced recorded outcomes, so future runs
-    can be biased toward configurations that historically won.
-    """
+    """Aggregate experimental memory across runs for continuous improvement."""
     from hackforge.paths import RUNS_DIR
 
     root = runs_root or RUNS_DIR
@@ -148,31 +155,36 @@ def learn_from_runs(runs_root: Path | None = None) -> dict[str, Any]:
             counts = manifest.get("candidate_counts", {})
             raw = float(counts.get("raw", 0) or 0)
             finalists = float(counts.get("finalists", 0) or 0)
-            research = (manifest.get("providers") or {}).get("research", "unknown")
-            stat = provider_stats.setdefault(research, {"runs": 0, "raw": 0, "finalists": 0})
+            research_provider = (manifest.get("providers") or {}).get("research", "unknown")
+            stat = provider_stats.setdefault(
+                research_provider,
+                {"runs": 0, "raw": 0, "finalists": 0},
+            )
             stat["runs"] += 1
             stat["raw"] += raw
             stat["finalists"] += finalists
-            result = manifest.get("hackathon_result")
+            result = _manifest_result(manifest)
             if result:
-                outcome_stats[result] = outcome_stats.get(result, 0) + 1
-            for pv in (manifest.get("prompt_versions") or {}):
-                prompt_versions_seen[pv] = prompt_versions_seen.get(pv, 0) + 1
+                outcome_stats[str(result)] = outcome_stats.get(str(result), 0) + 1
+            for prompt_version in (manifest.get("prompt_versions") or {}):
+                prompt_versions_seen[prompt_version] = prompt_versions_seen.get(prompt_version, 0) + 1
 
     for stat in provider_stats.values():
-        stat["survival_rate"] = round(stat["finalists"] / stat["raw"], 4) if stat["raw"] else 0.0
+        stat["survival_rate"] = (
+            round(stat["finalists"] / stat["raw"], 4) if stat["raw"] else 0.0
+        )
 
-    recorded = [r for r in rows if r.get("hackathon_result")]
+    recorded = [manifest for manifest in rows if _manifest_result(manifest)]
     recommendations: list[str] = []
     if not rows:
         recommendations.append("No runs found yet. Run `hackforge analyse` to start building memory.")
     if rows and not recorded:
         recommendations.append(
             "No outcomes recorded. Use `hackforge record-outcome <run> --result winner|finalist|dnq` "
-            "so HackForge can learn which configurations win."
+            "so HackForge can learn which configurations perform best."
         )
     if provider_stats:
-        best = max(provider_stats.items(), key=lambda kv: kv[1]["survival_rate"])
+        best = max(provider_stats.items(), key=lambda item: item[1]["survival_rate"])
         recommendations.append(
             f"Highest finalist survival rate: '{best[0]}' ({best[1]['survival_rate']:.1%} of raw ideas)."
         )
