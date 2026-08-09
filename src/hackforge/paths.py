@@ -102,12 +102,14 @@ IDEATION_LANES = [
     },
 ]
 
+# Competition-neutral review lenses. The prompt still receives the actual
+# official criteria/requirements, so a lens may not invent its own criterion.
 JUDGE_ROLES = [
-    "technical",
-    "product",
-    "sponsor",
+    "criteria",
+    "requirements",
+    "feasibility",
     "domain",
-    "demo-risk",
+    "novelty",
     "contrarian",
 ]
 
