@@ -21,17 +21,6 @@ from .search import mmr_select as mmr_select
 from .search import mutate_concepts as _search_mutate_concepts
 from .search import structural_distance as structural_distance
 
-NAVIGATOR_TOKENS = (
-    "navigator",
-    "opportunity board",
-    "eligibility checker",
-    "application draft",
-    "crisis action plan",
-    "safe route",
-    "campaign fatigue",
-    "ops doctor",
-)
-
 
 def cross_concepts(
     provider: LLMProvider,
@@ -41,12 +30,7 @@ def cross_concepts(
     count: int,
     evidence: list[Any] | None = None,
 ):
-    """Public concept crossing with competition-derived defaults.
-
-    The lower-level search engine intentionally remains compatible with older saved
-    runs. This boundary removes historical event-specific defaults before any idea
-    reaches gates, collision analysis, manifests, or exports.
-    """
+    """Public concept crossing with competition-derived defaults."""
     ideas, lineage = _search_cross_concepts(
         provider,
         brief,
@@ -91,20 +75,12 @@ def mutate_concepts(
 
 def _apply_competition_requirements(idea: CandidateIdea, brief: CompetitionBrief) -> None:
     """Translate the parsed brief into candidate-level implementation obligations."""
-    required_tech = brief.mandatory_technologies()
-    for technology in required_tech:
+    for technology in brief.mandatory_technologies():
         if not _technology_role(idea, technology):
             idea.technology_roles[technology] = (
-                f"{technology} is a material dependency in the core path: "
-                f"{idea.core_computation}. The implementation must fail or materially change "
-                "if this required technology is removed."
+                f"{technology} is a material dependency in the core path: {idea.core_computation}. "
+                "The implementation must materially change or fail if the required technology is removed."
             )
-
-    # Remove an old generator default when the current brief does not actually
-    # require those tools. Provider choice for HackForge itself is unrelated.
-    dependency_blob = idea.sponsor_dependency.lower()
-    if not required_tech and ("gpt-5.6" in dependency_blob or "codex" in dependency_blob):
-        idea.sponsor_dependency = ""
 
     data_required = bool(brief.data_requirements) or any(
         requirement.required and requirement.category == "data"
@@ -124,18 +100,20 @@ def _apply_competition_requirements(idea: CandidateIdea, brief: CompetitionBrief
             "Use the competition-provided or explicitly available dataset and verify access before implementation."
         )
 
-    constraint = brief.build_window or (f"the submission deadline {brief.deadline}" if brief.deadline else "")
+    constraint = brief.build_window or (
+        f"the submission deadline {brief.deadline}" if brief.deadline else ""
+    )
     team = f" with team constraint {brief.team_size}" if brief.team_size else ""
     if constraint:
         idea.minimum_demonstrable_loop = (
-            f"Within {constraint}{team}, implement the smallest complete loop: prepare the required inputs, "
-            f"build the core transformation ({idea.core_computation}), produce the last-mile result "
+            f"Within {constraint}{team}, implement the smallest complete loop: prepare the required inputs/resources, "
+            f"build the core transformation ({idea.core_computation}), produce the result "
             f"({idea.last_mile_action}), then validate the required submission proof."
         )
     else:
         idea.minimum_demonstrable_loop = (
-            "Implement the smallest complete loop without inventing a timebox: prepare required inputs, "
-            f"build the core transformation ({idea.core_computation}), produce the last-mile result "
+            "Implement the smallest complete loop without inventing a timebox: prepare required inputs/resources, "
+            f"build the core transformation ({idea.core_computation}), produce the result "
             f"({idea.last_mile_action}), and validate the competition-relevant output."
         )
 
@@ -162,7 +140,7 @@ def _apply_competition_requirements(idea: CandidateIdea, brief: CompetitionBrief
         else:
             explanation = (
                 f"Plan for required condition: {requirement.description}. "
-                "Verify the exact submission evidence before finalizing the build."
+                "Verify the exact submission evidence before finalizing the entry."
             )
         if explanation:
             idea.requirement_satisfaction[requirement.id] = explanation
@@ -192,7 +170,9 @@ def run_isolated_ideation(
     *,
     seeds_per_lane: int = 8,
 ) -> list[CandidateIdea]:
-    """Run lanes independently. Callers must not share prior lane outputs across providers."""
+    """Run lanes independently using only current-competition crowding constraints."""
+    if not providers:
+        raise ValueError("run_isolated_ideation requires at least one provider")
     template, _ = load_prompt("contrarian-ideation")
     blacklist = _format_blacklist(brief)
 
@@ -221,8 +201,9 @@ def run_isolated_ideation(
                 index=index,
             )
             _apply_competition_requirements(idea, brief)
-            if _violates_hard_bans(idea):
-                idea.kill_reason = (idea.kill_reason + " | hard-ban topology").strip(" |")
+            matched_ban = _matching_competition_ban(idea, brief)
+            if matched_ban:
+                idea.kill_reason = (idea.kill_reason + f" | competition do-not-build match: {matched_ban}").strip(" |")
                 idea.collision_risk = "high"
             lane_ideas.append(idea)
         return lane_ideas
@@ -272,7 +253,7 @@ def _normalize_seed(
         lane=lane_id,
         disciplines=list(item.get("disciplines") or disciplines),
         working_title=title,
-        primary_user=str(item.get("primary_user") or "unspecified"),
+        primary_user=str(item.get("primary_user") or "unspecified stakeholder"),
         painful_workflow=str(item.get("painful_workflow") or ""),
         current_workaround=str(item.get("current_workaround") or ""),
         imported_mechanism=str(item.get("imported_mechanism") or ""),
@@ -298,28 +279,34 @@ def _normalize_seed(
     )
 
 
-def _violates_hard_bans(idea: CandidateIdea) -> bool:
-    blob = " ".join(
-        [
-            idea.working_title,
-            idea.painful_workflow,
-            idea.last_mile_action,
-            idea.visible_transformation,
-            idea.killer_demo,
-            idea.imported_mechanism,
-        ]
-    ).lower()
-    if any(token in blob for token in NAVIGATOR_TOKENS):
-        recover = ("eligib" in blob and "draft" in blob) or ("rank" in blob and "application" in blob)
-        crisis = ("heatwave" in blob or "air quality" in blob) and ("safe" in blob or "action plan" in blob)
-        ops = ("campaign" in blob and "fatigue" in blob) or ("ctr" in blob and "ad copy" in blob)
-        return recover or crisis or ops
-    banned_words = ("tutor", "summarizer", "summariser", "wellness bot", "resume optim")
-    return any(word in blob for word in banned_words)
+def _matching_competition_ban(idea: CandidateIdea, brief: CompetitionBrief) -> str:
+    """Return only an evidence-derived current-competition do-not-build match."""
+    idea_tokens = set(_norm_tokens(
+        " ".join(
+            [
+                idea.working_title,
+                idea.painful_workflow,
+                idea.last_mile_action,
+                idea.visible_transformation,
+                idea.killer_demo,
+                idea.imported_mechanism,
+            ]
+        )
+    ))
+    if not idea_tokens:
+        return ""
+    for banned in brief.crowding.do_not_build:
+        banned_tokens = set(_norm_tokens(banned))
+        if not banned_tokens:
+            continue
+        overlap = len(idea_tokens & banned_tokens) / max(1, len(banned_tokens))
+        if overlap >= 0.5:
+            return banned
+    return ""
 
 
 def cluster_ideas(ideas: list[CandidateIdea]) -> list[dict[str, Any]]:
-    """Cluster by structural fingerprint (mechanism + action + user class), not title."""
+    """Cluster by structural fingerprint (mechanism + action + stakeholder), not title."""
     buckets: dict[str, list[CandidateIdea]] = {}
     for idea in ideas:
         fingerprint = _structural_fingerprint(idea)
