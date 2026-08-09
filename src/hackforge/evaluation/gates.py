@@ -6,13 +6,12 @@ from hackforge.models import CandidateIdea, CompetitionBrief, EvidenceSource, Ga
 
 REQUIRED_GATES = (
     "evidence_backed",
-    "data_accessible_and_verified",
-    "required_model_is_material",
-    "codex_role_is_material",
-    "solo_five_day_loop",
-    "observable_demo_proof",
+    "required_technology_fit",
+    "requirement_compliance",
+    "data_viability",
+    "delivery_feasible",
+    "demo_fit",
     "specific_track_fit",
-    "testable_claim",
 )
 
 
@@ -24,9 +23,6 @@ def evaluate_gates(
     evidence_by_id = {source.id: source for source in evidence}
     cited = [evidence_by_id[source_id] for source_id in idea.evidence_ids if source_id in evidence_by_id]
     accessible_citations = [source for source in cited if source.fetch_status == "ok" and source.verified]
-    required_tech = " ".join(brief.required_or_encouraged_tech).lower()
-    requires_gpt_5_6 = "gpt-5.6" in required_tech or "gpt 5.6" in required_tech
-    requires_codex = "codex" in required_tech
 
     results = [
         _result(
@@ -37,37 +33,12 @@ def evaluate_gates(
             else "No cited evidence ID resolves to a retrieved verified source",
             [source.id for source in accessible_citations],
         ),
-        _data_gate(idea, accessible_citations),
-        _material_role_gate(
-            "required_model_is_material",
-            idea.gpt_5_6_role,
-            required=requires_gpt_5_6,
-            required_terms=("gpt-5.6", "reason", "infer", "transform", "evaluate", "classif", "extract"),
-            label="GPT-5.6",
-        ),
-        _material_role_gate(
-            "codex_role_is_material",
-            idea.codex_build_role,
-            required=requires_codex,
-            required_terms=("codex", "build", "test", "implement", "session", "debug"),
-            label="Codex",
-        ),
-        _result(
-            "solo_five_day_loop",
-            _credible_five_day_loop(idea.minimum_demonstrable_loop),
-            idea.minimum_demonstrable_loop or "No minimum demonstrable loop supplied",
-        ),
-        _result(
-            "observable_demo_proof",
-            bool(idea.killer_demo and idea.demo_proof and _observable(idea.demo_proof)),
-            idea.demo_proof or "No observable or measurable demo result supplied",
-        ),
+        _technology_gate(idea, brief),
+        _requirement_gate(idea, brief),
+        _data_gate(idea, brief, accessible_citations),
+        _delivery_gate(idea, brief),
+        _demo_gate(idea, brief),
         _track_gate(idea, brief),
-        _result(
-            "testable_claim",
-            bool(idea.testable_claim and _testable(idea.testable_claim)),
-            idea.testable_claim or "No falsifiable claim supplied",
-        ),
     ]
     idea.gate_results = results
     return results
@@ -75,52 +46,199 @@ def evaluate_gates(
 
 def passes_gates(idea: CandidateIdea) -> bool:
     by_name = {result.gate: result for result in idea.gate_results}
-    return all(by_name.get(name) is not None and by_name[name].status in {"pass", "not_applicable"} for name in REQUIRED_GATES)
+    return all(
+        by_name.get(name) is not None and by_name[name].status in {"pass", "not_applicable"}
+        for name in REQUIRED_GATES
+    )
 
 
 def gate_failures(idea: CandidateIdea) -> list[str]:
     return [result.gate for result in idea.gate_results if result.status in {"fail", "unverified"}]
 
 
-def _data_gate(idea: CandidateIdea, accessible_citations: list[EvidenceSource]) -> GateResult:
+def _technology_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResult:
+    required = brief.mandatory_technologies()
+    if not required:
+        return GateResult(
+            gate="required_technology_fit",
+            status="not_applicable",
+            reason="Competition has no mandatory technology or platform requirement",
+        )
+
+    missing: list[str] = []
+    decorative: list[str] = []
+    for technology in required:
+        role = _role_for_technology(idea.technology_roles, technology)
+        if not role:
+            missing.append(technology)
+            continue
+        blob = role.lower()
+        weak = any(
+            phrase in blob
+            for phrase in ("optional", "could use", "nice to have", "if time", "decorative", "logo only")
+        )
+        if len(role.split()) < 6 or weak:
+            decorative.append(technology)
+
+    passed = not missing and not decorative
+    detail = []
+    if missing:
+        detail.append("missing material roles: " + ", ".join(missing))
+    if decorative:
+        detail.append("roles appear non-material: " + ", ".join(decorative))
+    if not detail:
+        detail.append("every mandatory technology/platform has a material implementation role")
+    return _result("required_technology_fit", passed, "; ".join(detail))
+
+
+def _requirement_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResult:
+    required = [requirement for requirement in brief.requirements if requirement.required]
+    artifact_keys = [f"artifact:{artifact}" for artifact in brief.submission_artifacts]
+    if not required and not artifact_keys:
+        return GateResult(
+            gate="requirement_compliance",
+            status="not_applicable",
+            reason="No structured mandatory requirements or submission artifacts were parsed",
+        )
+
+    missing: list[str] = []
+    for requirement in required:
+        explanation = idea.requirement_satisfaction.get(requirement.id, "").strip()
+        if not explanation:
+            missing.append(requirement.id)
+    for key in artifact_keys:
+        if not idea.requirement_satisfaction.get(key, "").strip():
+            missing.append(key)
+
+    return _result(
+        "requirement_compliance",
+        not missing,
+        "All structured mandatory requirements have an implementation/submission plan"
+        if not missing
+        else "Missing requirement plans: " + ", ".join(missing),
+    )
+
+
+def _data_gate(
+    idea: CandidateIdea,
+    brief: CompetitionBrief,
+    accessible_citations: list[EvidenceSource],
+) -> GateResult:
+    requires_data = bool(brief.data_requirements) or any(
+        requirement.required and requirement.category == "data" for requirement in brief.requirements
+    )
+    if not idea.data_sources:
+        if requires_data:
+            return _result(
+                "data_viability",
+                False,
+                "Competition requires data use but the concept names no credible data source",
+            )
+        return GateResult(
+            gate="data_viability",
+            status="not_applicable",
+            reason="Concept and competition do not require an external dataset",
+        )
+
     status = idea.data_access_status.strip().lower()
     named_urls = [source for source in idea.data_sources if re.search(r"https?://", source)]
+    non_urls = [source for source in idea.data_sources if source not in named_urls]
     cited_urls = {source.url for source in accessible_citations}
     verified_urls = [url for url in named_urls if url in cited_urls]
-    verified = status == "verified" and bool(verified_urls) and len(verified_urls) == len(named_urls)
-    passed = bool(idea.data_sources) and verified
-    if verified:
-        reason = "Every named data URL exactly matches retrieved, verified cited evidence"
+    urls_ok = len(verified_urls) == len(named_urls)
+    non_url_status_ok = status in {
+        "verified",
+        "available",
+        "provided",
+        "local",
+        "fixture",
+        "generated_fixture",
+        "synthetic_fixture",
+        "sensor",
+        "user_supplied",
+    }
+    non_urls_ok = not non_urls or (non_url_status_ok and bool(idea.data_access_plan.strip()))
+    passed = urls_ok and non_urls_ok and (bool(named_urls) or bool(non_urls))
+
+    if passed:
+        reason = "Named data access is credible for the competition and concept"
+    elif named_urls and not urls_ok:
+        reason = "One or more public data URLs were not verified against cited evidence"
     else:
-        reason = "Named data was not verified against retrieved evidence; synthetic or proposed data is rejected"
+        reason = "Non-URL data was named without a credible access status and access plan"
     return _result(
-        "data_accessible_and_verified",
+        "data_viability",
         passed,
         reason,
         [source.id for source in accessible_citations],
     )
 
 
-def _material_role_gate(
-    gate: str,
-    role: str,
-    *,
-    required: bool,
-    required_terms: tuple[str, ...],
-    label: str,
-) -> GateResult:
-    if not required:
-        return GateResult(gate=gate, status="not_applicable", reason=f"{label} is not mandatory for this brief")
-    blob = role.lower()
-    hits = sum(1 for term in required_terms if term in blob)
-    decorative = any(phrase in blob for phrase in ("optional", "could use", "chat interface", "generate copy"))
-    passed = len(role.split()) >= 8 and hits >= 2 and not decorative
-    return _result(gate, passed, role or f"No material {label} role supplied")
+def _delivery_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResult:
+    constrained = bool(brief.build_window or brief.deadline or brief.team_size) or any(
+        requirement.required and requirement.category in {"timebox", "team"}
+        for requirement in brief.requirements
+    )
+    if not constrained:
+        return GateResult(
+            gate="delivery_feasible",
+            status="not_applicable",
+            reason="No build-window, deadline, or team delivery constraint was parsed",
+        )
+
+    text = idea.minimum_demonstrable_loop.strip()
+    blob = text.lower()
+    has_sequence = any(
+        token in blob
+        for token in (
+            "build",
+            "implement",
+            "produce",
+            "prepare",
+            "train",
+            "test",
+            "validate",
+            "measure",
+            "submit",
+            "present",
+            "prototype",
+            "core",
+            "output",
+        )
+    )
+    passed = len(text.split()) >= 8 and has_sequence
+    constraints = ", ".join(
+        value for value in (brief.build_window, brief.deadline, brief.team_size) if value
+    )
+    return _result(
+        "delivery_feasible",
+        passed,
+        text or f"No delivery plan supplied for constraints: {constraints or 'structured requirement'}",
+    )
+
+
+def _demo_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResult:
+    if not _brief_requires_demo(brief):
+        return GateResult(
+            gate="demo_fit",
+            status="not_applicable",
+            reason="Competition does not require or explicitly score a demo/prototype/presentation proof",
+        )
+    passed = bool(idea.killer_demo and idea.demo_proof and _observable(idea.demo_proof))
+    return _result(
+        "demo_fit",
+        passed,
+        idea.demo_proof or "Competition calls for observable proof but no credible demo/prototype proof was supplied",
+    )
 
 
 def _track_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResult:
     if not brief.tracks:
-        return GateResult(gate="specific_track_fit", status="not_applicable", reason="Competition has no parsed tracks")
+        return GateResult(
+            gate="specific_track_fit",
+            status="not_applicable",
+            reason="Competition has no parsed tracks",
+        )
     fit = idea.track_fit.lower().strip()
     passed = any(fit in track.lower() or track.lower() in fit for track in brief.tracks if fit)
     return _result(
@@ -130,24 +248,65 @@ def _track_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResult:
     )
 
 
-def _credible_five_day_loop(text: str) -> bool:
-    blob = text.lower()
-    has_timebox = any(token in blob for token in ("day 1", "day one", "five-day", "5-day", "days 2", "day 5"))
-    has_loop = any(token in blob for token in ("fixture", "input", "transform", "core", "output", "demo", "metric", "test"))
-    return len(text.split()) >= 10 and has_timebox and has_loop
+def _brief_requires_demo(brief: CompetitionBrief) -> bool:
+    if brief.demo_requirements:
+        return True
+    if any(
+        requirement.required and requirement.category == "demo" for requirement in brief.requirements
+    ):
+        return True
+    criteria_blob = " ".join(
+        f"{criterion.name} {criterion.notes}" for criterion in brief.judging_criteria
+    ).lower()
+    artifacts_blob = " ".join(brief.submission_artifacts).lower()
+    return any(
+        token in criteria_blob or token in artifacts_blob
+        for token in ("demo", "prototype", "presentation", "pitch", "working project", "video")
+    )
+
+
+def _role_for_technology(roles: dict[str, str], technology: str) -> str:
+    wanted = _norm(technology)
+    for key, value in roles.items():
+        key_norm = _norm(key)
+        if wanted == key_norm or wanted in key_norm or key_norm in wanted:
+            return value.strip()
+    return ""
+
+
+def _norm(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
 
 
 def _observable(text: str) -> bool:
     blob = text.lower()
-    return any(token in blob for token in ("before", "after", "show", "display", "emit", "measure", "compare", "change", "reduce", "increase"))
+    return any(
+        token in blob
+        for token in (
+            "before",
+            "after",
+            "show",
+            "display",
+            "emit",
+            "measure",
+            "compare",
+            "change",
+            "reduce",
+            "increase",
+            "prototype",
+            "present",
+            "demonstrate",
+            "result",
+        )
+    )
 
 
-def _testable(text: str) -> bool:
-    blob = text.lower()
-    return any(token in blob for token in ("than", "%", "measure", "accuracy", "time", "fewer", "more", "reduce", "increase", "baseline"))
-
-
-def _result(gate: str, passed: bool, reason: str, evidence_ids: list[str] | None = None) -> GateResult:
+def _result(
+    gate: str,
+    passed: bool,
+    reason: str,
+    evidence_ids: list[str] | None = None,
+) -> GateResult:
     return GateResult(
         gate=gate,
         status="pass" if passed else "fail",
