@@ -16,14 +16,21 @@ def audit_collisions(
     *,
     live_enrich: bool = True,
 ) -> list[CollisionReport]:
-    """FAISS prefilter + dimensional scores + LLM auditor."""
+    """Semantic/local/public analogue audit with optional strict index enforcement.
+
+    A built FAISS index is used automatically when available. It is not a universal
+    prerequisite because some competitions (for example grants, pitches, robotics,
+    research, or private-domain challenges) may have little useful coverage in the
+    bundled public-project corpus. Set HACKFORGE_REQUIRE_SEMANTIC_COLLISION=1 when a
+    trusted workflow specifically requires a populated semantic index.
+    """
     return audit_collisions_engine(
         provider,
         candidates,
         live_enrich=live_enrich,
         use_llm=True,
         supplemental_analogues=corpus,
-        require_semantic=env_flag("HACKFORGE_REQUIRE_SEMANTIC_COLLISION", default=True),
+        require_semantic=env_flag("HACKFORGE_REQUIRE_SEMANTIC_COLLISION", default=False),
     )
 
 
