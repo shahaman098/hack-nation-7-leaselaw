@@ -96,7 +96,8 @@ def build_competition_brief(
         "Competition materials:",
         raw_text[:120_000],
         "",
-        "Default overcrowding seed blacklist (merge and refine only when relevant):",
+        "Advisory cross-competition crowding seeds. Use only when evidence makes them relevant; "
+        "an empty competition-specific crowding map is valid:",
         str(blacklist),
     ]
     if team_size:
@@ -107,22 +108,16 @@ def build_competition_brief(
         user_parts.append(f"Available skills/infrastructure: {skills}")
 
     schema = None if isinstance(provider, DryRunProvider) else read_json(SCHEMAS_DIR / "competition.json")
-    data = provider.complete_json(template, "\n".join(user_parts), schema=schema)
+    data = provider.complete_json(system=template, user="\n".join(user_parts), schema=schema)
     if not isinstance(data, dict):
         raise ValueError("Competition research did not return a JSON object")
 
     crowding_raw = data.get("crowding") or {}
     crowding = CrowdingMap(
-        high_collision=list(crowding_raw.get("high_collision") or blacklist.get("high_collision", [])),
-        medium_collision=list(crowding_raw.get("medium_collision") or blacklist.get("medium_collision", [])),
-        potentially_underexplored=list(
-            crowding_raw.get("potentially_underexplored")
-            or blacklist.get("potentially_underexplored_seeds", [])
-        ),
-        do_not_build=list(
-            crowding_raw.get("do_not_build")
-            or blacklist.get("do_not_build_structural_twins", [])
-        ),
+        high_collision=list(crowding_raw.get("high_collision") or []),
+        medium_collision=list(crowding_raw.get("medium_collision") or []),
+        potentially_underexplored=list(crowding_raw.get("potentially_underexplored") or []),
+        do_not_build=list(crowding_raw.get("do_not_build") or []),
     )
 
     facts = [
@@ -139,7 +134,7 @@ def build_competition_brief(
         else JudgingCriterion(name=str(item), weight_or_priority="unspecified")
         for item in data.get("judging_criteria", [])
     ]
-    requirements = []
+    requirements: list[CompetitionRequirement] = []
     for index, item in enumerate(data.get("requirements", [])):
         if isinstance(item, dict):
             payload = dict(item)
@@ -223,7 +218,7 @@ def enrich_brief_with_live_crowding(
     force: bool = False,
     sources: list[EvidenceSource] | None = None,
 ) -> CompetitionBrief:
-    """Merge optional Devpost crowd signals into blacklist labels only."""
+    """Merge optional Devpost crowd signals into competition-specific labels only."""
     from hackforge.utils import env_flag
 
     if not force and not env_flag("HACKFORGE_LIVE_RESEARCH"):
