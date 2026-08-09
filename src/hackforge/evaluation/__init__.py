@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import random
+import re
 from collections import Counter
 from typing import Any
 
@@ -14,7 +15,7 @@ from hackforge.models import (
     JudgeVote,
     PairwiseResult,
 )
-from hackforge.paths import HARD_GATES, JUDGE_ROLES
+from hackforge.paths import JUDGE_ROLES
 from hackforge.providers import DryRunProvider, LLMProvider
 from hackforge.utils import load_prompt, render_prompt
 
@@ -32,15 +33,21 @@ def review_feasibility(
     template, _ = load_prompt("feasibility")
     payload = {
         "deadline": brief.deadline,
+        "build_window": brief.build_window,
         "team_size": brief.team_size,
-        "required_tech": brief.required_or_encouraged_tech,
-        "candidates": [c.model_dump() for c in candidates],
+        "mandatory_technologies": brief.mandatory_technologies(),
+        "requirements": [requirement.model_dump() for requirement in brief.requirements if requirement.required],
+        "submission_artifacts": brief.submission_artifacts,
+        "demo_requirements": brief.demo_requirements,
+        "data_requirements": brief.data_requirements,
+        "candidates": [candidate.model_dump() for candidate in candidates],
     }
     schema = None if isinstance(provider, DryRunProvider) else _feasibility_schema(len(candidates))
     raw = provider.complete_json(template, str(payload), schema=schema)
     items = raw if isinstance(raw, list) else raw.get("reports") or []
     if not isinstance(items, list):
         raise RuntimeError("feasibility review returned a non-list reports payload")
+
     reports: list[FeasibilityReport] = []
     required_fields = {
         "candidate_id",
@@ -75,7 +82,8 @@ def review_feasibility(
                 notes=str(item.get("notes") or ""),
             )
         )
-    covered = {r.candidate_id for r in reports}
+
+    covered = {report.candidate_id for report in reports}
     if len(covered) != len(reports) and not isinstance(provider, DryRunProvider):
         raise RuntimeError("feasibility review returned duplicate candidate ids")
     expected = {candidate.id for candidate in candidates}
@@ -87,16 +95,16 @@ def review_feasibility(
         raise RuntimeError(
             f"feasibility review omitted candidate ids {sorted(missing)}; no fallback reports were generated"
         )
-    for c in candidates:
-        if c.id not in covered:
+    for candidate in candidates:
+        if candidate.id not in covered:
             reports.append(
                 FeasibilityReport(
-                    candidate_id=c.id,
+                    candidate_id=candidate.id,
                     delivery_risk="medium",
-                    critical_dependencies=[c.sponsor_dependency] if c.sponsor_dependency else [],
-                    non_fakeable_core=c.core_computation,
-                    minimum_demonstrable_loop=c.killer_demo,
-                    notes="fallback feasibility stub",
+                    critical_dependencies=[candidate.sponsor_dependency] if candidate.sponsor_dependency else [],
+                    non_fakeable_core=candidate.core_computation,
+                    minimum_demonstrable_loop=candidate.minimum_demonstrable_loop or candidate.killer_demo,
+                    notes="fixture-only fallback feasibility stub",
                 )
             )
     return reports
@@ -104,14 +112,14 @@ def review_feasibility(
 
 def feasibility_markdown(reports: list[FeasibilityReport]) -> str:
     lines = ["# Feasibility analysis", ""]
-    for r in reports:
-        lines.append(f"## {r.candidate_id}")
-        lines.append(f"- Delivery risk: **{r.delivery_risk}**")
-        lines.append(f"- Kill?: {r.kill_recommendation}")
-        lines.append(f"- Non-fakeable core: {r.non_fakeable_core}")
-        lines.append(f"- Min demo loop: {r.minimum_demonstrable_loop}")
-        lines.append(f"- Dependencies: {', '.join(r.critical_dependencies)}")
-        lines.append(f"- Notes: {r.notes}")
+    for report in reports:
+        lines.append(f"## {report.candidate_id}")
+        lines.append(f"- Delivery risk: **{report.delivery_risk}**")
+        lines.append(f"- Kill?: {report.kill_recommendation}")
+        lines.append(f"- Non-fakeable core: {report.non_fakeable_core}")
+        lines.append(f"- Minimum completion/proof loop: {report.minimum_demonstrable_loop}")
+        lines.append(f"- Dependencies: {', '.join(report.critical_dependencies)}")
+        lines.append(f"- Notes: {report.notes}")
         lines.append("")
     return "\n".join(lines)
 
@@ -123,62 +131,74 @@ def blind_judge(
     collisions: list[CollisionReport],
     feasibility: list[FeasibilityReport],
 ) -> EvaluationResult:
+    if not finalists:
+        raise ValueError("blind_judge requires at least one finalist")
+
     shuffled = sorted(finalists, key=lambda candidate: candidate.id)
     seed_material = brief.name + "|" + "|".join(candidate.id for candidate in shuffled)
     random.Random(int(hashlib.sha256(seed_material.encode()).hexdigest()[:16], 16)).shuffle(shuffled)
-    blind_map = {chr(ord("A") + i): c for i, c in enumerate(shuffled)}
-    reverse = {c.id: bid for bid, c in blind_map.items()}
-    coll_by = {r.candidate_id: r for r in collisions}
-    feas_by = {r.candidate_id: r for r in feasibility}
+    blind_map = {chr(ord("A") + index): candidate for index, candidate in enumerate(shuffled)}
+    collision_by = {report.candidate_id: report for report in collisions}
+    feasibility_by = {report.candidate_id: report for report in feasibility}
 
     anonymized = []
-    for bid, c in blind_map.items():
+    for blind_id, candidate in blind_map.items():
         anonymized.append(
             {
-                "blind_id": bid,
-                "primary_user": c.primary_user,
-                "painful_workflow": c.painful_workflow,
-                "imported_mechanism": c.imported_mechanism,
-                "data_sources": c.data_sources,
-                "core_computation": c.core_computation,
-                "last_mile_action": c.last_mile_action,
-                "visible_transformation": c.visible_transformation,
-                "killer_demo": c.killer_demo,
-                "hard_to_fake_advantage": c.hard_to_fake_advantage,
-                "collision_risk": coll_by[c.id].collision_risk if c.id in coll_by else c.collision_risk,
-                "delivery_risk": feas_by[c.id].delivery_risk if c.id in feas_by else "unknown",
-                "track_hints": brief.tracks,
+                "blind_id": blind_id,
+                "primary_user": candidate.primary_user,
+                "painful_workflow": candidate.painful_workflow,
+                "imported_mechanism": candidate.imported_mechanism,
+                "data_sources": candidate.data_sources,
+                "core_computation": candidate.core_computation,
+                "last_mile_action": candidate.last_mile_action,
+                "visible_transformation": candidate.visible_transformation,
+                "killer_demo": candidate.killer_demo,
+                "hard_to_fake_advantage": candidate.hard_to_fake_advantage,
+                "technology_roles": candidate.technology_roles,
+                "requirement_satisfaction": candidate.requirement_satisfaction,
+                "delivery_plan": candidate.minimum_demonstrable_loop,
+                "track_fit": candidate.track_fit,
+                "collision_risk": (
+                    collision_by[candidate.id].collision_risk
+                    if candidate.id in collision_by
+                    else candidate.collision_risk
+                ),
+                "delivery_risk": (
+                    feasibility_by[candidate.id].delivery_risk
+                    if candidate.id in feasibility_by
+                    else "unknown"
+                ),
             }
         )
 
-    criteria = [c.model_dump() for c in brief.judging_criteria]
+    criteria = [criterion.model_dump() for criterion in brief.judging_criteria]
+    constraints = {
+        "tracks": brief.tracks,
+        "mandatory_technologies": brief.mandatory_technologies(),
+        "requirements": [requirement.model_dump() for requirement in brief.requirements if requirement.required],
+        "submission_artifacts": brief.submission_artifacts,
+        "demo_requirements": brief.demo_requirements,
+        "data_requirements": brief.data_requirements,
+        "build_window": brief.build_window,
+        "deadline": brief.deadline,
+        "team_size": brief.team_size,
+    }
+
     template, _ = load_prompt("blind-judge")
     votes: list[JudgeVote] = []
     for role in JUDGE_ROLES:
         system = render_prompt(template, {"JUDGE_ROLE": role})
-        vote_schema = {
-            "type": "object",
-            "properties": {
-                "role": {"type": "string"},
-                "preferred_blind_id": {"type": "string", "enum": list(blind_map)},
-                "rationale": {"type": "string"},
-                "scores_by_official_criteria": {"type": "object"},
-                "hard_gate_failures": {"type": "array", "items": {"type": "string"}},
-                "demo_failure_risk": {"type": "string", "enum": ["low", "medium", "high"]},
-            },
-            "required": [
-                "role",
-                "preferred_blind_id",
-                "rationale",
-                "scores_by_official_criteria",
-                "hard_gate_failures",
-                "demo_failure_risk",
-            ],
-            "additionalProperties": False,
-        }
+        vote_schema = _vote_schema(list(blind_map))
         raw = provider.complete_json(
             system,
-            f"Official criteria: {criteria}\nCandidates: {anonymized}",
+            str(
+                {
+                    "official_criteria": criteria,
+                    "competition_constraints": constraints,
+                    "candidates": anonymized,
+                }
+            ),
             schema=None if isinstance(provider, DryRunProvider) else vote_schema,
         )
         if not isinstance(raw, dict):
@@ -207,31 +227,44 @@ def blind_judge(
             )
         )
 
-    hard_gates = _evaluate_hard_gates(finalists, coll_by, feas_by, reverse)
+    hard_gates = _candidate_hard_gates(blind_map, collision_by, feasibility_by)
     disagreements = _surface_disagreements(votes)
-    pairwise = _real_pairwise(provider, template, criteria, anonymized, votes, list(blind_map.keys()))
-    counts = Counter(v.preferred_blind_id for v in votes)
+    pairwise = _real_pairwise(
+        provider,
+        template,
+        criteria,
+        constraints,
+        anonymized,
+        votes,
+        list(blind_map),
+    )
+    vote_counts = Counter(vote.preferred_blind_id for vote in votes)
     pairwise_wins = Counter(result.winner for result in pairwise)
+
     ordered = sorted(
-        blind_map.keys(),
-        key=lambda bid: (
-            -pairwise_wins[bid],
-            -_weighted_official_score(votes, bid, brief),
-            -_technical_score(votes, bid),
-            -counts[bid],
-            bid,
+        blind_map,
+        key=lambda blind_id: (
+            -pairwise_wins[blind_id],
+            -_weighted_official_score(votes, blind_id, brief),
+            -vote_counts[blind_id],
+            blind_id,
         ),
     )
-    primary = ordered[0]
-    for bid in ordered:
-        gates = hard_gates.get(bid, {})
-        if all(g.get("passed", True) for g in gates.values()):
-            primary = bid
-            break
-    backup = next((b for b in ordered if b != primary), ordered[0])
+    primary = next(
+        (
+            blind_id
+            for blind_id in ordered
+            if all(gate.get("passed", True) for gate in hard_gates.get(blind_id, {}).values())
+        ),
+        ordered[0],
+    )
+    backup = next((blind_id for blind_id in ordered if blind_id != primary), primary)
 
     return EvaluationResult(
-        candidates=[{"blind_id": bid, "internal_id": c.id} for bid, c in blind_map.items()],
+        candidates=[
+            {"blind_id": blind_id, "internal_id": candidate.id}
+            for blind_id, candidate in blind_map.items()
+        ],
         hard_gates=hard_gates,
         judge_votes=votes,
         disagreements=disagreements,
@@ -240,63 +273,60 @@ def blind_judge(
             "primary_blind_id": primary,
             "backup_blind_id": backup,
             "why": (
-                f"Pairwise wins={dict(pairwise_wins)}; votes={dict(counts)}; "
-                "official criteria applied with technical implementation as tie-breaker; "
+                f"Pairwise wins={dict(pairwise_wins)}; votes={dict(vote_counts)}; "
+                "official competition criteria and their parsed weights/priorities determine ordering; "
                 f"disagreements={len(disagreements)}"
             ),
         },
     )
 
 
-def _evaluate_hard_gates(
-    finalists: list[CandidateIdea],
-    coll_by: dict[str, CollisionReport],
-    feas_by: dict[str, FeasibilityReport],
-    reverse: dict[str, str],
+def _candidate_hard_gates(
+    blind_map: dict[str, CandidateIdea],
+    collision_by: dict[str, CollisionReport],
+    feasibility_by: dict[str, FeasibilityReport],
 ) -> dict[str, dict[str, Any]]:
-    out: dict[str, dict[str, Any]] = {}
-    for c in finalists:
-        bid = reverse[c.id]
-        coll = coll_by.get(c.id)
-        feas = feas_by.get(c.id)
-        gates = {
-            "demonstrable_core": {"passed": bool(c.killer_demo), "notes": c.killer_demo or "missing killer demo"},
-            "real_computation_or_action": {
-                "passed": bool(c.core_computation and c.last_mile_action),
-                "notes": c.core_computation,
-            },
-            "data_accessible": {"passed": bool(c.data_sources), "notes": ", ".join(c.data_sources) or "no named data"},
-            "specific_track_fit": {"passed": True, "notes": "assessed against brief tracks in judge prompt"},
-            "sponsor_tech_material_or_explicitly_unnecessary": {
-                "passed": True,
-                "notes": c.sponsor_dependency or "explicitly none",
-            },
-            "core_loop_deliverable": {
-                "passed": not (feas and feas.kill_recommendation),
-                "notes": feas.notes if feas else "",
-            },
-            "clear_60s_transformation": {"passed": bool(c.visible_transformation), "notes": c.visible_transformation},
-            "collision_risk_acceptable": {
-                "passed": not (coll and coll.collision_risk == "high" and coll.kill_recommendation),
-                "notes": coll.collision_risk if coll else c.collision_risk,
-            },
+    output: dict[str, dict[str, Any]] = {}
+    for blind_id, candidate in blind_map.items():
+        gates: dict[str, Any] = {}
+        for result in candidate.gate_results:
+            gates[result.gate] = {
+                "passed": result.status in {"pass", "not_applicable"},
+                "status": result.status,
+                "notes": result.reason,
+            }
+        collision = collision_by.get(candidate.id)
+        gates["collision_risk_acceptable"] = {
+            "passed": not (
+                collision
+                and collision.collision_risk == "high"
+                and collision.kill_recommendation
+            ),
+            "notes": collision.notes if collision else candidate.collision_risk,
         }
-        for g in HARD_GATES:
-            gates.setdefault(g, {"passed": True, "notes": ""})
-        out[bid] = gates
-    return out
+        feasibility = feasibility_by.get(candidate.id)
+        gates["independent_feasibility"] = {
+            "passed": not (
+                feasibility
+                and feasibility.delivery_risk == "high"
+                and feasibility.kill_recommendation
+            ),
+            "notes": feasibility.notes if feasibility else "no independent kill recommendation",
+        }
+        output[blind_id] = gates
+    return output
 
 
 def _surface_disagreements(votes: list[JudgeVote]) -> list[str]:
     by_choice: dict[str, list[str]] = {}
-    for v in votes:
-        by_choice.setdefault(v.preferred_blind_id, []).append(v.role)
+    for vote in votes:
+        by_choice.setdefault(vote.preferred_blind_id, []).append(vote.role)
     if len(by_choice) <= 1:
         return []
-    parts = [f"{bid}: {', '.join(roles)}" for bid, roles in sorted(by_choice.items())]
+    parts = [f"{blind_id}: {', '.join(roles)}" for blind_id, roles in sorted(by_choice.items())]
     return [
         "Judge disagreement — " + " | ".join(parts),
-        "Do not average automatically; inspect tradeoffs (novelty vs demo reliability vs sponsor fit).",
+        "Inspect the official-criteria tradeoffs rather than averaging away disagreement.",
     ]
 
 
@@ -304,11 +334,14 @@ def _real_pairwise(
     provider: LLMProvider,
     template: str,
     criteria: list[dict[str, Any]],
+    constraints: dict[str, Any],
     anonymized: list[dict[str, Any]],
     votes: list[JudgeVote],
     ids: list[str],
 ) -> list[PairwiseResult]:
-    pairs = [[a, b] for index, a in enumerate(ids) for b in ids[index + 1 :]]
+    pairs = [[left, right] for index, left in enumerate(ids) for right in ids[index + 1 :]]
+    if not pairs:
+        return []
     schema = {
         "type": "object",
         "properties": {
@@ -319,7 +352,12 @@ def _real_pairwise(
                 "items": {
                     "type": "object",
                     "properties": {
-                        "pair": {"type": "array", "items": {"type": "string"}, "minItems": 2, "maxItems": 2},
+                        "pair": {
+                            "type": "array",
+                            "items": {"type": "string"},
+                            "minItems": 2,
+                            "maxItems": 2,
+                        },
                         "winner": {"type": "string"},
                         "reason": {"type": "string"},
                     },
@@ -333,13 +371,21 @@ def _real_pairwise(
     }
     system = (
         template.replace("{{JUDGE_ROLE}}", "pairwise-comparator")
-        + "\nCompare every supplied pair directly using only the supplied official competition criteria. "
-        "Do not infer pair winners from an overall ranking. Return {comparisons:[...]} only."
+        + "\nCompare every supplied pair directly using only the supplied official competition criteria "
+        "and applicable requirements. Do not import a universal technical, demo, sponsor, or impact "
+        "tie-breaker. Return {comparisons:[...]} only."
     )
     try:
         raw = provider.complete_json(
             system,
-            str({"official_criteria": criteria, "candidates": anonymized, "pairs": pairs}),
+            str(
+                {
+                    "official_criteria": criteria,
+                    "competition_constraints": constraints,
+                    "candidates": anonymized,
+                    "pairs": pairs,
+                }
+            ),
             schema=schema,
             retries=1,
         )
@@ -348,10 +394,13 @@ def _real_pairwise(
         if not isinstance(provider, DryRunProvider):
             raise
         rows = []
+
     results: list[PairwiseResult] = []
     expected = {tuple(pair) for pair in pairs}
     seen: set[tuple[str, str]] = set()
     for row in rows or []:
+        if not isinstance(row, dict):
+            continue
         pair = [str(item).upper() for item in row.get("pair") or []]
         if len(pair) != 2 or tuple(pair) not in expected or tuple(pair) in seen:
             continue
@@ -370,41 +419,67 @@ def _real_pairwise(
             f"missing={missing}; no deterministic fallback was used"
         )
 
-    counts = Counter(v.preferred_blind_id for v in votes)
-    for a, b in pairs:
-        if (a, b) in seen:
+    vote_counts = Counter(vote.preferred_blind_id for vote in votes)
+    for left, right in pairs:
+        if (left, right) in seen:
             continue
-        a_key = (counts[a], _technical_score(votes, a), -ord(a[0]))
-        b_key = (counts[b], _technical_score(votes, b), -ord(b[0]))
-        winner = a if a_key >= b_key else b
+        left_key = (_score_from_votes(votes, left), vote_counts[left], -ord(left[0]))
+        right_key = (_score_from_votes(votes, right), vote_counts[right], -ord(right[0]))
+        winner = left if left_key >= right_key else right
         results.append(
             PairwiseResult(
-                pair=[a, b],
+                pair=[left, right],
                 winner=winner,
-                reason=f"Deterministic fallback: independent votes {a}={counts[a]} vs {b}={counts[b]}",
+                reason=(
+                    "Deterministic fallback from official-criteria judge scores and independent votes: "
+                    f"{left}={left_key[:2]} vs {right}={right_key[:2]}"
+                ),
             )
         )
     return results
 
 
-def _weighted_official_score(votes: list[JudgeVote], blind_id: str, brief: CompetitionBrief) -> float:
-    del brief
+def _weighted_official_score(
+    votes: list[JudgeVote],
+    blind_id: str,
+    brief: CompetitionBrief,
+) -> float:
     score_sets = [_scores_for_candidate(vote, blind_id) for vote in votes]
     score_sets = [scores for scores in score_sets if scores]
     if not score_sets:
         return 0.0
-    totals = []
+
+    criteria = brief.judging_criteria
+    values: list[float] = []
     for scores in score_sets:
+        if criteria:
+            weighted_total = 0.0
+            total_weight = 0.0
+            for criterion in criteria:
+                score = _criterion_score(scores, criterion.name)
+                if score is None:
+                    continue
+                weight = _criterion_weight(criterion.weight_or_priority)
+                weighted_total += score * weight
+                total_weight += weight
+            if total_weight:
+                values.append(weighted_total / total_weight)
+                continue
         numeric = [float(value) for value in scores.values() if isinstance(value, (int, float))]
         if numeric:
-            totals.append(sum(numeric) / len(numeric))
-    return sum(totals) / len(totals) if totals else 0.0
+            values.append(sum(numeric) / len(numeric))
+    return sum(values) / len(values) if values else 0.0
 
 
-def _technical_score(votes: list[JudgeVote], blind_id: str) -> float:
-    values = [_criterion_value(_scores_for_candidate(vote, blind_id), "implementation") for vote in votes]
-    nonzero = [value for value in values if value]
-    return sum(nonzero) / len(nonzero) if nonzero else 0.0
+def _score_from_votes(votes: list[JudgeVote], blind_id: str) -> float:
+    score_sets = [_scores_for_candidate(vote, blind_id) for vote in votes]
+    numeric = [
+        float(value)
+        for scores in score_sets
+        for value in scores.values()
+        if isinstance(value, (int, float))
+    ]
+    return sum(numeric) / len(numeric) if numeric else 0.0
 
 
 def _scores_for_candidate(vote: JudgeVote, blind_id: str) -> dict[str, Any]:
@@ -415,20 +490,41 @@ def _scores_for_candidate(vote: JudgeVote, blind_id: str) -> dict[str, Any]:
     return raw if vote.preferred_blind_id == blind_id else {}
 
 
-def _criterion_value(scores: dict[str, Any], category: str) -> float:
-    aliases = {
-        "implementation": ("implementation", "technical"),
-        "design": ("design", "demo", "experience"),
-        "impact": ("impact", "applicability", "real-world"),
-        "idea": ("idea", "originality", "quality"),
-    }
+def _criterion_score(scores: dict[str, Any], criterion_name: str) -> float | None:
+    wanted = _norm(criterion_name)
     for key, value in scores.items():
-        if any(alias in key.lower() for alias in aliases[category]) and isinstance(value, (int, float)):
+        if not isinstance(value, (int, float)):
+            continue
+        current = _norm(key)
+        if current == wanted or current in wanted or wanted in current:
             return float(value)
-    return 0.0
+    return None
 
 
-def red_team_check(provider: LLMProvider, primary: CandidateIdea, backup: CandidateIdea) -> dict[str, Any]:
+def _criterion_weight(raw: str) -> float:
+    text = raw.strip().lower()
+    percent = re.search(r"(\d+(?:\.\d+)?)\s*%", text)
+    if percent:
+        return max(0.0001, float(percent.group(1)) / 100.0)
+    number = re.fullmatch(r"\s*(\d+(?:\.\d+)?)\s*", text)
+    if number:
+        return max(0.0001, float(number.group(1)))
+    labels = {"highest": 4.0, "critical": 4.0, "high": 3.0, "medium": 2.0, "low": 1.0}
+    for label, weight in labels.items():
+        if label in text:
+            return weight
+    return 1.0
+
+
+def _norm(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
+
+
+def red_team_check(
+    provider: LLMProvider,
+    primary: CandidateIdea,
+    backup: CandidateIdea,
+) -> dict[str, Any]:
     template, _ = load_prompt("red-team")
     schema = {
         "type": "object",
@@ -457,6 +553,8 @@ def red_team_check(provider: LLMProvider, primary: CandidateIdea, backup: Candid
     )
     if not isinstance(raw, dict):
         raise RuntimeError("red-team review returned a non-object response")
+    if isinstance(provider, DryRunProvider) and "severity_acceptance" not in raw:
+        raw["severity_acceptance"] = bool(raw.get("conditional_acceptance", True))
     required = {
         "primary_id",
         "fatal_flaws",
@@ -469,6 +567,29 @@ def red_team_check(provider: LLMProvider, primary: CandidateIdea, backup: Candid
     if missing and not isinstance(provider, DryRunProvider):
         raise RuntimeError(f"red-team review omitted fields {sorted(missing)}")
     return raw
+
+
+def _vote_schema(blind_ids: list[str]) -> dict[str, Any]:
+    return {
+        "type": "object",
+        "properties": {
+            "role": {"type": "string"},
+            "preferred_blind_id": {"type": "string", "enum": blind_ids},
+            "rationale": {"type": "string"},
+            "scores_by_official_criteria": {"type": "object"},
+            "hard_gate_failures": {"type": "array", "items": {"type": "string"}},
+            "demo_failure_risk": {"type": "string", "enum": ["low", "medium", "high"]},
+        },
+        "required": [
+            "role",
+            "preferred_blind_id",
+            "rationale",
+            "scores_by_official_criteria",
+            "hard_gate_failures",
+            "demo_failure_risk",
+        ],
+        "additionalProperties": False,
+    }
 
 
 def _feasibility_schema(count: int) -> dict[str, Any]:
@@ -484,8 +605,16 @@ def _feasibility_schema(count: int) -> dict[str, Any]:
                     "properties": {
                         "candidate_id": {"type": "string"},
                         "delivery_risk": {"type": "string", "enum": ["low", "medium", "high"]},
-                        "critical_dependencies": {"type": "array", "maxItems": 3, "items": {"type": "string"}},
-                        "fakeable_parts": {"type": "array", "maxItems": 3, "items": {"type": "string"}},
+                        "critical_dependencies": {
+                            "type": "array",
+                            "maxItems": 3,
+                            "items": {"type": "string"},
+                        },
+                        "fakeable_parts": {
+                            "type": "array",
+                            "maxItems": 3,
+                            "items": {"type": "string"},
+                        },
                         "non_fakeable_core": {"type": "string"},
                         "minimum_demonstrable_loop": {"type": "string"},
                         "kill_recommendation": {"type": "boolean"},
