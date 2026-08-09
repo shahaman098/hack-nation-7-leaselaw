@@ -101,25 +101,32 @@ def _run_analyse_impl(
             skills=skills,
         )
         if do_live:
+            # Public-repository and Devpost discovery are useful collision signals,
+            # not universal prerequisites. Sparse/private/non-software competitions
+            # must still be analysable. Strict modes remain available explicitly.
+            require_github = env_flag("HACKFORGE_REQUIRE_GITHUB_RESEARCH", default=False)
             github_evidence = search_github_projects(
                 brief.name,
                 token=os.getenv("GITHUB_TOKEN"),
                 max_results=12 if search_profile != "fast" else 6,
             )
             github_failures = [source for source in github_evidence if source.fetch_status != "ok"]
-            if github_failures:
+            if github_failures and require_github:
                 details = "; ".join(
                     f"{source.fetch_status}: {source.error or source.url}" for source in github_failures
                 )
-                raise RuntimeError(f"GitHub live research failed: {details}")
-            minimum_github = int(os.getenv("HACKFORGE_MIN_GITHUB_RESULTS", "1"))
+                raise RuntimeError(f"Strict GitHub research failed: {details}")
+            minimum_github = int(
+                os.getenv("HACKFORGE_MIN_GITHUB_RESULTS", "1" if require_github else "0")
+            )
             verified_github = [source for source in github_evidence if source.fetch_status == "ok"]
             if len(verified_github) < minimum_github:
                 raise RuntimeError(
-                    f"GitHub live research returned {len(verified_github)} verified repositories; "
-                    f"required at least {minimum_github}. No empty-evidence fallback was used."
+                    f"GitHub research returned {len(verified_github)} verified repositories; "
+                    f"strict mode requires at least {minimum_github}."
                 )
             evidence.extend(github_evidence)
+
             devpost_evidence = search_devpost_projects(
                 brief.theme or brief.name,
                 max_results=12 if search_profile != "fast" else 6,
@@ -130,19 +137,17 @@ def _run_analyse_impl(
                 details = "; ".join(
                     f"{source.fetch_status}: {source.error or source.url}" for source in devpost_failures
                 )
-                raise RuntimeError(f"Devpost live research failed: {details}")
+                raise RuntimeError(f"Strict Devpost research failed: {details}")
             minimum_devpost = int(
                 os.getenv("HACKFORGE_MIN_DEVPOST_RESULTS", "1" if require_live_devpost else "0")
             )
             verified_devpost = [source for source in devpost_evidence if source.fetch_status == "ok"]
             if len(verified_devpost) < minimum_devpost:
                 raise RuntimeError(
-                    f"Devpost live research returned {len(verified_devpost)} verified projects; "
-                    f"required at least {minimum_devpost}. No empty-evidence fallback was used."
+                    f"Devpost research returned {len(verified_devpost)} verified projects; "
+                    f"strict mode requires at least {minimum_devpost}."
                 )
-            # Preserve failed retrievals as provenance. The mandatory semantic
-            # collision stage still searches the real local corpus; live Devpost
-            # is enrichment because its public search is frequently WAF-blocked.
+            # Preserve both successful and failed enrichment attempts as provenance.
             evidence.extend(devpost_evidence)
             if verified_devpost:
                 enrich_brief_with_live_crowding(brief, force=True, sources=verified_devpost)
@@ -210,7 +215,10 @@ def _run_analyse_impl(
     write_json(run_dir / "idea-archive.json", archive.export())
     write_json(run_dir / "search-lineage.json", [item.model_dump() for item in lineage])
     clusters = cluster_ideas(ideas)
-    write_json(run_dir / "clustered-concepts.json", {"clusters": clusters, "ideas": [idea.model_dump() for idea in ideas]})
+    write_json(
+        run_dir / "clustered-concepts.json",
+        {"clusters": clusters, "ideas": [idea.model_dump() for idea in ideas]},
+    )
 
     t0 = time.perf_counter()
     _journal.checkpoint("hard_gates", candidates=len(ideas))
@@ -235,7 +243,7 @@ def _run_analyse_impl(
         _rewrite_search_artifacts(run_dir, ideas, lineage, archive)
     if not gated:
         write_json(run_dir / "gate-results.json", _gate_payload(ideas))
-        raise RuntimeError("Every candidate failed a required evidence, data, technology, feasibility, or demo gate")
+        raise RuntimeError("Every candidate failed one or more applicable competition requirements")
     write_json(run_dir / "gate-results.json", _gate_payload(ideas))
     timings["hard_gates"] = time.perf_counter() - t0
 
@@ -252,9 +260,6 @@ def _run_analyse_impl(
             providers.collision,
             shortlist,
             corpus=_public_analogues(evidence),
-            # GitHub and Devpost were already fetched, validated, and included above.
-            # Reuse that provenance-bearing evidence instead of rate-limit-heavy
-            # per-candidate searches.
             live_enrich=False,
         )
         timings["collision"] = time.perf_counter() - t0
@@ -265,12 +270,21 @@ def _run_analyse_impl(
     for idea in shortlist:
         report = collision_by.get(idea.id)
         if report and report.collision_risk == "high" and report.kill_recommendation:
-            rejections.append({"id": idea.id, "reason": f"collision kill: {report.notes or 'structural analogue'}"})
+            rejections.append(
+                {"id": idea.id, "reason": f"collision kill: {report.notes or 'structural analogue'}"}
+            )
         else:
             survivors.append(idea)
     if not survivors:
         survivors, added_collisions, added_lineage = _repair_all_killed(
-            providers, brief, shortlist, opportunities, mechanisms, archive, evidence, profile.mutation_rounds + 2, do_live
+            providers,
+            brief,
+            shortlist,
+            opportunities,
+            mechanisms,
+            archive,
+            evidence,
+            profile.mutation_rounds + 2,
         )
         collisions.extend(added_collisions)
         lineage.extend(added_lineage)
@@ -287,8 +301,14 @@ def _run_analyse_impl(
     feasible = []
     for idea in survivors:
         feasibility_report = feasibility_by.get(idea.id)
-        if feasibility_report and feasibility_report.delivery_risk == "high" and feasibility_report.kill_recommendation:
-            rejections.append({"id": idea.id, "reason": f"feasibility kill: {feasibility_report.notes}"})
+        if (
+            feasibility_report
+            and feasibility_report.delivery_risk == "high"
+            and feasibility_report.kill_recommendation
+        ):
+            rejections.append(
+                {"id": idea.id, "reason": f"feasibility kill: {feasibility_report.notes}"}
+            )
         else:
             feasible.append(idea)
     required_finalists = min(finalists, 3)
@@ -330,7 +350,9 @@ def _run_analyse_impl(
             )
         ]
         repair_feasibility = (
-            review_feasibility(providers.feasibility, repair_survivors, brief) if repair_survivors else []
+            review_feasibility(providers.feasibility, repair_survivors, brief)
+            if repair_survivors
+            else []
         )
         feasibility.extend(repair_feasibility)
         repair_feasibility_by = {report.candidate_id: report for report in repair_feasibility}
@@ -391,8 +413,9 @@ def _run_analyse_impl(
     if len(outputs) > 2:
         dossier += (
             f"\n\n## Structurally different backup 2\n**{outputs[2].working_title}** (`{outputs[2].id}`)\n"
-            f"- User: {outputs[2].primary_user}\n- Mechanism: {outputs[2].imported_mechanism}\n"
-            f"- Demo: {outputs[2].killer_demo}\n"
+            f"- Stakeholder: {outputs[2].primary_user}\n"
+            f"- Mechanism: {outputs[2].imported_mechanism}\n"
+            f"- Proof/demo: {outputs[2].killer_demo}\n"
         )
     write_text(run_dir / "final-recommendation.md", dossier)
 
@@ -491,7 +514,9 @@ def _run_gates(
         if passes_gates(idea):
             passing.append(idea)
         elif idea.id not in known_rejections:
-            rejections.append({"id": idea.id, "reason": "gate failure: " + ", ".join(gate_failures(idea))})
+            rejections.append(
+                {"id": idea.id, "reason": "gate failure: " + ", ".join(gate_failures(idea))}
+            )
     return passing
 
 
@@ -507,7 +532,7 @@ def _emergency_mutation(
     round_number: int,
 ) -> tuple[list[CandidateIdea], list[IdeaLineage]]:
     repair_targets = [
-        f"repair every failed hard gate; also diversify toward {region}"
+        f"repair every failed applicable gate; also diversify toward {region}"
         for region in archive.empty_region_targets(8)
     ]
     return mutate_concepts(
@@ -532,11 +557,16 @@ def _repair_all_killed(
     archive: SparseIdeaArchive,
     evidence: list[EvidenceSource],
     round_number: int,
-    do_live: bool,
 ) -> tuple[list[CandidateIdea], list[Any], list[IdeaLineage]]:
-    del do_live  # live public evidence was fetched once and is supplied as analogues
     mutations, lineage = _emergency_mutation(
-        providers, brief, parents, opportunities, mechanisms, archive, evidence, round_number=round_number
+        providers,
+        brief,
+        parents,
+        opportunities,
+        mechanisms,
+        archive,
+        evidence,
+        round_number=round_number,
     )
     gated = []
     for idea in mutations:
@@ -574,11 +604,20 @@ def _select_outputs(
     count: int,
 ) -> list[CandidateIdea]:
     output = [primary]
-    pool = [judge_backup] + [idea for idea in judged if idea.id not in {primary.id, judge_backup.id}]
+    pool = [judge_backup] + [
+        idea for idea in judged if idea.id not in {primary.id, judge_backup.id}
+    ]
     while pool and len(output) < count:
-        eligible = [idea for idea in pool if min(structural_distance(idea, chosen) for chosen in output) >= 0.22]
+        eligible = [
+            idea
+            for idea in pool
+            if min(structural_distance(idea, chosen) for chosen in output) >= 0.22
+        ]
         candidates = eligible or pool
-        pick = max(candidates, key=lambda idea: min(structural_distance(idea, chosen) for chosen in output))
+        pick = max(
+            candidates,
+            key=lambda idea: min(structural_distance(idea, chosen) for chosen in output),
+        )
         output.append(pick)
         pool = [idea for idea in pool if idea.id != pick.id]
     return output
@@ -613,7 +652,7 @@ def _public_analogues(evidence: list[EvidenceSource]) -> list[dict[str, Any]]:
             "name": source.title,
             "source": source.source_kind,
             "url": source.url,
-            "user": "public repository users",
+            "user": "public-project stakeholders",
             "problem": source.excerpt,
             "mechanism": source.excerpt,
             "data": "",
