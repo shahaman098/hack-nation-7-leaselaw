@@ -42,8 +42,14 @@
     "mechanism_id": { "type": "string" },
     "mutation_history": { "type": "array", "items": { "type": "string" } },
     "track_fit": { "type": "string" },
-    "gpt_5_6_role": { "type": "string" },
-    "codex_build_role": { "type": "string" },
+    "technology_roles": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "requirement_satisfaction": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
     "data_access_status": { "type": "string" },
     "data_access_plan": { "type": "string" },
     "testable_claim": { "type": "string" },
