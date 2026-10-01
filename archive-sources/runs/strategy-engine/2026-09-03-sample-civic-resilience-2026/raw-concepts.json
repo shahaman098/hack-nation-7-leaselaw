@@ -1,0 +1,614 @@
+[
+  {
+    "id": "institutional-appeal-path-diff-0",
+    "lane": "institutional",
+    "disciplines": [
+      "Public administration",
+      "Procedural fairness",
+      "Administrative error prevention"
+    ],
+    "working_title": "Appeal Path Diff",
+    "primary_user": "Social-care caseworkers filing benefit appeal packs",
+    "painful_workflow": "Reconstructing which form version, deadline clock, and evidence checklist applied on the decision date",
+    "current_workaround": "Scattered PDFs, email threads, and tribal knowledge in WhatsApp groups",
+    "imported_mechanism": "Configuration drift detection + temporal fault trees",
+    "mechanism_origin": "Reliability engineering / change management",
+    "data_sources": [
+      "Historical benefits guidance pages (dated snapshots)",
+      "Decision letter corpus (demo)",
+      "Appeals timetable rules CSV"
+    ],
+    "core_computation": "Diff official rule versions between decision date and today; emit missing-evidence set required for a valid appeal",
+    "last_mile_action": "Generate a dated appeal checklist + filing calendar holds",
+    "visible_transformation": "From 2 hours of version archaeology to a dated, auditable appeal pack outline in under a minute",
+    "sponsor_dependency": "Object storage for guidance snapshots (optional)",
+    "technical_risk": "Archive coverage gaps",
+    "collision_risk": "low",
+    "why_now": "Public guidance pages mutate silently; scrapable change histories make drift detectable",
+    "kill_reason": "May require careful sourcing of archived guidance pages",
+    "killer_demo": "Paste decision date + letter → show guidance diff → emit required evidence list with timestamps",
+    "hard_to_fake_advantage": "Auditable version-diff trail with timestamps",
+    "cluster_id": null
+  },
+  {
+    "id": "institutional-permit-queue-fairness-simulator-1",
+    "lane": "institutional",
+    "disciplines": [
+      "Public administration",
+      "Procedural fairness",
+      "Administrative error prevention"
+    ],
+    "working_title": "Permit Queue Fairness Simulator",
+    "primary_user": "Borough planning officers prioritizing inspection slots",
+    "painful_workflow": "Manually reordering inspection queues under statutory deadlines and staff sickness",
+    "current_workaround": "Spreadsheet with colored cells and hallway negotiations",
+    "imported_mechanism": "Constraint optimization with procedural fairness constraints",
+    "mechanism_origin": "Operations research / public administration",
+    "data_sources": [
+      "Planning applications open data",
+      "Staff roster CSV",
+      "Statutory response deadlines"
+    ],
+    "core_computation": "Solve queue assignment optimizing overdue risk subject to fairness and skill constraints",
+    "last_mile_action": "Publish next-day roster + citizen-facing delay notices draft",
+    "visible_transformation": "Chaotic board → constraint-satisfying roster with overdue-risk score",
+    "sponsor_dependency": "none required",
+    "technical_risk": "Model fidelity of fairness metric",
+    "collision_risk": "high",
+    "why_now": "Open planning datasets + cheap MILP/heuristic solvers",
+    "kill_reason": "Solver demo may feel abstract without UX polish | hard-ban topology",
+    "killer_demo": "Upload week's applications → show before/after overdue risk and fairness metric",
+    "hard_to_fake_advantage": "Numeric optimization delta judges can recompute",
+    "cluster_id": null
+  },
+  {
+    "id": "institutional-foi-failure-chain-tracer-2",
+    "lane": "institutional",
+    "disciplines": [
+      "Public administration",
+      "Procedural fairness",
+      "Administrative error prevention"
+    ],
+    "working_title": "FOI Failure Chain Tracer",
+    "primary_user": "Council FOI officers before statutory breach",
+    "painful_workflow": "Hunting which handoff stalled a request across teams",
+    "current_workaround": "Email archaeology after the breach clock",
+    "imported_mechanism": "Failure-chain / fault-tree reconstruction",
+    "mechanism_origin": "Reliability engineering",
+    "data_sources": [
+      "Anonymized FOI case log CSV",
+      "Team ownership map"
+    ],
+    "core_computation": "Infer most likely stalled edge in the process graph from timestamps",
+    "last_mile_action": "Create escalation ticket with evidence timeline",
+    "visible_transformation": "Blind inbox → pinpointed bottleneck + escalation draft",
+    "sponsor_dependency": "Managed Postgres for case state",
+    "technical_risk": "Synthetic data believability",
+    "collision_risk": "low",
+    "why_now": "Case logs are exportable; graph reasoning is cheap",
+    "kill_reason": "Needs a plausible synthetic log for demo",
+    "killer_demo": "Show live clock near breach → highlight failing handoff → draft escalation",
+    "hard_to_fake_advantage": "Stateful case timeline with computed bottleneck",
+    "cluster_id": null
+  },
+  {
+    "id": "institutional-grant-match-abuse-detector-3",
+    "lane": "institutional",
+    "disciplines": [
+      "Public administration",
+      "Procedural fairness",
+      "Administrative error prevention"
+    ],
+    "working_title": "Grant Match Abuse Detector",
+    "primary_user": "Charity finance officers reconciling restricted funds",
+    "painful_workflow": "Matching spend lines to grant conditions before audit",
+    "current_workaround": "Manual spreadsheet reconciliation",
+    "imported_mechanism": "Reconciliation trails + anomaly detection",
+    "mechanism_origin": "Forensic accounting",
+    "data_sources": [
+      "Grant condition PDFs",
+      "Bank CSV",
+      "Ledger export"
+    ],
+    "core_computation": "Score spend lines against encoded conditions; surface mismatched allocations",
+    "last_mile_action": "Produce auditor-ready exception report",
+    "visible_transformation": "Unscoped ledger → ranked exceptions with condition citations",
+    "sponsor_dependency": "none required",
+    "technical_risk": "Condition encoding completeness",
+    "collision_risk": "medium",
+    "why_now": "Structured bank CSVs + better document parsing",
+    "kill_reason": "Document parsing quality risk",
+    "killer_demo": "Upload ledger + one grant PDF → red exceptions with citations",
+    "hard_to_fake_advantage": "Deterministic reconciliation exceptions",
+    "cluster_id": null
+  },
+  {
+    "id": "institutional-clinic-no-show-pool-4",
+    "lane": "institutional",
+    "disciplines": [
+      "Public administration",
+      "Procedural fairness",
+      "Administrative error prevention"
+    ],
+    "working_title": "Clinic No-Show Pool",
+    "primary_user": "NHS outpatient admin leads",
+    "painful_workflow": "Last-minute slot recovery when patients cancel",
+    "current_workaround": "Phone blasting waiting list in arbitrary order",
+    "imported_mechanism": "Risk pooling + priority incentives",
+    "mechanism_origin": "Insurance science / mechanism design",
+    "data_sources": [
+      "Historical attendance CSV",
+      "Waiting list export"
+    ],
+    "core_computation": "Rank call order maximizing fill probability under notice-time constraints",
+    "last_mile_action": "Generate ordered outreach list + SMS drafts",
+    "visible_transformation": "Random calling → ranked recovery plan with expected fill lift",
+    "sponsor_dependency": "none required",
+    "technical_risk": "Privacy constraints",
+    "collision_risk": "medium",
+    "why_now": "Attendance history is routinely exportable",
+    "kill_reason": "Health data sensitivity in live settings",
+    "killer_demo": "Simulate 3 cancellations → show ranked backups and expected seats filled",
+    "hard_to_fake_advantage": "Scored ordering with simulated fill lift",
+    "cluster_id": null
+  },
+  {
+    "id": "systems_or-appeal-path-diff-0",
+    "lane": "systems_or",
+    "disciplines": [
+      "Operations research",
+      "Control theory",
+      "Supply-chain engineering"
+    ],
+    "working_title": "Appeal Path Diff",
+    "primary_user": "Social-care caseworkers filing benefit appeal packs",
+    "painful_workflow": "Reconstructing which form version, deadline clock, and evidence checklist applied on the decision date",
+    "current_workaround": "Scattered PDFs, email threads, and tribal knowledge in WhatsApp groups",
+    "imported_mechanism": "Configuration drift detection + temporal fault trees",
+    "mechanism_origin": "Reliability engineering / change management",
+    "data_sources": [
+      "Historical benefits guidance pages (dated snapshots)",
+      "Decision letter corpus (demo)",
+      "Appeals timetable rules CSV"
+    ],
+    "core_computation": "Diff official rule versions between decision date and today; emit missing-evidence set required for a valid appeal",
+    "last_mile_action": "Generate a dated appeal checklist + filing calendar holds",
+    "visible_transformation": "From 2 hours of version archaeology to a dated, auditable appeal pack outline in under a minute",
+    "sponsor_dependency": "Object storage for guidance snapshots (optional)",
+    "technical_risk": "Archive coverage gaps",
+    "collision_risk": "low",
+    "why_now": "Public guidance pages mutate silently; scrapable change histories make drift detectable",
+    "kill_reason": "May require careful sourcing of archived guidance pages",
+    "killer_demo": "Paste decision date + letter → show guidance diff → emit required evidence list with timestamps",
+    "hard_to_fake_advantage": "Auditable version-diff trail with timestamps",
+    "cluster_id": null
+  },
+  {
+    "id": "systems_or-permit-queue-fairness-simulator-1",
+    "lane": "systems_or",
+    "disciplines": [
+      "Operations research",
+      "Control theory",
+      "Supply-chain engineering"
+    ],
+    "working_title": "Permit Queue Fairness Simulator",
+    "primary_user": "Borough planning officers prioritizing inspection slots",
+    "painful_workflow": "Manually reordering inspection queues under statutory deadlines and staff sickness",
+    "current_workaround": "Spreadsheet with colored cells and hallway negotiations",
+    "imported_mechanism": "Constraint optimization with procedural fairness constraints",
+    "mechanism_origin": "Operations research / public administration",
+    "data_sources": [
+      "Planning applications open data",
+      "Staff roster CSV",
+      "Statutory response deadlines"
+    ],
+    "core_computation": "Solve queue assignment optimizing overdue risk subject to fairness and skill constraints",
+    "last_mile_action": "Publish next-day roster + citizen-facing delay notices draft",
+    "visible_transformation": "Chaotic board → constraint-satisfying roster with overdue-risk score",
+    "sponsor_dependency": "none required",
+    "technical_risk": "Model fidelity of fairness metric",
+    "collision_risk": "high",
+    "why_now": "Open planning datasets + cheap MILP/heuristic solvers",
+    "kill_reason": "Solver demo may feel abstract without UX polish | hard-ban topology",
+    "killer_demo": "Upload week's applications → show before/after overdue risk and fairness metric",
+    "hard_to_fake_advantage": "Numeric optimization delta judges can recompute",
+    "cluster_id": null
+  },
+  {
+    "id": "systems_or-foi-failure-chain-tracer-2",
+    "lane": "systems_or",
+    "disciplines": [
+      "Operations research",
+      "Control theory",
+      "Supply-chain engineering"
+    ],
+    "working_title": "FOI Failure Chain Tracer",
+    "primary_user": "Council FOI officers before statutory breach",
+    "painful_workflow": "Hunting which handoff stalled a request across teams",
+    "current_workaround": "Email archaeology after the breach clock",
+    "imported_mechanism": "Failure-chain / fault-tree reconstruction",
+    "mechanism_origin": "Reliability engineering",
+    "data_sources": [
+      "Anonymized FOI case log CSV",
+      "Team ownership map"
+    ],
+    "core_computation": "Infer most likely stalled edge in the process graph from timestamps",
+    "last_mile_action": "Create escalation ticket with evidence timeline",
+    "visible_transformation": "Blind inbox → pinpointed bottleneck + escalation draft",
+    "sponsor_dependency": "Managed Postgres for case state",
+    "technical_risk": "Synthetic data believability",
+    "collision_risk": "low",
+    "why_now": "Case logs are exportable; graph reasoning is cheap",
+    "kill_reason": "Needs a plausible synthetic log for demo",
+    "killer_demo": "Show live clock near breach → highlight failing handoff → draft escalation",
+    "hard_to_fake_advantage": "Stateful case timeline with computed bottleneck",
+    "cluster_id": null
+  },
+  {
+    "id": "systems_or-grant-match-abuse-detector-3",
+    "lane": "systems_or",
+    "disciplines": [
+      "Operations research",
+      "Control theory",
+      "Supply-chain engineering"
+    ],
+    "working_title": "Grant Match Abuse Detector",
+    "primary_user": "Charity finance officers reconciling restricted funds",
+    "painful_workflow": "Matching spend lines to grant conditions before audit",
+    "current_workaround": "Manual spreadsheet reconciliation",
+    "imported_mechanism": "Reconciliation trails + anomaly detection",
+    "mechanism_origin": "Forensic accounting",
+    "data_sources": [
+      "Grant condition PDFs",
+      "Bank CSV",
+      "Ledger export"
+    ],
+    "core_computation": "Score spend lines against encoded conditions; surface mismatched allocations",
+    "last_mile_action": "Produce auditor-ready exception report",
+    "visible_transformation": "Unscoped ledger → ranked exceptions with condition citations",
+    "sponsor_dependency": "none required",
+    "technical_risk": "Condition encoding completeness",
+    "collision_risk": "medium",
+    "why_now": "Structured bank CSVs + better document parsing",
+    "kill_reason": "Document parsing quality risk",
+    "killer_demo": "Upload ledger + one grant PDF → red exceptions with citations",
+    "hard_to_fake_advantage": "Deterministic reconciliation exceptions",
+    "cluster_id": null
+  },
+  {
+    "id": "systems_or-clinic-no-show-pool-4",
+    "lane": "systems_or",
+    "disciplines": [
+      "Operations research",
+      "Control theory",
+      "Supply-chain engineering"
+    ],
+    "working_title": "Clinic No-Show Pool",
+    "primary_user": "NHS outpatient admin leads",
+    "painful_workflow": "Last-minute slot recovery when patients cancel",
+    "current_workaround": "Phone blasting waiting list in arbitrary order",
+    "imported_mechanism": "Risk pooling + priority incentives",
+    "mechanism_origin": "Insurance science / mechanism design",
+    "data_sources": [
+      "Historical attendance CSV",
+      "Waiting list export"
+    ],
+    "core_computation": "Rank call order maximizing fill probability under notice-time constraints",
+    "last_mile_action": "Generate ordered outreach list + SMS drafts",
+    "visible_transformation": "Random calling → ranked recovery plan with expected fill lift",
+    "sponsor_dependency": "none required",
+    "technical_risk": "Privacy constraints",
+    "collision_risk": "medium",
+    "why_now": "Attendance history is routinely exportable",
+    "kill_reason": "Health data sensitivity in live settings",
+    "killer_demo": "Simulate 3 cancellations → show ranked backups and expected seats filled",
+    "hard_to_fake_advantage": "Scored ordering with simulated fill lift",
+    "cluster_id": null
+  },
+  {
+    "id": "edge_users-appeal-path-diff-0",
+    "lane": "edge_users",
+    "disciplines": [
+      "Human factors",
+      "Epidemiology",
+      "Reliability engineering"
+    ],
+    "working_title": "Appeal Path Diff",
+    "primary_user": "Social-care caseworkers filing benefit appeal packs",
+    "painful_workflow": "Reconstructing which form version, deadline clock, and evidence checklist applied on the decision date",
+    "current_workaround": "Scattered PDFs, email threads, and tribal knowledge in WhatsApp groups",
+    "imported_mechanism": "Configuration drift detection + temporal fault trees",
+    "mechanism_origin": "Reliability engineering / change management",
+    "data_sources": [
+      "Historical benefits guidance pages (dated snapshots)",
+      "Decision letter corpus (demo)",
+      "Appeals timetable rules CSV"
+    ],
+    "core_computation": "Diff official rule versions between decision date and today; emit missing-evidence set required for a valid appeal",
+    "last_mile_action": "Generate a dated appeal checklist + filing calendar holds",
+    "visible_transformation": "From 2 hours of version archaeology to a dated, auditable appeal pack outline in under a minute",
+    "sponsor_dependency": "Object storage for guidance snapshots (optional)",
+    "technical_risk": "Archive coverage gaps",
+    "collision_risk": "low",
+    "why_now": "Public guidance pages mutate silently; scrapable change histories make drift detectable",
+    "kill_reason": "May require careful sourcing of archived guidance pages",
+    "killer_demo": "Paste decision date + letter → show guidance diff → emit required evidence list with timestamps",
+    "hard_to_fake_advantage": "Auditable version-diff trail with timestamps",
+    "cluster_id": null
+  },
+  {
+    "id": "edge_users-permit-queue-fairness-simulator-1",
+    "lane": "edge_users",
+    "disciplines": [
+      "Human factors",
+      "Epidemiology",
+      "Reliability engineering"
+    ],
+    "working_title": "Permit Queue Fairness Simulator",
+    "primary_user": "Borough planning officers prioritizing inspection slots",
+    "painful_workflow": "Manually reordering inspection queues under statutory deadlines and staff sickness",
+    "current_workaround": "Spreadsheet with colored cells and hallway negotiations",
+    "imported_mechanism": "Constraint optimization with procedural fairness constraints",
+    "mechanism_origin": "Operations research / public administration",
+    "data_sources": [
+      "Planning applications open data",
+      "Staff roster CSV",
+      "Statutory response deadlines"
+    ],
+    "core_computation": "Solve queue assignment optimizing overdue risk subject to fairness and skill constraints",
+    "last_mile_action": "Publish next-day roster + citizen-facing delay notices draft",
+    "visible_transformation": "Chaotic board → constraint-satisfying roster with overdue-risk score",
+    "sponsor_dependency": "none required",
+    "technical_risk": "Model fidelity of fairness metric",
+    "collision_risk": "high",
+    "why_now": "Open planning datasets + cheap MILP/heuristic solvers",
+    "kill_reason": "Solver demo may feel abstract without UX polish | hard-ban topology",
+    "killer_demo": "Upload week's applications → show before/after overdue risk and fairness metric",
+    "hard_to_fake_advantage": "Numeric optimization delta judges can recompute",
+    "cluster_id": null
+  },
+  {
+    "id": "edge_users-foi-failure-chain-tracer-2",
+    "lane": "edge_users",
+    "disciplines": [
+      "Human factors",
+      "Epidemiology",
+      "Reliability engineering"
+    ],
+    "working_title": "FOI Failure Chain Tracer",
+    "primary_user": "Council FOI officers before statutory breach",
+    "painful_workflow": "Hunting which handoff stalled a request across teams",
+    "current_workaround": "Email archaeology after the breach clock",
+    "imported_mechanism": "Failure-chain / fault-tree reconstruction",
+    "mechanism_origin": "Reliability engineering",
+    "data_sources": [
+      "Anonymized FOI case log CSV",
+      "Team ownership map"
+    ],
+    "core_computation": "Infer most likely stalled edge in the process graph from timestamps",
+    "last_mile_action": "Create escalation ticket with evidence timeline",
+    "visible_transformation": "Blind inbox → pinpointed bottleneck + escalation draft",
+    "sponsor_dependency": "Managed Postgres for case state",
+    "technical_risk": "Synthetic data believability",
+    "collision_risk": "low",
+    "why_now": "Case logs are exportable; graph reasoning is cheap",
+    "kill_reason": "Needs a plausible synthetic log for demo",
+    "killer_demo": "Show live clock near breach → highlight failing handoff → draft escalation",
+    "hard_to_fake_advantage": "Stateful case timeline with computed bottleneck",
+    "cluster_id": null
+  },
+  {
+    "id": "edge_users-grant-match-abuse-detector-3",
+    "lane": "edge_users",
+    "disciplines": [
+      "Human factors",
+      "Epidemiology",
+      "Reliability engineering"
+    ],
+    "working_title": "Grant Match Abuse Detector",
+    "primary_user": "Charity finance officers reconciling restricted funds",
+    "painful_workflow": "Matching spend lines to grant conditions before audit",
+    "current_workaround": "Manual spreadsheet reconciliation",
+    "imported_mechanism": "Reconciliation trails + anomaly detection",
+    "mechanism_origin": "Forensic accounting",
+    "data_sources": [
+      "Grant condition PDFs",
+      "Bank CSV",
+      "Ledger export"
+    ],
+    "core_computation": "Score spend lines against encoded conditions; surface mismatched allocations",
+    "last_mile_action": "Produce auditor-ready exception report",
+    "visible_transformation": "Unscoped ledger → ranked exceptions with condition citations",
+    "sponsor_dependency": "none required",
+    "technical_risk": "Condition encoding completeness",
+    "collision_risk": "medium",
+    "why_now": "Structured bank CSVs + better document parsing",
+    "kill_reason": "Document parsing quality risk",
+    "killer_demo": "Upload ledger + one grant PDF → red exceptions with citations",
+    "hard_to_fake_advantage": "Deterministic reconciliation exceptions",
+    "cluster_id": null
+  },
+  {
+    "id": "edge_users-clinic-no-show-pool-4",
+    "lane": "edge_users",
+    "disciplines": [
+      "Human factors",
+      "Epidemiology",
+      "Reliability engineering"
+    ],
+    "working_title": "Clinic No-Show Pool",
+    "primary_user": "NHS outpatient admin leads",
+    "painful_workflow": "Last-minute slot recovery when patients cancel",
+    "current_workaround": "Phone blasting waiting list in arbitrary order",
+    "imported_mechanism": "Risk pooling + priority incentives",
+    "mechanism_origin": "Insurance science / mechanism design",
+    "data_sources": [
+      "Historical attendance CSV",
+      "Waiting list export"
+    ],
+    "core_computation": "Rank call order maximizing fill probability under notice-time constraints",
+    "last_mile_action": "Generate ordered outreach list + SMS drafts",
+    "visible_transformation": "Random calling → ranked recovery plan with expected fill lift",
+    "sponsor_dependency": "none required",
+    "technical_risk": "Privacy constraints",
+    "collision_risk": "medium",
+    "why_now": "Attendance history is routinely exportable",
+    "kill_reason": "Health data sensitivity in live settings",
+    "killer_demo": "Simulate 3 cancellations → show ranked backups and expected seats filled",
+    "hard_to_fake_advantage": "Scored ordering with simulated fill lift",
+    "cluster_id": null
+  },
+  {
+    "id": "incentives-appeal-path-diff-0",
+    "lane": "incentives",
+    "disciplines": [
+      "Mechanism design",
+      "Insurance science",
+      "Forensic accounting"
+    ],
+    "working_title": "Appeal Path Diff",
+    "primary_user": "Social-care caseworkers filing benefit appeal packs",
+    "painful_workflow": "Reconstructing which form version, deadline clock, and evidence checklist applied on the decision date",
+    "current_workaround": "Scattered PDFs, email threads, and tribal knowledge in WhatsApp groups",
+    "imported_mechanism": "Configuration drift detection + temporal fault trees",
+    "mechanism_origin": "Reliability engineering / change management",
+    "data_sources": [
+      "Historical benefits guidance pages (dated snapshots)",
+      "Decision letter corpus (demo)",
+      "Appeals timetable rules CSV"
+    ],
+    "core_computation": "Diff official rule versions between decision date and today; emit missing-evidence set required for a valid appeal",
+    "last_mile_action": "Generate a dated appeal checklist + filing calendar holds",
+    "visible_transformation": "From 2 hours of version archaeology to a dated, auditable appeal pack outline in under a minute",
+    "sponsor_dependency": "Object storage for guidance snapshots (optional)",
+    "technical_risk": "Archive coverage gaps",
+    "collision_risk": "low",
+    "why_now": "Public guidance pages mutate silently; scrapable change histories make drift detectable",
+    "kill_reason": "May require careful sourcing of archived guidance pages",
+    "killer_demo": "Paste decision date + letter → show guidance diff → emit required evidence list with timestamps",
+    "hard_to_fake_advantage": "Auditable version-diff trail with timestamps",
+    "cluster_id": null
+  },
+  {
+    "id": "incentives-permit-queue-fairness-simulator-1",
+    "lane": "incentives",
+    "disciplines": [
+      "Mechanism design",
+      "Insurance science",
+      "Forensic accounting"
+    ],
+    "working_title": "Permit Queue Fairness Simulator",
+    "primary_user": "Borough planning officers prioritizing inspection slots",
+    "painful_workflow": "Manually reordering inspection queues under statutory deadlines and staff sickness",
+    "current_workaround": "Spreadsheet with colored cells and hallway negotiations",
+    "imported_mechanism": "Constraint optimization with procedural fairness constraints",
+    "mechanism_origin": "Operations research / public administration",
+    "data_sources": [
+      "Planning applications open data",
+      "Staff roster CSV",
+      "Statutory response deadlines"
+    ],
+    "core_computation": "Solve queue assignment optimizing overdue risk subject to fairness and skill constraints",
+    "last_mile_action": "Publish next-day roster + citizen-facing delay notices draft",
+    "visible_transformation": "Chaotic board → constraint-satisfying roster with overdue-risk score",
+    "sponsor_dependency": "none required",
+    "technical_risk": "Model fidelity of fairness metric",
+    "collision_risk": "high",
+    "why_now": "Open planning datasets + cheap MILP/heuristic solvers",
+    "kill_reason": "Solver demo may feel abstract without UX polish | hard-ban topology",
+    "killer_demo": "Upload week's applications → show before/after overdue risk and fairness metric",
+    "hard_to_fake_advantage": "Numeric optimization delta judges can recompute",
+    "cluster_id": null
+  },
+  {
+    "id": "incentives-foi-failure-chain-tracer-2",
+    "lane": "incentives",
+    "disciplines": [
+      "Mechanism design",
+      "Insurance science",
+      "Forensic accounting"
+    ],
+    "working_title": "FOI Failure Chain Tracer",
+    "primary_user": "Council FOI officers before statutory breach",
+    "painful_workflow": "Hunting which handoff stalled a request across teams",
+    "current_workaround": "Email archaeology after the breach clock",
+    "imported_mechanism": "Failure-chain / fault-tree reconstruction",
+    "mechanism_origin": "Reliability engineering",
+    "data_sources": [
+      "Anonymized FOI case log CSV",
+      "Team ownership map"
+    ],
+    "core_computation": "Infer most likely stalled edge in the process graph from timestamps",
+    "last_mile_action": "Create escalation ticket with evidence timeline",
+    "visible_transformation": "Blind inbox → pinpointed bottleneck + escalation draft",
+    "sponsor_dependency": "Managed Postgres for case state",
+    "technical_risk": "Synthetic data believability",
+    "collision_risk": "low",
+    "why_now": "Case logs are exportable; graph reasoning is cheap",
+    "kill_reason": "Needs a plausible synthetic log for demo",
+    "killer_demo": "Show live clock near breach → highlight failing handoff → draft escalation",
+    "hard_to_fake_advantage": "Stateful case timeline with computed bottleneck",
+    "cluster_id": null
+  },
+  {
+    "id": "incentives-grant-match-abuse-detector-3",
+    "lane": "incentives",
+    "disciplines": [
+      "Mechanism design",
+      "Insurance science",
+      "Forensic accounting"
+    ],
+    "working_title": "Grant Match Abuse Detector",
+    "primary_user": "Charity finance officers reconciling restricted funds",
+    "painful_workflow": "Matching spend lines to grant conditions before audit",
+    "current_workaround": "Manual spreadsheet reconciliation",
+    "imported_mechanism": "Reconciliation trails + anomaly detection",
+    "mechanism_origin": "Forensic accounting",
+    "data_sources": [
+      "Grant condition PDFs",
+      "Bank CSV",
+      "Ledger export"
+    ],
+    "core_computation": "Score spend lines against encoded conditions; surface mismatched allocations",
+    "last_mile_action": "Produce auditor-ready exception report",
+    "visible_transformation": "Unscoped ledger → ranked exceptions with condition citations",
+    "sponsor_dependency": "none required",
+    "technical_risk": "Condition encoding completeness",
+    "collision_risk": "medium",
+    "why_now": "Structured bank CSVs + better document parsing",
+    "kill_reason": "Document parsing quality risk",
+    "killer_demo": "Upload ledger + one grant PDF → red exceptions with citations",
+    "hard_to_fake_advantage": "Deterministic reconciliation exceptions",
+    "cluster_id": null
+  },
+  {
+    "id": "incentives-clinic-no-show-pool-4",
+    "lane": "incentives",
+    "disciplines": [
+      "Mechanism design",
+      "Insurance science",
+      "Forensic accounting"
+    ],
+    "working_title": "Clinic No-Show Pool",
+    "primary_user": "NHS outpatient admin leads",
+    "painful_workflow": "Last-minute slot recovery when patients cancel",
+    "current_workaround": "Phone blasting waiting list in arbitrary order",
+    "imported_mechanism": "Risk pooling + priority incentives",
+    "mechanism_origin": "Insurance science / mechanism design",
+    "data_sources": [
+      "Historical attendance CSV",
+      "Waiting list export"
+    ],
+    "core_computation": "Rank call order maximizing fill probability under notice-time constraints",
+    "last_mile_action": "Generate ordered outreach list + SMS drafts",
+    "visible_transformation": "Random calling → ranked recovery plan with expected fill lift",
+    "sponsor_dependency": "none required",
+    "technical_risk": "Privacy constraints",
+    "collision_risk": "medium",
+    "why_now": "Attendance history is routinely exportable",
+    "kill_reason": "Health data sensitivity in live settings",
+    "killer_demo": "Simulate 3 cancellations → show ranked backups and expected seats filled",
+    "hard_to_fake_advantage": "Scored ordering with simulated fill lift",
+    "cluster_id": null
+  }
+]

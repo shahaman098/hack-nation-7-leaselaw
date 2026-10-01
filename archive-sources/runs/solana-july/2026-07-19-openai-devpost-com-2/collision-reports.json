@@ -1,0 +1,734 @@
+[
+  {
+    "candidate_id": "opp-001 × m0_verifiable_build_trace | evidence_ids: src-007ffb1ef031, src-df096fbdbfd0, src-e561ed9410ee, src-8d19e5ee8d3c | data_sources: https://openai.devpost.com/rules, https://openai.devpost.com/resources, https://openai.devpost.com/details/dates, https://github.com/Procureallyai/flight-recorder | data_access_status: verified",
+    "nearest_analogues": [
+      {
+        "name": "Procureallyai/flight-recorder",
+        "source": "github",
+        "url": "https://github.com/Procureallyai/flight-recorder",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": true,
+          "same_data": true,
+          "same_action": true,
+          "same_demo": true
+        },
+        "differences": [
+          "Candidate is explicitly packaged for Devpost submission readiness with README/demo/Codex Session ID checks.",
+          "Candidate adds pass/fail judge-testability badge and required hackathon artifact validation."
+        ]
+      },
+      {
+        "name": "Neilblaze README/profile-template projects",
+        "source": "devpost/github",
+        "url": "https://devpost.com/software/cocoa-monster",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Analogue is README/profile presentation, not executable provenance or test-bound submission evidence.",
+          "No visible trace graph, commit digest, or validation harness."
+        ]
+      },
+      {
+        "name": "Dashboard-only analytics without an irreversible state change",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate writes repository artifacts and a sealed evidence bundle instead of only displaying analytics.",
+          "Demo includes failing/restored validation tied to commit state."
+        ]
+      }
+    ],
+    "collision_risk": "high",
+    "observable_differentiator": "Devpost-specific sealing workflow that validates required submission artifacts, Session ID, README patches, tests, and demo transcript against the current commit.",
+    "differentiator_is_substantive": false,
+    "kill_recommendation": true,
+    "notes": "The nearest public analogue, flight-recorder, shares the core user, problem, provenance mechanism, Codex-built evidence trail, and demo shape. The Devpost-specific checklist is useful but reads as a thin specialization over the same verifiable engineering passport concept."
+  },
+  {
+    "candidate_id": "concept-004",
+    "nearest_analogues": [
+      {
+        "name": "AI study tutor / quiz / flashcard generator",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate targets instructors assessing process quality, not learners consuming tutoring or quizzes.",
+          "Demo perturbs trace evidence and changes assessment status rather than generating study content."
+        ]
+      },
+      {
+        "name": "Document / PDF summariser",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate evaluates work-history traces with counterfactual robustness checks, not just final documents.",
+          "Output is an assessment record with cited process events and revision action."
+        ]
+      },
+      {
+        "name": "Procureallyai/flight-recorder",
+        "source": "github",
+        "url": "https://github.com/Procureallyai/flight-recorder",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": true,
+          "same_data": true,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate repurposes provenance traces for education assessment and rubric sensitivity, not software build attestation.",
+          "Visible action is institutional assessment status change rather than repository engineering passport."
+        ]
+      }
+    ],
+    "collision_risk": "medium",
+    "observable_differentiator": "Seeded counterfactual rubric runner that removes trace events and shows assessment conclusions becoming robust or sensitive before committing an instructor assessment status.",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "Education AI is crowded, but the candidate is not a tutor/quiz clone. The main collision is with provenance-trace infrastructure, yet the user, workflow action, and counterfactual assessment demo differ materially."
+  },
+  {
+    "candidate_id": "concept-005",
+    "nearest_analogues": [
+      {
+        "name": "Dashboard-only analytics without an irreversible state change",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate blocks or commits allocation decisions with an exportable ledger, not just reports metrics.",
+          "Demo shows rule conflict counterexamples changing applicant statuses."
+        ]
+      },
+      {
+        "name": "Nested — personalized city match",
+        "source": "corpora/past-winners",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Analogue ranks preferences to places; candidate verifies scarce-resource allocations against written constraints.",
+          "Candidate produces counterexamples and an operational commit packet rather than recommendations."
+        ]
+      },
+      {
+        "name": "Bekhbekh7821/CanopyOps",
+        "source": "github",
+        "url": "https://github.com/Bekhbekh7821/CanopyOps",
+        "similarities": {
+          "same_user": true,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Analogue manages cultivation operations and compliance records, not generic scarce-resource allocation fairness.",
+          "Candidate's core demo is constraint violation detection and blocked writeback."
+        ]
+      }
+    ],
+    "collision_risk": "low",
+    "observable_differentiator": "Constraint-backed allocation commit flow that finds minimal rule counterexamples, blocks invalid allocations, then exports committed statuses and a rationale ledger.",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "Nearest supplied analogues are generic dashboards or unrelated operational tools. The constraint-safe writeback and minimal counterexample loop are materially different and demo-observable."
+  },
+  {
+    "candidate_id": "concept-003",
+    "nearest_analogues": [
+      {
+        "name": "Document / PDF summariser",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": true,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate builds a sourced procedural dependency graph with missing-evidence probes, not a prose summary.",
+          "Output is a locked appeal-prep packet with node state changes and audit trail."
+        ]
+      },
+      {
+        "name": "Symptom checker / triage chatbot",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": false,
+          "same_mechanism": true,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate handles administrative appeal prerequisites and evidence chronology, not medical triage.",
+          "Demo updates graph confidence after adding proof rather than giving advice."
+        ]
+      },
+      {
+        "name": "Dashboard-only analytics without an irreversible state change",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate has targeted probes and exportable appointment brief, not only a dashboard view.",
+          "Visible state changes from unknown to supported/contradicted/missing on timeline nodes."
+        ]
+      }
+    ],
+    "collision_risk": "medium",
+    "observable_differentiator": "Evidence-span-preserving appeal timeline graph that asks targeted missing-proof questions and exports a procedural appointment packet after confidence recalculation.",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "There is some collision with document summarizers and triage-style assistants for vulnerable users, but the graph-node state transition, source-span tests, and procedural packet make it more than a renamed chatbot if demonstrated clearly."
+  },
+  {
+    "candidate_id": "mut-r4-01-tracepatch-verifier",
+    "nearest_analogues": [
+      {
+        "name": "Procureallyai/flight-recorder",
+        "source": "github",
+        "url": "https://github.com/Procureallyai/flight-recorder",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": true,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": true
+        },
+        "differences": [
+          "TracePatch writes correction patches into README/demo/setup artifacts rather than issuing an engineering passport.",
+          "TracePatch maps official hackathon rules to repo evidence, while analogue is broader Codex-build provenance."
+        ]
+      },
+      {
+        "name": "Dashboard-only analytics without an irreversible state change",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate has an accepted file diff and rerun verification as the visible action.",
+          "Candidate is repo/rule-specific, not a passive dashboard."
+        ]
+      },
+      {
+        "name": "Generic chatbot wrapper over a sponsor API",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate requires deterministic repo scanners, executable checks, and patch writeback.",
+          "Output is evidence-linked diffs, not free-form chat."
+        ]
+      }
+    ],
+    "collision_risk": "medium",
+    "observable_differentiator": "Demo must show a real accepted README/demo/setup diff, rerun command output, and requirement rows moving from unsupported to corrected with evidence IDs.",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "Closest collision is flight-recorder-style Codex provenance for hackathon submissions. The correction writeback loop is material enough if implemented as actual file patches plus verification, not just an audit report."
+  },
+  {
+    "candidate_id": "mut-r4-02-nextstep-queue-scheduler",
+    "nearest_analogues": [
+      {
+        "name": "Bekhbekh7821/CanopyOps",
+        "source": "github",
+        "url": "https://github.com/Bekhbekh7821/CanopyOps",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": true,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate schedules post-decision follow-ups for constrained services, not crop plans or cultivation workups.",
+          "Observable output is owner/deadline/prerequisite queue export, not operational reporting."
+        ]
+      },
+      {
+        "name": "Meeting notes / productivity chatbot",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate commits bounded follow-up actions with owners and windows instead of summarizing meetings or notes.",
+          "Scheduler detects time-window conflicts and blocked prerequisites."
+        ]
+      },
+      {
+        "name": "Dashboard-only analytics without an irreversible state change",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate changes the action queue and exports calendar/CSV artifacts.",
+          "Success metric is zero unowned actionable cases, not dashboard visibility."
+        ]
+      }
+    ],
+    "collision_risk": "medium",
+    "observable_differentiator": "The demo should commit a concrete next-action queue where every actionable case has owner, due time, prerequisite, and exportable calendar/CSV evidence.",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "Crowded around task management and operations dashboards, but the post-allocation bounded-action scheduler is sufficiently distinct if the scheduling engine handles conflicts and blocks missing prerequisites."
+  },
+  {
+    "candidate_id": "mut-r4-03-unsafe-filing-interlock-rece",
+    "nearest_analogues": [
+      {
+        "name": "Symptom checker / triage chatbot",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate blocks a procedural filing transition rather than advising triage.",
+          "It produces an evidence receipt and release state after prerequisites are satisfied."
+        ]
+      },
+      {
+        "name": "Document / PDF summariser",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": true,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate uses prerequisite graph checks and negative evidence, not document summary.",
+          "The last-mile action is blocking/releasing submission with receipt ID."
+        ]
+      },
+      {
+        "name": "Dashboard-only analytics without an irreversible state change",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate has an interlock state machine that prevents ready/submit state.",
+          "It shows receipt generation and subsequent release after proof upload."
+        ]
+      }
+    ],
+    "collision_risk": "medium",
+    "observable_differentiator": "The decisive demo is a submit action that is blocked until missing proof is attached, with a durable receipt showing blocked action, source-backed reason, and release status.",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "Legal/admin document help is crowded, but an actual procedural interlock with durable receipts differs from navigator, summarizer, or advice chatbot patterns."
+  },
+  {
+    "candidate_id": "mut-r4-04-rubric-regression-lab",
+    "nearest_analogues": [
+      {
+        "name": "AI study tutor / quiz / flashcard generator",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate serves curriculum/assessment operators, not learners seeking tutoring.",
+          "It generates executable regression tests and release gates, not learning content."
+        ]
+      },
+      {
+        "name": "Dashboard-only analytics without an irreversible state change",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": true,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate blocks or approves a rubric release based on test outcomes.",
+          "It compares old/new rubric behavior across fixed learner traces."
+        ]
+      },
+      {
+        "name": "Document / PDF summariser",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": true,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate does not summarize rubrics; it tests grading invariants under changes.",
+          "The demo exposes changed pass/fail outcomes and failing regression IDs."
+        ]
+      }
+    ],
+    "collision_risk": "low",
+    "observable_differentiator": "Show a proposed rubric edit failing generated regression tests, blocking release, then passing after the rubric clause is restored.",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "Education space is crowded, but rubric regression testing for institutional release gating is not a renamed tutor/quiz product. Main risk is whether generated tests are truly executable and repeatable."
+  },
+  {
+    "candidate_id": "mut-r4-05-shiftsplice-live-constraint-",
+    "nearest_analogues": [
+      {
+        "name": "Dashboard-only analytics without an irreversible state change",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate writes a replacement schedule and dispatch CSV, not a conflict dashboard.",
+          "It proves seeded hard violations drop to zero via a solver-backed workflow."
+        ]
+      },
+      {
+        "name": "Meeting notes / productivity chatbot",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate reallocates constrained resources rather than organizing notes or reminders.",
+          "Core demo is live disruption repair with minimal-change reassignment."
+        ]
+      },
+      {
+        "name": "Bekhbekh7821/CanopyOps",
+        "source": "github",
+        "url": "https://github.com/Bekhbekh7821/CanopyOps",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate targets clinic/lab/pop-up scheduling disruptions, not cultivation operations.",
+          "Output is a valid replacement schedule with held cases and contact notes."
+        ]
+      }
+    ],
+    "collision_risk": "medium",
+    "observable_differentiator": "A resource is removed from a live schedule and the app produces a minimal valid reallocation packet with before/after constraint diffs and export.",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "The scheduling/reallocation category has many analogues outside the supplied corpus, so collision risk is medium. The minimal-change constrained writeback must be clearly visible to avoid reading as another scheduling dashboard."
+  },
+  {
+    "candidate_id": "mut-r4-06-conflictticket-minimal-revie",
+    "nearest_analogues": [
+      {
+        "name": "Procureallyai/flight-recorder",
+        "source": "github",
+        "url": "https://github.com/Procureallyai/flight-recorder",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": true,
+          "same_data": true,
+          "same_action": false,
+          "same_demo": true
+        },
+        "differences": [
+          "Candidate opens a minimal blocking-conflict review issue rather than creating a build provenance passport.",
+          "It reduces a broad checklist to a conflict set with acceptance criteria."
+        ]
+      },
+      {
+        "name": "TracePatch Verifier",
+        "source": "prior-run-candidate",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": true,
+          "same_data": true,
+          "same_action": false,
+          "same_demo": true
+        },
+        "differences": [
+          "ConflictTicket opens a review task; TracePatch applies correction patches into documentation/workflow files.",
+          "ConflictTicket optimizes reviewer workload, while TracePatch optimizes verified submission materials."
+        ]
+      },
+      {
+        "name": "Generic chatbot wrapper over a sponsor API",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate collects repo state, rule evidence, and failing tests into a reproducible minimal conflict set.",
+          "Observable output is a GitHub-ready issue payload, not chat advice."
+        ]
+      }
+    ],
+    "collision_risk": "high",
+    "observable_differentiator": "The only clear differentiator is opening a focused review issue rather than applying patches or producing provenance, and the issue must be backed by reproducible minimal-conflict reduction.",
+    "differentiator_is_substantive": false,
+    "kill_recommendation": true,
+    "notes": "Several analogues share the same hackathon builder user, submission-readiness problem, rule/repo evidence data, and constraint mechanism. Compared with TracePatch and flight-recorder, the changed action is weaker and demo-overlapping."
+  },
+  {
+    "candidate_id": "mut-r4-07-appeal-ledger-procedural-evi",
+    "nearest_analogues": [
+      {
+        "name": "Document / PDF summariser",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": true,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate maintains claim-status transitions in a provenance ledger instead of producing a flat summary.",
+          "It tracks negative evidence, contradictions, deadlines, and source-linked status changes."
+        ]
+      },
+      {
+        "name": "Unsafe Filing Interlock Receipt",
+        "source": "prior-run-candidate",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": true,
+          "same_data": true,
+          "same_action": false,
+          "same_demo": true
+        },
+        "differences": [
+          "Appeal Ledger reconstructs and updates a procedural evidence timeline; Interlock blocks a specific unsafe submit transition.",
+          "Ledger export is a checklist and dated provenance record, not a release/block receipt."
+        ]
+      },
+      {
+        "name": "Symptom checker / triage chatbot",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate is evidence provenance for administrative appeals, not conversational triage advice.",
+          "It updates durable claim states and exports a packet checklist."
+        ]
+      }
+    ],
+    "collision_risk": "medium",
+    "observable_differentiator": "The demo must show a persistent ledger where adding a missing notice changes specific claims from unverified to sourced or needs-evidence, with dated evidence IDs.",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "Close to generic appeal/document assistance and to Unsafe Filing Interlock. It survives if the ledger state transitions are central; otherwise it collapses into document summarization."
+  },
+  {
+    "candidate_id": "mut-r4-08-labmethod-mirror-counterfact",
+    "nearest_analogues": [
+      {
+        "name": "AI study tutor / quiz / flashcard generator",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Candidate targets instructors reviewing experiment protocols before data collection, not students practicing content.",
+          "It runs counterfactual perturbations with numeric conclusion drift rather than generating study materials."
+        ]
+      },
+      {
+        "name": "mst-projects/negotiation-simulator",
+        "source": "github",
+        "url": "https://github.com/mst-projects/negotiation-simulator",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": true,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": true
+        },
+        "differences": [
+          "Candidate reviews experimental design stability; analogue simulates message/negotiation outcomes.",
+          "Candidate emits required protocol revisions tied to assumption IDs."
+        ]
+      },
+      {
+        "name": "Rubric Regression Lab",
+        "source": "prior-run-candidate",
+        "url": "",
+        "similarities": {
+          "same_user": true,
+          "same_problem": true,
+          "same_mechanism": true,
+          "same_data": true,
+          "same_action": false,
+          "same_demo": true
+        },
+        "differences": [
+          "LabMethod tests experimental-protocol counterfactuals before data collection; Rubric Regression tests rubric edits across learner traces.",
+          "LabMethod action is revise-design/approve protocol, not rubric release gating."
+        ]
+      }
+    ],
+    "collision_risk": "medium",
+    "observable_differentiator": "Show paired counterfactual protocol runs where one perturbation changes effect estimate or conclusion and forces a visible revise-design state with required fixes.",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "Shares institutional education review and generated test logic with Rubric Regression Lab, but the data object and action differ enough if the counterfactual experiment runner is numeric and replayable."
+  }
+]

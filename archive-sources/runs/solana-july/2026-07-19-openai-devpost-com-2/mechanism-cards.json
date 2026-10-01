@@ -1,0 +1,110 @@
+[
+  {
+    "id": "m0_verifiable_build_trace",
+    "mechanism_family": "provenance",
+    "mechanism": "Instrumented development-trace compiler",
+    "origin_domain": "software supply chain attestation",
+    "inputs": [
+      "source repository events",
+      "agent action logs",
+      "test execution records",
+      "dependency metadata",
+      "human decision annotations"
+    ],
+    "transformation": "Normalize heterogeneous build and authoring events into a signed, replayable provenance graph that links code changes, rationale, dependencies, validation steps, and resulting artifacts.",
+    "outputs": [
+      "artifact provenance graph",
+      "change-to-validation mapping",
+      "dependency authorization evidence",
+      "replay checklist",
+      "integrity digest"
+    ],
+    "constraints": [
+      "must preserve enough event order to reconstruct causality",
+      "must exclude secrets and private credentials from recorded traces",
+      "must bind each artifact to a specific repository state",
+      "must distinguish automated edits from human edits"
+    ]
+  },
+  {
+    "id": "m1_constraint_backed_decision_diff",
+    "mechanism_family": "constraint solving",
+    "mechanism": "Decision-state consistency checker",
+    "origin_domain": "formal methods and policy verification",
+    "inputs": [
+      "structured requirements",
+      "implementation rules",
+      "test cases",
+      "edge-case examples",
+      "observed outputs"
+    ],
+    "transformation": "Translate requirements and implementation behavior into comparable constraint sets, then solve for contradictions, unreachable states, missing cases, and behavior that satisfies code constraints while violating stated requirements.",
+    "outputs": [
+      "constraint satisfaction report",
+      "minimal counterexamples",
+      "unreachable-condition list",
+      "requirement-to-rule coverage matrix",
+      "suggested invariant set"
+    ],
+    "constraints": [
+      "must represent uncertainty separately from contradiction",
+      "must produce minimal reproducible counterexamples",
+      "must keep generated invariants traceable to source requirements",
+      "must avoid treating absent requirements as permission"
+    ]
+  },
+  {
+    "id": "m2_counterfactual_evaluation_harness",
+    "mechanism_family": "counterfactual testing",
+    "mechanism": "Perturbation-based robustness evaluator",
+    "origin_domain": "simulation and experimental design",
+    "inputs": [
+      "baseline scenarios",
+      "system outputs",
+      "evaluation criteria",
+      "controlled perturbation dimensions",
+      "randomization seed"
+    ],
+    "transformation": "Generate paired counterfactual scenarios by varying one or more controlled factors, execute the same evaluation path, and compare output deltas against expected invariance, monotonicity, or sensitivity constraints.",
+    "outputs": [
+      "counterfactual scenario set",
+      "delta analysis",
+      "robustness score",
+      "invariance violations",
+      "sensitivity map"
+    ],
+    "constraints": [
+      "must isolate perturbation variables where possible",
+      "must keep scenario pairs comparable",
+      "must record seeds and generation parameters",
+      "must separate expected sensitivity from anomalous drift"
+    ]
+  },
+  {
+    "id": "m3_anomaly_localization_loop",
+    "mechanism_family": "anomaly detection",
+    "mechanism": "Evidence-weighted fault localization loop",
+    "origin_domain": "observability and diagnostic inference",
+    "inputs": [
+      "runtime logs",
+      "test failures",
+      "recent changes",
+      "static dependency graph",
+      "configuration state"
+    ],
+    "transformation": "Correlate anomalous observations with dependency paths and recent state changes, rank likely fault locations, generate targeted probes, and update confidence scores from probe results until a bounded diagnostic explanation is reached.",
+    "outputs": [
+      "ranked fault hypotheses",
+      "evidence graph",
+      "targeted probe plan",
+      "confidence updates",
+      "bounded root-cause explanation"
+    ],
+    "constraints": [
+      "must retain negative evidence as confidence-reducing signals",
+      "must avoid collapsing correlation into causation without probes",
+      "must cap diagnostic iterations",
+      "must make confidence changes auditable"
+    ]
+  }
+]

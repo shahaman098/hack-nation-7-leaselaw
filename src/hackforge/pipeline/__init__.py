@@ -68,7 +68,7 @@ def _run_analyse_impl(
 ) -> Path:
     del seeds_per_lane  # retained for API compatibility; profiles now own search breadth.
     if not any([input_path, url, text]):
-        raise ValueError("Provide input_path, url, or text")
+        raise ValueError("Provide input_path, url, and/or text (they can be combined)")
     if finalists < 3:
         raise ValueError("finalists must be at least 3 (one winner and two structurally different backups)")
 
@@ -488,17 +488,53 @@ def _run_analyse_impl(
 def _collect_initial_evidence(
     *, input_path: Path | None, url: str | None, text: str | None
 ) -> tuple[str, list[str], list[EvidenceSource]]:
-    if input_path:
-        raw, sources = ingest_file(input_path)
-        return raw, sources, [input_evidence(raw, sources[0])]
+    """Merge operator file/paste and optional URL crawl into one evidence pack.
+
+    Sources are complementary, not mutually exclusive: a pasted description can
+    fill gaps left by a JS-heavy or blocked competition page, and a URL can add
+    official pages even when the operator already pasted the brief.
+    Operator-supplied material is ordered first so it stays authoritative.
+    """
+    evidence: list[EvidenceSource] = []
+    input_sources: list[str] = []
+    raw_parts: list[str] = []
+
+    if input_path is not None:
+        file_raw, sources = ingest_file(input_path)
+        if file_raw.strip():
+            raw_parts.append(file_raw)
+            input_sources.extend(sources)
+            evidence.append(input_evidence(file_raw, sources[0]))
+
+    if text is not None and text.strip():
+        raw_parts.append(text)
+        input_sources.append("inline")
+        evidence.append(input_evidence(text, "inline"))
+
+    url_failed_without_fallback = False
     if url:
-        evidence = crawl_competition(url)
-        raw = evidence_text(evidence)
-        if not raw:
-            raise RuntimeError(f"Could not retrieve competition evidence from {url}")
-        return raw, [url], evidence
-    raw = text or ""
-    return raw, ["inline"], [input_evidence(raw, "inline")]
+        crawled = crawl_competition(url)
+        crawled_text = evidence_text(crawled)
+        evidence.extend(crawled)
+        input_sources.append(url)
+        if crawled_text.strip():
+            raw_parts.append(crawled_text)
+        elif not raw_parts:
+            url_failed_without_fallback = True
+
+    if url_failed_without_fallback:
+        raise RuntimeError(
+            f"Could not retrieve competition evidence from {url}. "
+            "Paste the official description with --text or --input and keep --url as a citation."
+        )
+
+    raw = "\n\n".join(part for part in raw_parts if part.strip())
+    if not raw.strip():
+        raise RuntimeError(
+            "No usable competition description found. "
+            "Provide --url, --text, and/or --input with real content."
+        )
+    return raw, input_sources, evidence
 
 
 def _run_gates(

@@ -1,0 +1,104 @@
+{
+  "name": "Sample Civic Resilience Hackathon 2026",
+  "slug": "sample-civic-resilience-2026",
+  "source_urls": [
+    "/Users/efi/Daily Projects/Hackathon Strategy Engine/fixtures/uk-parliament-easya-2026.md"
+  ],
+  "theme": "Civic tech and public service reliability",
+  "tracks": [
+    "Civic Data",
+    "Accessibility",
+    "Public Admin Tooling"
+  ],
+  "sponsors": [
+    "Example Cloud",
+    "Open Data Alliance"
+  ],
+  "deadline": "2026-09-04",
+  "team_size": "2",
+  "required_or_encouraged_tech": [
+    "Example Cloud APIs optional"
+  ],
+  "prizes": [
+    "Grand prize",
+    "Best civic impact"
+  ],
+  "facts": [
+    {
+      "claim": "Judging weighs real-world applicability, technical implementation, and demo clarity.",
+      "source": "fixtures/sample-hackathon.md",
+      "confidence": "high"
+    },
+    {
+      "claim": "Open government datasets are encouraged.",
+      "source": "fixtures/sample-hackathon.md",
+      "confidence": "high"
+    }
+  ],
+  "inference": [
+    {
+      "claim": "Judges will punish chatbot wrappers and dashboard-only demos.",
+      "rationale": "Criteria emphasize working application footage and original architecture."
+    }
+  ],
+  "missing": [
+    "Exact percentage weights for each criterion"
+  ],
+  "potentially_stale": [],
+  "judging_criteria": [
+    {
+      "name": "Technical implementation",
+      "weight_or_priority": "high",
+      "notes": ""
+    },
+    {
+      "name": "Real-world applicability",
+      "weight_or_priority": "high",
+      "notes": ""
+    },
+    {
+      "name": "Originality",
+      "weight_or_priority": "medium",
+      "notes": ""
+    },
+    {
+      "name": "Design / demo clarity",
+      "weight_or_priority": "medium",
+      "notes": ""
+    }
+  ],
+  "sponsor_capabilities": [
+    "Managed Postgres",
+    "Object storage",
+    "Serverless functions"
+  ],
+  "available_datasets": [
+    "Local planning applications CSV",
+    "FOI request logs",
+    "Service outage reports"
+  ],
+  "crowding": {
+    "high_collision": [
+      "AI study tutor",
+      "Generic mental-health companion",
+      "Document summariser",
+      "Carbon footprint dashboard"
+    ],
+    "medium_collision": [
+      "Scholarship navigator",
+      "Emergency tip assistant",
+      "Automated sales outreach"
+    ],
+    "potentially_underexplored": [
+      "Appeal-pathway reconstruction",
+      "Administrative error prevention",
+      "Constraint-based council resource allocation"
+    ],
+    "do_not_build": [
+      "Retrieve-check-draft opportunity navigators",
+      "Personal crisis action navigators from risk maps",
+      "Ops fatigue CSV doctors"
+    ]
+  },
+  "sanitized_brief": "Sample Civic Resilience Hackathon 2026. Tracks: Civic Data, Accessibility, Public Admin Tooling. Judging: technical implementation (high), real-world applicability (high), originality (medium), design/demo clarity (medium). Sponsor capabilities: managed DB, storage, serverless. Encourage open gov data. Blacklist: tutors, summarisers, wellness bots, opportunity navigators, crisis navigators, ops fatigue doctors. Prefer under-explored admin failure modes and allocation under constraint."
+}

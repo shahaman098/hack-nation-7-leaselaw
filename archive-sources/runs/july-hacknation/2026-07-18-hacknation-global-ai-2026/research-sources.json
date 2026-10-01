@@ -1,0 +1,93 @@
+[
+  {
+    "id": "src-d6b97c716aae",
+    "url": "/Users/efi/Music/Projects/Hackathon July/HackNation/hackathon-briefs/hacknation-global-ai-2026.md",
+    "title": "/Users/efi/Music/Projects/Hackathon July/HackNation/hackathon-briefs/hacknation-global-ai-2026.md",
+    "source_kind": "input",
+    "retrieved_at": "2026-07-18T18:57:18.503133+00:00",
+    "excerpt": "# Hack-Nation 6th Global AI Hackathon\n\nIn collaboration with MIT Club of Northern California and MIT Club of Germany.\n\n## Context\n\nTeams choose one sponsor challenge and build a working hackathon prototype. Strong submissions must be demo-first, specific to the selected challenge, grounded in real or provided data, and able to show a memorable transformation in about one minute. Avoid generic chatbot wrappers, dashboard-only projects, unsupported AI claims, and sponsor technology used only as decoration.\n\n## Challenge 01 - ElevenLabs: The Negotiator\n\nBuild a voice-agent system that gathers real prices by phone, compares itemized quotes, and negotiates a better deal in a phone-priced market such as moving, medical bills, car buying, contractor bids, freight, equipment rental, or wedding vendors.\n\nRequired modules:\n- Estimator: voice interview using ElevenLabs Agents plus at least one document type; both produce the same confirmed structured job spec.\n- Caller: live calls against at least three distinct negotiation styles; every quote captured in structured comparable form with itemized fees.\n- Closer: at least one negotiation where price or terms change because of leverage gathered; final report ranks all quotes and cites transcript evidence.\n\nImportant controls:\n- AI disclosure and honesty constraints.\n- Handles interruptions, refusals, vague answers, hang-ups, and \"are you a robot?\"\n- Never invents inventory or fake competing bids.\n\nLikely winning angle: conversation design and real negotiation quality matter more than agent-stack complexity.\n\n## Challenge 02 - Maschmeyer Group: The VC Brain\n\nBuild a data- and AI-first venture operating system for Sourcing, Screening, Diligence, and Decision, enabling a human investor to evaluate and deploy $100K checks within 24 hours.\n\nRequired capabilities:\n- Thesis Engine configurable by sector, stage, geography, check size, ownership target, and risk appetite.\n- Smart data collection from pitch decks, GitHub, social signals, launches, papers, patents, hackathons, accelerators, and applications.\n- Inbound application flow: deck plus company name minimum.\n- Outbound sourcing flow: find founders before formal fundraising and activate them into applications.\n- Multi-axis screening: Founder, Market, and Idea-vs-Market scored independently, not averaged; each includes trend.\n- Persistent Founder Score that follows a person across applications and updates over time.\n- Evidence-backed investment memos and per-claim Trust Scores.\n\nJudging:\n- Data Architecture and Intelligence: 30%.\n- Intelligent Analysis and Trust: 25%.\n- Investment Utility and Execution: 30%.\n- UX and Design: 15%.\n\nLikely winning angle: deep sourcing and cold-start founder evaluation, not a polished generic investor dashboard.\n\n## Challenge 03 - RealPage: RealDoor\n\nBuild an affordable-housing application-readiness copilot for one metro, one program, and synthetic documents. The AI extracts, explains, retrieves, calculates, and prepares; the renter confirms; a qualified human decides.\n\nRequired flow:\n- Profile: upload synthetic pay stubs or benefit letters, extract only allowlisted fields with source boxes and confidence, require renter confirmation or correction.\n- Understand: use a versioned corpus for one program and rule year, show confirmed value, threshold, formula, source, and effective date, abstain when uncertain, never label the renter eligible.\n- Prepare: flag missing or expired items against a gold checklist, let renter preview/edit/download/delete, never auto-send a profile or packet.\n\nNon-negotiables:\n- No approval, denial, score, rank, or eligibility decision.\n- No hidden proxies or protected-trait inference.\n- Consent, correction, privacy, deletion, prompt-injection resistance, and WCAG 2.2 AA accessibility.\n\nJudging:\n- Profile accuracy: 25%.\n- Rules and math: 25%.\n- Safety and privacy: 20%.\n- Accessibility: 15%.\n- End-to-end usefulness: 15%.\n\nLikely winning angle: correctness, safety controls, deterministic math, and accessibility.\n\n## Challenge 04 - Databricks: Data Legend\n\nBuild a Healthcare Facility Intelligence App on Databricks Free Edition that turns 10,000 messy Indian healthcare facility records into decisions a non-technical planner can trust.\n\nChoose one mission track:\n- Facility Trust Desk: capability plus region -> ranked facilities with trust signals -> facility citations -> human override with note.\n- Medical Desert Planner: capability plus geography -> trust-weighted regional coverage -> drill into facility records behind aggregate -> save scenario.\n- Referral Copilot: location plus care need -> evidence-attached shortlist with distance, evidence, gaps -> save shortlist.\n- Data Readiness Desk: surface completeness gaps, contradictions, suspicious claims, high-leverage records -> review queue -> persist reviewer decisions.\n\nRequired product elements:\n- Databricks App live on Free Edition.\n- Evidence Engine that extracts structure from messy structured and free-text facility records.\n- Trust Scorer that communicates confidence and uncertainty, not just keyword matches.\n- Planner workflow that persists notes, overrides, shortlists, scenarios, or review decisions.\n\nProvided dataset:\n- 10,000 Indian facility records across 51 columns.\n- Fields include description, capability, procedure, equipment, numberDoctors, capacity, yearEstablished, source URLs, and location.\n- Important sparsity: numberDoctors about 36.4% coverage, capacity about 25.2%.\n\nSponsor tech:\n- Databricks Apps.\n- Agent Bricks / Mosaic AI.\n- Genie.\n- MLflow 3 tracing.\n- AI Search / Vector Search.\n- Lakebase for persistence.\n\nJudging:\n- Evidence and Trust: 35%.\n- Product Judgment: 30%.\n- Technical Execution: 25%.\n- Ambition: 10%.\n\nLikely winning angle: distinguish true medical deserts from data deserts and show evidence-backed uncertainty a planner can act on.\n\n## Challenge 05 - OpenAI: Foundation Models for Women's Hormonal Health\n\nBuild one reusable open-science layer for women's hormonal health: a dataset, benchmark, model, or application that future researchers can build on.\n\nPossible layers:\n- Data and Benchmark Infrastructure: standardized multimodal dataset, train/validation/test splits, transparent evaluation, focused prediction tasks such as hormone level, ovulation, menopause stage, or disease-risk prediction.\n- AI Model Infrastructure: focused reproducible model for hormone-level or hormonal-state prediction, explainable multimodal integration, or clinical-trial prediction where hormonal variability may affect efficacy or safety.\n- Application Infrastructure: regulator-conscious de-identified data contribution, digital hormone journal, voice logging, personalized hormone insights, or digital twin built on reusable datasets/models.\n\nOpen-science requirement:\n- Publish datasets, benchmarks, source code, model checkpoints, documentation, and evaluation pipelines whenever possible.\n\nData sources:\n- mcPHASES on PhysioNet: Fitbit, continuous glucose monitoring, hormone measurements, menstrual-cycle data, sleep, and symptoms.\n- NHANES: reproductive health, thyroid hormones, lab data, nutrition, demographics.\n\nSuccess criteria:\n- Women's health impact.\n- Technical excellence.\n- Foundation value.\n\nLikely winning angle: a reusable benchmark or evaluation pipeline is stronger than an isolated symptom-tracking app.\n\n## Challenge 06 - OpenAI: Genome Firewall\n\nBuild a strictly defensive AI system that takes one quality-checked reconstructed bacterial genome FASTA for one supported species and predicts, for each antibiotic, likely to fail, likely to work, or no-call. Each result must include calibrated confidence and supporting genes or DNA changes.\n\nRequired modules:\n- Genome Reader: repeatable path from assembled FASTA to AI features using AMRFinderPlus as default annotation; output format specification.\n- Predictor: predictions for all antibiotics on each species, with deterministic molecular-target compatibility gate and sequence-homology de-duplication before evaluation.\n- Decision Report: Streamlit or Gradio demo with drug, likely fail/work/no-call, calibrated confidence, evidence category, and mandatory \"confirm with standard lab testing\" message.\n\nResponsibility requirements:\n- Strictly defensive; never designs, modifies, or suggests changes to organisms.\n- Honest generalization using genetically related groups and held-out data.\n- Calibrated confidence and no-call option.\n- Separate known resistance genes/DNA changes from statistical associations.\n- Human oversight.\n\nData and tools:\n- BV-BRC genome and lab-measured AMR data.\n- AMRFinderPlus.\n- ResFinder.\n- cAMRah.\n- Baseline: regularized logistic regression per antibiotic with AMRFinderPlus features.\n\nEvaluation:\n- Balanced accuracy, resistant recall, susceptible recall.\n- F1, AUROC, PR-AUC per drug.\n- Brier score, reliability plot, no-call rate, accuracy after no-call.\n- Generalization by genetically related bacterial group.\n\nLikely winning angle: one species and a few antibiotics done honestly with grouped splits, calibration, no-call behavior, and careful defensive framing.\n\n## Shared Strategic Constraints\n\n- Small team, hackathon build window, working demo required.\n- A winning project must be judge-legible in under 60 seconds.\n- Prefer real computation, state transitions, evidence, trust layers, deterministic checks, and workflow completion over pure chat.\n- Sponsor technology should be materially necessary.\n- The idea must not be replaceable by opening ChatGPT.\n- Strong demo pattern: messy fragmented evidence -> system performs real extraction/computation/verification -> user gets a defensible action or decision-support artifact.\n",
+    "fetch_status": "ok",
+    "http_status": null,
+    "error": "",
+    "content_hash": "d6b97c716aae69d589b3ebc0e6de7285536b4c25f8c45f1d50ac8c18999b9097",
+    "verified": true
+  },
+  {
+    "id": "src-129af4198102",
+    "url": "https://github.com/mojoyin-labs/HerLog",
+    "title": "mojoyin-labs/HerLog",
+    "source_kind": "github",
+    "retrieved_at": "2026-07-18T18:58:28.452370+00:00",
+    "excerpt": "Topics: \nUpdated: 2026-07-18T18:45:34Z",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "129af41981029320faa70807cba75f6e0bcab81e453a61902946b2bdd6ce56d2",
+    "verified": true
+  },
+  {
+    "id": "src-3387c893a95d",
+    "url": "https://github.com/ElaineQian09/Hack_Nation_6th_Global_AI_Hackathon",
+    "title": "ElaineQian09/Hack_Nation_6th_Global_AI_Hackathon",
+    "source_kind": "github",
+    "retrieved_at": "2026-07-18T18:58:28.452812+00:00",
+    "excerpt": "Topics: \nUpdated: 2026-07-18T18:41:07Z",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "3387c893a95d7fa97698e698ba8c8e678c8459c64278b6080a46cba0e350a767",
+    "verified": true
+  },
+  {
+    "id": "src-901a6fe2994e",
+    "url": "https://github.com/ADnocap/HackNation-6th-edition",
+    "title": "ADnocap/HackNation-6th-edition",
+    "source_kind": "github",
+    "retrieved_at": "2026-07-18T18:58:28.452847+00:00",
+    "excerpt": "Topics: \nUpdated: 2026-07-18T18:39:25Z",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "901a6fe2994e27e62d122c93d14cef134af6030f33346ea5f47ec3dec3aa8e30",
+    "verified": true
+  },
+  {
+    "id": "src-a8757b1b9b4f",
+    "url": "https://github.com/elohiya1/group-6-hackathon",
+    "title": "elohiya1/group-6-hackathon",
+    "source_kind": "github",
+    "retrieved_at": "2026-07-18T18:58:28.452865+00:00",
+    "excerpt": "Topics: \nUpdated: 2026-07-18T18:38:24Z",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "a8757b1b9b4fb07b224ba19d3c7b79502d8edbdfb225a9f03b7ee3fcefd56e2d",
+    "verified": true
+  },
+  {
+    "id": "src-1e31404a25a0",
+    "url": "https://devpost.com/software/rapid-site-builder-hire-your-ai-ops-team",
+    "title": "rapid-site-builder",
+    "source_kind": "devpost",
+    "retrieved_at": "2026-07-18T18:58:34.170883+00:00",
+    "excerpt": "Describe your business in one line — an AI agent team designs, writes, and ships your website live. Built for the Google Cloud Rapid Agent Hackathon.\nBuilt with: \nDiscovered via public repository: https://github.com/OpsAgentsAI/rapid-site-builder",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "1e31404a25a08ff628cf3fdbde31443781dee4cc4a59df08ee7c09e749ab2965",
+    "verified": true
+  },
+  {
+    "id": "src-ba3ac1541527",
+    "url": "https://devpost.com/software/repset-fv2zt3",
+    "title": "repset",
+    "source_kind": "devpost",
+    "retrieved_at": "2026-07-18T18:58:34.170928+00:00",
+    "excerpt": "Move while the model thinks — context-aware, local-first movement breaks for Codex.\nBuilt with: accessibility, codex, developer-wellness, local-first, mcp, openai, privacy, typescript\nDiscovered via public repository: https://github.com/AmirmLotfy/repset",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "ba3ac15415277436e0fbb8d4a1d3777f9776b6014c048a2ecbc28c04d06b96b9",
+    "verified": true
+  }
+]

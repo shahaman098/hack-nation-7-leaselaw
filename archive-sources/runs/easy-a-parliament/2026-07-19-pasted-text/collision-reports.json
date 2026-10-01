@@ -1,0 +1,401 @@
+[
+  {
+    "candidate_id": "concept-c3d4",
+    "nearest_analogues": [
+      {
+        "name": "Load shedding / circuit breaker patterns in backend services",
+        "source": "general engineering knowledge",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": true,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Targets frontend demo resilience for AI video generation, not backend service reliability.",
+          "Uses SPC anomaly detection on real-time metrics, not simple threshold-based circuit breakers."
+        ]
+      },
+      {
+        "name": "fal-client-side SDK error handling wrappers",
+        "source": "typical developer tooling",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": true,
+          "same_demo": false
+        },
+        "differences": [
+          "Provides SPC-driven fallback buffer switching rather than standard retry/timeout error handling.",
+          "Demo showcases a live glitch interception with logging, not just silent error suppression."
+        ]
+      }
+    ],
+    "collision_risk": "low",
+    "observable_differentiator": "SPC-based anomaly detection triggers seamless fallback video buffer, demonstrated via live network throttling",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "No direct analogue found in corpus or prior runs. Nearest analogues are generic patterns; the SPC mechanism applied to real-time demo protection is novel and well-demonstrated."
+  },
+  {
+    "candidate_id": "concept-004-ci",
+    "nearest_analogues": [
+      {
+        "name": "Style transfer / controlnet / ip-adapter tools for image generation",
+        "source": "public projects and research",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Uses counterfactual causal inference to adjust specific attributes, not neural style transfer or prompt-based control.",
+          "Demo shows iterative convergence with measurable style-match percentage, not single-step style application."
+        ]
+      },
+      {
+        "name": "Prompt engineering tools for style replication",
+        "source": "developer community",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Quantifies style adherence via causal DAG and counterfactual corrections, not trial-and-error prompting.",
+          "Visual report with deltas per attribute (line weight, palette) is unique, shown in demo."
+        ]
+      }
+    ],
+    "collision_risk": "low",
+    "observable_differentiator": "Causal counterfactual adjustments with real-time style-match scoring and targeted re-generation",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "No collision found. Typical style tools rely on direct transfer or embedding injection; the causal inference approach is distinct and the demo demonstrates a novel workflow."
+  },
+  {
+    "candidate_id": "concept-003-des",
+    "nearest_analogues": [
+      {
+        "name": "Brand compliance checkers in advertising platforms",
+        "source": "commercial martech tools",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Employs discrete event simulation for temporal compliance tracing, not static frame analysis.",
+          "Provides time-weighted scores and event logs per video, not just pass/fail or percentage aggregates."
+        ]
+      },
+      {
+        "name": "Side-by-side video comparison tools (e.g., for color grading)",
+        "source": "video editing software",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": true,
+          "same_demo": false
+        },
+        "differences": [
+          "Simulates brand guideline violations over time with synchronized event log, not just visual side-by-side.",
+          "Generates compliance PDF with frame grabs, enabling auditable decision-making."
+        ]
+      }
+    ],
+    "collision_risk": "medium",
+    "observable_differentiator": "Discrete event simulation engine logs frame-by-frame brand violations and produces compliance reports",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "Some overlap with existing brand tools in problem space, but the simulation-based, time-aware approach and audit trail are novel. No direct clones found."
+  },
+  {
+    "candidate_id": "C5",
+    "nearest_analogues": [
+      {
+        "name": "Prompt chaining / sequential generation tools with seed consistency",
+        "source": "developer community projects",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Uses constraint propagation and interval arithmetic to ensure consistency before generation, not post-hoc fixing.",
+          "Demo shows batch generation with locked character identity across shots, not frame-by-frame manual tweaking."
+        ]
+      },
+      {
+        "name": "fal Assets reusable character identity features",
+        "source": "fal.ai documentation",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": true,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Automatically injects constrained descriptors into prompts based on a visual bible, not just storing a reference image.",
+          "Reduces drift proven by CLIP cosine distance measurement, not just visual similarity."
+        ]
+      }
+    ],
+    "collision_risk": "low",
+    "observable_differentiator": "Constraint propagation mathematically narrows generation parameters per shot, shown via side-by-side consistency comparison",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "No direct collision. While prompt chaining and asset reuse exist, the constraint propagation mechanism is novel and the demo provides quantitative evidence of reduced drift."
+  },
+  {
+    "candidate_id": "mut-r4-02-styleforge-verified-counterf",
+    "nearest_analogues": [
+      {
+        "name": "borjasolerme/Filmoss",
+        "source": "github",
+        "url": "https://github.com/borjasolerme/Filmoss",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Filmoss is an open-source canvas for AI media creation/editing with no counterfactual style treatment scheduling",
+          "StyleForge uses causal DAGs and propensity scores for targeted style corrections, not a general-purpose editing canvas"
+        ]
+      }
+    ],
+    "collision_risk": "low",
+    "observable_differentiator": "Causal style-propensity scoring and scheduled re-treatment dashboard with frame-level counterfactual corrections",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "No existing project applies counterfactual inference to anime style adherence. The crowded-archetype matches are irrelevant (generic study tutors, PDF summarizers) with very low similarity scores. The cited Filmoss repo is a general media canvas, not a style treatment system. Unique mechanism + unique action (scheduled re-treatment) = no kill."
+  },
+  {
+    "candidate_id": "mut-r4-03-safecut-real-time-transition",
+    "nearest_analogues": [
+      {
+        "name": "borjasolerme/Filmoss",
+        "source": "github",
+        "url": "https://github.com/borjasolerme/Filmoss",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Filmoss is a general AI media canvas without transition safety gating or cryptographic evidence receipts",
+          "SafeCut applies constraint propagation with interval arithmetic specifically to scene transitions with auto-heal re-rendering"
+        ]
+      }
+    ],
+    "collision_risk": "low",
+    "observable_differentiator": "Frame-precise constraint checking on interpolated transition frames with cryptographic evidence receipts and targeted auto-heal re-rendering",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "No existing tool applies constraint propagation to video transition safety with cryptographic signing. Crowded-archetype nearest matches are all unrelated (study tutors, dashboards). The GitHub source is a general editing tool. Unique mechanism, unique action (block + auto-heal), unique demo output."
+  },
+  {
+    "candidate_id": "mut-r4-04-scenedoctor-automated-regres",
+    "nearest_analogues": [
+      {
+        "name": "Crowded archetype: Carbon-footprint tracker dashboard",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Carbon-footprint dashboard tracks emissions data, not AI video pipeline regression testing",
+          "SceneDoctor uses counterfactual inference with causal DAGs and difference-in-differences estimation, not simple metric tracking"
+        ]
+      }
+    ],
+    "collision_risk": "low",
+    "observable_differentiator": "Causal regression testing with difference-in-differences analysis for AI pipeline changes, producing CI/CD-style pass/fail badges with GitHub issue integration",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "No evidence of any existing tool applying causal inference to regression testing for AI video pipelines. All nearest matches are generic crowded archetypes (trackers, study tools) with no substantive overlap. The combination of causal DAG construction, embedding-based treatment effect measurement, and CI/CD integration is unique."
+  },
+  {
+    "candidate_id": "mut-r4-05-creditguard-spc-driven-budge",
+    "nearest_analogues": [
+      {
+        "name": "Crowded archetype: Dashboard-only analytics without irreversible state change",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Dashboard-only analytics do not perform automated resource reallocation based on anomaly detection",
+          "CreditGuard applies SPC to API credit consumption and actively throttles/reallocates resources to prevent budget exhaustion"
+        ]
+      },
+      {
+        "name": "Crowded archetype: AI study tutor / quiz / flashcard generator",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Study tutors are content-generation tools with no SPC monitoring or resource constraint management",
+          "CreditGuard is a middleware library for credit budget protection, not a user-facing content creation tool"
+        ]
+      }
+    ],
+    "collision_risk": "low",
+    "observable_differentiator": "SPC-based anomaly detection applied to API credit consumption with automated real-time resource reallocation and throttling",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "Unique application of statistical process control to API credit management. No known project monitors credit burn rate as a manufacturing process. Crowded-archetype matches are unrelated categories. The action (silent resource reallocation during live demo) is novel in the hackathon context."
+  },
+  {
+    "candidate_id": "mut-r4-06-conflictstyle-causal-mediato",
+    "nearest_analogues": [
+      {
+        "name": "borjasolerme/Filmoss",
+        "source": "github",
+        "url": "https://github.com/borjasolerme/Filmoss",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Filmoss provides general AI media editing without semantic conflict mediation or causal mediator analysis",
+          "ConflictStyle identifies minimal causal mediators between natural language feedback and visual attributes with quantifiable adjustment reports"
+        ]
+      }
+    ],
+    "collision_risk": "low",
+    "observable_differentiator": "Causal mediation analysis translating subjective creative feedback into minimal visual attribute adjustments with audit trail",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "No existing tool frames creative direction conflicts as causal inference problems with identifiable mediators. The mechanism (counterfactual mediator identification) is uniquely applied to creative collaboration. Crowded-archetype matches are entirely unrelated (study tools, meeting notes)."
+  },
+  {
+    "candidate_id": "mut-r4-07-simevidence-objectively-bran",
+    "nearest_analogues": [
+      {
+        "name": "Crowded archetype: Carbon-footprint tracker dashboard",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Carbon-footprint trackers monitor environmental metrics, not regulatory compliance of video content",
+          "SimEvidence uses discrete event simulation with a frame-by-frame state vector and cryptographic provenance ledger for compliance auditing"
+        ]
+      },
+      {
+        "name": "Crowded archetype: Symptom checker / triage chatbot",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Symptom checkers use rule-based or ML classification for health triage, not regulatory video compliance simulation",
+          "SimEvidence applies formal regulatory grammar parsing with state-defined thresholds and immutable audit trail generation"
+        ]
+      }
+    ],
+    "collision_risk": "low",
+    "observable_differentiator": "Frame-level discrete event simulation of regulatory compliance with cryptographically signed provenance records on an append-only ledger",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "Unique application of discrete event simulation to video compliance auditing with cryptographic evidence. No known tool combines regulatory rule parsing, frame-by-frame state tracking, and blockchain-style provenance logging for AI-generated video. Crowded archetypes are unrelated domains."
+  },
+  {
+    "candidate_id": "mut-r4-08-biblediff-counterfactual-vis",
+    "nearest_analogues": [
+      {
+        "name": "borjasolerme/Filmoss",
+        "source": "github",
+        "url": "https://github.com/borjasolerme/Filmoss",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "Filmoss is a general AI media editing canvas without counterfactual generation of unconstrained comparison worlds",
+          "BibleDiff explicitly generates both constrained and counterfactual-unconstrained video sequences and publishes causal audit certificates"
+        ]
+      }
+    ],
+    "collision_risk": "low",
+    "observable_differentiator": "Side-by-side counterfactual world generation with statistical significance testing and publishable causal forest plot audit certificates",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "No existing tool generates explicit counterfactual (unconstrained) video worlds for continuity comparison. The mechanism of running two full generation passes (with and without visual bible constraints) and publishing formal causal audit certificates is unique. Crowded-archetype matches are irrelevant."
+  }
+]

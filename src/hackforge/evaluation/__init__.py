@@ -221,7 +221,7 @@ def blind_judge(
                 role=role,
                 preferred_blind_id=preferred,
                 rationale=str(raw.get("rationale") or ""),
-                scores_by_official_criteria=dict(raw.get("scores_by_official_criteria") or {}),
+                scores_by_official_criteria=_coerce_score_map(raw.get("scores_by_official_criteria")),
                 hard_gate_failures=list(raw.get("hard_gate_failures") or []),
                 demo_failure_risk=raw.get("demo_failure_risk") or "medium",
             )
@@ -569,6 +569,23 @@ def red_team_check(
     return raw
 
 
+def _coerce_score_map(value: Any) -> dict[str, Any]:
+    """Accept criterion score maps as dicts or Codex-safe [{key,value}] arrays."""
+    if isinstance(value, dict):
+        return dict(value)
+    if isinstance(value, list):
+        output: dict[str, Any] = {}
+        for row in value:
+            if not isinstance(row, dict):
+                continue
+            key = str(row.get("key") or row.get("name") or row.get("criterion") or "").strip()
+            if not key or "value" not in row:
+                continue
+            output[key] = row.get("value")
+        return output
+    return {}
+
+
 def _vote_schema(blind_ids: list[str]) -> dict[str, Any]:
     return {
         "type": "object",
@@ -576,7 +593,18 @@ def _vote_schema(blind_ids: list[str]) -> dict[str, Any]:
             "role": {"type": "string"},
             "preferred_blind_id": {"type": "string", "enum": blind_ids},
             "rationale": {"type": "string"},
-            "scores_by_official_criteria": {"type": "object"},
+            "scores_by_official_criteria": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "key": {"type": "string", "minLength": 1},
+                        "value": {"type": ["number", "string"]},
+                    },
+                    "required": ["key", "value"],
+                    "additionalProperties": False,
+                },
+            },
             "hard_gate_failures": {"type": "array", "items": {"type": "string"}},
             "demo_failure_risk": {"type": "string", "enum": ["low", "medium", "high"]},
         },

@@ -1,18 +1,22 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import click
 from rich import print
 
+from hackforge import __version__
 from hackforge.collision import audit_collisions_engine, collision_markdown
 from hackforge.collision.corpus_loader import load_candidates
 from hackforge.diagnostics import doctor_ready_for_live, run_doctor
-from hackforge.evals import run_baseline_benchmark, run_promptfoo
-from hackforge.integrations.corpus_pull import build_index as build_corpus_index
-from hackforge.integrations.corpus_pull import pull_corpora
+from hackforge.evals import run_benchmark
+from hackforge.evals.promptfoo_runner import run_promptfoo
+from hackforge.integrations.corpus_pull import build_index_from_cache as build_corpus_index
+from hackforge.integrations.corpus_pull import pull_sources as pull_corpora
 from hackforge.memory import append_human_override, learn_from_runs, list_runs
+from hackforge.paths import EVALS_DIR
 from hackforge.pipeline import run_analyse
 from hackforge.providers import load_providers
 from hackforge.research import search_devpost_projects
@@ -20,14 +24,28 @@ from hackforge.utils import env_flag, read_json, write_json, write_text
 
 
 @click.group()
+@click.version_option(version=__version__, prog_name="hackforge")
 def main() -> None:
     """HackForge: private competition strategy, research, and collision laboratory."""
 
 
 @main.command()
-@click.option("--input", "input_path", type=click.Path(exists=True, path_type=Path))
-@click.option("--url", type=str)
-@click.option("--text", type=str)
+@click.option(
+    "--input",
+    "input_path",
+    type=click.Path(exists=True, path_type=Path),
+    help="Local competition brief/file. Can be combined with --url and --text.",
+)
+@click.option(
+    "--url",
+    type=str,
+    help="Public competition page URL. Can be combined with --text/--input.",
+)
+@click.option(
+    "--text",
+    type=str,
+    help="Paste competition description inline, or pass '-' to read from stdin.",
+)
 @click.option("--team-size", type=str)
 @click.option("--deadline", type=str)
 @click.option("--skills", type=str)
@@ -74,9 +92,17 @@ def analyse(
     no_visual_report: bool,
     live_research: bool | None,
 ) -> None:
-    """Run evidence → idea search → collision → feasibility → blind judging."""
+    """Run evidence → idea search → collision → feasibility → blind judging.
+
+    Pass any combination of --url, --text, and --input. Pasted text and local
+    files are treated as authoritative operator evidence; URLs add official pages.
+    """
     if not any([input_path, url, text]):
-        raise click.UsageError("Provide --input, --url, or --text")
+        raise click.UsageError("Provide --input, --url, and/or --text (they can be combined)")
+    if text == "-":
+        text = sys.stdin.read()
+        if not text.strip():
+            raise click.UsageError("Read '--text -' from stdin, but received empty input")
     fixture = read_json(fixture_bundle) if fixture_bundle else None
     if fixture is not None and not dry_run:
         raise click.UsageError("--fixture-bundle is only allowed with --dry-run")
@@ -140,9 +166,9 @@ def corpus() -> None:
 @click.option("--limit", type=click.IntRange(1, 100_000), default=5000, show_default=True)
 def corpus_pull(source: str, limit: int) -> None:
     """Download/normalize optional public competition-project corpora."""
-    results = pull_corpora(source=source, limit=limit)
-    for result in results:
-        print(f"[green]{result['source']}[/green]: {result['count']} rows -> {result['path']}")
+    results = pull_corpora([source], limit=limit)
+    for src, path in results.items():
+        print(f"[green]{src}[/green]: {path}")
 
 
 @corpus.command("build-index")
@@ -150,8 +176,9 @@ def corpus_pull(source: str, limit: int) -> None:
 @click.option("--max-records", type=click.IntRange(1, 250_000), default=None)
 def corpus_build_index(model: str | None, max_records: int | None) -> None:
     """Build FAISS index from normalized optional project corpora."""
-    result = build_corpus_index(model_name=model, max_records=max_records)
-    print(f"[bold green]Index built[/bold green]: {json.dumps(result, indent=2)}")
+    del model  # EmbedIndex owns its default model; retained for CLI compatibility.
+    result = build_corpus_index(max_records=max_records)
+    print(f"[bold green]Index built[/bold green]: {result}")
 
 
 @main.group()
@@ -184,10 +211,11 @@ def research_exists(query: str, limit: int) -> None:
 @click.option("--promptfoo/--no-promptfoo", default=True)
 def eval_command(provider: str, promptfoo: bool) -> None:
     """Run baseline competition benchmarks and optional Promptfoo evaluation."""
-    results = run_baseline_benchmark(provider=provider)
-    print(f"[green]Baseline benchmark:[/green] {results['json_path']}")
+    dry_run = provider == "fixture"
+    results_path = run_benchmark(EVALS_DIR / "benchmarks", dry_run=dry_run)
+    print(f"[green]Baseline benchmark:[/green] {results_path}")
     if promptfoo:
-        promptfoo_result = run_promptfoo(provider=provider)
+        promptfoo_result = run_promptfoo(dry_run=dry_run)
         print(f"[green]Promptfoo:[/green] {promptfoo_result}")
 
 

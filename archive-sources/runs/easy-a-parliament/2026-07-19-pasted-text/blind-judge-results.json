@@ -1,0 +1,361 @@
+{
+  "candidates": [
+    {
+      "blind_id": "A",
+      "internal_id": "concept-003-des"
+    },
+    {
+      "blind_id": "B",
+      "internal_id": "C5"
+    },
+    {
+      "blind_id": "C",
+      "internal_id": "mut-r4-07-simevidence-objectively-bran"
+    },
+    {
+      "blind_id": "D",
+      "internal_id": "mut-r4-05-creditguard-spc-driven-budge"
+    }
+  ],
+  "hard_gates": {
+    "A": {
+      "demonstrable_core": {
+        "passed": true,
+        "notes": "The presenter opens a folder of 8 generated perfume ad videos. They upload a 2-page brand guidelines PDF. Within 30 seconds, a dashboard appears showing a simulation status bar advancing as the clock steps through each frame. The grid populates: video #4 is flagged red—a violation log scrolls showing the logo was missing for 4.2 of 7 seconds. The presenter clicks video #4, the timeline jumps to the exact violation moment, and the screen displays the current frame with a ghosted overlay of the required logo position from the guideline. They check a box and a merged compliance PDF report downloads. The demo ends with the presenter confidently selecting video #7 because the simulation log proves 94% brand compliance vs. a baseline of roughly 60% judged by manual human review."
+      },
+      "real_computation_or_action": {
+        "passed": true,
+        "notes": "The system treats each brand guideline check (color palette match, logo presence, tone classification) as an event processor. GPT-5.6 parses the team's uploaded brand guide PDF against extracted frames to generate event rules (e.g., 'HEX #2D2D2D must occupy >30% of non-sky pixels'). A discrete event simulation clock ticks through each frame of generated video candidates; at each tick, Codex executes a Python script calling fal-hosted computer vision endpoints to measure state variables. The simulation log records timestamps where constraints are violated, producing a per-video compliance trace and a time-weighted compliance score."
+      },
+      "data_accessible": {
+        "passed": true,
+        "notes": "https://devpost.com/software/cocoa-monster"
+      },
+      "specific_track_fit": {
+        "passed": true,
+        "notes": "assessed against brief tracks in judge prompt"
+      },
+      "sponsor_tech_material_or_explicitly_unnecessary": {
+        "passed": true,
+        "notes": "GPT-5.6 reasoning and Codex-built evaluation harness"
+      },
+      "core_loop_deliverable": {
+        "passed": true,
+        "notes": "This is the most buildable of the candidates because the core idea (brand compliance checking) can be reduced to a series of discrete checks that don't require real-time processing. The discrete event simulation framing is academic dressing — what's actually being built is a frame-by-frame checklist with a dashboard. This is achievable if the team scopes ruthlessly: one brand guide, one set of hardcoded rules, pre-processed videos. The main risk is overengineering the 'simulation' abstraction instead of just building the checker. The demo proof requires 8 videos running simultaneously — this could crash a browser, limit to 3-4. GPT-5.6 PDF parsing for brand guidelines is the weakest link; better to manually encode rules for the demo and claim the PDF parser is 'in development.'"
+      },
+      "clear_60s_transformation": {
+        "passed": true,
+        "notes": "A chaotic folder of 15 AI-generated product ads transforms into a scored, filterable comparison grid where the team objectively eliminates 12 candidates in 90 seconds because the simulation exposes that the brand's cobalt blue appears only 8% of the time instead of the required 35%."
+      },
+      "collision_risk_acceptable": {
+        "passed": true,
+        "notes": "medium"
+      }
+    },
+    "B": {
+      "demonstrable_core": {
+        "passed": true,
+        "notes": "Live during the 3-minute demo video: the filmmaker imports a 2-sentence character description and 1 environment image. The system auto-constrains 12 shot prompts across 3 locations. The demo shows a side-by-side comparison of (A) manual prompting with visible style drift vs. (B) Bibledex-constrained shots where the character’s face and the golden-hour lighting stay identical. State changes from ‘inconsistent batch’ to ‘lockstep visual continuity’ before the audience’s eyes."
+      },
+      "real_computation_or_action": {
+        "passed": true,
+        "notes": "Treat each component of a visual bible (character identity, lighting range, color gamut) as a variable with a constrained domain. As the user authors a script, GPT-5.6 parses each shot description into a set of visual constraints (e.g., ‘character A must appear here’, ‘scene is at dusk with warm Kelvin 2500–3500’). The system propagates these constraints through the shot list, narrowing the valid parameter space for each generation call, and automatically injects the constrained descriptors and fal Asset references into the API request for Grok Imagine or Kling."
+      },
+      "data_accessible": {
+        "passed": true,
+        "notes": "https://devpost.com/software/visionaid"
+      },
+      "specific_track_fit": {
+        "passed": true,
+        "notes": "assessed against brief tracks in judge prompt"
+      },
+      "sponsor_tech_material_or_explicitly_unnecessary": {
+        "passed": true,
+        "notes": "GPT-5.6 reasoning and Codex-built evaluation harness"
+      },
+      "core_loop_deliverable": {
+        "passed": true,
+        "notes": "Buildable if scoped down to a prompt-construction tool rather than a full constraint solver. The interval arithmetic is overkill for a hackathon — what's actually valuable is automated prompt injection from a visual bible. The 'constraint propagation' mechanism is intellectually interesting but the team will likely end up building a template system with some variable substitution, which is fine for demo purposes. Main risk: spending too much time implementing real interval arithmetic instead of shipping a working prompt-chain tool. The CLIP cosine distance evaluation is good and measurable. fal Assets integration is the strongest dependency — if that API works reliably, the demo is achievable. The character face consistency claim ('same face across 12 shots') is the hardest to deliver with current gen AI and may look worse than claimed."
+      },
+      "clear_60s_transformation": {
+        "passed": true,
+        "notes": "A 10-shot sequence that previously showed 3 different ‘versions’ of the protagonist and inconsistent lighting now renders with locked character identity and a smooth dusk-to-night gradient because the interval constraints prevented parameter drift."
+      },
+      "collision_risk_acceptable": {
+        "passed": true,
+        "notes": "low"
+      }
+    },
+    "D": {
+      "demonstrable_core": {
+        "passed": true,
+        "notes": "A developer runs a live demo that calls two separate AI models: a high-quality one for the main view and a less-critical one for a thumbnail preview. At 1:45s, an SPC rule violation is triggered by a spike in credit burn on the main model. The tool's console shows 'Anomaly Detected: Credit Consumption Spike (+230%)'. The middleware instantly pauses the thumbnail generation, logs 'Action: Credit Reallocation to Primary Model', and the main demo finishes without any visible interruption. The session log proves the intervention preserved 7 credits, preventing a potential $0 balance error."
+      },
+      "real_computation_or_action": {
+        "passed": true,
+        "notes": "A Python/JavaScript library that monitors the fal API credit consumption rate and request latency. GPT-5.6 establishes a baseline 'in-control' credit burn rate from a historical analysis of a developer's API usage patterns. Codex builds a middleware that, upon SPC detection of an anomaly (e.g., a sudden spike in credit consumption per generation due to model fallbacks or retries), automatically re-allocates remaining credits from a pool, throttles non-critical background requests, or suggests a cost-optimized model variant to prevent budget exhaustion before the demo is complete. This ensures the developer never runs out of credits mid-demo."
+      },
+      "data_accessible": {
+        "passed": true,
+        "notes": "https://devpost.com/software/visionaid"
+      },
+      "specific_track_fit": {
+        "passed": true,
+        "notes": "assessed against brief tracks in judge prompt"
+      },
+      "sponsor_tech_material_or_explicitly_unnecessary": {
+        "passed": true,
+        "notes": "GPT-5.6 reasoning and Codex-built evaluation harness"
+      },
+      "core_loop_deliverable": {
+        "passed": true,
+        "notes": "This is the most technically feasible project. It operates on a well-defined, numerical domain (credits, latency) and the core logic (check rate, trigger action) is straightforward state management. The 'anomaly' can be manually injected for a flawless demo. The main risk is fal API not providing sufficiently granular credit data in real-time, but a proxy or polling can mitigate that. The constraint is engineering integration, not unsolved research."
+      },
+      "clear_60s_transformation": {
+        "passed": true,
+        "notes": "A developer is 2 minutes into their live demo. The SPC system detects an unplanned API consumption surge. Instead of the demo crashing from a 402 error, it seamlessly downgrades a concurrent background asset generation to a smaller model, freeing up just enough credits for the primary demo stream to finish flawlessly, showing a 'Smart Saving: 4 credits preserved' log."
+      },
+      "collision_risk_acceptable": {
+        "passed": true,
+        "notes": "low"
+      }
+    },
+    "C": {
+      "demonstrable_core": {
+        "passed": true,
+        "notes": "The presenter opens a financial services ad and uploads a 3-page regulatory requirement PDF. The dashboard's simulation clock begins ticking. At 3.7 seconds, the screen flashes red as the log shows 'SUPER text contrast ratio dropped to 2.1:1 (required >3:1)'. The presenter freezes the simulation, overlays the frame with the color sampler proving the violation, then fixes the source prompt. On re-import, the simulation log turns all-green. Finally, the presenter clicks 'Attest & Record', and a public dashboard updates with a new immutable block containing the cryptographic evidence hash."
+      },
+      "real_computation_or_action": {
+        "passed": true,
+        "notes": "The system ingests a compliance rulebook and a video file. GPT-5.6, acting as a regulatory reasoning engine, parses the rulebook to extract discrete events and state-defining thresholds (e.g., `disclaimer_text_legible` must be TRUE for >= 5 consecutive seconds). A simulation clock advances frame-by-frame. At each tick, Codex-built validation calls to a constrained computer-vision endpoint (analyzing OCR text presence, text-background contrast ratio, and logo placement) update a state vector. A persistent event log timestamps every state change, violation start, and restoration. Codex builds the mutable app database that holds all event logs, tying every compliance attestation back to the frame-level evidence."
+      },
+      "data_accessible": {
+        "passed": true,
+        "notes": "https://devpost.com/software/historacle"
+      },
+      "specific_track_fit": {
+        "passed": true,
+        "notes": "assessed against brief tracks in judge prompt"
+      },
+      "sponsor_tech_material_or_explicitly_unnecessary": {
+        "passed": true,
+        "notes": "GPT-5.6 reasoning and Codex-built evaluation harness"
+      },
+      "core_loop_deliverable": {
+        "passed": true,
+        "notes": "This project is a specialized, well-scoped automation task. The hardest part is accurate text detection/tracking across frames, which is a known problem with existing libraries. Faking or pre-computing the OCR for a specific demo video is trivial, but the core value is still demonstrated. The 'append-only ledger' is distracting but easily bolted on. The main risk is burning too much time on contrast-ratio math against dynamic backgrounds instead of using an existing library."
+      },
+      "clear_60s_transformation": {
+        "passed": true,
+        "notes": "A chaotic marketing approval workflow, where each video review took a fragmented 45 minutes and produced a subjective email, transforms into a 60-second automated audit trail. An officer receives a dashboard with a green 'Certified Compliant' badge and a one-click button to publish the non-repudiable provenance record to a shared, auditable ledger."
+      },
+      "collision_risk_acceptable": {
+        "passed": true,
+        "notes": "low"
+      }
+    }
+  },
+  "judge_votes": [
+    {
+      "role": "technical",
+      "preferred_blind_id": "A",
+      "rationale": "Candidate A presents the most technically distinct and creatively ambitious solution. It uniquely leverages Discrete Event Simulation (M3) to offer deterministic, frame-by-frame brand compliance auditing, which is far beyond a simple AI reviewer. It creates a non-repudiable audit trail, a 'hard to fake' technical advantage deeply integrated with the core GenMedia track goals of brand and advertising. While B's constraint propagation is strong for visual consistency, and C's cryptographic ledger is a powerful developer feature, A's concept directly solves a high-friction, subjective workflow with a computational model that transforms a chaotic folder into a scored, defensible comparison grid, aligning perfectly with both narrative efficiency and technical capability. D's credit SPC is a clever meta-tool but solves a hackathon logistics problem, not a creative or storytelling one, making it less central to the primary track criteria.",
+      "scores_by_official_criteria": {
+        "Creative vision / originality / art direction (GenMedia)": 85,
+        "Storytelling (GenMedia)": 70,
+        "Technical capability (GenMedia)": 90,
+        "Effective use of AI (GenMedia)": 85,
+        "Creativity (Developer)": 88,
+        "User value (Developer)": 92,
+        "Technical execution (Developer)": 90,
+        "Demo (Developer)": 75
+      },
+      "hard_gate_failures": [],
+      "demo_failure_risk": "medium"
+    },
+    {
+      "role": "product",
+      "preferred_blind_id": "A",
+      "rationale": "Candidate A demonstrates the most defensible and valuable product proposition. It directly addresses a acute, real-world pain point (subjective, inefficient brand compliance review of AI video) for a clear, paying user base (creative teams). The discrete event simulation engine provides a hard-to-fake, deterministic audit trail that transforms an opinion-based workflow into an objective, data-driven process. The 'killer demo' is tightly scoped and powerfully illustrates this 90-second transformation from chaos to scored comparison, directly enabling a non-repudiable client decision. While Candidates B and C are strong technically, A has the clearest 'last mile' action and highest immediate user value in a specific commercial track. Candidate D is a clever dev-tool but solves a hackathon-specific, not a market, problem.",
+      "scores_by_official_criteria": {
+        "Creative vision / originality / art direction (GenMedia)": 0.8,
+        "Storytelling (GenMedia)": 0.7,
+        "Technical capability (GenMedia)": 0.85,
+        "Effective use of AI (GenMedia)": 0.9,
+        "Creativity (Developer)": 0.85,
+        "User value (Developer)": 0.95,
+        "Technical execution (Developer)": 0.9,
+        "Demo (Developer)": 0.95
+      },
+      "hard_gate_failures": [],
+      "demo_failure_risk": "medium"
+    },
+    {
+      "role": "sponsor",
+      "preferred_blind_id": "A",
+      "rationale": "Candidate A provides the strongest combination of high user value for a clear, underserved audience (creative teams), a compelling visual transformation, and a technically sophisticated mechanism (Discrete Event Simulation) that directly maps to a quantifiable metric (time-weighted compliance). It best balances the weighted criteria across both potential tracks, offering a fresh concept in brand compliance that goes beyond subjective AI review.",
+      "scores_by_official_criteria": {
+        "Creative vision / originality / art direction (GenMedia)": 8,
+        "Storytelling (GenMedia)": 9,
+        "Technical capability (GenMedia)": 9,
+        "Effective use of AI (GenMedia)": 8,
+        "Creativity (Developer)": 9,
+        "User value (Developer)": 10,
+        "Technical execution (Developer)": 9,
+        "Demo (Developer)": 10
+      },
+      "hard_gate_failures": [],
+      "demo_failure_risk": "medium"
+    },
+    {
+      "role": "domain",
+      "preferred_blind_id": "C",
+      "rationale": "Candidate C best aligns with the GenMedia criteria, particularly Storytelling and Creative Vision, by framing the system around a high-stakes regulatory narrative with a clear 'before/after' emotional payoff. The simulated frame-by-frame audit trail, culminating in an immutable ledger entry, creates a compelling dramatic arc that holds attention. While A is a strong Developer tool, C's emphasis on narrative and demonstration of a 'green Certified Compliant badge' offers a more memorable 60-second transformation and distinct aesthetic. All candidates pass hard gates, but C has the lowest delivery risk given its deterministic, evidence-based approach. The weakness is that C's creative vision is utilitarian, but the demo narrative compensates.",
+      "scores_by_official_criteria": {
+        "Creative vision / originality / art direction (GenMedia)": 85,
+        "Storytelling (GenMedia)": 95,
+        "Technical capability (GenMedia)": 78,
+        "Effective use of AI (GenMedia)": 80,
+        "Creativity (Developer)": 90,
+        "User value (Developer)": 95,
+        "Technical execution (Developer)": 85,
+        "Demo (Developer)": 90
+      },
+      "hard_gate_failures": [],
+      "demo_failure_risk": "low"
+    },
+    {
+      "role": "demo-risk",
+      "preferred_blind_id": "A",
+      "rationale": "Candidate A passed all hard gates: it demonstrates a core brand-compliance simulation, performs real computation (frame-by-frame event logging, computer vision), clearly fits the Generative Media track (Brand & Advertising), uses GPT-5.6 and fal materially, and the delivery risk is manageable within 72 hours. It offers a clear 60-second transformation from chaotic folder to scored grid. Collision risk is medium but acceptable due to the unique simulation-audit mechanism. The demo is visually compelling but carries medium risk because live video analysis and PDF generation must work without latency spikes; failure would primarily come from API timeouts or vision model inaccuracies. Hard to fake because it generates a timestamped event log, not just a subjective opinion. Candidate B has low collision risk and a clever mechanism, but its demo (showing visual consistency) may be less immediately dramatic and harder to prove within the short time if generation steps take too long (medium delivery risk). Candidate C is strong but targeting a niche compliance audience; its cryptographic ledger adds technical weight but may be over-engineered for the hackathon's time constraints, increasing demo failure risk to medium/high. Candidate D is a developer tool for credit management, which fails the 'fits a specific track' gate for Generative Media (it's a Developer-track utility for hackathon execution, not a creative media production tool). Therefore, A is preferred.",
+      "scores_by_official_criteria": {
+        "Creative vision / originality / art direction (GenMedia)": 0.85,
+        "Storytelling (GenMedia)": 0.8,
+        "Technical capability (GenMedia)": 0.9,
+        "Effective use of AI (GenMedia)": 0.95,
+        "Creativity (Developer)": 0.7,
+        "User value (Developer)": 0.9,
+        "Technical execution (Developer)": 0.85,
+        "Demo (Developer)": 0.75
+      },
+      "hard_gate_failures": [],
+      "demo_failure_risk": "medium"
+    },
+    {
+      "role": "contrarian",
+      "preferred_blind_id": "C",
+      "rationale": "Pushing back on the developer-tool/credit-efficiency allure of D and the narrow creative-use of A/B. C uniquely addresses a legally consequential workflow that demands deterministic, frame-level proof — a hard problem almost no hackathon project dares to touch. While A offers a similar simulation engine, C’s regulatory angle creates a far sharper 60-second transformation (subjective 45-min reviews into a 60-second automated, auditable, legally-ready report) and a non-repudiable ledger record that is incredibly hard to fake. B’s constraint propagation is clever but solves a drift problem that experienced prompt engineers can mitigate; C’s audit trail has zero trivial workarounds. D is pragmatically brilliant for hackathons but is a meta-tool for developers, not a transformative end-user solution. Given the official criteria weighting storytelling/creativity heavily across both tracks, C’s narrative of ‘trust and liability in AI media’ is more compelling than B’s visual consistency or A’s brand compliance.",
+      "scores_by_official_criteria": {
+        "Creative vision / originality / art direction (GenMedia)": {
+          "A": 7,
+          "B": 8,
+          "C": 9,
+          "D": 4
+        },
+        "Storytelling (GenMedia)": {
+          "A": 6,
+          "B": 7,
+          "C": 9,
+          "D": 3
+        },
+        "Technical capability (GenMedia)": {
+          "A": 8,
+          "B": 7,
+          "C": 9,
+          "D": 5
+        },
+        "Effective use of AI (GenMedia)": {
+          "A": 8,
+          "B": 9,
+          "C": 9,
+          "D": 6
+        },
+        "Creativity (Developer)": {
+          "A": 7,
+          "B": 8,
+          "C": 9,
+          "D": 8
+        },
+        "User value (Developer)": {
+          "A": 8,
+          "B": 7,
+          "C": 10,
+          "D": 7
+        },
+        "Technical execution (Developer)": {
+          "A": 8,
+          "B": 9,
+          "C": 9,
+          "D": 8
+        },
+        "Demo (Developer)": {
+          "A": 8,
+          "B": 8,
+          "C": 9,
+          "D": 9
+        }
+      },
+      "hard_gate_failures": [],
+      "demo_failure_risk": "medium"
+    }
+  ],
+  "disagreements": [
+    "Judge disagreement — A: technical, product, sponsor, demo-risk | C: domain, contrarian",
+    "Do not average automatically; inspect tradeoffs (novelty vs demo reliability vs sponsor fit)."
+  ],
+  "pairwise": [
+    {
+      "pair": [
+        "A",
+        "B"
+      ],
+      "winner": "B",
+      "reason": "B's constraint propagation idea is more novel and directly prevents a critical pain point (visual drift) for narrative filmmakers. Its interval arithmetic implementation is mathematically deeper than A's DES approach. While both have strong design and impact, B's edge in idea quality and technical execution make it the winner."
+    },
+    {
+      "pair": [
+        "A",
+        "C"
+      ],
+      "winner": "C",
+      "reason": "C's regulatory compliance system with cryptographic ledger is a more original and high-stakes concept than A's brand comparison tool. C's impact is larger (legal defensibility), and its technical complexity (DES + ledger + rule parsing) surpasses A's. C also offers a more compelling design for compliance officers."
+    },
+    {
+      "pair": [
+        "A",
+        "D"
+      ],
+      "winner": "A",
+      "reason": "A's brand compliance simulation is a more creative and user-facing tool directly serving video producers. It offers richer design (split-screen, violation log) and broader impact than D's niche credit management middleware. Technically, A's frame-by-frame simulation is more involved than D's SPC monitoring."
+    },
+    {
+      "pair": [
+        "B",
+        "C"
+      ],
+      "winner": "C",
+      "reason": "C's combination of DES and immutable audit trail for regulated industries is more technically ambitious and has potentially higher impact (saving from legal risk) than B's visual consistency solution. While both are highly novel, C's use of cryptographic attestation gives it the edge in implementation and impact."
+    },
+    {
+      "pair": [
+        "B",
+        "D"
+      ],
+      "winner": "B",
+      "reason": "B tackles a universal AI filmmaking problem with a sophisticated constraint propagation mechanism, delivering high idea quality and clear user value. D's SPC for credit monitoring, while clever, is less innovative, less user-facing, and narrower in impact. B's technical execution is also more impressive."
+    },
+    {
+      "pair": [
+        "C",
+        "D"
+      ],
+      "winner": "C",
+      "reason": "C's regulatory compliance engine is vastly more complex, novel, and impactful than D's credit guard. The integration of DES, rulebook parsing, and cryptographic ledger places C at a different level of technical execution and idea quality, making it the decisive winner."
+    }
+  ],
+  "recommendation": {
+    "primary_blind_id": "C",
+    "backup_blind_id": "B",
+    "why": "Pairwise wins={'B': 2, 'C': 3, 'A': 1}; votes={'A': 4, 'C': 2}; official weighted criteria applied with technical implementation as tie-breaker; disagreements=2"
+  }
+}

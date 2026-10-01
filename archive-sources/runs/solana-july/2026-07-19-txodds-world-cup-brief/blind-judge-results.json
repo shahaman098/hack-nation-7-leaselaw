@@ -1,0 +1,537 @@
+{
+  "candidates": [
+    {
+      "blind_id": "A",
+      "internal_id": "conc-replay-sandbox"
+    },
+    {
+      "blind_id": "B",
+      "internal_id": "concept-group-crypto-call"
+    },
+    {
+      "blind_id": "C",
+      "internal_id": "concept-1"
+    },
+    {
+      "blind_id": "D",
+      "internal_id": "conc-feat-health"
+    }
+  ],
+  "hard_gates": {
+    "B": {
+      "demonstrable_core": {
+        "passed": true,
+        "notes": "Simulate a live match where one user predicts a ‘last-minute VAR penalty winner.’ The demo shows the TxLINE feed updating with a 90+5’ penalty event, the constraint solver triggering on the specific stat, and the user’s wallet instantly receiving the winning NFT while confetti falls—all without a single human judge."
+      },
+      "real_computation_or_action": {
+        "passed": true,
+        "notes": "GPT-5.6 translates natural language predictions into structured constraints (e.g., total_goals == 3, winner == 'home'). Codex builds a Solana program that uses CPI into TxLINE’s validate_stat to check these constraints against live feed entries, conditionally minting a ‘CryptoCall Right’ NFT to the correct predictor’s wallet only if the constraint passes."
+      },
+      "data_accessible": {
+        "passed": true,
+        "notes": "https://devpost.com/software/goal-gate"
+      },
+      "specific_track_fit": {
+        "passed": true,
+        "notes": "assessed against brief tracks in judge prompt"
+      },
+      "sponsor_tech_material_or_explicitly_unnecessary": {
+        "passed": true,
+        "notes": "GPT-5.6 reasoning and Codex-built evaluation harness"
+      },
+      "core_loop_deliverable": {
+        "passed": true,
+        "notes": "The killer demo describes a Solana app that reads TxLINE and auto-mints NFTs. Without TxLINE API docs for CPI, the team is building against an imaginary interface. Risk collapses if TxLINE test harness ships with a validate_stat equivalent on devnet; otherwise the demo loop is fakeable but the core mechanism is vapor."
+      },
+      "clear_60s_transformation": {
+        "passed": true,
+        "notes": "A chaotic group chat is replaced by a lightweight mini-app where predictions become permanent, uneditable Solana accounts; the post-match state changes from a silent group chat to a provably accurate leaderboard with soulbound NFTs that attest to who really said what."
+      },
+      "collision_risk_acceptable": {
+        "passed": true,
+        "notes": "low"
+      }
+    },
+    "D": {
+      "demonstrable_core": {
+        "passed": true,
+        "notes": "On day 3, feed a pre-recorded TxLINE stream with an inserted gap; the demo shows GPT-5.6 computing a root that mismatches the reference model, and Codex verifying and storing the anomalous root on-chain, then issuing a notification."
+      },
+      "real_computation_or_action": {
+        "passed": true,
+        "notes": "GPT-5.6 continuously ingests TxLINE data, computes Merkle trees over sliding windows, compares consecutive roots, and flags anomalies when dissimilarity exceeds a threshold; Codex implements on-chain root storage and verification by calling a Solana program to store roots and check against stored norms."
+      },
+      "data_accessible": {
+        "passed": true,
+        "notes": "https://devpost.com/software/blind-navigator"
+      },
+      "specific_track_fit": {
+        "passed": true,
+        "notes": "assessed against brief tracks in judge prompt"
+      },
+      "sponsor_tech_material_or_explicitly_unnecessary": {
+        "passed": true,
+        "notes": "GPT-5.6 reasoning and Codex-built evaluation harness"
+      },
+      "core_loop_deliverable": {
+        "passed": true,
+        "notes": "Feasible if the team has strong Solana and Merkle tree experience. The GPT-5.6 dependency is artificial—this is pure signal processing. The risk is over-engineering: trying to integrate GPT-5.6 will waste time. A tight Rust/Python loop without LLM is more likely to ship."
+      },
+      "clear_60s_transformation": {
+        "passed": true,
+        "notes": "An agent's log shows a triggered alert: 'Anomaly detected at window 42, deviation 0.35 > 0.3 threshold, root stored at account X'."
+      },
+      "collision_risk_acceptable": {
+        "passed": true,
+        "notes": "low"
+      }
+    },
+    "C": {
+      "demonstrable_core": {
+        "passed": true,
+        "notes": "Buyer submits a mock settled bet on Cameroon 2-1 Brazil; the verifier constructs a Merkle proof for the TxLINE 'home_score' stat, calls on-chain verification, and displays a green 'Validated' or red 'Discrepancy found' with the correct data."
+      },
+      "real_computation_or_action": {
+        "passed": true,
+        "notes": "Fetch Merkle root from Solana, take a user-submitted or platform-provided stat, compute its Merkle proof using off-chain data from TxLINE, and verify on-chain (logs) using Solana system program's Keccak-256 hash via CPI, returning boolean validity."
+      },
+      "data_accessible": {
+        "passed": true,
+        "notes": "https://devpost.com/software/speak-pro-ai-wsc64u"
+      },
+      "specific_track_fit": {
+        "passed": true,
+        "notes": "assessed against brief tracks in judge prompt"
+      },
+      "sponsor_tech_material_or_explicitly_unnecessary": {
+        "passed": true,
+        "notes": "GPT-5.6 reasoning and Codex-built evaluation harness"
+      },
+      "core_loop_deliverable": {
+        "passed": true,
+        "notes": "This is the most self-contained candidate and does not require an LLM—it is a pure crypto engineering problem. The main risk is TxLINE's Merkle tree structure and data availability. If TxLINE already publishes roots on-chain and the leaf encoding is documented, this is a solid demo. Otherwise, it's a guessing game."
+      },
+      "clear_60s_transformation": {
+        "passed": true,
+        "notes": "From 'I hope this site is honest' to cryptographic certainty shown as a simple pass/fail badge."
+      },
+      "collision_risk_acceptable": {
+        "passed": true,
+        "notes": "low"
+      }
+    },
+    "A": {
+      "demonstrable_core": {
+        "passed": true,
+        "notes": "On day 2, load a completed match's JSON file and demo a 5x replay; the developer's prediction market contract resolves correctly using the sandbox output, with each state change verifiable via the on-chain audit trail."
+      },
+      "real_computation_or_action": {
+        "passed": true,
+        "notes": "GPT-5.6 reads an archival JSON file of World Cup match data, transforms each data point into TxLINE-compatible schema, and replays it at a configurable rate; Codex logs each replayed transaction with a CPI call to a Solana program that records input hash, output hash, and replay timestamp on-chain."
+      },
+      "data_accessible": {
+        "passed": true,
+        "notes": "https://devpost.com/software/arpit-portfolio"
+      },
+      "specific_track_fit": {
+        "passed": true,
+        "notes": "assessed against brief tracks in judge prompt"
+      },
+      "sponsor_tech_material_or_explicitly_unnecessary": {
+        "passed": true,
+        "notes": "GPT-5.6 reasoning and Codex-built evaluation harness"
+      },
+      "core_loop_deliverable": {
+        "passed": true,
+        "notes": "The idea has genuine hackathon utility, but the cited data source is completely wrong—it is a personal portfolio, not sports data. The team must find or fabricate a World Cup fixture. The provenance program is overkill; dropping it reduces risk significantly. The core value is a simple replay server, which is a 1-day build."
+      },
+      "clear_60s_transformation": {
+        "passed": true,
+        "notes": "In the developer's terminal, a live log shows: 'Replaying match 19, event 14 (goal) at 5x speed, CPI provenance logged at txid 0xABCD...'."
+      },
+      "collision_risk_acceptable": {
+        "passed": true,
+        "notes": "low"
+      }
+    }
+  },
+  "judge_votes": [
+    {
+      "role": "technical",
+      "preferred_blind_id": "B",
+      "rationale": "Candidate B best satisfies the judging criteria with high marks on user experience and technical correctness, offering a novel, end-to-end consumer product that directly solves a painful social workflow with an original mechanism. Its hard-to-fake advantage—fully automated, serverless resolution using CPI to TxLINE—demonstrates deep integration and deterministic logic. While delivery risk is high, the demo video can clearly show the transformation, and the project passes all hard gates. Candidate C is a close second for its Merkle proof verification, but B's broader appeal and polished user journey give it the edge.",
+      "scores_by_official_criteria": {
+        "A": {
+          "TxLINE data integration quality": 8,
+          "User experience and polish": 6,
+          "Technical correctness and deterministic logic": 8,
+          "Novelty and originality": 7,
+          "Demo video quality and live simulation": 7,
+          "End-to-end execution and production readiness": 6,
+          "Monetization path": 5,
+          "Compliance and legal risk awareness": 8,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 9
+        },
+        "B": {
+          "TxLINE data integration quality": 9,
+          "User experience and polish": 9,
+          "Technical correctness and deterministic logic": 9,
+          "Novelty and originality": 9,
+          "Demo video quality and live simulation": 8,
+          "End-to-end execution and production readiness": 7,
+          "Monetization path": 8,
+          "Compliance and legal risk awareness": 7,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 9
+        },
+        "C": {
+          "TxLINE data integration quality": 9,
+          "User experience and polish": 7,
+          "Technical correctness and deterministic logic": 9,
+          "Novelty and originality": 8,
+          "Demo video quality and live simulation": 7,
+          "End-to-end execution and production readiness": 7,
+          "Monetization path": 6,
+          "Compliance and legal risk awareness": 9,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 10
+        },
+        "D": {
+          "TxLINE data integration quality": 8,
+          "User experience and polish": 5,
+          "Technical correctness and deterministic logic": 8,
+          "Novelty and originality": 7,
+          "Demo video quality and live simulation": 7,
+          "End-to-end execution and production readiness": 6,
+          "Monetization path": 5,
+          "Compliance and legal risk awareness": 8,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 8
+        }
+      },
+      "hard_gate_failures": [],
+      "demo_failure_risk": "high"
+    },
+    {
+      "role": "product",
+      "preferred_blind_id": "B",
+      "rationale": "Candidate B delivers the strongest product. It addresses an immediately relatable, painful workflow (the chaotic group chat) with a delightful, concrete last-mile action (minting 'Called It' NFTs). The visible transformation from disputed memories to an immutable, serverless arbiter is powerful. It scores highest on user experience, demo quality, and end-to-end execution by creating a complete, closed-loop consumer product. The monetization path is also clearest through premium capsules or NFT operations. While delivery risk is high, the product vision is superior.",
+      "scores_by_official_criteria": {
+        "A": {
+          "TxLINE data integration quality": 8,
+          "User experience and polish": 5,
+          "Technical correctness and deterministic logic": 9,
+          "Novelty and originality": 7,
+          "Demo video quality and live simulation": 6,
+          "End-to-end execution and production readiness": 6,
+          "Monetization path": 4,
+          "Compliance and legal risk awareness": 8,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 9
+        },
+        "B": {
+          "TxLINE data integration quality": 9,
+          "User experience and polish": 9,
+          "Technical correctness and deterministic logic": 8,
+          "Novelty and originality": 8,
+          "Demo video quality and live simulation": 9,
+          "End-to-end execution and production readiness": 7,
+          "Monetization path": 8,
+          "Compliance and legal risk awareness": 8,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 7
+        },
+        "C": {
+          "TxLINE data integration quality": 6,
+          "User experience and polish": 8,
+          "Technical correctness and deterministic logic": 9,
+          "Novelty and originality": 6,
+          "Demo video quality and live simulation": 7,
+          "End-to-end execution and production readiness": 7,
+          "Monetization path": 5,
+          "Compliance and legal risk awareness": 9,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 9
+        },
+        "D": {
+          "TxLINE data integration quality": 9,
+          "User experience and polish": 4,
+          "Technical correctness and deterministic logic": 8,
+          "Novelty and originality": 7,
+          "Demo video quality and live simulation": 5,
+          "End-to-end execution and production readiness": 6,
+          "Monetization path": 4,
+          "Compliance and legal risk awareness": 8,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 8
+        }
+      },
+      "hard_gate_failures": [],
+      "demo_failure_risk": "high"
+    },
+    {
+      "role": "sponsor",
+      "preferred_blind_id": "B",
+      "rationale": "Candidate B directly addresses a consumer-facing pain point with a novel, automated, and trustless resolution mechanism. It uses TxLINE data for constraint solving, has a clear 60-second transformation from chaotic chat to permanent on-chain record, and demonstrates production readiness through its soulbound NFT mechanics. The demo is high-impact, showing real-time resolution with confetti, and it is hard to fake because it requires live, signed TxLINE data to trigger the solver. It meets all hard gates: core result demonstrable (NFT minted on resolution), real computation beyond chat (CPI constraint solving), accessible data via TxLINE, fits Consumer track, sponsor tech is material (TxLINE for validation, Solana programs for settlement), core loop deliverable, collision risk low, and 60-second transformation clear. Scores are high on UX, novelty, and technical correctness.",
+      "scores_by_official_criteria": {
+        "A": {
+          "TxLINE data integration quality": 9,
+          "User experience and polish": 6,
+          "Technical correctness and deterministic logic": 8,
+          "Novelty and originality": 7,
+          "Demo video quality and live simulation": 7,
+          "End-to-end execution and production readiness": 6,
+          "Monetization path": 3,
+          "Compliance and legal risk awareness": 7,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 8
+        },
+        "B": {
+          "TxLINE data integration quality": 9,
+          "User experience and polish": 9,
+          "Technical correctness and deterministic logic": 9,
+          "Novelty and originality": 9,
+          "Demo video quality and live simulation": 9,
+          "End-to-end execution and production readiness": 7,
+          "Monetization path": 7,
+          "Compliance and legal risk awareness": 8,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 7
+        },
+        "C": {
+          "TxLINE data integration quality": 8,
+          "User experience and polish": 7,
+          "Technical correctness and deterministic logic": 9,
+          "Novelty and originality": 8,
+          "Demo video quality and live simulation": 7,
+          "End-to-end execution and production readiness": 5,
+          "Monetization path": 4,
+          "Compliance and legal risk awareness": 8,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 10
+        },
+        "D": {
+          "TxLINE data integration quality": 8,
+          "User experience and polish": 5,
+          "Technical correctness and deterministic logic": 8,
+          "Novelty and originality": 8,
+          "Demo video quality and live simulation": 7,
+          "End-to-end execution and production readiness": 6,
+          "Monetization path": 5,
+          "Compliance and legal risk awareness": 7,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 9
+        }
+      },
+      "hard_gate_failures": [],
+      "demo_failure_risk": "medium"
+    },
+    {
+      "role": "domain",
+      "preferred_blind_id": "A",
+      "rationale": "Candidate A provides the strongest domain foundation. Its developer sandbox directly enables all other tracks (Prediction Markets, Fan Experiences, Trading Agents) and critically solves the painful pre-tournament data-scaffolding gap that blocks Track 1 & 3 builders. It passes all hard gates: it demonstrates a core replay result, performs actual computation (data transformation + CPI logging), works with accessible archival JSON, and uniquely fits the Prediction Markets and Settlement track by accelerating settlement logic development. The CPI provenance audit trail is a concrete 'hard to fake' on-chain mechanism that also scores on advanced Solana primitives. B has a compelling consumer facing transformation but has high delivery risk given the complexity of cross-program constraint solving over live data without a live test environment; A mitigates this risk for the whole ecosystem. C and D are useful utilities but are narrower 'verification' point-solutions that lack the fundamental enablement A provides to builders.",
+      "scores_by_official_criteria": {
+        "A": {
+          "TxLINE data integration quality": 9,
+          "User experience and polish": 7,
+          "Technical correctness and deterministic logic": 9,
+          "Novelty and originality": 8,
+          "Demo video quality and live simulation": 8,
+          "End-to-end execution and production readiness": 6,
+          "Monetization path": 5,
+          "Compliance and legal risk awareness": 8,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 8
+        },
+        "B": {
+          "TxLINE data integration quality": 8,
+          "User experience and polish": 9,
+          "Technical correctness and deterministic logic": 8,
+          "Novelty and originality": 9,
+          "Demo video quality and live simulation": 8,
+          "End-to-end execution and production readiness": 5,
+          "Monetization path": 7,
+          "Compliance and legal risk awareness": 6,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 7
+        },
+        "C": {
+          "TxLINE data integration quality": 7,
+          "User experience and polish": 7,
+          "Technical correctness and deterministic logic": 8,
+          "Novelty and originality": 6,
+          "Demo video quality and live simulation": 6,
+          "End-to-end execution and production readiness": 6,
+          "Monetization path": 5,
+          "Compliance and legal risk awareness": 8,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 8
+        },
+        "D": {
+          "TxLINE data integration quality": 8,
+          "User experience and polish": 5,
+          "Technical correctness and deterministic logic": 7,
+          "Novelty and originality": 7,
+          "Demo video quality and live simulation": 7,
+          "End-to-end execution and production readiness": 5,
+          "Monetization path": 5,
+          "Compliance and legal risk awareness": 8,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 6
+        }
+      },
+      "hard_gate_failures": [],
+      "demo_failure_risk": "medium"
+    },
+    {
+      "role": "demo-risk",
+      "preferred_blind_id": "A",
+      "rationale": "Candidate A targets the most painful and time-sensitive developer workflow, directly enabling builders on World Cup data without infrastructure overhead. It passes all hard gates: the core result (replayed TxLINE stream with audit trail) can be demonstrated, involves real computation (data parsing, schema mapping, replay engine, on-chain logging), implies accessible data (archival JSON), and fits Track 1 (Prediction Markets/Settlement) while materially using sponsor tech for audit. The 60-second transformation from no stream to a provable replay is clear, and collision risk is low. The demo failure risk is medium because replay accuracy and CPI logging must align perfectly, but the audit trail is hard to fake as it relies on TxLINE’s own signing primitives.",
+      "scores_by_official_criteria": {
+        "A": {
+          "TxLINE data integration quality": 9,
+          "User experience and polish": 8,
+          "Technical correctness and deterministic logic": 9,
+          "Novelty and originality": 8,
+          "Demo video quality and live simulation": 8,
+          "End-to-end execution and production readiness": 7,
+          "Monetization path": 6,
+          "Compliance and legal risk awareness": 7,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 8
+        },
+        "B": {
+          "TxLINE data integration quality": 8,
+          "User experience and polish": 9,
+          "Technical correctness and deterministic logic": 7,
+          "Novelty and originality": 7,
+          "Demo video quality and live simulation": 9,
+          "End-to-end execution and production readiness": 6,
+          "Monetization path": 8,
+          "Compliance and legal risk awareness": 6,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 7
+        },
+        "C": {
+          "TxLINE data integration quality": 8,
+          "User experience and polish": 7,
+          "Technical correctness and deterministic logic": 9,
+          "Novelty and originality": 7,
+          "Demo video quality and live simulation": 7,
+          "End-to-end execution and production readiness": 7,
+          "Monetization path": 5,
+          "Compliance and legal risk awareness": 8,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 9
+        },
+        "D": {
+          "TxLINE data integration quality": 9,
+          "User experience and polish": 6,
+          "Technical correctness and deterministic logic": 8,
+          "Novelty and originality": 9,
+          "Demo video quality and live simulation": 7,
+          "End-to-end execution and production readiness": 7,
+          "Monetization path": 5,
+          "Compliance and legal risk awareness": 7,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 9
+        }
+      },
+      "hard_gate_failures": [],
+      "demo_failure_risk": "medium"
+    },
+    {
+      "role": "contrarian",
+      "preferred_blind_id": "C",
+      "rationale": "While A and D are strong developer tools, and B is consumer-facing, C uniquely tackles a fundamental trust problem with a universally deployable primitive. It is the only candidate that offers a standalone, user-agnostic verifier for any event, not just a specific market or tool. This contrasts with B, which is a high-risk, feature-specific social app (delivery risk: high) that may be too narrow. A's sandbox is excellent but serves a meta-process, and D's anomaly detection is niche. C delivers the most elegant, singular transformation: from subjective hope to objective, checkable cryptographic certainty, requiring minimal user behavior change. The hard-to-fake advantage of a Merkle proof viewer directly leveraging on-chain TxLINE roots is compelling and aligns best with the 'Technical Correctness' criterion.",
+      "scores_by_official_criteria": {
+        "A": {
+          "TxLINE data integration quality": 9,
+          "User experience and polish": 7,
+          "Technical correctness and deterministic logic": 9,
+          "Novelty and originality": 7,
+          "Demo video quality and live simulation": 8,
+          "End-to-end execution and production readiness": 7,
+          "Monetization path": 5,
+          "Compliance and legal risk awareness": 8,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 9
+        },
+        "B": {
+          "TxLINE data integration quality": 8,
+          "User experience and polish": 9,
+          "Technical correctness and deterministic logic": 7,
+          "Novelty and originality": 8,
+          "Demo video quality and live simulation": 8,
+          "End-to-end execution and production readiness": 5,
+          "Monetization path": 8,
+          "Compliance and legal risk awareness": 6,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 6
+        },
+        "C": {
+          "TxLINE data integration quality": 9,
+          "User experience and polish": 8,
+          "Technical correctness and deterministic logic": 9,
+          "Novelty and originality": 8,
+          "Demo video quality and live simulation": 8,
+          "End-to-end execution and production readiness": 8,
+          "Monetization path": 7,
+          "Compliance and legal risk awareness": 9,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 10
+        },
+        "D": {
+          "TxLINE data integration quality": 9,
+          "User experience and polish": 6,
+          "Technical correctness and deterministic logic": 8,
+          "Novelty and originality": 7,
+          "Demo video quality and live simulation": 7,
+          "End-to-end execution and production readiness": 7,
+          "Monetization path": 6,
+          "Compliance and legal risk awareness": 7,
+          "Use of advanced Solana primitives (Merkle proofs, CPI)": 9
+        }
+      },
+      "hard_gate_failures": [],
+      "demo_failure_risk": "medium"
+    }
+  ],
+  "disagreements": [
+    "Judge disagreement — A: domain, demo-risk | B: technical, product, sponsor | C: contrarian",
+    "Do not average automatically; inspect tradeoffs (novelty vs demo reliability vs sponsor fit)."
+  ],
+  "pairwise": [
+    {
+      "pair": [
+        "A",
+        "B"
+      ],
+      "winner": "B",
+      "reason": "B delivers a polished consumer mini-app with automatic on-chain settlement and NFT minting, offering superior user experience, more engaging demo potential, and greater impact for Track 2, while A's developer sandbox, though technically sound, is a niche tool with lower UX polish."
+    },
+    {
+      "pair": [
+        "A",
+        "C"
+      ],
+      "winner": "C",
+      "reason": "C provides a clear, trustless bet settlement verifier with a simple pass/fail UX, addressing a broad user pain and demonstrating practical use of Merkle proofs on-chain. A's terminal-based replay tool is less accessible and has narrower appeal."
+    },
+    {
+      "pair": [
+        "A",
+        "D"
+      ],
+      "winner": "D",
+      "reason": "D's real-time anomaly detection with rolling Merkle roots and on-chain alerting represents a more novel and technically sophisticated second-order use of TxLINE data, offering high value for automated trading agents. A's replay sandbox is useful but less innovative in its application."
+    },
+    {
+      "pair": [
+        "B",
+        "C"
+      ],
+      "winner": "B",
+      "reason": "B's social prediction app with automated resolution and soulbound NFTs creates a fun, engaging experience with strong viral potential, far surpassing C's simpler verification badge in UX, demo excitement, and consumer appeal."
+    },
+    {
+      "pair": [
+        "B",
+        "D"
+      ],
+      "winner": "B",
+      "reason": "Despite D's strong technical merit, B's consumer-facing product aligns better with Track 2 priorities for UX and polish, offering a more compelling demo and broader user impact through its gamified, provably fair prediction resolution."
+    },
+    {
+      "pair": [
+        "C",
+        "D"
+      ],
+      "winner": "D",
+      "reason": "D's continuous anomaly monitoring with on-chain root storage demonstrates a more novel and complex integration of TxLINE data, providing proactive integrity assurance for high-stakes trading, whereas C's one-off verification is a simpler, more reactive tool."
+    }
+  ],
+  "recommendation": {
+    "primary_blind_id": "B",
+    "backup_blind_id": "D",
+    "why": "Pairwise wins={'B': 3, 'C': 1, 'D': 2}; votes={'B': 3, 'A': 2, 'C': 1}; official weighted criteria applied with technical implementation as tie-breaker; disagreements=2"
+  }
+}

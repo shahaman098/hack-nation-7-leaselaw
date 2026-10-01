@@ -1,0 +1,16 @@
+{
+  "status": "failed",
+  "stage": "blind_judging",
+  "created_at": "2026-07-18T18:57:18+00:00",
+  "updated_at": "2026-07-18T19:08:04+00:00",
+  "pid": 97025,
+  "provider": "codex",
+  "search_profile": "fast",
+  "log_file": "/Users/efi/Music/Projects/Hackathon July/HackNation/hackathon-strategy-engine/runs/2026-07-18-hacknation-global-ai-2026/run.log",
+  "counts": {
+    "requested": 2,
+    "candidates": 4
+  },
+  "error_type": "RuntimeError",
+  "error": "Codex exec failed (1): /.codex-plugin/plugin.json\n2026-07-18T19:07:58.138151Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/\n2026-07-18T19:07:58.138166Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/\n2026-07-18T19:07:58.138499Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/\n2026-07-18T19:07:58.138504Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/\n2026-07-18T19:07:58.138829Z  WARN codex_core_skills::loader: ignoring interface.icon_small: icon path with '..' must resolve under plugin assets/\n2026-07-18T19:07:58.138834Z  WARN codex_core_skills::loader: ignoring interface.icon_large: icon path with '..' must resolve under plugin assets/\n2026-07-18T19:07:58.139178Z  WARN codex_core_skills::loader: ignoring inte"
+}

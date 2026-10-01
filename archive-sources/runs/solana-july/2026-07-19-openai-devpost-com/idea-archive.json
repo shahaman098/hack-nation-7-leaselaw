@@ -1,0 +1,2235 @@
+{
+  "dimensions": [
+    "track",
+    "user_class",
+    "workflow",
+    "mechanism_family",
+    "data",
+    "last_mile_action",
+    "demo_type"
+  ],
+  "occupied_cells": 16,
+  "cells": [
+    {
+      "cell": [
+        "developer-tools",
+        "build-deadline-entrants",
+        "00-2026-21",
+        "auditing-execution-grounded",
+        "com-devpost-https",
+        "be-bundle-can",
+        "after-before"
+      ],
+      "quality": 0.74,
+      "idea": {
+        "id": "concept-001",
+        "lane": "systems",
+        "disciplines": [
+          "software verification and scientific reproducibility"
+        ],
+        "working_title": "Submission Flight Recorder",
+        "primary_user": "Hackathon entrants preparing OpenAI Build Week submissions under a short deadline.",
+        "painful_workflow": "Entrants have to prove a working project, runnable repo, README setup path, demo coverage, /feedback Codex Session ID, and deadline-safe completeness across separate artifacts before changes lock after July 21, 2026 at 5:00 PM PDT.",
+        "current_workaround": "Manual checklists, README rewrites, commit browsing, and late Devpost form review, usually without a reproducible link between claims and artifacts.",
+        "imported_mechanism": "mechanism-000: execution-to-claim provenance binding from trace-grounded execution auditing.",
+        "mechanism_origin": "software verification and scientific reproducibility",
+        "data_sources": [
+          "https://openai.devpost.com/"
+        ],
+        "core_computation": "Ingest git commits, README sections, test logs, demo script bullets, Codex session metadata, and declared GPT-5.6/Codex contribution claims; normalize them into a graph that binds each claim to a commit hash, command output, session identifier, or missing evidence marker; then run timestamp, artifact-presence, and reproducibility checks against the required submission package.",
+        "last_mile_action": "Generates a locked submission bundle: patched README checklist, evidence manifest, demo script diff, failing readiness gates, and a shareable judge-test link that can be re-run locally or in a sandbox.",
+        "visible_transformation": "The demo starts with a repo showing unsupported claims and missing submission artifacts, then after running the recorder shows specific claims turning from red to green only when linked to commit/test/session evidence, while the generated manifest and README are written to disk.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The submission window closes on July 21, 2026 at 5:00 PM PDT, changes are barred after that point, and Stage One can reject projects that fail basic viability or required-tool fit.",
+        "kill_reason": "",
+        "killer_demo": "Use a sample Build Week repo with a vague README claim like 'built with Codex and GPT-5.6' and no setup proof. Run the tool, watch it fail the package, add a Codex Session ID and test command output, then re-run to produce a verified evidence manifest and a judge-ready README section in under three minutes.",
+        "hard_to_fake_advantage": "It does not grade the idea or summarize the repo. It checks immutable identifiers, timestamps, command outputs, and evidence reachability, making unsupported contribution claims visible before submission lock.",
+        "cluster_id": "cluster-1-571dd015",
+        "evidence_ids": [
+          "src-89f188836c2c"
+        ],
+        "opportunity_id": "opp-001",
+        "mechanism_id": "mechanism-000",
+        "mutation_history": [],
+        "track_fit": "Developer Tools",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a manual 20-item submission checklist baseline, the tool reduces unresolved required-artifact issues in a seeded repo from at least 6 to 0 and produces a reproducible evidence manifest in under 5 minutes on the demo machine.",
+        "demo_proof": "Use a sample Build Week repo with a vague README claim like 'built with Codex and GPT-5.6' and no setup proof. Run the tool, watch it fail the package, add a Codex Session ID and test command output, then re-run to produce a verified evidence manifest and a judge-ready README section in under three minutes.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "trace-grounded execution auditing",
+        "demo_type": "before-after",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 0.2,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer Tools",
+          "user_class": "Hackathon entrants preparing OpenAI Build Week submissions under a short deadline.",
+          "workflow": "Entrants have to prove a working project, runnable repo, README setup path, demo coverage, /feedback Codex Session ID, and deadline-safe completeness across separate artifacts before changes lock after July 21, 2026 at 5:00 PM PDT.",
+          "mechanism_family": "trace-grounded execution auditing",
+          "data": "https://openai.devpost.com/",
+          "last_mile_action": "Generates a locked submission bundle: patched README checklist, evidence manifest, demo script diff, failing readiness gates, and a shareable judge-test link that can be re-run locally or in a sandbox.",
+          "demo_type": "before-after",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-89f188836c2c"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-89f188836c2c"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "fail",
+            "reason": "Use a sample Build Week repo with a vague README claim like 'built with Codex and GPT-5.6' and no setup proof. Run the tool, watch it fail the package, add a Codex Session ID and test command output, then re-run to produce a verified evidence manifest and a judge-ready README section in under three minutes.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer Tools'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a manual 20-item submission checklist baseline, the tool reduces unresolved required-artifact issues in a seeded repo from at least 6 to 0 and produces a reproducible evidence manifest in under 5 minutes on the demo machine.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer-tools",
+        "build-code-eligible",
+        "5-6-across",
+        "differential-mediated-model",
+        "com-devpost-https",
+        "after-appendix-attaches",
+        "live-replay"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "concept-002",
+        "lane": "institutional",
+        "disciplines": [
+          "compiler testing and metamorphic testing"
+        ],
+        "working_title": "Prior-Work Boundary Lab",
+        "primary_user": "Small teams extending pre-existing repositories for OpenAI Build Week who need to separate eligible new work from older code.",
+        "painful_workflow": "Teams must explain what was built during the eligible period and how Codex and GPT-5.6 contributed, but the evidence is scattered across commits, logs, issue notes, tests, and README prose.",
+        "current_workaround": "A teammate manually reviews git history and writes a narrative, hoping judges accept it as a meaningful extension rather than a repackaged older project.",
+        "imported_mechanism": "mechanism-001: selective oracle amplification from model-mediated differential testing, adapted to validate claimed new behavior against explicit repo invariants.",
+        "mechanism_origin": "compiler testing and metamorphic testing",
+        "data_sources": [
+          "https://openai.devpost.com/resources"
+        ],
+        "core_computation": "GPT-5.6 proposes executable edge cases and metamorphic checks for only the files touched during the submission window; the runner executes those tests against the pre-window baseline and current build, stores reproducible seeds, and identifies which new claims have measurable behavior that did not exist before. Codex implements the diff miner, test harness, fixture generator, and README/manifest writer, then iterates on failing seeds until the demo path is stable.",
+        "last_mile_action": "Writes a 'New During Build Week' section to the README, attaches regression seeds, opens a local evidence page, and exports a submission appendix that maps each new feature claim to before/after behavior and test output.",
+        "visible_transformation": "The demo checks out a pre-window baseline where a claimed feature fails or is absent, then switches to the current commit where the generated invariant test passes, updating the boundary map from 'unproven extension' to 'measured new behavior'.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "Pre-existing projects are allowed only if meaningfully extended during the submission period, and submissions require a repository, README explanation, demo narration, and /feedback Codex Session ID.",
+        "kill_reason": "",
+        "killer_demo": "Run it on a pre-seeded repo with an older app and two new Build Week features. The tool shows one claim unsupported, generates a GPT-5.6 edge-case test for the supported feature, proves baseline failure/current success, and commits a README appendix plus machine-readable evidence JSON.",
+        "hard_to_fake_advantage": "The concept makes prior-work boundaries behavioral, not rhetorical: claims must survive executable before/after tests with stored seeds and explicit invariants instead of relying on screenshots or broad narration.",
+        "cluster_id": "cluster-2-f3990d69",
+        "evidence_ids": [
+          "src-177f855a9a7d"
+        ],
+        "opportunity_id": "opp-002",
+        "mechanism_id": "mechanism-001",
+        "mutation_history": [],
+        "track_fit": "Developer Tools",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a human-written prior-work paragraph baseline, the tool identifies at least 3 claim-to-commit/test links and catches 1 intentionally unsupported new-work claim in the seeded demo repo within 10 minutes.",
+        "demo_proof": "Run it on a pre-seeded repo with an older app and two new Build Week features. The tool shows one claim unsupported, generates a GPT-5.6 edge-case test for the supported feature, proves baseline failure/current success, and commits a README appendix plus machine-readable evidence JSON.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "model-mediated differential testing",
+        "demo_type": "live replay",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer Tools",
+          "user_class": "Small teams extending pre-existing repositories for OpenAI Build Week who need to separate eligible new work from older code.",
+          "workflow": "Teams must explain what was built during the eligible period and how Codex and GPT-5.6 contributed, but the evidence is scattered across commits, logs, issue notes, tests, and README prose.",
+          "mechanism_family": "model-mediated differential testing",
+          "data": "https://openai.devpost.com/resources",
+          "last_mile_action": "Writes a 'New During Build Week' section to the README, attaches regression seeds, opens a local evidence page, and exports a submission appendix that maps each new feature claim to before/after behavior and test output.",
+          "demo_type": "live replay",
+          "embedding_distances": {
+            "track": 0.22816938161849976,
+            "user_class": 0.438850998878479,
+            "workflow": 0.5314840873082479,
+            "mechanism_family": 0.4342159529527028,
+            "data": 0.14564016461372375,
+            "last_mile_action": 0.38816027839978534,
+            "demo_type": 0.46569934487342834
+          }
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-177f855a9a7d"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-177f855a9a7d"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Run it on a pre-seeded repo with an older app and two new Build Week features. The tool shows one claim unsupported, generates a GPT-5.6 edge-case test for the supported feature, proves baseline failure/current success, and commits a README appendix plus machine-readable evidence JSON.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer Tools'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a human-written prior-work paragraph baseline, the tool identifies at least 3 claim-to-commit/test links and catches 1 intentionally unsupported new-work claim in the seeded demo repo within 10 minutes.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "education",
+        "002-003-89f188836c2c",
+        "actual-against-ai",
+        "artifact-aware-constraint",
+        "com-devpost-https",
+        "accepted-actually-after",
+        "benchmark"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "concept-002-3",
+        "lane": "systems",
+        "disciplines": [
+          "program synthesis and automated repair"
+        ],
+        "working_title": "LessonProof Build Harness",
+        "primary_user": "Teachers and instructional content creators producing technical learning materials. opportunity_id=opp-003; mechanism_id=mechanism-002; evidence_ids=src-aa2c74c76559,src-a90051657ad2,src-89f188836c2c; data_sources=https://github.com/vemodalen-x/understand-video, https://openai.devpost.com/rules, https://openai.devpost.com/; data_access_status=verified.",
+        "painful_workflow": "Creating coding lessons from real repositories forces teachers to reconcile source behavior, runnable commands, learner explanations, screenshots, and checks. The weak workaround is a static tutorial or AI-generated lesson text that is not proven against the repo and can drift from actual execution.",
+        "current_workaround": "Handwritten README walkthroughs, screen recordings, notebooks, or generic tutor/quiz tools; these explain code but rarely prove that each learner-facing step still runs.",
+        "imported_mechanism": "Imported mechanism: specification-constrained build loop from mechanism-002. It converts a lesson goal into constraints such as command must pass, diff must be inspectable, explanation must cite changed files, and learner checkpoint must be executable. Codex role: Codex performs the repository edits, test wiring, fixture creation, README build notes, and /feedback-traceable implementation work. GPT-5.6 role: GPT-5.6 reasons over repo structure, proposes constraints, turns passing execution traces into learner-level explanations, and uses tool-calling to request test runs and screenshot refreshes.",
+        "mechanism_origin": "program synthesis and automated repair",
+        "data_sources": [
+          "https://openai.devpost.com/rules"
+        ],
+        "core_computation": "Given a repo and lesson objective, the system synthesizes a five-step lesson as executable checkpoints. Each checkpoint has a target diff, assertion file, expected command output, and explanation. The verifier rejects any checkpoint where commands fail, files are not changed as described, or screenshots/logs do not match the learner claim.",
+        "last_mile_action": "It writes an accepted patch branch plus a lesson bundle: checkpoint pages, runnable tests, before/after screenshots, and a student task that actually modifies code and re-runs verification.",
+        "visible_transformation": "The demo starts with a repo that has no lesson path, then visibly produces checkpoint files, applies a small code change, runs tests, marks failed constraints red, fixes them, and exports a learner page whose status changes from unverified to verified.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The Education track rewards working projects with design, implementation, impact, and idea quality, while common generic tutor and flashcard concepts face high collision pressure.",
+        "kill_reason": "",
+        "killer_demo": "Minimum demonstrable loop: Day 1 ingest one public sample repo and define three machine-checkable lesson constraints. Day 2 build the Codex-driven patch runner and rejected-edit log. Day 3 add GPT-5.6 explanation generation from actual diffs and test output. Day 4 build the teacher review UI with approve/reject and re-run buttons. Day 5 record a sub-3-minute demo showing one failing generated lesson repaired into a passing verified lesson bundle. Demo outcome: a lesson checkpoint count and pass rate changes on screen, for example 0/3 verified to 3/3 verified.",
+        "hard_to_fake_advantage": "The product is not a tutor, flashcard generator, PDF summarizer, or dashboard. Its hard-to-fake advantage is that every learning artifact is backed by runnable repo state, retained verification transcripts, and rejected edit logs. Codex's material contribution is visible in commits, patches, tests, and session trace. GPT-5.6's material contribution is visible in constraint derivation, reasoning over failures, and grounded explanation generation from execution evidence.",
+        "cluster_id": "cluster-3-4a9df67f",
+        "evidence_ids": [
+          "src-a90051657ad2"
+        ],
+        "opportunity_id": "opp-003",
+        "mechanism_id": "mechanism-002",
+        "mutation_history": [],
+        "track_fit": "Education",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a baseline hand-authored Markdown coding lesson with no automated verification, LessonProof will reduce broken learner steps by at least 50% on a 10-checkpoint sample, measured by identical fresh-clone setup and test commands before publishing.",
+        "demo_proof": "Minimum demonstrable loop: Day 1 ingest one public sample repo and define three machine-checkable lesson constraints. Day 2 build the Codex-driven patch runner and rejected-edit log. Day 3 add GPT-5.6 explanation generation from actual diffs and test output. Day 4 build the teacher review UI with approve/reject and re-run buttons. Day 5 record a sub-3-minute demo showing one failing generated lesson repaired into a passing verified lesson bundle. Demo outcome: a lesson checkpoint count and pass rate changes on screen, for example 0/3 verified to 3/3 verified.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "constraint-aware artifact synthesis",
+        "demo_type": "benchmark",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Education",
+          "user_class": "Teachers and instructional content creators producing technical learning materials. opportunity_id=opp-003; mechanism_id=mechanism-002; evidence_ids=src-aa2c74c76559,src-a90051657ad2,src-89f188836c2c; data_sources=https://github.com/vemodalen-x/understand-video, https://openai.devpost.com/rules, https://openai.devpost.com/; data_access_status=verified.",
+          "workflow": "Creating coding lessons from real repositories forces teachers to reconcile source behavior, runnable commands, learner explanations, screenshots, and checks. The weak workaround is a static tutorial or AI-generated lesson text that is not proven against the repo and can drift from actual execution.",
+          "mechanism_family": "constraint-aware artifact synthesis",
+          "data": "https://openai.devpost.com/rules",
+          "last_mile_action": "It writes an accepted patch branch plus a lesson bundle: checkpoint pages, runnable tests, before/after screenshots, and a student task that actually modifies code and re-runs verification.",
+          "demo_type": "benchmark",
+          "embedding_distances": {
+            "track": 0.48450809717178345,
+            "user_class": 0.5686616400877634,
+            "workflow": 0.5741948982079824,
+            "mechanism_family": 0.36452152331670123,
+            "data": 0.20036916931470236,
+            "last_mile_action": 0.403337558110555,
+            "demo_type": 0.5128326912720998
+          }
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-a90051657ad2"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-a90051657ad2"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Minimum demonstrable loop: Day 1 ingest one public sample repo and define three machine-checkable lesson constraints. Day 2 build the Codex-driven patch runner and rejected-edit log. Day 3 add GPT-5.6 explanation generation from actual diffs and test output. Day 4 build the teacher review UI with approve/reject and re-run buttons. Day 5 record a sub-3-minute demo showing one failing generated lesson repaired into a passing verified lesson bundle. Demo outcome: a lesson checkpoint count and pass rate changes on screen, for example 0/3 verified to 3/3 verified.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Education'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a baseline hand-authored Markdown coding lesson with no automated verification, LessonProof will reduce broken learner steps by at least 50% on a 10-checkpoint sample, measured by identical fresh-clone setup and test commands before publishing.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "productivity-work",
+        "003-004-138179fb5b85",
+        "advisory-approvals-are",
+        "analysis-contribution-counterfactual",
+        "com-details-devpost",
+        "accepted-actual-after",
+        "failure-injection"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "concept-003",
+        "lane": "institutional",
+        "disciplines": [
+          "causal inference and software process mining"
+        ],
+        "working_title": "ChangeReceipt Ops Gate",
+        "primary_user": "Operations leads coordinating bounded internal work with AI-assisted engineering. opportunity_id=opp-004; mechanism_id=mechanism-003; evidence_ids=src-138179fb5b85,src-a90051657ad2,src-9e3a619909fa,src-89f188836c2c; data_sources=https://github.com/vemodalen-x/TEMPO, https://openai.devpost.com/rules, https://openai.devpost.com/details/faqs, https://openai.devpost.com/; data_access_status=verified.",
+        "painful_workflow": "An ops lead asks for a small internal workflow change, but the path from request to working software is opaque: scoping decisions vanish into chat, human approvals are informal, and the final artifact may be an advisory dashboard instead of a tested state-changing tool.",
+        "current_workaround": "A ticket, a spreadsheet of requirements, a Slack thread, and a manually reviewed PR. The organization gets little evidence about which AI-assisted changes mattered, which alternatives were rejected, or whether the tool behaves better than the pre-change workflow.",
+        "imported_mechanism": "Imported mechanism: ablation-based model impact estimation from mechanism-003. The system records a human baseline implementation plan, a Codex-assisted implementation path, and a controlled ablation where model-dependent changes are removed or replaced. Codex role: Codex implements the internal tool change, writes migrations/tests, fixes failures, and produces the auditable build session evidence. GPT-5.6 role: GPT-5.6 decomposes the ops request, identifies approval gates, labels model-dependent changes, and compares baseline versus assisted runs with the same evaluation commands.",
+        "mechanism_origin": "causal inference and software process mining",
+        "data_sources": [
+          "https://openai.devpost.com/details/faqs"
+        ],
+        "core_computation": "For each requested operational change, it builds a change graph with requirement nodes, approval nodes, code commits, tests, and outcome metrics. It then runs identical checks across the baseline artifact, Codex-assisted artifact, and ablated artifact, producing a receipt that states which model-assisted changes caused measurable improvements or regressions.",
+        "last_mile_action": "After human approval, it opens or updates the actual internal tool branch and writes a signed change receipt into the repo: accepted changes, rejected changes, approval timestamps, test transcript, and counterfactual metric deltas.",
+        "visible_transformation": "The demo begins with an unresolved ops request, then shows a branch created, tests running, an approval gate blocking deployment, approval granted, and the tool state changing from pending request to merged verified change with a receipt showing metric deltas.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The Work and Productivity track rewards working, coherent product experiences with real impact, while generic workflow chatbots and dashboard-only analytics are identified as high-collision patterns.",
+        "kill_reason": "",
+        "killer_demo": "Minimum demonstrable loop: Day 1 define one sample ops request and a tiny internal tool repo with baseline workflow metrics. Day 2 implement Codex-assisted branch creation, tests, and receipt capture. Day 3 add GPT-5.6 task decomposition and approval-gate reasoning. Day 4 add ablation comparison that removes model-dependent patches and reruns the same checks. Day 5 record a sub-3-minute demo showing baseline, assisted, and ablated results side by side, with the request status changing from pending to approved to verified. Demo outcome: cycle time, failing checks, and completed workflow count visibly change.",
+        "hard_to_fake_advantage": "The product avoids the crowded generic workflow chatbot and dashboard-only patterns because it performs a governed repository state transition and measures whether the AI-assisted path actually improved the workflow. Codex's contribution is materially testable through patches, build logs, and /feedback session evidence. GPT-5.6's contribution is materially testable through decomposition, counterfactual labels, approval reasoning, and metric comparison outputs.",
+        "cluster_id": "cluster-4-cdd6482c",
+        "evidence_ids": [
+          "src-9e3a619909fa"
+        ],
+        "opportunity_id": "opp-004",
+        "mechanism_id": "mechanism-003",
+        "mutation_history": [],
+        "track_fit": "Work and Productivity",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a baseline manual ticket-to-PR process on the same sample ops request, ChangeReceipt Ops Gate will reduce untraceable requirements by at least 60% and cut unresolved verification failures by at least 40%, measured with the same checklist and test suite across baseline, assisted, and ablated branches.",
+        "demo_proof": "Minimum demonstrable loop: Day 1 define one sample ops request and a tiny internal tool repo with baseline workflow metrics. Day 2 implement Codex-assisted branch creation, tests, and receipt capture. Day 3 add GPT-5.6 task decomposition and approval-gate reasoning. Day 4 add ablation comparison that removes model-dependent patches and reruns the same checks. Day 5 record a sub-3-minute demo showing baseline, assisted, and ablated results side by side, with the request status changing from pending to approved to verified. Demo outcome: cycle time, failing checks, and completed workflow count visibly change.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "counterfactual contribution analysis",
+        "demo_type": "failure injection",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Work and Productivity",
+          "user_class": "Operations leads coordinating bounded internal work with AI-assisted engineering. opportunity_id=opp-004; mechanism_id=mechanism-003; evidence_ids=src-138179fb5b85,src-a90051657ad2,src-9e3a619909fa,src-89f188836c2c; data_sources=https://github.com/vemodalen-x/TEMPO, https://openai.devpost.com/rules, https://openai.devpost.com/details/faqs, https://openai.devpost.com/; data_access_status=verified.",
+          "workflow": "An ops lead asks for a small internal workflow change, but the path from request to working software is opaque: scoping decisions vanish into chat, human approvals are informal, and the final artifact may be an advisory dashboard instead of a tested state-changing tool.",
+          "mechanism_family": "counterfactual contribution analysis",
+          "data": "https://openai.devpost.com/details/faqs",
+          "last_mile_action": "After human approval, it opens or updates the actual internal tool branch and writes a signed change receipt into the repo: accepted changes, rejected changes, approval timestamps, test transcript, and counterfactual metric deltas.",
+          "demo_type": "failure injection",
+          "embedding_distances": {
+            "track": 0.33081844449043274,
+            "user_class": 0.48884955048561096,
+            "workflow": 0.6131772597630819,
+            "mechanism_family": 0.41825053095817566,
+            "data": 0.14050080378850302,
+            "last_mile_action": 0.403530220190684,
+            "demo_type": 0.47129398584365845
+          }
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-9e3a619909fa"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-9e3a619909fa"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Minimum demonstrable loop: Day 1 define one sample ops request and a tiny internal tool repo with baseline workflow metrics. Day 2 implement Codex-assisted branch creation, tests, and receipt capture. Day 3 add GPT-5.6 task decomposition and approval-gate reasoning. Day 4 add ablation comparison that removes model-dependent patches and reruns the same checks. Day 5 record a sub-3-minute demo showing baseline, assisted, and ablated results side by side, with the request status changing from pending to approved to verified. Demo outcome: cycle time, failing checks, and completed workflow count visibly change.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Work and Productivity'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a baseline manual ticket-to-PR process on the same sample ops request, ChangeReceipt Ops Gate will reduce untraceable requirements by at least 60% and cut unresolved verification failures by at least 40%, measured with the same checklist and test suite across baseline, assisted, and ablated branches.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer-tools",
+        "2026-21-before",
+        "5-6-build",
+        "differential-mediated-model",
+        "com-dates-details",
+        "any-appendix-artifact",
+        "counterfactual"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "concept-004",
+        "lane": "developer tooling",
+        "disciplines": [
+          "compiler testing and metamorphic testing"
+        ],
+        "working_title": "Submission Lockbox",
+        "primary_user": "Hackathon teams with a working OpenAI Build Week project who need to freeze a judge-testable package before the July 21, 2026 deadline.",
+        "painful_workflow": "Teams discover too late that the demo, repository, README, runnable sandbox, Codex Session ID, and GPT-5.6 usage explanation do not mutually support the same build state.",
+        "current_workaround": "Manual checklists across Devpost, GitHub, README files, YouTube descriptions, local test logs, and ad hoc team chat reminders.",
+        "imported_mechanism": "opportunity_id: opp-001; mechanism_id: mechanism-000; evidence_ids: src-89f188836c2c, src-a90051657ad2, src-9e3a619909fa, src-b64d44229cd4; data_sources: https://openai.devpost.com/, https://openai.devpost.com/rules, https://openai.devpost.com/details/faqs, https://openai.devpost.com/details/dates; data_access_status: verified. Uses execution-to-claim provenance binding from software reproducibility: every submission claim must be attached to a repo commit, command trace, artifact hash, demo timestamp, or Codex Session ID field.",
+        "mechanism_origin": "compiler testing and metamorphic testing",
+        "data_sources": [
+          "https://openai.devpost.com/details/dates"
+        ],
+        "core_computation": "Builds a submission evidence graph from git commits, README sections, package scripts, test output, demo-video transcript markers, sandbox URL probes, and declared Devpost requirements. GPT-5.6 role: reasons over the graph to identify unsupported claims, stale setup steps, missing judge paths, and contradictions between README/demo/repo without inventing evidence. Codex role: implements the CLI, parsers, repo probes, Playwright smoke test, fixture tests, and produces the /feedback-linked build log explaining which changes were generated and verified.",
+        "last_mile_action": "Creates a signed `submission-lock.json`, opens a local checklist UI, patches a README submission appendix, and optionally fails CI if any required artifact lacks bound evidence.",
+        "visible_transformation": "The demo starts with a repo showing five red missing-evidence gates, then records a test run, attaches a Codex Session ID, validates a sandbox URL, binds a demo timestamp, and flips the package into a green locked state with a downloadable evidence bundle.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The submission window closes on July 21, 2026 at 5:00 PM PDT, changes are barred after that point, and Stage One can reject projects that fail basic viability or required-tool fit.",
+        "kill_reason": "",
+        "killer_demo": "In under three minutes: run `lockbox scan`, show a failed Stage One readiness gate, add one missing README setup command and a sample-data path, rerun smoke tests, then show the generated evidence graph proving the exact commit, demo URL, Codex Session ID, and GPT-5.6 contribution statement all refer to the same build.",
+        "hard_to_fake_advantage": "It does not grade the idea or summarize the project. It verifies artifact consistency with immutable identifiers, command output, URL probes, file hashes, and timestamped graph edges, making it much harder to fake than a checklist or generic submission assistant.",
+        "cluster_id": "cluster-5-228732e0",
+        "evidence_ids": [
+          "src-b64d44229cd4"
+        ],
+        "opportunity_id": "opp-001",
+        "mechanism_id": "mechanism-001",
+        "mutation_history": [],
+        "track_fit": "Developer Tools",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a manual README-and-Devpost checklist baseline, Submission Lockbox will detect at least 4 classes of submission-package defects in a seeded 10-repo fixture set: missing runnable command, stale demo link, absent Codex Session ID, and unsupported GPT-5.6 usage claim. minimum_demonstrable_loop: Day 1 build repo scanner and rule fixtures; Day 2 add README/package/test parsers; Day 3 add GPT-5.6 contradiction review over explicit evidence only; Day 4 add local UI, lockfile, and CI exit codes; Day 5 record seeded defect benchmark and public demo video.",
+        "demo_proof": "In under three minutes: run `lockbox scan`, show a failed Stage One readiness gate, add one missing README setup command and a sample-data path, rerun smoke tests, then show the generated evidence graph proving the exact commit, demo URL, Codex Session ID, and GPT-5.6 contribution statement all refer to the same build.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "model-mediated differential testing",
+        "demo_type": "counterfactual",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer Tools",
+          "user_class": "Hackathon teams with a working OpenAI Build Week project who need to freeze a judge-testable package before the July 21, 2026 deadline.",
+          "workflow": "Teams discover too late that the demo, repository, README, runnable sandbox, Codex Session ID, and GPT-5.6 usage explanation do not mutually support the same build state.",
+          "mechanism_family": "model-mediated differential testing",
+          "data": "https://openai.devpost.com/details/dates",
+          "last_mile_action": "Creates a signed `submission-lock.json`, opens a local checklist UI, patches a README submission appendix, and optionally fails CI if any required artifact lacks bound evidence.",
+          "demo_type": "counterfactual",
+          "embedding_distances": {
+            "track": 0.22816938161849976,
+            "user_class": 0.4459371268749237,
+            "workflow": 0.5173014303048452,
+            "mechanism_family": 0.4342159529527028,
+            "data": 0.23025787870089212,
+            "last_mile_action": 0.41792671879132587,
+            "demo_type": 0.36071455478668213
+          }
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-b64d44229cd4"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-b64d44229cd4"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "In under three minutes: run `lockbox scan`, show a failed Stage One readiness gate, add one missing README setup command and a sample-data path, rerun smoke tests, then show the generated evidence graph proving the exact commit, demo URL, Codex Session ID, and GPT-5.6 contribution statement all refer to the same build.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer Tools'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a manual README-and-Devpost checklist baseline, Submission Lockbox will detect at least 4 classes of submission-package defects in a seeded 10-repo fixture set: missing runnable command, stale demo link, absent Codex Session ID, and unsupported GPT-5.6 usage claim. minimum_demonstrable_loop: Day 1 build repo scanner and rule fixtures; Day 2 add README/package/test parsers; Day 3 add GPT-5.6 contradiction review over explicit evidence only; Day 4 add local UI, lockfile, and CI exit codes; Day 5 record seeded defect benchmark and public demo video.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer-tools",
+        "5-6-build",
+        "across-agent-are",
+        "artifact-aware-constraint",
+        "ai-com-github",
+        "after-allowed-before",
+        "state-transition"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "concept-005",
+        "lane": "systems",
+        "disciplines": [
+          "program synthesis and automated repair"
+        ],
+        "working_title": "Agent Contribution Ledger",
+        "primary_user": "Small teams extending pre-existing projects during OpenAI Build Week who need to distinguish eligible new work from prior code and explain Codex/GPT-5.6 contributions credibly.",
+        "painful_workflow": "Contribution claims are scattered across commits, generated code, chat logs, test runs, README prose, and demo narration, so teams either under-explain meaningful agent work or make broad claims they cannot substantiate.",
+        "current_workaround": "A dated commit history plus manually written README notes and a rough verbal explanation in the demo video.",
+        "imported_mechanism": "opportunity_id: opp-002; mechanism_id: mechanism-001; evidence_ids: src-a90051657ad2, src-9e3a619909fa, src-89f188836c2c; data_sources: https://openai.devpost.com/rules, https://openai.devpost.com/details/faqs, https://openai.devpost.com/; data_access_status: verified. Uses selective oracle amplification from metamorphic testing: model-proposed edge cases become executable probes that test whether claimed new features actually changed behavior after the eligible-period commits.",
+        "mechanism_origin": "program synthesis and automated repair",
+        "data_sources": [
+          "https://github.com/Jatinkumar2503/Nexus--AI"
+        ],
+        "core_computation": "Builds a before/after harness around selected feature claims: checkout baseline commit, checkout submission commit, generate invariant-preserving inputs, execute both states, and reduce differences into minimal evidence snippets. GPT-5.6 role: proposes concrete metamorphic tests from feature claims and classifies only observed before/after behavior tied to command output. Codex role: wires git checkout orchestration, test adapters, seed persistence, reducers, README ledger generation, and regression tests for the CLI.",
+        "last_mile_action": "Writes `CONTRIBUTION_LEDGER.md` with claim-by-claim before/after evidence, stores reproducible seeds, and exports a short demo script that shows which behavior changed during the allowed build window.",
+        "visible_transformation": "The demo selects a claim such as 'new sandbox setup catches missing environment variables', runs the same generated cases on the baseline and final commits, then shows baseline failure, final pass, and an appended ledger row with command, seed, commit IDs, and Codex/GPT-5.6 roles.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "Pre-existing projects are allowed only if meaningfully extended during the submission period, and submissions require a repository, README explanation, demo narration, and /feedback Codex Session ID.",
+        "kill_reason": "",
+        "killer_demo": "Use a sample pre-existing repo with three claimed new features. The tool rejects one unsupported claim, reduces one failing edge case to a two-line config, and accepts two claims only after they produce measurable before/after behavior. The final screen shows the ledger committed into the repo.",
+        "hard_to_fake_advantage": "It binds contribution claims to behavioral deltas rather than prose. A team cannot pass by saying Codex helped; they need reproducible command traces showing the final build behaves differently from the baseline under stored seeds.",
+        "cluster_id": "cluster-6-d017011f",
+        "evidence_ids": [
+          "src-64d029422dfb"
+        ],
+        "opportunity_id": "opp-002",
+        "mechanism_id": "mechanism-002",
+        "mutation_history": [],
+        "track_fit": "Developer Tools",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a baseline of manual commit-log review, Agent Contribution Ledger will identify unsupported contribution claims with at least 80% precision on a seeded fixture corpus of 20 claims across pre-existing and new commits. minimum_demonstrable_loop: Day 1 implement baseline/final git checkout runner; Day 2 define claim schema and executable invariant adapters; Day 3 connect GPT-5.6 for seeded metamorphic case generation; Day 4 add reducer, ledger writer, and Codex build-log appendix; Day 5 run fixture benchmark and record the before/after contribution demo.",
+        "demo_proof": "Use a sample pre-existing repo with three claimed new features. The tool rejects one unsupported claim, reduces one failing edge case to a two-line config, and accepts two claims only after they produce measurable before/after behavior. The final screen shows the ledger committed into the repo.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "constraint-aware artifact synthesis",
+        "demo_type": "state transition",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer Tools",
+          "user_class": "Small teams extending pre-existing projects during OpenAI Build Week who need to distinguish eligible new work from prior code and explain Codex/GPT-5.6 contributions credibly.",
+          "workflow": "Contribution claims are scattered across commits, generated code, chat logs, test runs, README prose, and demo narration, so teams either under-explain meaningful agent work or make broad claims they cannot substantiate.",
+          "mechanism_family": "constraint-aware artifact synthesis",
+          "data": "https://github.com/Jatinkumar2503/Nexus--AI",
+          "last_mile_action": "Writes `CONTRIBUTION_LEDGER.md` with claim-by-claim before/after evidence, stores reproducible seeds, and exports a short demo script that shows which behavior changed during the allowed build window.",
+          "demo_type": "state transition",
+          "embedding_distances": {
+            "track": 0.22816938161849976,
+            "user_class": 0.449357271194458,
+            "workflow": 0.5724129378795624,
+            "mechanism_family": 0.36452152331670123,
+            "data": 0.530708114306132,
+            "last_mile_action": 0.4175076385339101,
+            "demo_type": 0.425834725300471
+          }
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-64d029422dfb"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-64d029422dfb"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Use a sample pre-existing repo with three claimed new features. The tool rejects one unsupported claim, reduces one failing edge case to a two-line config, and accepts two claims only after they produce measurable before/after behavior. The final screen shows the ledger committed into the repo.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer Tools'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a baseline of manual commit-log review, Agent Contribution Ledger will identify unsupported contribution claims with at least 80% precision on a seeded fixture corpus of 20 claims across pre-existing and new commits. minimum_demonstrable_loop: Day 1 implement baseline/final git checkout runner; Day 2 define claim schema and executable invariant adapters; Day 3 connect GPT-5.6 for seeded metamorphic case generation; Day 4 add reducer, ledger writer, and Codex build-log appendix; Day 5 run fixture benchmark and record the before/after contribution demo.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "productivity-work",
+        "2026-21-9e3a619909fa",
+        "before-boundaries-broad",
+        "analysis-contribution-counterfactual",
+        "com-devpost-https",
+        "9e3a619909fa-a90051657ad2-access",
+        "counterfactual"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r1-01-submission-correction-commit",
+        "lane": "Developer Tools",
+        "disciplines": [
+          "causal inference and software process mining"
+        ],
+        "working_title": "Submission Correction Committer",
+        "primary_user": "Hackathon teammates acting as final submitter who must repair incorrect README, repo, and Devpost-facing claims before the July 21, 2026 deadline using verified rules evidence src-a90051657ad2 from https://openai.devpost.com/rules and src-9e3a619909fa from https://openai.devpost.com/details/faqs; data_access_status=verified.",
+        "painful_workflow": "Instead of proving broad prior-work boundaries, the user has a concrete defect: a submission claim, setup step, or required-tool explanation is wrong or unsupported, and fixing it means manually comparing the README, demo script, repo state, and official Build Week rules before editing the workflow text.",
+        "current_workaround": "A teammate leaves comments in docs or chat, then someone manually rewrites the README and hopes the correction is specific enough and aligned with the official requirements.",
+        "imported_mechanism": "mechanism-000: trace-grounded execution auditing from software verification and scientific reproducibility, adapted into a correction synthesizer. GPT-5.6 performs the material reasoning role: it compares each submission statement against verified evidence, repo traces, and command output, then proposes the smallest correction that removes unsupported language. Codex performs the material build role: it implements the repo scanner, README patcher, correction diff view, command runner, and /feedback-traceable workflow that writes the accepted correction back into the repository.",
+        "mechanism_origin": "causal inference and software process mining",
+        "data_sources": [
+          "https://openai.devpost.com/"
+        ],
+        "core_computation": "The system ingests the README, package scripts, demo checklist, git metadata, and verified Build Week rule sources. It builds a claim-to-evidence graph, marks contradicted or unsupported statements, asks GPT-5.6 to generate a bounded replacement sentence with cited evidence IDs, then uses Codex-built patch machinery to apply only reviewer-approved corrections. Day 1: cache https://openai.devpost.com/rules and https://openai.devpost.com/details/faqs fixtures and define correction severity labels. Day 2: build README/demo-script claim extractor and evidence graph. Day 3: implement GPT-5.6 correction generation and contradiction checks. Day 4: add Codex-authored patch application, review UI, and rollback log. Day 5: record a before/after demo on a seeded repo with two false claims and one missing required explanation.",
+        "last_mile_action": "Writes a verified correction directly into the workflow artifact: it opens a pull request or local patch that updates README/setup/demo text, inserts the matching evidence IDs, and adds a correction log entry showing data_access_status=verified for src-a90051657ad2 and src-9e3a619909fa.",
+        "visible_transformation": "Before: the seeded README has 3 submission claims, with 2 unsupported or contradicted by verified rules evidence and 0 committed corrections. After: the correction run leaves 0 contradicted claims, commits 2 evidence-linked text repairs, and shows a reviewer-approved diff with the exact rule URL beside each change.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The Work and Productivity track rewards working, coherent product experiences with real impact, while generic workflow chatbots and dashboard-only analytics are identified as high-collision patterns.",
+        "kill_reason": "",
+        "killer_demo": "Run on a seeded Build Week repo whose README incorrectly says the demo can be over 3 minutes and omits how GPT-5.6 was used. The tool flags both defects, cites https://openai.devpost.com/rules as src-a90051657ad2, uses GPT-5.6 to draft minimal corrected wording, and Codex applies the accepted patch. The on-screen metric changes from 1/3 compliant claims to 3/3 compliant claims.",
+        "hard_to_fake_advantage": "It does not merely produce a checklist or dashboard: the product changes the submission artifact itself and records the verified source, reviewer decision, patch diff, and command evidence needed to audit the correction.",
+        "cluster_id": "cluster-7-12db7814",
+        "evidence_ids": [
+          "src-89f188836c2c"
+        ],
+        "opportunity_id": "opp-004",
+        "mechanism_id": "mechanism-003",
+        "mutation_history": [
+          "round 1: empty action region: write a verified correction into the workflow"
+        ],
+        "track_fit": "Work and Productivity",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a baseline manual README review, the tool will repair at least 2 of 2 seeded submission-text defects and reduce unresolved contradicted claims from 2 to 0 within 5 minutes, measured against the same repo and verified evidence catalog.",
+        "demo_proof": "Run on a seeded Build Week repo whose README incorrectly says the demo can be over 3 minutes and omits how GPT-5.6 was used. The tool flags both defects, cites https://openai.devpost.com/rules as src-a90051657ad2, uses GPT-5.6 to draft minimal corrected wording, and Codex applies the accepted patch. The on-screen metric changes from 1/3 compliant claims to 3/3 compliant claims.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "counterfactual contribution analysis",
+        "demo_type": "counterfactual",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Work and Productivity",
+          "user_class": "Hackathon teammates acting as final submitter who must repair incorrect README, repo, and Devpost-facing claims before the July 21, 2026 deadline using verified rules evidence src-a90051657ad2 from https://openai.devpost.com/rules and src-9e3a619909fa from https://openai.devpost.com/details/faqs; data_access_status=verified.",
+          "workflow": "Instead of proving broad prior-work boundaries, the user has a concrete defect: a submission claim, setup step, or required-tool explanation is wrong or unsupported, and fixing it means manually comparing the README, demo script, repo state, and official Build Week rules before editing the workflow text.",
+          "mechanism_family": "counterfactual contribution analysis",
+          "data": "https://openai.devpost.com/",
+          "last_mile_action": "Writes a verified correction directly into the workflow artifact: it opens a pull request or local patch that updates README/setup/demo text, inserts the matching evidence IDs, and adds a correction log entry showing data_access_status=verified for src-a90051657ad2 and src-9e3a619909fa.",
+          "demo_type": "counterfactual",
+          "embedding_distances": {
+            "track": 0.33081844449043274,
+            "user_class": 0.5221122900644938,
+            "workflow": 0.5156432787577311,
+            "mechanism_family": 0.41825053095817566,
+            "data": 0.14676620562871298,
+            "last_mile_action": 0.4054548442363739,
+            "demo_type": 0.36071455478668213
+          }
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-89f188836c2c"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-89f188836c2c"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Run on a seeded Build Week repo whose README incorrectly says the demo can be over 3 minutes and omits how GPT-5.6 was used. The tool flags both defects, cites https://openai.devpost.com/rules as src-a90051657ad2, uses GPT-5.6 to draft minimal corrected wording, and Codex applies the accepted patch. The on-screen metric changes from 1/3 compliant claims to 3/3 compliant claims.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Work and Productivity'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a baseline manual README review, the tool will repair at least 2 of 2 seeded submission-text defects and reduce unresolved contradicted claims from 2 to 0 within 5 minutes, measured against the same repo and verified evidence catalog.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer-tools",
+        "89f188836c2c-a90051657ad2-access",
+        "action-between-but",
+        "artifact-aware-constraint",
+        "com-devpost-https",
+        "89f188836c2c-a90051657ad2-acceptance",
+        "state-transition"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r1-02-next-step-lesson-scheduler",
+        "lane": "Education",
+        "disciplines": [
+          "program synthesis and automated repair"
+        ],
+        "working_title": "Next-Step Lesson Scheduler",
+        "primary_user": "Bootcamp instructors running live coding labs who need every learner to leave a verified lesson with one scheduled next bounded action, using verified event requirements src-89f188836c2c from https://openai.devpost.com/ and src-a90051657ad2 from https://openai.devpost.com/rules; data_access_status=verified.",
+        "painful_workflow": "The failure is not lesson generation itself; it is that learners finish a verified checkpoint but the next action is vague, too large, or not tied to a runnable command, so progress stalls between sessions.",
+        "current_workaround": "Instructors write follow-up homework in Slack, LMS comments, or a calendar invite, but the task is not automatically scoped to the learner's last passing repo state or checked against the same execution evidence.",
+        "imported_mechanism": "mechanism-001: model-mediated differential testing, repurposed from finding edge cases to bounding the next learner action. GPT-5.6 performs the material planning role: it reasons over the last passing checkpoint, failed variants, and official Build Week requirement evidence to propose one small next action with acceptance criteria. Codex performs the material implementation role: it builds the scheduler, repo-state detector, command verifier, calendar/task export, and traceable session artifacts.",
+        "mechanism_origin": "program synthesis and automated repair",
+        "data_sources": [
+          "https://openai.devpost.com/resources"
+        ],
+        "core_computation": "The system reads a verified lesson checkpoint transcript, learner repo state, failed tests, and timebox constraints. It uses GPT-5.6 to synthesize three candidate next actions, rejects any action without a runnable acceptance command, and Codex-built verification schedules the smallest passing action into an LMS task, calendar event, or GitHub issue. Day 1: create a sample lesson repo and define a 30-minute bounded-action metric. Day 2: build checkpoint transcript parser and action schema. Day 3: add GPT-5.6 candidate generation plus invariant-based action rejection. Day 4: implement Codex-built scheduling exports to GitHub issue and calendar ICS with acceptance commands. Day 5: record a before/after demo showing vague homework converted into one scheduled, verified next step.",
+        "last_mile_action": "Schedules the next bounded action instead of writing another lesson page: it creates a dated GitHub issue or ICS task with one command to run, one file region to edit, one acceptance test, and links to verified evidence IDs src-89f188836c2c and src-a90051657ad2.",
+        "visible_transformation": "Before: a learner exits with 0 scheduled next actions and a vague note like 'finish the parser'. After: the system schedules 1 bounded 30-minute action, attaches 1 acceptance command, and verifies that the target repo state changes from 2/3 passing checks to 3/3 after the task is completed.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The submission window closes on July 21, 2026 at 5:00 PM PDT, changes are barred after that point, and Stage One can reject projects that fail basic viability or required-tool fit.",
+        "kill_reason": "",
+        "killer_demo": "Start from a lesson checkpoint where the learner has a failing parser edge case and no homework item. GPT-5.6 proposes a bounded repair task, Codex writes the issue plus ICS event, the learner applies the suggested patch, and the demo counter changes from 0 scheduled verified actions and 2/3 checks passing to 1 scheduled verified action and 3/3 checks passing.",
+        "hard_to_fake_advantage": "The scheduler is anchored to runnable repo evidence and a single measurable next action, so it cannot hide behind inspirational tutoring prose. The artifact exists in the learner's actual workflow as a scheduled issue or calendar task with a pass/fail command.",
+        "cluster_id": "cluster-8-71cc0dd7",
+        "evidence_ids": [
+          "src-177f855a9a7d"
+        ],
+        "opportunity_id": "opp-001",
+        "mechanism_id": "mechanism-002",
+        "mutation_history": [
+          "round 1: empty action region: schedule the next bounded action"
+        ],
+        "track_fit": "Developer Tools",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a baseline instructor-written homework note, the tool will produce a schedulable next action with one executable acceptance command for at least 8 of 10 checkpoint transcripts, and learners will complete the seeded repair path from 2/3 to 3/3 passing checks within the same 30-minute timebox.",
+        "demo_proof": "Start from a lesson checkpoint where the learner has a failing parser edge case and no homework item. GPT-5.6 proposes a bounded repair task, Codex writes the issue plus ICS event, the learner applies the suggested patch, and the demo counter changes from 0 scheduled verified actions and 2/3 checks passing to 1 scheduled verified action and 3/3 checks passing.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "constraint-aware artifact synthesis",
+        "demo_type": "state transition",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer Tools",
+          "user_class": "Bootcamp instructors running live coding labs who need every learner to leave a verified lesson with one scheduled next bounded action, using verified event requirements src-89f188836c2c from https://openai.devpost.com/ and src-a90051657ad2 from https://openai.devpost.com/rules; data_access_status=verified.",
+          "workflow": "The failure is not lesson generation itself; it is that learners finish a verified checkpoint but the next action is vague, too large, or not tied to a runnable command, so progress stalls between sessions.",
+          "mechanism_family": "constraint-aware artifact synthesis",
+          "data": "https://openai.devpost.com/resources",
+          "last_mile_action": "Schedules the next bounded action instead of writing another lesson page: it creates a dated GitHub issue or ICS task with one command to run, one file region to edit, one acceptance test, and links to verified evidence IDs src-89f188836c2c and src-a90051657ad2.",
+          "demo_type": "state transition",
+          "embedding_distances": {
+            "track": 0.22816938161849976,
+            "user_class": 0.5111465950806936,
+            "workflow": 0.7016321321328481,
+            "mechanism_family": 0.36452152331670123,
+            "data": 0.14564016461372375,
+            "last_mile_action": 0.4122619827588399,
+            "demo_type": 0.425834725300471
+          }
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-177f855a9a7d"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-177f855a9a7d"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Start from a lesson checkpoint where the learner has a failing parser edge case and no homework item. GPT-5.6 proposes a bounded repair task, Codex writes the issue plus ICS event, the learner applies the suggested patch, and the demo counter changes from 0 scheduled verified actions and 2/3 checks passing to 1 scheduled verified action and 3/3 checks passing.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer Tools'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a baseline instructor-written homework note, the tool will produce a schedulable next action with one executable acceptance command for at least 8 of 10 checkpoint transcripts, and learners will complete the seeded repair path from 2/3 to 3/3 passing checks within the same 30-minute timebox.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer-tools",
+        "002-3-a90051657ad2",
+        "before-but-class",
+        "auditing-execution-grounded",
+        "com-devpost-https",
+        "after-badge-block",
+        "counterfactual"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-01-erratacommit-lab",
+        "lane": "education",
+        "disciplines": [
+          "software verification and scientific reproducibility"
+        ],
+        "working_title": "ErrataCommit Lab",
+        "primary_user": "Teaching assistants maintaining live course lab repositories after students report broken or misleading exercise steps. parent_id=concept-002-3; evidence_id=src-a90051657ad2; data_source=https://openai.devpost.com/rules; data_access_status=verified.",
+        "painful_workflow": "A student reports that a lab instruction is wrong, but the TA must reproduce the issue, identify whether code, tests, or prose is stale, update the exercise, and preserve a defensible explanation for the correction before the next class.",
+        "current_workaround": "The TA patches README text or posts a forum clarification, while the repository history rarely links the student report, failing command, corrected instruction, and verified rerun in one auditable place.",
+        "imported_mechanism": "Imported mechanism: model-mediated differential testing from mechanism-001, changed from lesson synthesis to errata repair. GPT-5.6 materially converts the student report into executable hypotheses, proposes invariant checks, compares old and corrected instructions, and emits evidence-linked correction rationale. Codex materially edits the lab repo, creates the failing reproduction, applies the correction, runs tests, commits the errata file, and captures the build session evidence.",
+        "mechanism_origin": "software verification and scientific reproducibility",
+        "data_sources": [
+          "https://openai.devpost.com/"
+        ],
+        "core_computation": "Given a student report and course repo, the system replays the reported command path, generates minimal failing cases and expected invariants, locates the stale instruction or fixture, and produces a verified errata record only when the corrected workflow passes the same commands that failed before. All data access is verified against https://openai.devpost.com/rules with matching catalog id src-a90051657ad2.",
+        "last_mile_action": "It writes a verified correction directly into the workflow: a patch to the lab instructions, an ERRATA.md entry with the failing transcript, a corrected command block, and a rerun badge that changes only after the reproduction passes.",
+        "visible_transformation": "The demo starts with a lab page whose setup command fails for the reported case, then shows the errata workflow writing the correction into the repo and changing the status from unverified report to verified correction with a passing transcript.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The submission window closes on July 21, 2026 at 5:00 PM PDT, changes are barred after that point, and Stage One can reject projects that fail basic viability or required-tool fit.",
+        "kill_reason": "",
+        "killer_demo": "Day 1: select one public toy lab repo, add one seeded broken instruction, and record baseline failure count. Day 2: build the report-ingest form and deterministic command replay runner. Day 3: use GPT-5.6 to generate invariant checks and correction rationale from the failing transcript, while Codex applies the repo patch and test fixture. Day 4: implement the verified ERRATA.md writer and before/after transcript viewer. Day 5: record a sub-3-minute demo showing 0/1 reported fixes verified before correction and 1/1 verified after the written errata patch lands.",
+        "hard_to_fake_advantage": "This is not a generic tutor or lesson generator because the final artifact is a repository correction backed by replayed failure evidence. GPT-5.6 has a material reasoning role in converting reports into invariants and correction rationale; Codex has a material build role in editing files, wiring tests, and recording the passing repair transcript.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-89f188836c2c"
+        ],
+        "opportunity_id": "opp-001",
+        "mechanism_id": "mechanism-000",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: write a verified correction into the workflow"
+        ],
+        "track_fit": "Developer Tools",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Against a baseline TA workflow that manually edits README text after a report, ErrataCommit Lab will reduce unreproduced corrections by at least 50% on 10 seeded lab defects, measured by whether each correction includes a failing-before transcript, passing-after transcript, and committed errata entry.",
+        "demo_proof": "Day 1: select one public toy lab repo, add one seeded broken instruction, and record baseline failure count. Day 2: build the report-ingest form and deterministic command replay runner. Day 3: use GPT-5.6 to generate invariant checks and correction rationale from the failing transcript, while Codex applies the repo patch and test fixture. Day 4: implement the verified ERRATA.md writer and before/after transcript viewer. Day 5: record a sub-3-minute demo showing 0/1 reported fixes verified before correction and 1/1 verified after the written errata patch lands.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "trace-grounded execution auditing",
+        "demo_type": "counterfactual",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer Tools",
+          "user_class": "Teaching assistants maintaining live course lab repositories after students report broken or misleading exercise steps. parent_id=concept-002-3; evidence_id=src-a90051657ad2; data_source=https://openai.devpost.com/rules; data_access_status=verified.",
+          "workflow": "A student reports that a lab instruction is wrong, but the TA must reproduce the issue, identify whether code, tests, or prose is stale, update the exercise, and preserve a defensible explanation for the correction before the next class.",
+          "mechanism_family": "trace-grounded execution auditing",
+          "data": "https://openai.devpost.com/",
+          "last_mile_action": "It writes a verified correction directly into the workflow: a patch to the lab instructions, an ERRATA.md entry with the failing transcript, a corrected command block, and a rerun badge that changes only after the reproduction passes.",
+          "demo_type": "counterfactual",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-89f188836c2c"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-89f188836c2c"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Day 1: select one public toy lab repo, add one seeded broken instruction, and record baseline failure count. Day 2: build the report-ingest form and deterministic command replay runner. Day 3: use GPT-5.6 to generate invariant checks and correction rationale from the failing transcript, while Codex applies the repo patch and test fixture. Day 4: implement the verified ERRATA.md writer and before/after transcript viewer. Day 5: record a sub-3-minute demo showing 0/1 reported fixes verified before correction and 1/1 verified after the written errata patch lands.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer Tools'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Against a baseline TA workflow that manually edits README text after a report, ErrataCommit Lab will reduce unreproduced corrections by at least 50% on 10 seeded lab defects, measured by whether each correction includes a failing-before transcript, passing-after transcript, and committed errata entry.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer-tools",
+        "003-9e3a619909fa-access",
+        "action-after-applicant",
+        "analysis-contribution-counterfactual",
+        "com-devpost-https",
+        "action-actions-audit",
+        "state-transition"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-02-nextstep-clerk",
+        "lane": "work-productivity",
+        "disciplines": [
+          "causal inference and software process mining"
+        ],
+        "working_title": "NextStep Clerk",
+        "primary_user": "Clinic and community-service coordinators who must turn incomplete intake records into the next bounded staff action without losing approval context. parent_id=concept-003; evidence_id=src-9e3a619909fa; data_source=https://openai.devpost.com/details/faqs; data_access_status=verified.",
+        "painful_workflow": "After an intake review, staff often know a case is blocked but not the smallest safe next action: call applicant, request one document, assign reviewer, or schedule follow-up. The delay hides in notes and queues instead of becoming a time-boxed action.",
+        "current_workaround": "Coordinators keep ad hoc spreadsheets, calendar reminders, and chat messages, then manually decide who should do the next step and when it is due.",
+        "imported_mechanism": "Imported mechanism: trace-grounded execution auditing from mechanism-000, changed from repo contribution receipts to operational next-action scheduling. GPT-5.6 materially reads the verified intake trace, identifies the blocking evidence gap, ranks the smallest compliant next action, and explains the scheduling decision. Codex materially builds the queue UI, audit log, scheduler integration stub, fixture data, tests, and recorded session evidence.",
+        "mechanism_origin": "causal inference and software process mining",
+        "data_sources": [
+          "https://openai.devpost.com/resources"
+        ],
+        "core_computation": "For each blocked case, the system builds an evidence graph of intake fields, missing documents, staff roles, policy gates, and prior contacts, then selects exactly one bounded next action with owner, due time, required input, and stop condition. All data access is verified against https://openai.devpost.com/details/faqs with matching catalog id src-9e3a619909fa.",
+        "last_mile_action": "It schedules the next bounded action: creates a calendar/task item with owner, due date, one required outcome, linked evidence, and an audit note explaining why broader or riskier actions were rejected.",
+        "visible_transformation": "The demo begins with five blocked intake cards and no scheduled follow-up, then shows one selected case converted into a dated staff task while the queue count and overdue-risk indicator update on screen.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "Pre-existing projects are allowed only if meaningfully extended during the submission period, and submissions require a repository, README explanation, demo narration, and /feedback Codex Session ID.",
+        "kill_reason": "",
+        "killer_demo": "Day 1: create a fixed sample intake queue with five blocked cases and baseline time-to-next-action metrics. Day 2: build the evidence graph parser and missing-input detector. Day 3: use GPT-5.6 to choose bounded next actions with stop conditions, while Codex implements the scheduler stub, audit log, and tests. Day 4: add coordinator approve/edit controls and task export. Day 5: record a sub-3-minute demo showing blocked cases moving from 0/5 scheduled next actions to 5/5 scheduled, with median next-action latency dropping from manual baseline minutes to automated seconds.",
+        "hard_to_fake_advantage": "The product avoids dashboard-only workflow analytics because it changes operational state by scheduling a specific bounded task. GPT-5.6 is material in evidence-gap reasoning and action selection; Codex is material in the working scheduler, queue state transitions, tests, and auditable build trace.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-177f855a9a7d"
+        ],
+        "opportunity_id": "opp-002",
+        "mechanism_id": "mechanism-003",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: schedule the next bounded action"
+        ],
+        "track_fit": "Developer Tools",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a baseline spreadsheet-and-calendar workflow on the same five-case fixture, NextStep Clerk will increase correctly scheduled bounded next actions from 0/5 to at least 4/5 and reduce median time to task creation by at least 60%, measured with identical case data and coordinator approval rules.",
+        "demo_proof": "Day 1: create a fixed sample intake queue with five blocked cases and baseline time-to-next-action metrics. Day 2: build the evidence graph parser and missing-input detector. Day 3: use GPT-5.6 to choose bounded next actions with stop conditions, while Codex implements the scheduler stub, audit log, and tests. Day 4: add coordinator approve/edit controls and task export. Day 5: record a sub-3-minute demo showing blocked cases moving from 0/5 scheduled next actions to 5/5 scheduled, with median next-action latency dropping from manual baseline minutes to automated seconds.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "counterfactual contribution analysis",
+        "demo_type": "state transition",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer Tools",
+          "user_class": "Clinic and community-service coordinators who must turn incomplete intake records into the next bounded staff action without losing approval context. parent_id=concept-003; evidence_id=src-9e3a619909fa; data_source=https://openai.devpost.com/details/faqs; data_access_status=verified.",
+          "workflow": "After an intake review, staff often know a case is blocked but not the smallest safe next action: call applicant, request one document, assign reviewer, or schedule follow-up. The delay hides in notes and queues instead of becoming a time-boxed action.",
+          "mechanism_family": "counterfactual contribution analysis",
+          "data": "https://openai.devpost.com/resources",
+          "last_mile_action": "It schedules the next bounded action: creates a calendar/task item with owner, due date, one required outcome, linked evidence, and an audit note explaining why broader or riskier actions were rejected.",
+          "demo_type": "state transition",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-177f855a9a7d"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-177f855a9a7d"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Day 1: create a fixed sample intake queue with five blocked cases and baseline time-to-next-action metrics. Day 2: build the evidence graph parser and missing-input detector. Day 3: use GPT-5.6 to choose bounded next actions with stop conditions, while Codex implements the scheduler stub, audit log, and tests. Day 4: add coordinator approve/edit controls and task export. Day 5: record a sub-3-minute demo showing blocked cases moving from 0/5 scheduled next actions to 5/5 scheduled, with median next-action latency dropping from manual baseline minutes to automated seconds.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer Tools'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a baseline spreadsheet-and-calendar workflow on the same five-case fixture, NextStep Clerk will increase correctly scheduled bounded next actions from 0/5 to at least 4/5 and reduce median time to task creation by at least 60%, measured with identical case data and coordinator approval rules.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "education",
+        "002-003-3",
+        "action-actuator-be",
+        "artifact-aware-constraint",
+        "com-devpost-https",
+        "before-blocks-can",
+        "after-before"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-03-labguard-transition-receipt",
+        "lane": "education-safety",
+        "disciplines": [
+          "program synthesis and automated repair"
+        ],
+        "working_title": "LabGuard Transition Receipt",
+        "primary_user": "University lab instructors running hands-on robotics, chemistry-simulation, or hardware-control coding labs. Parent concept: concept-002-3. opportunity_id=opp-003; mechanism_id=mechanism-002; evidence_ids=src-a90051657ad2; data_sources=https://openai.devpost.com/rules; data_access_status=verified.",
+        "painful_workflow": "Instructors let students edit control scripts or simulation parameters, but a small unchecked change can move a lab from safe practice mode into an unsafe actuator, voltage, chemical-dose, or destructive-file transition. Current lesson tools prove comprehension, not whether the next action should be blocked before execution.",
+        "current_workaround": "A pre-lab checklist, TA review, locked starter files, and manual spot checks before students run code. These controls are slow, inconsistent, and often produce no durable proof of why a risky transition was stopped.",
+        "imported_mechanism": "Imported mechanism: specification-constrained build loop from mechanism-002. Codex role: Codex builds the sandbox runner, policy fixtures, transition interceptors, failing and passing lab examples, UI receipt drawer, and reproducible verification commands. GPT-5.6 role: GPT-5.6 converts a lab rubric into explicit safety invariants, explains blocked transitions from execution evidence, and uses tool-calling to request re-checks after a student or instructor edits the lab script.",
+        "mechanism_origin": "program synthesis and automated repair",
+        "data_sources": [
+          "https://openai.devpost.com/rules"
+        ],
+        "core_computation": "The system parses each proposed lab state transition into precondition, action, effect, and evidence nodes, then checks it against instructor-defined invariants and executable sandbox probes. Accepted transitions run in the lab harness; rejected transitions are blocked and written to an evidence receipt containing the triggering diff, violated invariant, command transcript, and remediation hint. Data access is verified using https://openai.devpost.com/rules with matching evidence ID src-a90051657ad2.",
+        "last_mile_action": "It blocks an unsafe transition before the student can run it and emits a shareable evidence receipt for instructor review, including the exact policy rule, sandbox output, and a Codex-generated patch suggestion that restores a safe path.",
+        "visible_transformation": "Before: a student changes a simulated pump limit from 5 ml/min to 50 ml/min and the lab runner shows an unguarded executable transition. After: the same change is intercepted, the run button changes to Blocked, an evidence receipt appears with the violated invariant, and a corrected commit changes the status to Verified Safe.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The Education track rewards working projects with design, implementation, impact, and idea quality, while common generic tutor and flashcard concepts face high collision pressure.",
+        "kill_reason": "",
+        "killer_demo": "Day 1: create one verified sample lab repo, define three machine-checkable safety invariants, and cite https://openai.devpost.com/rules as src-a90051657ad2 for hackathon requirement traceability. Day 2: build the Codex-implemented transition interceptor and sandbox command runner. Day 3: add GPT-5.6 rubric-to-invariant reasoning and receipt explanations grounded in command output. Day 4: build the instructor review UI that compares blocked, patched, and accepted transitions. Day 5: record a sub-3-minute demo showing before 0 unsafe transitions blocked and 0 receipts, after 1 unsafe transition blocked, 1 evidence receipt generated, and 3/3 safe transitions allowed.",
+        "hard_to_fake_advantage": "This is not a generic tutor or lesson generator: it performs a concrete preventative action at the moment a risky lab state change would occur. Codex is materially responsible for the runnable sandbox, interceptors, tests, and receipt-writing implementation. GPT-5.6 is materially responsible for deriving safety invariants, mapping failed execution evidence to human-readable reasoning, and deciding which re-checks to invoke.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-a90051657ad2"
+        ],
+        "opportunity_id": "opp-003",
+        "mechanism_id": "mechanism-002",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: block an unsafe transition with an evidence receipt"
+        ],
+        "track_fit": "Education",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a baseline locked-starter-file workflow reviewed manually by a TA, LabGuard Transition Receipt will block at least 90% of seeded unsafe transitions while allowing at least 95% of seeded safe transitions on a 40-case lab fixture, measured by identical sandbox commands and instructor invariants.",
+        "demo_proof": "Day 1: create one verified sample lab repo, define three machine-checkable safety invariants, and cite https://openai.devpost.com/rules as src-a90051657ad2 for hackathon requirement traceability. Day 2: build the Codex-implemented transition interceptor and sandbox command runner. Day 3: add GPT-5.6 rubric-to-invariant reasoning and receipt explanations grounded in command output. Day 4: build the instructor review UI that compares blocked, patched, and accepted transitions. Day 5: record a sub-3-minute demo showing before 0 unsafe transitions blocked and 0 receipts, after 1 unsafe transition blocked, 1 evidence receipt generated, and 3/3 safe transitions allowed.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "constraint-aware artifact synthesis",
+        "demo_type": "before-after",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Education",
+          "user_class": "University lab instructors running hands-on robotics, chemistry-simulation, or hardware-control coding labs. Parent concept: concept-002-3. opportunity_id=opp-003; mechanism_id=mechanism-002; evidence_ids=src-a90051657ad2; data_sources=https://openai.devpost.com/rules; data_access_status=verified.",
+          "workflow": "Instructors let students edit control scripts or simulation parameters, but a small unchecked change can move a lab from safe practice mode into an unsafe actuator, voltage, chemical-dose, or destructive-file transition. Current lesson tools prove comprehension, not whether the next action should be blocked before execution.",
+          "mechanism_family": "constraint-aware artifact synthesis",
+          "data": "https://openai.devpost.com/rules",
+          "last_mile_action": "It blocks an unsafe transition before the student can run it and emits a shareable evidence receipt for instructor review, including the exact policy rule, sandbox output, and a Codex-generated patch suggestion that restores a safe path.",
+          "demo_type": "before-after",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-a90051657ad2"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-a90051657ad2"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Day 1: create one verified sample lab repo, define three machine-checkable safety invariants, and cite https://openai.devpost.com/rules as src-a90051657ad2 for hackathon requirement traceability. Day 2: build the Codex-implemented transition interceptor and sandbox command runner. Day 3: add GPT-5.6 rubric-to-invariant reasoning and receipt explanations grounded in command output. Day 4: build the instructor review UI that compares blocked, patched, and accepted transitions. Day 5: record a sub-3-minute demo showing before 0 unsafe transitions blocked and 0 receipts, after 1 unsafe transition blocked, 1 evidence receipt generated, and 3/3 safe transitions allowed.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Education'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a baseline locked-starter-file workflow reviewed manually by a TA, LabGuard Transition Receipt will block at least 90% of seeded unsafe transitions while allowing at least 95% of seeded safe transitions on a 40-case lab fixture, measured by identical sandbox commands and instructor invariants.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "productivity-work",
+        "003-004-9e3a619909fa",
+        "because-behavior-break",
+        "differential-mediated-model",
+        "com-details-devpost",
+        "ablated-baseline-branch",
+        "live-replay"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-04-regressionpatch-drill",
+        "lane": "developer-tools",
+        "disciplines": [
+          "compiler testing and metamorphic testing"
+        ],
+        "working_title": "RegressionPatch Drill",
+        "primary_user": "Maintainers of small open-source libraries who need to accept issue reports without silently reintroducing fixed bugs. Parent concept: concept-003. opportunity_id=opp-004; mechanism_id=mechanism-003; evidence_ids=src-9e3a619909fa; data_sources=https://openai.devpost.com/details/faqs; data_access_status=verified.",
+        "painful_workflow": "A maintainer receives a bug report, patches the visible failure, and moves on without a regression test because reproducing the issue, minimizing the fixture, and wiring it into CI takes longer than the code fix. The next refactor can re-break the same behavior with no warning.",
+        "current_workaround": "Issue comments, a one-off local reproduction command, or a manual PR note saying the bug was tested. These artifacts are easy to lose and usually do not become a durable executable guard.",
+        "imported_mechanism": "Imported mechanism: ablation-based model impact estimation from mechanism-003. Codex role: Codex creates the minimal failing fixture, writes the regression test, applies the patch, runs the baseline and patched test commands, and commits the reproducibility bundle. GPT-5.6 role: GPT-5.6 decomposes the issue report into expected behavior, identifies the smallest testable failure condition, labels which patch lines are model-dependent, and compares baseline, patched, and ablated runs.",
+        "mechanism_origin": "compiler testing and metamorphic testing",
+        "data_sources": [
+          "https://openai.devpost.com/details/faqs"
+        ],
+        "core_computation": "The system turns an issue report plus repository state into a triad: failing baseline reproduction, candidate fix, and regression test. It runs the same test command on the original branch, the Codex-assisted patch branch, and an ablated branch with the model-dependent fix removed, then records whether the new test fails, passes, and fails again as expected. Data access is verified using https://openai.devpost.com/details/faqs with matching evidence ID src-9e3a619909fa.",
+        "last_mile_action": "It generates and runs a regression test, opens the patch branch only when the test proves the bug, and writes a receipt containing baseline failure, patched pass, ablated failure, changed files, and the exact command transcript.",
+        "visible_transformation": "Before: an issue has no reproduction, the project test suite reports 12/12 passing, and the bug can recur unnoticed. After: Codex adds a focused regression test, baseline reports 12/13 passing with the new failure, patched branch reports 13/13 passing, and ablated branch returns to 12/13 with the same named failure.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The Work and Productivity track rewards working, coherent product experiences with real impact, while generic workflow chatbots and dashboard-only analytics are identified as high-collision patterns.",
+        "kill_reason": "",
+        "killer_demo": "Day 1: select one small verified public repo fixture, write a synthetic issue report, and cite https://openai.devpost.com/details/faqs as src-9e3a619909fa for judging/testability traceability. Day 2: build the Codex-powered reproduction harness that checks out baseline and runs the existing test command. Day 3: add GPT-5.6 issue decomposition and minimal regression-test proposal generation. Day 4: implement the ablation runner that removes model-dependent fix hunks and reruns the identical command. Day 5: record a sub-3-minute demo showing before no regression test and 12/12 misleading pass, after generated regression test with baseline 12/13 fail, patched 13/13 pass, and ablated 12/13 fail.",
+        "hard_to_fake_advantage": "The product is not a generic code reviewer or CI summarizer because it must create an executable failing test before accepting the fix and must prove the fix is causal through ablation. Codex is materially visible in the generated fixture, regression test, patch, branch, and test logs. GPT-5.6 is materially visible in issue-to-test reasoning, model-dependent hunk labeling, and structured comparison of baseline versus patched versus ablated results.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-9e3a619909fa"
+        ],
+        "opportunity_id": "opp-004",
+        "mechanism_id": "mechanism-001",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: generate and run a regression test"
+        ],
+        "track_fit": "Work and Productivity",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a baseline maintainer workflow that patches the bug without requiring a new test, RegressionPatch Drill will convert at least 8 of 10 seeded issue reports into regression tests that fail on baseline, pass on the patch, and fail on ablation, measured with the same repository setup and test command.",
+        "demo_proof": "Day 1: select one small verified public repo fixture, write a synthetic issue report, and cite https://openai.devpost.com/details/faqs as src-9e3a619909fa for judging/testability traceability. Day 2: build the Codex-powered reproduction harness that checks out baseline and runs the existing test command. Day 3: add GPT-5.6 issue decomposition and minimal regression-test proposal generation. Day 4: implement the ablation runner that removes model-dependent fix hunks and reruns the identical command. Day 5: record a sub-3-minute demo showing before no regression test and 12/12 misleading pass, after generated regression test with baseline 12/13 fail, patched 13/13 pass, and ablated 12/13 fail.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "model-mediated differential testing",
+        "demo_type": "live replay",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Work and Productivity",
+          "user_class": "Maintainers of small open-source libraries who need to accept issue reports without silently reintroducing fixed bugs. Parent concept: concept-003. opportunity_id=opp-004; mechanism_id=mechanism-003; evidence_ids=src-9e3a619909fa; data_sources=https://openai.devpost.com/details/faqs; data_access_status=verified.",
+          "workflow": "A maintainer receives a bug report, patches the visible failure, and moves on without a regression test because reproducing the issue, minimizing the fixture, and wiring it into CI takes longer than the code fix. The next refactor can re-break the same behavior with no warning.",
+          "mechanism_family": "model-mediated differential testing",
+          "data": "https://openai.devpost.com/details/faqs",
+          "last_mile_action": "It generates and runs a regression test, opens the patch branch only when the test proves the bug, and writes a receipt containing baseline failure, patched pass, ablated failure, changed files, and the exact command transcript.",
+          "demo_type": "live replay",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-9e3a619909fa"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-9e3a619909fa"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Day 1: select one small verified public repo fixture, write a synthetic issue report, and cite https://openai.devpost.com/details/faqs as src-9e3a619909fa for judging/testability traceability. Day 2: build the Codex-powered reproduction harness that checks out baseline and runs the existing test command. Day 3: add GPT-5.6 issue decomposition and minimal regression-test proposal generation. Day 4: implement the ablation runner that removes model-dependent fix hunks and reruns the identical command. Day 5: record a sub-3-minute demo showing before no regression test and 12/12 misleading pass, after generated regression test with baseline 12/13 fail, patched 13/13 pass, and ablated 12/13 fail.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Work and Productivity'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a baseline maintainer workflow that patches the bug without requiring a new test, RegressionPatch Drill will convert at least 8 of 10 seeded issue reports into regression tests that fail on baseline, pass on the patch, and fail on ablation, measured with the same repository setup and test command.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer-tools",
+        "001-002-3",
+        "allocation-are-available",
+        "auditing-execution-grounded",
+        "com-dates-details",
+        "assigned-blocks-budget",
+        "benchmark"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-05-creditvalve-build-allocator",
+        "lane": "systems",
+        "disciplines": [
+          "software verification and scientific reproducibility"
+        ],
+        "working_title": "CreditValve Build Allocator",
+        "primary_user": "Hackathon entrants and small build teams who must decide where to spend scarce remaining Codex/GPT-5.6 build time before the OpenAI Build Week deadline. parent_id=concept-002-3; opportunity_id=opp-001; mechanism_id=mechanism-001; evidence_ids=src-a90051657ad2,src-b64d44229cd4; data_sources=https://openai.devpost.com/rules, https://openai.devpost.com/details/dates; data_access_status=verified.",
+        "painful_workflow": "Near submission, teams have more defects, polish requests, README gaps, and demo risks than available build hours or model credits. The painful step is not generating more suggestions; it is deciding which constrained resource allocation produces the biggest judge-testability gain before changes are locked.",
+        "current_workaround": "Teams keep a loose TODO list, manually guess which bugs matter, and spend remaining AI sessions on visible polish or broad refactors without proving that the chosen allocation improves required submission readiness.",
+        "imported_mechanism": "Imported mechanism: model-mediated differential testing from mechanism-001. GPT-5.6 role: GPT-5.6 proposes invariant-preserving submission checks, estimates which tasks consume the constrained resource budget, and selects a resource reallocation plan using executable evidence rather than preference text. Codex role: Codex implements the verifier, budget ledger, test adapters, README checks, and the branch-level changes needed to execute each candidate allocation against the same fixture.",
+        "mechanism_origin": "software verification and scientific reproducibility",
+        "data_sources": [
+          "https://openai.devpost.com/details/dates"
+        ],
+        "core_computation": "The system ingests a repo, a remaining build budget, and required submission checks grounded in https://openai.devpost.com/rules and https://openai.devpost.com/details/dates. It generates candidate allocations across bug fixing, setup reproducibility, README completeness, demo script repair, and test stability, then runs the same readiness suite before and after each candidate and chooses the allocation that maximizes verified submission pass count per constrained hour or credit. Data access is verified because every named URL is present in the verified_evidence_catalog with matching IDs src-a90051657ad2 and src-b64d44229cd4.",
+        "last_mile_action": "It reallocates a constrained resource by writing a concrete build budget plan into the repo: task caps, skipped work with rationale, assigned Codex session blocks, and the next command to run for the selected highest-yield fix.",
+        "visible_transformation": "The demo begins with a repo showing 5 remaining hours, 9 open readiness failures, and no allocation. It ends with an accepted resource plan that moves time away from low-impact polish into setup and verifier fixes, changing the readiness board from 4/10 passing checks to 8/10 passing checks and the budget ledger from unassigned to fully allocated.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The submission window closes on July 21, 2026 at 5:00 PM PDT, changes are barred after that point, and Stage One can reject projects that fail basic viability or required-tool fit.",
+        "kill_reason": "",
+        "killer_demo": "Day 1: load one sample repo, cache verified Devpost rule/date fixtures from https://openai.devpost.com/rules and https://openai.devpost.com/details/dates, and define a 10-check readiness baseline. Day 2: build the Codex-executed readiness runner and budget ledger. Day 3: add GPT-5.6 candidate allocation reasoning and invariant generation, then execute at least three alternative allocations. Day 4: implement the reallocation UI with lock/unlock controls and a repo-written allocation file. Day 5: record a sub-3-minute demo showing before/after metrics: readiness checks improve from 4/10 to at least 8/10 under the same 5-hour budget, while skipped tasks remain visible.",
+        "hard_to_fake_advantage": "This is not a generic project manager, checklist, or dashboard. The hard-to-fake part is the resource reallocation being tied to executable readiness deltas and fixed public rule evidence. Codex has a material role because it builds and runs the verifier, patches the repo, and records command transcripts. GPT-5.6 has a material role because it derives the candidate allocations, maps them to required submission constraints, and explains the selected allocation from measured pass-rate changes.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-b64d44229cd4"
+        ],
+        "opportunity_id": "opp-001",
+        "mechanism_id": "mechanism-000",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: reallocate a constrained resource"
+        ],
+        "track_fit": "Developer Tools",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a baseline human-prioritized TODO list using the same sample repo and 5-hour budget, CreditValve Build Allocator will increase verified submission-readiness checks by at least 30 percentage points, measured by the identical 10-check runner before and after allocation.",
+        "demo_proof": "Day 1: load one sample repo, cache verified Devpost rule/date fixtures from https://openai.devpost.com/rules and https://openai.devpost.com/details/dates, and define a 10-check readiness baseline. Day 2: build the Codex-executed readiness runner and budget ledger. Day 3: add GPT-5.6 candidate allocation reasoning and invariant generation, then execute at least three alternative allocations. Day 4: implement the reallocation UI with lock/unlock controls and a repo-written allocation file. Day 5: record a sub-3-minute demo showing before/after metrics: readiness checks improve from 4/10 to at least 8/10 under the same 5-hour budget, while skipped tasks remain visible.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "trace-grounded execution auditing",
+        "demo_type": "benchmark",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer Tools",
+          "user_class": "Hackathon entrants and small build teams who must decide where to spend scarce remaining Codex/GPT-5.6 build time before the OpenAI Build Week deadline. parent_id=concept-002-3; opportunity_id=opp-001; mechanism_id=mechanism-001; evidence_ids=src-a90051657ad2,src-b64d44229cd4; data_sources=https://openai.devpost.com/rules, https://openai.devpost.com/details/dates; data_access_status=verified.",
+          "workflow": "Near submission, teams have more defects, polish requests, README gaps, and demo risks than available build hours or model credits. The painful step is not generating more suggestions; it is deciding which constrained resource allocation produces the biggest judge-testability gain before changes are locked.",
+          "mechanism_family": "trace-grounded execution auditing",
+          "data": "https://openai.devpost.com/details/dates",
+          "last_mile_action": "It reallocates a constrained resource by writing a concrete build budget plan into the repo: task caps, skipped work with rationale, assigned Codex session blocks, and the next command to run for the selected highest-yield fix.",
+          "demo_type": "benchmark",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-b64d44229cd4"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-b64d44229cd4"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Day 1: load one sample repo, cache verified Devpost rule/date fixtures from https://openai.devpost.com/rules and https://openai.devpost.com/details/dates, and define a 10-check readiness baseline. Day 2: build the Codex-executed readiness runner and budget ledger. Day 3: add GPT-5.6 candidate allocation reasoning and invariant generation, then execute at least three alternative allocations. Day 4: implement the reallocation UI with lock/unlock controls and a repo-written allocation file. Day 5: record a sub-3-minute demo showing before/after metrics: readiness checks improve from 4/10 to at least 8/10 under the same 5-hour budget, while skipped tasks remain visible.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer Tools'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a baseline human-prioritized TODO list using the same sample repo and 5-hour budget, CreditValve Build Allocator will increase verified submission-readiness checks by at least 30 percentage points, measured by the identical 10-check runner before and after allocation.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer-tools",
+        "000-002-003",
+        "across-actually-assisted",
+        "analysis-contribution-counterfactual",
+        "ai-com-github",
+        "before-branch-can",
+        "failure-injection"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-06-conflictset-review-opener",
+        "lane": "institutional",
+        "disciplines": [
+          "causal inference and software process mining"
+        ],
+        "working_title": "ConflictSet Review Opener",
+        "primary_user": "Maintainers of shared AI-assisted repositories who need to unblock a disputed change without asking reviewers to read the full branch. parent_id=concept-003; opportunity_id=opp-002; mechanism_id=mechanism-000; evidence_ids=src-a90051657ad2,src-9e3a619909fa; data_sources=https://openai.devpost.com/rules, https://openai.devpost.com/details/faqs; data_access_status=verified.",
+        "painful_workflow": "When a Codex-assisted change fails review, the discussion sprawls across diffs, comments, tests, README claims, and demo obligations. Reviewers lose time debating the entire branch instead of the smallest set of files, claims, and failing checks that actually conflict.",
+        "current_workaround": "A maintainer manually writes a PR comment, links screenshots, asks for a broad review, and hopes someone infers which requirement, test failure, or submission claim is blocking acceptance.",
+        "imported_mechanism": "Imported mechanism: trace-grounded execution auditing from mechanism-000. GPT-5.6 role: GPT-5.6 performs the conflict minimization step by mapping changed files, failed checks, README claims, and Devpost requirements into the smallest reviewable conflict set. Codex role: Codex gathers the git diff, runs tests, extracts failing traces, creates the review task payload, and writes the minimal conflict artifact into the repository or issue tracker.",
+        "mechanism_origin": "causal inference and software process mining",
+        "data_sources": [
+          "https://github.com/Jatinkumar2503/Nexus--AI"
+        ],
+        "core_computation": "The system builds a provenance graph from changed files, declared claims, test results, Codex session evidence, and verified hackathon requirements from https://openai.devpost.com/rules and https://openai.devpost.com/details/faqs. It computes the minimal hitting set of artifacts that explain every unresolved conflict, rejects unrelated files, and emits one review task with exact evidence IDs src-a90051657ad2 and src-9e3a619909fa. Data access is verified because both URLs are literal matches in the verified_evidence_catalog.",
+        "last_mile_action": "It opens a review task containing the minimal conflict set: the fewest files, claims, failing commands, and required submission obligations that a human must decide on before the branch can proceed.",
+        "visible_transformation": "The demo starts with a noisy 23-file branch, 14 comments, and 6 failing or ambiguous claims. It ends with one generated review task containing 3 files, 2 failing commands, and 2 disputed claims, with unrelated diffs collapsed and the branch status changed from blocked-by-review to awaiting-minimal-decision.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "Pre-existing projects are allowed only if meaningfully extended during the submission period, and submissions require a repository, README explanation, demo narration, and /feedback Codex Session ID.",
+        "kill_reason": "",
+        "killer_demo": "Day 1: create a sample repo branch with seeded conflicts and cache verified fixtures from https://openai.devpost.com/rules and https://openai.devpost.com/details/faqs. Day 2: build the Codex diff/test/claim collector and store trace IDs. Day 3: implement GPT-5.6 conflict minimization over the provenance graph and reject non-causal files. Day 4: add the review-task opener UI and export format with approve/request-change buttons. Day 5: record a sub-3-minute demo showing before/after metrics: reviewer scope shrinks from 23 files and 14 comments to 3 files and 1 task while preserving all 6 original conflicts.",
+        "hard_to_fake_advantage": "This is not a generic AI code reviewer or PR summarizer. Its hard-to-fake advantage is that it opens a state-changing review task only after proving that the minimal conflict set still covers every failed requirement and claim. Codex has a material role in collecting traces, running commands, and writing the review artifact. GPT-5.6 has a material role in reasoning over provenance, reducing the conflict set, and producing evidence-linked decisions.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-64d029422dfb"
+        ],
+        "opportunity_id": "opp-002",
+        "mechanism_id": "mechanism-003",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: open a review task containing the minimal conflict set"
+        ],
+        "track_fit": "Developer Tools",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a baseline full-branch review request on the same seeded branch, ConflictSet Review Opener will reduce reviewer artifact count by at least 60% while retaining 100% coverage of known failing checks and disputed claims, measured against the seeded conflict oracle.",
+        "demo_proof": "Day 1: create a sample repo branch with seeded conflicts and cache verified fixtures from https://openai.devpost.com/rules and https://openai.devpost.com/details/faqs. Day 2: build the Codex diff/test/claim collector and store trace IDs. Day 3: implement GPT-5.6 conflict minimization over the provenance graph and reject non-causal files. Day 4: add the review-task opener UI and export format with approve/request-change buttons. Day 5: record a sub-3-minute demo showing before/after metrics: reviewer scope shrinks from 23 files and 14 comments to 3 files and 1 task while preserving all 6 original conflicts.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "counterfactual contribution analysis",
+        "demo_type": "failure injection",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer Tools",
+          "user_class": "Maintainers of shared AI-assisted repositories who need to unblock a disputed change without asking reviewers to read the full branch. parent_id=concept-003; opportunity_id=opp-002; mechanism_id=mechanism-000; evidence_ids=src-a90051657ad2,src-9e3a619909fa; data_sources=https://openai.devpost.com/rules, https://openai.devpost.com/details/faqs; data_access_status=verified.",
+          "workflow": "When a Codex-assisted change fails review, the discussion sprawls across diffs, comments, tests, README claims, and demo obligations. Reviewers lose time debating the entire branch instead of the smallest set of files, claims, and failing checks that actually conflict.",
+          "mechanism_family": "counterfactual contribution analysis",
+          "data": "https://github.com/Jatinkumar2503/Nexus--AI",
+          "last_mile_action": "It opens a review task containing the minimal conflict set: the fewest files, claims, failing commands, and required submission obligations that a human must decide on before the branch can proceed.",
+          "demo_type": "failure injection",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-64d029422dfb"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-64d029422dfb"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Day 1: create a sample repo branch with seeded conflicts and cache verified fixtures from https://openai.devpost.com/rules and https://openai.devpost.com/details/faqs. Day 2: build the Codex diff/test/claim collector and store trace IDs. Day 3: implement GPT-5.6 conflict minimization over the provenance graph and reject non-causal files. Day 4: add the review-task opener UI and export format with approve/request-change buttons. Day 5: record a sub-3-minute demo showing before/after metrics: reviewer scope shrinks from 23 files and 14 comments to 3 files and 1 task while preserving all 6 original conflicts.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer Tools'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a baseline full-branch review request on the same seeded branch, ConflictSet Review Opener will reduce reviewer artifact count by at least 60% while retaining 100% coverage of known failing checks and disputed claims, measured against the seeded conflict oracle.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "education",
+        "002-003-3",
+        "across-after-approvals",
+        "artifact-aware-constraint",
+        "coder-colleenchen525-com",
+        "5-6-blocks",
+        "counterfactual"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-07-traceledger-lesson-release",
+        "lane": "developer-tools",
+        "disciplines": [
+          "program synthesis and automated repair"
+        ],
+        "working_title": "TraceLedger Lesson Release",
+        "primary_user": "Curriculum engineering leads who maintain public coding-course repositories and need release evidence before publishing lessons. Parent ID: concept-002-3. opportunity_id=opp-003; mechanism_id=mechanism-002; evidence_ids=src-aa2c74c76559,src-a90051657ad2; data_sources=https://github.com/vemodalen-x/understand-video, https://openai.devpost.com/rules; data_access_status=verified.",
+        "painful_workflow": "Before publishing a lesson update, the lead must prove which repository files, generated explanations, test outputs, screenshots, and human approvals belong to the same lesson release. The painful part is not lesson authoring itself; it is reconstructing provenance after edits, reruns, and manual fixes have scattered evidence across commits, chats, and local artifacts.",
+        "current_workaround": "A release checklist in Markdown plus ad hoc links to pull requests, terminal logs, and screenshots. Reviewers can see artifacts but cannot reliably answer whether a learner-facing claim came from verified execution, GPT-5.6 reasoning, Codex edits, or a manual override.",
+        "imported_mechanism": "Imported mechanism: specification-constrained build loop from mechanism-002, repurposed from lesson generation into provenance-ledger construction. Codex material role: Codex instruments the course repository, writes the ledger updater, creates fixture tests, captures command transcripts, and commits the verifiable release artifacts. GPT-5.6 material role: GPT-5.6 maps each learner-facing claim to constraints, classifies evidence nodes, detects missing provenance links, and emits structured ledger decisions tied to verified sources and execution outputs.",
+        "mechanism_origin": "program synthesis and automated repair",
+        "data_sources": [
+          "https://github.com/colleenchen525-coder/curio"
+        ],
+        "core_computation": "The system ingests a course repo, lesson diff, command transcript, screenshot manifest, and reviewer approvals, then builds an append-only provenance ledger. Each ledger row links a claim, source file, test command, observed output hash, screenshot hash, actor type, and pass/fail constraint. Data access is verified because every external data URL is drawn from the verified evidence catalog: src-aa2c74c76559 matches https://github.com/vemodalen-x/understand-video and src-a90051657ad2 matches https://openai.devpost.com/rules.",
+        "last_mile_action": "It updates a provenance ledger in the repository and blocks lesson release until every published claim has a verified source row, a passing command transcript, and an explicit Codex/GPT-5.6 contribution label.",
+        "visible_transformation": "The demo opens on a lesson release with 11 orphan claims, 0 verified ledger rows, and no reviewer-ready audit trail. After the run, the repository shows an updated ledger, hashed evidence files, failing rows marked for repair, and a release badge changing from blocked to verified when all rows pass.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The Education track rewards working projects with design, implementation, impact, and idea quality, while common generic tutor and flashcard concepts face high collision pressure.",
+        "kill_reason": "",
+        "killer_demo": "Day 1: create a small course-repo fixture from https://github.com/vemodalen-x/understand-video and define the before metrics: orphan claims, missing command proofs, and release-blocking rows. Day 2: use Codex to build the ledger schema, repository scanner, transcript hasher, and failing fixture tests. Day 3: use GPT-5.6 to map claims to evidence nodes, explain missing links, and request Codex reruns for unresolved rows. Day 4: build the review UI and the last-mile action that writes the append-only provenance ledger back into the repo. Day 5: record a sub-3-minute demo showing the same lesson release move from 11 orphan claims, 0/11 verified rows, and blocked status to 0 orphan claims, 11/11 verified rows, and release-ready status.",
+        "hard_to_fake_advantage": "This is not a tutor, flashcard generator, PDF summarizer, or generic dashboard. The hard-to-fake part is the append-only ledger that ties every lesson claim to a repository state, command transcript, artifact hash, and actor contribution. Codex is visible in the repository instrumentation, tests, commits, and build logs. GPT-5.6 is visible in the claim-to-evidence reasoning, missing-link diagnosis, and structured provenance decisions.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-a27761e18042"
+        ],
+        "opportunity_id": "opp-003",
+        "mechanism_id": "mechanism-002",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: update a provenance ledger"
+        ],
+        "track_fit": "Education",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a baseline Markdown release checklist on the same 12-claim lesson update, TraceLedger Lesson Release will reduce untraceable learner-facing claims by at least 70% and reduce reviewer provenance-check time by at least 40%, measured by two reviewers using the same repository, checklist rubric, and verification commands.",
+        "demo_proof": "Day 1: create a small course-repo fixture from https://github.com/vemodalen-x/understand-video and define the before metrics: orphan claims, missing command proofs, and release-blocking rows. Day 2: use Codex to build the ledger schema, repository scanner, transcript hasher, and failing fixture tests. Day 3: use GPT-5.6 to map claims to evidence nodes, explain missing links, and request Codex reruns for unresolved rows. Day 4: build the review UI and the last-mile action that writes the append-only provenance ledger back into the repo. Day 5: record a sub-3-minute demo showing the same lesson release move from 11 orphan claims, 0/11 verified rows, and blocked status to 0 orphan claims, 11/11 verified rows, and release-ready status.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "constraint-aware artifact synthesis",
+        "demo_type": "counterfactual",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Education",
+          "user_class": "Curriculum engineering leads who maintain public coding-course repositories and need release evidence before publishing lessons. Parent ID: concept-002-3. opportunity_id=opp-003; mechanism_id=mechanism-002; evidence_ids=src-aa2c74c76559,src-a90051657ad2; data_sources=https://github.com/vemodalen-x/understand-video, https://openai.devpost.com/rules; data_access_status=verified.",
+          "workflow": "Before publishing a lesson update, the lead must prove which repository files, generated explanations, test outputs, screenshots, and human approvals belong to the same lesson release. The painful part is not lesson authoring itself; it is reconstructing provenance after edits, reruns, and manual fixes have scattered evidence across commits, chats, and local artifacts.",
+          "mechanism_family": "constraint-aware artifact synthesis",
+          "data": "https://github.com/colleenchen525-coder/curio",
+          "last_mile_action": "It updates a provenance ledger in the repository and blocks lesson release until every published claim has a verified source row, a passing command transcript, and an explicit Codex/GPT-5.6 contribution label.",
+          "demo_type": "counterfactual",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-a27761e18042"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-a27761e18042"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Day 1: create a small course-repo fixture from https://github.com/vemodalen-x/understand-video and define the before metrics: orphan claims, missing command proofs, and release-blocking rows. Day 2: use Codex to build the ledger schema, repository scanner, transcript hasher, and failing fixture tests. Day 3: use GPT-5.6 to map claims to evidence nodes, explain missing links, and request Codex reruns for unresolved rows. Day 4: build the review UI and the last-mile action that writes the append-only provenance ledger back into the repo. Day 5: record a sub-3-minute demo showing the same lesson release move from 11 orphan claims, 0/11 verified rows, and blocked status to 0 orphan claims, 11/11 verified rows, and release-ready status.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Education'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a baseline Markdown release checklist on the same 12-claim lesson update, TraceLedger Lesson Release will reduce untraceable learner-facing claims by at least 70% and reduce reviewer provenance-check time by at least 40%, measured by two reviewers using the same repository, checklist rubric, and verification commands.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "productivity-work",
+        "003-004-138179fb5b85",
+        "against-ai-approval",
+        "differential-mediated-model",
+        "collab-com-github",
+        "ablated-after-alternatives",
+        "state-transition"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-08-shiftmirror-counterfactual-s",
+        "lane": "work-productivity",
+        "disciplines": [
+          "compiler testing and metamorphic testing"
+        ],
+        "working_title": "ShiftMirror Counterfactual Scheduler",
+        "primary_user": "Clinic and community-service scheduling managers who need to justify staff rota changes before publishing them. Parent ID: concept-003. opportunity_id=opp-004; mechanism_id=mechanism-003; evidence_ids=src-138179fb5b85,src-9e3a619909fa; data_sources=https://github.com/vemodalen-x/TEMPO, https://openai.devpost.com/details/faqs; data_access_status=verified.",
+        "painful_workflow": "A manager changes a rota to reduce missed coverage, but cannot show whether the AI-suggested schedule is genuinely better than the current rota or merely different. The hard workflow is comparing the proposed roster against a credible counterfactual while respecting approval gates, coverage rules, and staff constraints.",
+        "current_workaround": "Managers use spreadsheet copies, manual what-if tabs, and informal approval messages. The final rota may be accepted because it looks plausible, but there is no reproducible baseline-vs-counterfactual comparison with the same rules and metrics.",
+        "imported_mechanism": "Imported mechanism: ablation-based model impact estimation from mechanism-003, shifted from software-change receipts to scheduling counterfactuals. Codex material role: Codex builds the rota simulator, constraint tests, approval workflow, export action, and reproducible demo harness. GPT-5.6 material role: GPT-5.6 decomposes staff constraints, labels which schedule changes are model-dependent, generates counterfactual scenarios, and explains metric deltas against the baseline rota.",
+        "mechanism_origin": "compiler testing and metamorphic testing",
+        "data_sources": [
+          "https://github.com/krishivjoshi219-collab/OpenAI"
+        ],
+        "core_computation": "Given a current rota, staff availability, required coverage windows, fairness rules, and approval constraints, the system creates three comparable schedules: baseline, GPT-5.6-assisted proposal, and ablated counterfactual with model-dependent changes removed or replaced by current-policy defaults. It runs identical coverage, fairness, overtime, and approval checks across all three. Data access is verified because src-138179fb5b85 matches https://github.com/vemodalen-x/TEMPO and src-9e3a619909fa matches https://openai.devpost.com/details/faqs in the verified evidence catalog.",
+        "last_mile_action": "It triggers a counterfactual comparison and, after manager approval, exports the winning rota plus a signed comparison receipt showing baseline metrics, assisted metrics, ablated metrics, approval timestamp, and rejected alternatives.",
+        "visible_transformation": "The demo starts with a rota showing 6 uncovered shifts, 14 overtime hours, and no causal explanation. The comparison run displays baseline, assisted, and ablated schedules side by side, then exports an approved rota with 1 uncovered shift, 5 overtime hours, and a receipt explaining which GPT-5.6-suggested swaps caused the improvement.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The Work and Productivity track rewards working, coherent product experiences with real impact, while generic workflow chatbots and dashboard-only analytics are identified as high-collision patterns.",
+        "kill_reason": "",
+        "killer_demo": "Day 1: create a fixed scheduling fixture with current rota, staff availability, coverage rules, and baseline metrics from the sample workflow data tied to https://github.com/vemodalen-x/TEMPO. Day 2: use Codex to build the rota constraint engine, schedule importer, and metric runner. Day 3: use GPT-5.6 to propose schedule swaps, label model-dependent changes, and generate an ablated counterfactual schedule. Day 4: build the side-by-side comparison UI with approval controls and the exportable receipt. Day 5: record a sub-3-minute demo showing baseline 6 uncovered shifts and 14 overtime hours, assisted 1 uncovered shift and 5 overtime hours, and ablated 4 uncovered shifts and 11 overtime hours, followed by approved export.",
+        "hard_to_fake_advantage": "This avoids a generic scheduling chatbot or dashboard because it performs a governed schedule export only after identical checks across baseline, assisted, and counterfactual variants. Codex is materially present in the simulator, tests, export workflow, and reproducible build session. GPT-5.6 is materially present in constraint decomposition, counterfactual generation, model-dependent change labeling, and evidence-linked explanation of deltas.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-95f185dabaa5"
+        ],
+        "opportunity_id": "opp-004",
+        "mechanism_id": "mechanism-001",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: trigger a counterfactual comparison"
+        ],
+        "track_fit": "Work and Productivity",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Compared with a baseline spreadsheet what-if process on the same 30-shift fixture, ShiftMirror Counterfactual Scheduler will cut uncovered shifts by at least 50% while keeping overtime no higher than baseline, and will produce a reproducible counterfactual receipt for 100% of exported rotas.",
+        "demo_proof": "Day 1: create a fixed scheduling fixture with current rota, staff availability, coverage rules, and baseline metrics from the sample workflow data tied to https://github.com/vemodalen-x/TEMPO. Day 2: use Codex to build the rota constraint engine, schedule importer, and metric runner. Day 3: use GPT-5.6 to propose schedule swaps, label model-dependent changes, and generate an ablated counterfactual schedule. Day 4: build the side-by-side comparison UI with approval controls and the exportable receipt. Day 5: record a sub-3-minute demo showing baseline 6 uncovered shifts and 14 overtime hours, assisted 1 uncovered shift and 5 overtime hours, and ablated 4 uncovered shifts and 11 overtime hours, followed by approved export.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "model-mediated differential testing",
+        "demo_type": "state transition",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Work and Productivity",
+          "user_class": "Clinic and community-service scheduling managers who need to justify staff rota changes before publishing them. Parent ID: concept-003. opportunity_id=opp-004; mechanism_id=mechanism-003; evidence_ids=src-138179fb5b85,src-9e3a619909fa; data_sources=https://github.com/vemodalen-x/TEMPO, https://openai.devpost.com/details/faqs; data_access_status=verified.",
+          "workflow": "A manager changes a rota to reduce missed coverage, but cannot show whether the AI-suggested schedule is genuinely better than the current rota or merely different. The hard workflow is comparing the proposed roster against a credible counterfactual while respecting approval gates, coverage rules, and staff constraints.",
+          "mechanism_family": "model-mediated differential testing",
+          "data": "https://github.com/krishivjoshi219-collab/OpenAI",
+          "last_mile_action": "It triggers a counterfactual comparison and, after manager approval, exports the winning rota plus a signed comparison receipt showing baseline metrics, assisted metrics, ablated metrics, approval timestamp, and rejected alternatives.",
+          "demo_type": "state transition",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-95f185dabaa5"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-95f185dabaa5"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "pass",
+            "reason": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "pass",
+            "reason": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Day 1: create a fixed scheduling fixture with current rota, staff availability, coverage rules, and baseline metrics from the sample workflow data tied to https://github.com/vemodalen-x/TEMPO. Day 2: use Codex to build the rota constraint engine, schedule importer, and metric runner. Day 3: use GPT-5.6 to propose schedule swaps, label model-dependent changes, and generate an ablated counterfactual schedule. Day 4: build the side-by-side comparison UI with approval controls and the exportable receipt. Day 5: record a sub-3-minute demo showing baseline 6 uncovered shifts and 14 overtime hours, assisted 1 uncovered shift and 5 overtime hours, and ablated 4 uncovered shifts and 11 overtime hours, followed by approved export.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Work and Productivity'; official tracks: Apps for Your Life, Work and Productivity, Developer Tools, Education",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Compared with a baseline spreadsheet what-if process on the same 30-shift fixture, ShiftMirror Counterfactual Scheduler will cut uncovered shifts by at least 50% while keeping overtime no higher than baseline, and will produce a reproducible counterfactual receipt for 100% of exported rotas.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    }
+  ],
+  "replacements_and_kills": []
+}

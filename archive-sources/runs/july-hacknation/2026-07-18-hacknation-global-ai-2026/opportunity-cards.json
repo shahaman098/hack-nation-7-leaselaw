@@ -1,0 +1,62 @@
+[
+  {
+    "id": "opp-001",
+    "user_class": "Households purchasing phone-priced services",
+    "painful_workflow": "They must describe the same job repeatedly across calls, extract comparable line-item quotes from vague conversations, handle refusals or pressure tactics, and decide whether a quoted term actually improved because of legitimate leverage.",
+    "unmet_need": "A trustworthy way to turn messy phone conversations into comparable, evidence-backed negotiation outcomes without inventing competing offers or misrepresenting the buyer.",
+    "evidence_ids": [
+      "src-d6b97c716aae"
+    ],
+    "track": "ElevenLabs: The Negotiator",
+    "why_now": "The track explicitly rewards real phone-price gathering, multiple negotiation styles, structured quotes, transcript evidence, honesty controls, and a demonstrated change in price or terms.",
+    "unresolved_claims": [
+      "Which phone-priced market has enough reachable vendors during the hackathon window is not specified.",
+      "Whether teams can lawfully record or transcribe calls depends on jurisdiction and consent handling not detailed in the supplied evidence."
+    ]
+  },
+  {
+    "id": "opp-002",
+    "user_class": "Early-stage venture investors making small rapid checks",
+    "painful_workflow": "They must assess unfamiliar startups under severe time pressure by reconciling fragmented evidence from decks, public signals, founder history, technical artifacts, and market context before deciding whether a $100K check is worth deeper conviction.",
+    "unmet_need": "A defensible diligence workflow that separates sourced evidence from inference and makes uncertainty visible enough for a human investor to act quickly without relying on generic memo prose.",
+    "evidence_ids": [
+      "src-d6b97c716aae"
+    ],
+    "track": "Maschmeyer Group: The VC Brain",
+    "why_now": "The judging criteria heavily weight data architecture, trust, investment utility, and execution, while the brief frames the target workflow as evaluating and deploying $100K checks within 24 hours.",
+    "unresolved_claims": [
+      "The supplied evidence does not specify what proprietary investor workflows or internal data, if any, are available.",
+      "The quality and availability of startup evidence sources during the hackathon are not guaranteed."
+    ]
+  },
+  {
+    "id": "opp-003",
+    "user_class": "Affordable-housing applicants preparing documentation",
+    "painful_workflow": "They must interpret program rules, identify missing or expired documents, verify extracted facts from pay stubs or benefit letters, and prepare an application packet while avoiding accidental eligibility conclusions.",
+    "unmet_need": "A privacy-preserving application-readiness process that helps applicants correct records and understand rule-backed document gaps without ranking, scoring, approving, or denying them.",
+    "evidence_ids": [
+      "src-d6b97c716aae"
+    ],
+    "track": "RealPage: RealDoor",
+    "why_now": "The RealPage track requires source-backed extraction, deterministic rules and math, consent, correction, deletion, prompt-injection resistance, accessibility, and a strict boundary against eligibility decisioning.",
+    "unresolved_claims": [
+      "The supplied evidence only mentions synthetic documents and one program year, so real applicant document variability is unresolved.",
+      "The exact affordable-housing program corpus and rule complexity are not provided."
+    ]
+  },
+  {
+    "id": "opp-004",
+    "user_class": "Public-health planners assessing healthcare facility coverage",
+    "painful_workflow": "They must decide where facility records indicate actual service capacity versus sparse or misleading documentation, while preserving reviewer notes, uncertainty, and evidence for later planning decisions.",
+    "unmet_need": "A facility-intelligence workflow that distinguishes documented capability gaps from true access gaps using cited records, uncertainty signals, and human review memory.",
+    "evidence_ids": [
+      "src-d6b97c716aae"
+    ],
+    "track": "Databricks: Data Legend",
+    "why_now": "The Databricks challenge supplies 10,000 Indian healthcare facility records with sparse capacity and doctor coverage fields, and its top judging weights emphasize evidence, trust, product judgment, and decision-support persistence.",
+    "unresolved_claims": [
+      "The supplied evidence does not establish whether facility records are current enough for operational planning.",
+      "Ground truth for distinguishing data deserts from medical deserts is not specified."
+    ]
+  }
+]

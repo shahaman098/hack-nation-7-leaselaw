@@ -1,0 +1,244 @@
+{
+  "name": "UK Parliament Hackathon with EasyA",
+  "slug": "uk-parliament-hackathon-with-easya-2026",
+  "source_urls": [
+    "/Users/efi/Hackathons/Easy A Parliament/idea-forge/engine/evals/ground-truth/easya-uk-parliament-hackathon.md"
+  ],
+  "theme": "Technology, AI, blockchain, and government in a UK Parliament pitch setting.",
+  "tracks": [],
+  "sponsors": [
+    "EasyA"
+  ],
+  "deadline": "2026-09-04",
+  "build_window": "Projects may start from 2026-08-24; pitch day is 2026-09-04.",
+  "team_size": "5",
+  "required_tech": [
+    "AI and/or crypto/blockchain must be material to the core product path."
+  ],
+  "encouraged_tech": [
+    "Government or civic-problem relevance",
+    "EasyA/Web3 community fit",
+    "Follow-on grant story"
+  ],
+  "required_or_encouraged_tech": [
+    "AI",
+    "Crypto/blockchain",
+    "Web3"
+  ],
+  "requirements": [
+    {
+      "id": "req-ai-or-crypto-core",
+      "category": "technology",
+      "description": "Projects must be AI and/or crypto/blockchain, and the AI or crypto mechanism must be core rather than incidental.",
+      "required": true,
+      "evidence_ids": [
+        "src-d39d2793b384"
+      ]
+    },
+    {
+      "id": "req-team-size-5",
+      "category": "team",
+      "description": "Teams may have at most 5 people.",
+      "required": true,
+      "evidence_ids": [
+        "src-d39d2793b384",
+        "operator-team-size"
+      ]
+    },
+    {
+      "id": "req-pitch-day",
+      "category": "demo",
+      "description": "Participants present or pitch on 2026-09-04 in Parliament before MPs, civil servants, and invited guests.",
+      "required": true,
+      "evidence_ids": [
+        "src-d39d2793b384",
+        "operator-deadline"
+      ]
+    },
+    {
+      "id": "req-build-start",
+      "category": "timebox",
+      "description": "Participants may begin building from 2026-08-24; the event day is a pitch format rather than a multi-hour coding session.",
+      "required": false,
+      "evidence_ids": [
+        "src-d39d2793b384"
+      ]
+    },
+    {
+      "id": "req-open-eligibility",
+      "category": "eligibility",
+      "description": "The event is open to people regardless of technical experience, including non-coders, university students, and seasoned developers.",
+      "required": false,
+      "evidence_ids": [
+        "src-d39d2793b384"
+      ]
+    },
+    {
+      "id": "req-non-coder-prize",
+      "category": "other",
+      "description": "A special prize is dedicated for non-coders.",
+      "required": false,
+      "evidence_ids": [
+        "src-d39d2793b384"
+      ]
+    },
+    {
+      "id": "req-no-specific-sdk",
+      "category": "technology",
+      "description": "No specific model, blockchain, sponsor SDK, or repository format is stated as mandatory in the supplied evidence.",
+      "required": false,
+      "evidence_ids": [
+        "src-d39d2793b384"
+      ]
+    }
+  ],
+  "submission_artifacts": [
+    "Pitch or presentation on 2026-09-04",
+    "Working live or recorded demo is described as strategically important, but no formal repository, deck, video, model, or written report requirement is published in the supplied evidence."
+  ],
+  "demo_requirements": [
+    "On-the-day pitch in front of MPs, civil servants, and invited guests.",
+    "A working demo understandable to a non-technical parliamentarian is described as the submission that matters, but no formal demo specification is published."
+  ],
+  "data_requirements": [],
+  "prizes": [
+    "Prize money: equity-free funding for the best projects.",
+    "Grants: hundreds of thousands in follow-on grant funding for winning projects.",
+    "Special prize dedicated for non-coders.",
+    "Exact prize amounts are not published in the supplied evidence."
+  ],
+  "facts": [
+    {
+      "claim": "The event is scheduled for Friday 4 September 2026, 12:30-17:30, at the House of Commons, Saint Margaret Street, London SW1A 0AA.",
+      "source": "src-d39d2793b384",
+      "confidence": "high"
+    },
+    {
+      "claim": "The host is EasyA, and the event is free to enter with free food stated in the supplied evidence.",
+      "source": "src-d39d2793b384",
+      "confidence": "high"
+    },
+    {
+      "claim": "Projects must be AI and/or crypto/blockchain according to organiser rules cited in the supplied evidence.",
+      "source": "src-d39d2793b384",
+      "confidence": "high"
+    },
+    {
+      "claim": "Maximum team size is 5 people.",
+      "source": "src-d39d2793b384 and operator-supplied constraint",
+      "confidence": "high"
+    },
+    {
+      "claim": "Participants may start building from Monday 24 August 2026; pitch day is 4 September 2026.",
+      "source": "src-d39d2793b384",
+      "confidence": "high"
+    },
+    {
+      "claim": "The Eventbrite listing describes live panels, workshops, a competition to present an idea, prize money, grants, job/internship opportunities, Wi-Fi, food, and a 5-hour in-person duration.",
+      "source": "src-d39d2793b384",
+      "confidence": "medium"
+    },
+    {
+      "claim": "No published judging rubric, tracks, or exact prize amounts are included in the supplied Eventbrite summary.",
+      "source": "src-d39d2793b384",
+      "confidence": "high"
+    },
+    {
+      "claim": "No specific model, chain, or sponsor SDK is named as required in the supplied evidence.",
+      "source": "src-d39d2793b384",
+      "confidence": "high"
+    }
+  ],
+  "inference": [
+    {
+      "claim": "Parliamentary relevance is likely important.",
+      "rationale": "The pitch audience includes MPs, Lords, civil servants, and invited guests, and the venue is UK Parliament; however, no formal rubric weight is published."
+    },
+    {
+      "claim": "Demo clarity for non-technical decision-makers is likely important.",
+      "rationale": "The supplied organiser summary says a working demo understandable to a non-technical parliamentarian in a few minutes is the submission that matters, but this is not a published scoring rubric."
+    },
+    {
+      "claim": "AI/crypto substance is a likely judging filter.",
+      "rationale": "The rules require projects to be AI and/or crypto, with the mechanism core to the product."
+    }
+  ],
+  "missing": [
+    "Published judging rubric and scoring weights.",
+    "Exact prize amounts and prize categories beyond the non-coder prize.",
+    "Formal submission mechanism and required artifacts, such as deck, video, repository, prototype URL, or form.",
+    "Whether a live demo is formally required versus strongly expected.",
+    "Any required datasets or restricted data-use rules.",
+    "Any formal tracks or sponsor-specific challenges.",
+    "Eligibility rules beyond openness to non-coders, students, and developers.",
+    "IP ownership, licensing, judging process, and post-event grant conditions."
+  ],
+  "potentially_stale": [
+    "Eventbrite listing details, agenda, judging panel, prize amounts, and guest list may change before 2026-09-04.",
+    "Operator-supplied deadline and team-size constraints should be rechecked against final organiser rules before submission.",
+    "The statement that no published rubric, tracks, or exact prize amounts exist is based on supplied evidence and may become stale if the event page is updated."
+  ],
+  "judging_criteria": [
+    {
+      "name": "AI and/or crypto substance",
+      "weight_or_priority": "Mandatory eligibility constraint; no numeric judging weight published.",
+      "notes": "AI or blockchain must be material to the core product path."
+    },
+    {
+      "name": "Parliamentary relevance",
+      "weight_or_priority": "Inferred important; no published weight.",
+      "notes": "The audience includes MPs, Lords, civil servants, startups, recruiters, and VCs."
+    },
+    {
+      "name": "Demo clarity",
+      "weight_or_priority": "Inferred important; no published weight.",
+      "notes": "Evidence emphasizes a working demo that non-technical parliamentarians can understand in a few minutes."
+    },
+    {
+      "name": "Pitch quality",
+      "weight_or_priority": "Required event format; no published weight.",
+      "notes": "The on-the-day format is a pitch/presentation rather than a same-day coding sprint."
+    },
+    {
+      "name": "Follow-on potential",
+      "weight_or_priority": "Encouraged/inferred; no published weight.",
+      "notes": "The listing mentions equity-free funding, grants, recruiters, VCs, and follow-on grant funding."
+    }
+  ],
+  "sponsor_capabilities": [
+    "EasyA Web3/developer community",
+    "Workshops for participants, including people new to technology",
+    "Access to MPs, Lords, civil servants, UK startups, recruiters, and VCs",
+    "Venue support including Wi-Fi and food",
+    "Potential prize money and follow-on grant exposure"
+  ],
+  "available_datasets": [],
+  "crowding": {
+    "high_collision": [
+      "Generic chatbot wrapper over an AI or blockchain API",
+      "Document / PDF summariser, especially if framed only as policy summarisation",
+      "Dashboard-only analytics without a meaningful downstream action",
+      "Recommendation list with no last-mile action"
+    ],
+    "medium_collision": [
+      "Scholarship / grant / benefits eligibility navigator using retrieve-check-draft flow",
+      "Generic opportunity board for students/job seekers",
+      "Emergency information assistant / crisis tip sheet"
+    ],
+    "potentially_underexplored": [
+      "Appeal-pathway reconstruction",
+      "Constraint-based resource allocation under official rules",
+      "Administrative error prevention / form failure-chain detection",
+      "Eligibility inconsistency detection across agencies",
+      "Procedural fairness / case-queue priority simulation",
+      "Failure-surface minimisation for competition proof or demonstrations"
+    ],
+    "do_not_build": [
+      "Any navigator that only ranks and drafts applications from scattered PDFs",
+      "Any personal crisis action planner that maps risk data to a checklist and safe route",
+      "Any ops doctor that uploads CSV and labels campaigns healthy/fatigued",
+      "A slide-only civic vision with AI/crypto added as a superficial label"
+    ]
+  },
+  "sanitized_brief": "UK Parliament Hackathon with EasyA is an in-person pitch competition scheduled for 2026-09-04, 12:30-17:30, at the House of Commons in London. Participants may start building from 2026-08-24. Teams are limited to 5 people. Projects must use AI and/or crypto/blockchain as a material core mechanism; no specific model, chain, SDK, repository, dataset, or sponsor technology is stated as mandatory. The event is open to non-coders as well as developers, and a special non-coder prize is stated. No published scoring rubric, track list, exact prize amounts, or formal artifact checklist is available in the supplied evidence. The event format is a pitch before MPs, Lords, civil servants, and invited guests; demo clarity for non-technical parliamentarians, parliamentary relevance, and AI/crypto substance are inferred as important but not published as weighted criteria. Useful capabilities include EasyA's Web3/developer community, workshops, venue access, and exposure to government decision-makers, startups, recruiters, and VCs. Crowding labels: high collision includes generic AI wrappers, PDF summarizers, dashboard-only analytics, and recommendation lists without action; medium collision includes benefits/grant navigators and generic opportunity boards; potentially underexplored areas include appeal-pathway reconstruction, official-rule resource allocation, administrative error prevention, eligibility inconsistency detection, procedural fairness simulation, and demonstration failure-surface minimisation."
+}

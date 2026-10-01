@@ -1,10 +1,38 @@
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
-from hackforge.models import CollisionReport
+from hackforge.models import CandidateIdea, CollisionReport
 from hackforge.paths import CORPORA_DIR, RUNS_DIR
 from hackforge.utils import read_json
+
+
+def load_candidates(run_dir: Path) -> list[CandidateIdea]:
+    """Load candidate ideas from a completed HackForge run directory."""
+    for name in ("raw-concepts.json", "finalists.json", "clustered-concepts.json"):
+        path = run_dir / name
+        if not path.exists():
+            continue
+        payload = read_json(path)
+        rows: list[Any]
+        if isinstance(payload, list):
+            rows = payload
+        elif isinstance(payload, dict):
+            rows = payload.get("ideas") or payload.get("candidates") or payload.get("clusters") or []
+        else:
+            continue
+        ideas: list[CandidateIdea] = []
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            try:
+                ideas.append(CandidateIdea.model_validate(row))
+            except Exception:
+                continue
+        if ideas:
+            return ideas
+    return []
 
 
 def load_analogue_corpus() -> list[dict[str, Any]]:

@@ -1,0 +1,14 @@
+2026-07-19T06:58:33+00:00 INFO run initialized provider='deepseek' search_profile='fast'
+2026-07-19T06:58:33+00:00 INFO stage started stage='provider_selection'
+2026-07-19T06:58:33+00:00 INFO stage started stage='competition_research'
+2026-07-19T07:00:25+00:00 INFO stage started stage='divergent_search'
+2026-07-19T07:00:25+00:00 INFO stage started stage='opportunity_discovery' requested=4
+2026-07-19T07:00:49+00:00 INFO stage started stage='mechanism_mining' requested=4
+2026-07-19T07:01:09+00:00 INFO stage started stage='concept_crossing' requested=6
+2026-07-19T07:02:45+00:00 INFO stage started stage='mutation_round_1' requested=2
+2026-07-19T07:03:17+00:00 INFO stage started stage='hard_gates' candidates=8
+2026-07-19T07:03:28+00:00 INFO stage started stage='collision_audit' candidates=4
+2026-07-19T07:04:26+00:00 INFO stage started stage='feasibility' candidates=4
+2026-07-19T07:08:46+00:00 INFO stage started stage='blind_judging' candidates=4
+2026-07-19T07:12:53+00:00 INFO stage started stage='exporting' finalists=3
+2026-07-19T07:12:53+00:00 INFO run completed output_ids=['mut-r4-05-creditguard-spc-driven-budge', 'mut-r4-07-simevidence-objectively-bran', 'C5']

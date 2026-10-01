@@ -1,0 +1,57 @@
+{
+  "high_collision": [
+    "Generic chatbot wrapper over a sponsor API",
+    "Dashboard-only analytics without an irreversible state change",
+    "Document / PDF summariser",
+    "Symptom checker / triage chatbot",
+    "Generic mental-health companion or wellness chatbot",
+    "Recommendation list with no last-mile action",
+    "AI study tutor / quiz / flashcard generator",
+    "Meeting notes / productivity chatbot",
+    "Resume / LinkedIn optimiser",
+    "Carbon-footprint tracker dashboard",
+    "Generic investor dashboard with AI-generated memo summaries",
+    "Generic housing eligibility navigator that ranks or decides applicants",
+    "Generic medical facility search over keywords without evidence or uncertainty",
+    "Isolated symptom-tracking app without reusable dataset, benchmark, or evaluation layer",
+    "AMR prediction demo without grouped splits, calibration, no-call behavior, or defensive guardrails"
+  ],
+  "medium_collision": [
+    "Scholarship / grant / benefits eligibility navigator (retrieve -> check -> draft)",
+    "Emergency information assistant / crisis tip sheet",
+    "Automated sales outreach multi-agent SDR",
+    "Generic opportunity board for students/job seekers",
+    "Campaign fatigue / ops anomaly dashboard with rewritten ads",
+    "Pitch-deck parser with averaged startup score",
+    "Voice appointment-booking or quote-collection bot without demonstrated leverage-changing negotiation",
+    "Healthcare map dashboard with sparse filters and no reviewer persistence",
+    "Application packet generator that does not show source boxes, confidence, deletion, and correction controls",
+    "Benchmark leaderboard without reproducible splits or documentation",
+    "Recent similar title: rapid-site-builder",
+    "Recent similar title: repset"
+  ],
+  "potentially_underexplored": [
+    "Appeal-pathway reconstruction",
+    "Constraint-based resource allocation under official rules",
+    "Administrative error prevention / form failure-chain detection",
+    "Eligibility inconsistency detection across agencies",
+    "Procedural fairness / case-queue priority simulation",
+    "Demo-failure surface minimisation for live presentations",
+    "Negotiation evidence ledger that proves leverage source, disclosure, refusal handling, and changed terms",
+    "Founder cold-start evidence graph with persistent person-level score and per-claim trust trail",
+    "Affordable-housing rule math verifier with abstention and source-effective-date tracing",
+    "Medical data-desert versus medical-desert discriminator with human override memory",
+    "Open-science hormonal-health evaluation harness with transparent splits and reusable documentation",
+    "Genome AMR calibration and no-call audit surface for one species and a narrow drug set"
+  ],
+  "do_not_build": [
+    "Any 'navigator' that only ranks and drafts applications from scattered PDFs",
+    "Any personal crisis action planner that maps risk data to a checklist and safe route",
+    "Any ops doctor that uploads CSV and labels campaigns healthy/fatigued",
+    "Any tool that approves, denies, scores, ranks, or labels a renter eligible for affordable housing",
+    "Any Genome Firewall project that designs, modifies, optimizes, or suggests changes to organisms",
+    "Any system that invents fake bids, fake inventory, fake quote evidence, or fake competing offers",
+    "Any sponsor-tech demo where the sponsor API is decorative rather than necessary",
+    "Any pure chat experience replaceable by opening ChatGPT"
+  ]
+}

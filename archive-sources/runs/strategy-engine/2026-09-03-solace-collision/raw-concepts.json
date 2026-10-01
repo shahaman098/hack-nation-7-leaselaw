@@ -1,0 +1,28 @@
+[
+  {
+    "id": "solace-westminster",
+    "lane": "civic-accountability",
+    "disciplines": ["public-sector", "energy", "blockchain", "ai-governance"],
+    "working_title": "Solace",
+    "primary_user": "UK local councillor / scrutiny committee overseeing fuel poverty spend",
+    "painful_workflow": "Signing off Winter Fuel Payment, Warm Home Discount, and Household Support Fund with no proof which households actually got warmer",
+    "current_workaround": "Vouchers and BACS transfers; post-hoc audits that cannot show heat outcomes",
+    "imported_mechanism": "Match local rooftop solar surplus to nearby fuel-poor households; AI scores case notes; deterministic solver allocates; GBP token settles; hashed kWh on public ledger",
+    "mechanism_origin": "Accountability infrastructure + programmable settlement, not energy trading",
+    "data_sources": [
+      "synthetic half-hourly meter readings",
+      "synthetic council case notes",
+      "weather / heating-degree proxies"
+    ],
+    "core_computation": "Nine-factor deterministic need scoring with published weights; pure allocation function with SHA-256 digests; AI only for note parsing and post-hoc plain-English reports",
+    "last_mile_action": "Councillor deposits into winter pot, settles allocations on chain, prints committee-ready report with explorer link",
+    "visible_transformation": "Live pot balance and per-household (hashed) energy delivery a non-technical MP can verify",
+    "sponsor_dependency": "EasyA Parliament venue; optional Anthropic for reports; no sponsor cloud required for offline demo",
+    "technical_risk": "Simulated meters; testnet GBP token not regulated money; local matching is settlement/accounting not physical grid rewiring",
+    "collision_risk": "unknown",
+    "why_now": "Fuel Poverty Strategy 2026 and Warm Homes Plan push outcome traceability; Parliament audience obsessed with accountability and energy",
+    "kill_reason": "",
+    "killer_demo": "Deposit live → run engine → settle SolacePound txs → plain-English report + explorer link in under four minutes",
+    "hard_to_fake_advantage": "Tested firewall: allocation engine cannot import AI/network/clock/random; privacy HMAC on recipients; doctor checks DB vs on-chain ledger parity"
+  }
+]

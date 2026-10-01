@@ -1,0 +1,42 @@
+{
+  "high_collision": [
+    "Direct sports betting platform",
+    "Prediction market with AMM",
+    "Live score dashboard without additional value",
+    "AI pundit bot (listed example)",
+    "Group sweepstakes app",
+    "Hi-lo stats game",
+    "Sharp movement detector agent",
+    "In-play market maker agent",
+    "Parametric sports insurance product",
+    "Sportsbook UI clone"
+  ],
+  "medium_collision": [
+    "Prop bet market with minor variations",
+    "Betting arbitrage scanner",
+    "Odds visualization dashboard with basic filters",
+    "Social betting with standard UX",
+    "Automated betting executor without novel strategy",
+    "Recent similar title: GoalGate-Jamhacks10",
+    "Recent similar title: LSUDOKO",
+    "Recent similar title: Flexy"
+  ],
+  "potentially_underexplored": [
+    "Real-time sports data-driven game with irreversible state changes",
+    "Trustless dispute resolution for sports data oracles",
+    "Compliance and regulatory automation for betting platforms",
+    "AI agent that generates dynamic sports highlights from live data",
+    "Fan engagement via staking or loyalty using live match metrics",
+    "Manipulation detection system for odds feeds",
+    "Solana-native data streaming proof verification for DePIN",
+    "Decentralized commentary platform with prediction incentives",
+    "Event-driven NFT minting based on match events"
+  ],
+  "do_not_build": [
+    "Products that use TxLINE credit token for user wagering or transfers",
+    "Wireframes or pitch decks without a working build",
+    "Projects with no TxLINE data dependency",
+    "Pure gambling apps that obviously violate legal restrictions",
+    "Dashboard-only analytics without an irreversible state change or novel interaction"
+  ]
+}

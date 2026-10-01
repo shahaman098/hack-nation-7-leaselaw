@@ -391,8 +391,35 @@ def _codex_strict_schema(schema: dict[str, Any]) -> dict[str, Any]:
             ]
         else:
             normalized[key] = value
+
+    # Free-form maps (object + additionalProperties: <schema>) are rejected by Codex
+    # strict mode. Rewrite them as [{key,value}] arrays before sealing the object.
+    additional = schema.get("additionalProperties")
+    if (
+        (schema.get("type") == "object" or "properties" in schema)
+        and isinstance(additional, dict)
+        and not schema.get("properties")
+    ):
+        value_schema = _codex_strict_schema(additional)
+        return {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "key": {"type": "string", "minLength": 1},
+                    "value": value_schema,
+                },
+                "required": ["key", "value"],
+                "additionalProperties": False,
+            },
+        }
+
     if normalized.get("type") == "object" or "properties" in normalized:
-        properties = normalized.get("properties") or {}
+        properties = normalized.setdefault("properties", {})
+        # Codex rejects object schemas that omit properties entirely.
+        if not isinstance(properties, dict):
+            properties = {}
+            normalized["properties"] = properties
         normalized["additionalProperties"] = False
         normalized["required"] = list(properties.keys())
     return normalized

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "opp-001",
+    "user_class": "AI-native filmmakers producing multi-scene narrative shorts",
+    "painful_workflow": "They manually re-prompt for every new shot, struggling to maintain consistent character appearance, lighting, and world details across scenes. They waste significant hackathon time on trial-and-error prompt tweaking instead of directing the story.",
+    "unmet_need": "A way to automatically propagate a defined visual bible (character portraits, environment look, color palette) into every scene's generation prompt so that stylistic and identity consistency is guaranteed without manually copying descriptors.",
+    "evidence_ids": [
+      "src-d75e6b52e714",
+      "src-f9410f1e4598",
+      "src-aaead20420c8"
+    ],
+    "track": "Developer",
+    "why_now": "The hackathon's judging criteria heavily weights storytelling (35%) and visual consistency under technical capability, while fal's Assets system is purpose-built for reusable character identity but remains underutilized without automated prompt-chain tooling.",
+    "unresolved_claims": [
+      "Whether fal Assets already supports automated injection into multi-model pipelines via the Workflows API",
+      "If hackathon participants actually recognize style drift as their primary failure mode versus other time sinks"
+    ]
+  },
+  {
+    "id": "opp-002",
+    "user_class": "Developer-track participants building AI-video tools under extreme time pressure",
+    "painful_workflow": "They must demonstrate a polished, working tool in a 3-minute demo video, but any real-time AI generation failure or latency spike during the demo recording can ruin the presentation. They lack guardrails to handle model errors gracefully under a 72-hour constraint.",
+    "unmet_need": "A lightweight development pattern or library that automatically catches real-time generation failures and falls back to pre-computed or lower-fidelity alternative outputs, ensuring a demo never freezes or shows raw error states.",
+    "evidence_ids": [
+      "src-d75e6b52e714",
+      "src-2ec6e755355c"
+    ],
+    "track": "Developer",
+    "why_now": "The hackathon's Developer Track weights demo impressiveness at 15% but technical execution at 35%; a single visible glitch can destroy both. The 'potentially_underexplored' analysis explicitly calls out demo-failure surface minimization as a high-value gap.",
+    "unresolved_claims": [
+      "Whether the fal API's error codes are predictable enough to build reliable fallback logic within the hackathon window",
+      "If judges interpret pre-rendered fallback segments as a lack of real-time boldness rather than engineering maturity"
+    ]
+  },
+  {
+    "id": "opp-003",
+    "user_class": "Small brand and advertising creative teams producing short-form AI commercials",
+    "painful_workflow": "They iterate through dozens of AI-generated video drafts to find one that matches brand guidelines, but have no systematic way to compare versions side-by-side on specific brand attributes (logo visibility, color accuracy, tone). Evaluation is purely subjective and slows decision-making.",
+    "unmet_need": "A structured review interface that overlays brand guideline checks (color palette match percentage, logo presence detection, tone classifier) onto generated video candidates, enabling objective side-by-side comparison.",
+    "evidence_ids": [
+      "src-d75e6b52e714",
+      "src-d504fa1eb1bd"
+    ],
+    "track": "Developer",
+    "why_now": "The Generative Media Track includes dedicated Brand & Advertising theme, and the resource guide warns against incremental wrappers, but no current tool addresses the brand-compliance feedback loop—a clear gap for a Developer Track submission that brings measurable user value to Gen Media creators.",
+    "unresolved_claims": [
+      "Whether automated brand compliance checks would be perceived as creatively constraining by hackathon judges focused on originality (30% of GenMedia score)",
+      "If logo/color detection models can run reliably within fal's serverless infrastructure during a live hack"
+    ]
+  },
+  {
+    "id": "opp-004",
+    "user_class": "Solo generative media artists creating anime-style short films",
+    "painful_workflow": "They want to produce high-quality anime with unique, personal art styles, but the default model outputs look generic. To achieve a distinctive aesthetic, they must manually post-process frames or write extremely complex single-prompt style descriptions that still drift.",
+    "unmet_need": "A way to fine-tune or condition the generation pipeline on a custom style reference pack (character sheets, key background art, color scripts) so that every generated frame conforms to a unique, non-generic anime aesthetic without manual per-frame correction.",
+    "evidence_ids": [
+      "src-d75e6b52e714",
+      "src-db3809040a0e"
+    ],
+    "track": "Developer",
+    "why_now": "Anime is an explicit Generative Media Track theme, and 'generic anime characters' is flagged as a high-collision risk. The hackathon offers Grok Imagine and Kling via fal API, which could be orchestrated with style-reference injection to escape the generic look—aligning with the 'multi-model synergy beyond chaining' underexplored area.",
+    "unresolved_claims": [
+      "Whether Grok Imagine or Kling support style-reference conditioning through the fal API at the time of the hackathon",
+      "If hackathon participants will consider 'custom style conditioning' a developer tool or a generative media asset pipeline worthy of a Developer Track entry"
+    ]
+  }
+]

@@ -1,0 +1,77 @@
+[
+  {
+    "id": "opp-001",
+    "user_class": "Hackathon entrants building complex runnable submissions under a short deadline",
+    "painful_workflow": "Turning a fast-moving build process into a submission package that proves the project runs, shows the required model and Codex usage, and can be evaluated from a short demo even if judges do not run it.",
+    "unmet_need": "Reliable evidence of build provenance, runnable state, and judge-testability that survives deadline pressure and distinguishes new post-submission-period work from prior work.",
+    "evidence_ids": [
+      "src-007ffb1ef031",
+      "src-df096fbdbfd0",
+      "src-e561ed9410ee",
+      "src-8d19e5ee8d3c"
+    ],
+    "track": "Developer Tools",
+    "why_now": "Submission requires a public demo video, repository access, README, and /feedback Codex Session ID by July 21, 2026, while judging may rely only on submitted materials rather than hands-on testing.",
+    "unresolved_claims": [
+      "Whether judges will consistently run submitted projects or mainly rely on video and text remains unresolved.",
+      "The extent of entrant difficulty producing credible Codex/GPT-5.6 provenance is inferred, not directly measured.",
+      "The public project gallery was unpublished, so current crowding around this workflow is uncertain."
+    ]
+  },
+  {
+    "id": "opp-002",
+    "user_class": "Small organizations and operators who must allocate scarce resources under externally imposed rules",
+    "painful_workflow": "Reconciling eligibility rules, constraints, priorities, and tradeoffs before making allocation decisions that affect real people or limited budgets.",
+    "unmet_need": "A defensible way to detect inconsistencies, surface constraint conflicts, and document why a particular allocation path is fair before irreversible action is taken.",
+    "evidence_ids": [
+      "src-007ffb1ef031",
+      "src-c820642b7f7f",
+      "src-df096fbdbfd0",
+      "src-bb71774d423b"
+    ],
+    "track": "Work and Productivity",
+    "why_now": "The competition rewards credible real-world impact, complete runnable workflows, and non-trivial implementation, while underexplored areas include constraint-based allocation and procedural fairness rather than dashboard-only reporting.",
+    "unresolved_claims": [
+      "Specific target domains and their legal or policy constraints would need independent sourcing before any claims of fairness or compliance.",
+      "No official dataset is provided, so sample data realism would be entrant-dependent.",
+      "Whether this workflow is underrepresented among final submissions cannot be confirmed before the gallery is published."
+    ]
+  },
+  {
+    "id": "opp-003",
+    "user_class": "People navigating disputes, appeals, or high-stakes administrative decisions without expert support",
+    "painful_workflow": "Reconstructing what happened across forms, notices, deadlines, evidence, and prior communications to understand whether an appeal pathway still exists.",
+    "unmet_need": "A clear separation between sourced facts, missing evidence, deadlines, and unresolved assumptions so users can avoid procedural mistakes before seeking formal advice or submitting materials.",
+    "evidence_ids": [
+      "src-007ffb1ef031",
+      "src-df096fbdbfd0",
+      "src-c820642b7f7f"
+    ],
+    "track": "Apps for Your Life",
+    "why_now": "The hackathon favors specific audience problems with credible impact and working product experience, while appeal-pathway reconstruction and administrative error prevention are identified as underexplored compared with generic personal assistants.",
+    "unresolved_claims": [
+      "Legal, benefits, immigration, housing, or healthcare appeal rules would require jurisdiction-specific sourcing before use.",
+      "The need is grounded in workflow plausibility and competition analysis, not direct interviews with affected users.",
+      "Care boundaries between procedural organization and legal advice would need careful definition."
+    ]
+  },
+  {
+    "id": "opp-004",
+    "user_class": "Educators and training teams responsible for assessing process quality, not just final answers",
+    "painful_workflow": "Reviewing learner work when the final artifact hides the sequence of decisions, revisions, failed attempts, and assistance used to produce it.",
+    "unmet_need": "A way to evaluate learning process, originality, and decision quality from auditable work history instead of relying on final submissions, generic quizzes, or summary explanations.",
+    "evidence_ids": [
+      "src-007ffb1ef031",
+      "src-c820642b7f7f",
+      "src-df096fbdbfd0",
+      "src-8d19e5ee8d3c"
+    ],
+    "track": "Education",
+    "why_now": "Education entries that are only tutoring, flashcards, quizzes, or summarization are crowded, while the rules emphasize documenting Codex workflow, key decisions, and contribution evidence as part of quality and implementation assessment.",
+    "unresolved_claims": [
+      "The exact assessment standards for different educational settings would need validation with instructors.",
+      "Student privacy and acceptable-use constraints are not sourced in the hackathon materials.",
+      "Current submission distribution in the Education track is unavailable, so relative crowding is inferred."
+    ]
+  }
+]

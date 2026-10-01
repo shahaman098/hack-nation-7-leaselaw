@@ -1,0 +1,742 @@
+{
+  "dimensions": [
+    "track",
+    "user_class",
+    "workflow",
+    "mechanism_family",
+    "data",
+    "last_mile_action",
+    "demo_type"
+  ],
+  "occupied_cells": 8,
+  "cells": [
+    {
+      "cell": [
+        "ai-are-by",
+        "ai-blockchain-crypto",
+        "actually-affected-assumptions",
+        "counterfactual-policy-simulation",
+        "administrative-anonymised-baseline",
+        "assumption-band-be",
+        "interactive-live-pitch"
+      ],
+      "quality": 1.0,
+      "idea": {
+        "id": "concept-000",
+        "lane": "institutional",
+        "disciplines": [
+          "computational social science"
+        ],
+        "working_title": "Policy Consequence Lens",
+        "primary_user": "Non-technical parliamentarians evaluating AI or crypto/blockchain proposals",
+        "painful_workflow": "During a short in-person pitch, MPs and parliamentary guests need to understand what a proposed rule or technology intervention would actually change, who is affected, and which assumptions drive the result, without reading technical notebooks or trusting a slide-only claim.",
+        "current_workaround": "Teams verbally describe expected impact, show static charts, or use generic AI summaries that do not expose the assumptions, uncertainty, or affected groups behind the claim.",
+        "imported_mechanism": "m-000 counterfactual-policy-simulation applied to proposed civic technology or policy rules.",
+        "mechanism_origin": "computational social science",
+        "data_sources": [
+          "Generated fixture dataset representing anonymised constituency casework, grants, or administrative records",
+          "User-entered natural-language rule text during the demo",
+          "Optional local CSV upload if the team prepares a synthetic baseline table before the event"
+        ],
+        "core_computation": "An AI parser converts a plain-English proposal or rule change into inspectable predicates, applies those predicates to a small baseline dataset or generated civic-service fixture, runs current-state versus proposed-state simulations, and attributes outcome deltas to specific predicates, population segments, and uncertainty ranges.",
+        "last_mile_action": "The parliamentarian receives a one-page consequence brief with a plain-English verdict, assumption trace, uncertainty band, and a short list of records or cases that require human review before the policy claim should be trusted.",
+        "visible_transformation": "A vague proposal such as changing eligibility, review priority, or grant allocation rules becomes an interactive before/after impact view showing who gains, who loses, why the result changed, and where the model is uncertain.",
+        "sponsor_dependency": "Low. EasyA provides the venue, audience, and Web3/community context, but the concept does not require a sponsor SDK or specific platform.",
+        "technical_risk": "Medium. The main risk is overclaiming simulation validity. The prototype should constrain itself to a small synthetic domain, expose assumptions clearly, and present outputs as scenario analysis rather than predictions.",
+        "collision_risk": "unknown",
+        "why_now": "The pitch day is 2026-09-04 in Parliament, with MPs, Lords, civil servants, and invited guests in the audience; the supplied organiser summary says demo clarity for non-technical parliamentarians matters.",
+        "kill_reason": "",
+        "killer_demo": "On pitch day, enter a natural-language rule change for a fictional parliamentary grant or casework queue, press simulate, and show the room how the AI turns it into predicates, reruns outcomes, highlights affected citizen groups, and produces an MP-readable consequence brief in under three minutes.",
+        "hard_to_fake_advantage": "The demo is not a generic chatbot because the AI-generated interpretation must become inspectable executable predicates, cite source fields, and survive a visible counterfactual run with uncertainty rather than producing unsupported prose.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-d39d2793b384",
+          "src-19eb9b332a3a",
+          "opp-000",
+          "m-000"
+        ],
+        "opportunity_id": "opp-000",
+        "mechanism_id": "m-000",
+        "mutation_history": [],
+        "track_fit": "No formal tracks are published. Fits the hackathon theme by making AI core to a government-facing workflow and by producing a demo that a non-technical parliamentarian can explain.",
+        "technology_roles": {
+          "AI and/or crypto/blockchain must be core to the product mechanism.": "AI is essential: it converts natural-language rule text into formal predicates and assumption traces. Removing AI leaves only manual simulation setup and breaks the product's core value.",
+          "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product.": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: An AI parser converts a plain-English proposal or rule change into inspectable predicates, applies those predicates to a small baseline dataset or generated civic-service fixture, runs current-state versus proposed-state simulations, and attributes outcome deltas to specific predicates, population segments, and uncertainty ranges.. Removing it must materially change or break the required implementation.",
+          "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA.": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: An AI parser converts a plain-English proposal or rule change into inspectable predicates, applies those predicates to a small baseline dataset or generated civic-service fixture, runs current-state versus proposed-state simulations, and attributes outcome deltas to specific predicates, population segments, and uncertainty ranges.. Removing it must materially change or break the required implementation."
+        },
+        "requirement_satisfaction": {
+          "req-core-ai-crypto": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: An AI parser converts a plain-English proposal or rule change into inspectable predicates, applies those predicates to a small baseline dataset or generated civic-service fixture, runs current-state versus proposed-state simulations, and attributes outcome deltas to specific predicates, population segments, and uncertainty ranges.. Removing it must materially change or break the required implementation.",
+          "req-team-size": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (An AI parser converts a plain-English proposal or rule change into inspectable predicates, applies those predicates to a small baseline dataset or generated civic-service fixture, runs current-state versus proposed-state simulations, and attributes outcome deltas to specific predicates, population segments, and uncertainty ranges.), produce the result (The parliamentarian receives a one-page consequence brief with a plain-English verdict, assumption trace, uncertainty band, and a short list of records or cases that require human review before the policy claim should be trusted.), then validate the required submission proof.",
+          "req-pitch-day": "A judge can change one sentence in a policy rule and immediately see the parsed predicates, affected records, aggregate deltas, uncertainty interval, and MP-readable explanation update on screen.",
+          "req-accessible-demo": "A judge can change one sentence in a policy rule and immediately see the parsed predicates, affected records, aggregate deltas, uncertainty interval, and MP-readable explanation update on screen.",
+          "req-in-person-event": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: An AI parser converts a plain-English proposal or rule change into inspectable predicates, applies those predicates to a small baseline dataset or generated civic-service fixture, runs current-state versus proposed-state simulations, and attributes outcome deltas to specific predicates, population segments, and uncertainty ranges.. Removing it must materially change or break the required implementation.",
+          "artifact:Live or recorded pitch on 2026-09-04": "Produce and validate the required submission artifact: Live or recorded pitch on 2026-09-04.",
+          "artifact:Working demo or observable product demonstration suitable for non-technical parliamentarians": "Produce and validate the required submission artifact: Working demo or observable product demonstration suitable for non-technical parliamentarians."
+        },
+        "data_access_status": "No mandated public dataset is supplied by the brief. The concept can be demonstrated with generated fixtures and user-entered rules, which fits the absence of formal data requirements.",
+        "data_access_plan": "Build a small synthetic dataset with documented fields and baseline outcomes. Keep all records fictional, expose the schema in the demo, and allow a judge to edit a rule live so the transformation is observable without relying on external data access.",
+        "testable_claim": "For a prepared synthetic casework or grant-allocation dataset, the prototype can transform a plain-English rule change into inspectable predicates and a before/after impact brief during the pitch without manual recoding.",
+        "demo_proof": "A judge can change one sentence in a policy rule and immediately see the parsed predicates, affected records, aggregate deltas, uncertainty interval, and MP-readable explanation update on screen.",
+        "minimum_demonstrable_loop": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (An AI parser converts a plain-English proposal or rule change into inspectable predicates, applies those predicates to a small baseline dataset or generated civic-service fixture, runs current-state versus proposed-state simulations, and attributes outcome deltas to specific predicates, population segments, and uncertainty ranges.), produce the result (The parliamentarian receives a one-page consequence brief with a plain-English verdict, assumption trace, uncertainty band, and a short list of records or cases that require human review before the policy claim should be trusted.), then validate the required submission proof.",
+        "mechanism_family": "counterfactual-policy-simulation",
+        "demo_type": "Working interactive prototype plus live pitch.",
+        "external_evaluation_scores": {
+          "evidence_quality": 1.0,
+          "feasibility": 1.0,
+          "core_depth": 1.0,
+          "actionability": 1.0,
+          "differentiation": 1.0
+        },
+        "novelty_vector": {
+          "track": "No formal tracks are published. Fits the hackathon theme by making AI core to a government-facing workflow and by producing a demo that a non-technical parliamentarian can explain.",
+          "user_class": "Non-technical parliamentarians evaluating AI or crypto/blockchain proposals",
+          "workflow": "During a short in-person pitch, MPs and parliamentary guests need to understand what a proposed rule or technology intervention would actually change, who is affected, and which assumptions drive the result, without reading technical notebooks or trusting a slide-only claim.",
+          "mechanism_family": "counterfactual-policy-simulation",
+          "data": "Generated fixture dataset representing anonymised constituency casework, grants, or administrative records | User-entered natural-language rule text during the demo | Optional local CSV upload if the team prepares a synthetic baseline table before the event",
+          "last_mile_action": "The parliamentarian receives a one-page consequence brief with a plain-English verdict, assumption trace, uncertainty band, and a short list of records or cases that require human review before the policy claim should be trusted.",
+          "demo_type": "Working interactive prototype plus live pitch.",
+          "embedding_distances": {}
+        },
+        "gate_results": []
+      }
+    },
+    {
+      "cell": [
+        "accessible-ai-are",
+        "ai-blockchain-civil",
+        "after-are-base",
+        "ledger-provenance-verifiable",
+        "by-claims-cryptographic",
+        "can-changed-claim",
+        "interactive-live-pitch"
+      ],
+      "quality": 1.0,
+      "idea": {
+        "id": "concept-001",
+        "lane": "systems",
+        "disciplines": [
+          "supply-chain audit"
+        ],
+        "working_title": "Parliament Claim Provenance Stamp",
+        "primary_user": "Civil servants and public-sector officials exposed to AI or crypto/blockchain pitches",
+        "painful_workflow": "Officials hearing compressed technology pitches need to tell whether a proposal's claims are supported by source material, whether outputs changed after review, and whether a demo has silently drifted from its declared evidence base.",
+        "current_workaround": "Pitch teams cite documents, screenshots, or links informally, while reviewers rely on trust, memory, or manual checking to detect unsupported claims and post-hoc changes.",
+        "imported_mechanism": "m-001 verifiable-provenance-ledger applied to pitch claims, policy documents, datasets, and generated demo outputs.",
+        "mechanism_origin": "supply-chain audit",
+        "data_sources": [
+          "User-uploaded or locally prepared pitch claims",
+          "Local fictional source notes for the demo",
+          "Cryptographic hashes and signed transformation metadata generated by the prototype"
+        ],
+        "core_computation": "Each source artifact, claim, and generated output is hashed into an append-only cryptographic event log. An AI verifier compares the semantic content of each claim against its declared source artifacts, flags unsupported or drifted assertions, and records verifier decisions with timestamps and transformation metadata.",
+        "last_mile_action": "The pitch team produces a QR-linked provenance stamp for each major claim. A parliamentarian can scan it to see whether the claim is source-supported, what changed since the last version, and which unsupported statements need clarification.",
+        "visible_transformation": "A pitch deck or demo claim goes from an opaque assertion to a tamper-evident lineage graph with support checks, unsupported-claim flags, and a concise explanation of what evidence backs the statement.",
+        "sponsor_dependency": "Low to medium. EasyA's Web3 community makes the provenance-ledger framing culturally aligned, but no EasyA-specific SDK or sponsor dataset is required.",
+        "technical_risk": "Medium. The prototype must avoid claiming legal-grade verification. Keep the demo scoped to claim support and tamper evidence, with clear distinction between semantic support flags and final human judgement.",
+        "collision_risk": "unknown",
+        "why_now": "Projects must make AI and/or crypto/blockchain core to the product mechanism, while the event’s government setting implies parliamentary relevance is strategically important even though no rubric weight is published.",
+        "kill_reason": "",
+        "killer_demo": "Upload three short fictional policy source notes and five pitch claims. The system hashes the artifacts, creates a provenance chain, marks two claims as supported, flags one exaggerated claim as unsupported, then shows that editing a claim changes the ledger state and the QR stamp verification result.",
+        "hard_to_fake_advantage": "Hash integrity alone cannot detect semantic exaggeration, while AI alone cannot prove artifact history. Combining the cryptographic ledger with semantic verification makes both source tampering and unsupported claim drift visible.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-d39d2793b384",
+          "src-19eb9b332a3a",
+          "src-effc6640b768",
+          "opp-001",
+          "m-001"
+        ],
+        "opportunity_id": "opp-001",
+        "mechanism_id": "m-001",
+        "mutation_history": [],
+        "track_fit": "No formal tracks are published. Fits the AI and crypto/blockchain theme by making both mechanisms substantive for civic trust, auditability, and accessible technology evaluation.",
+        "technology_roles": {
+          "AI and/or crypto/blockchain must be core to the product mechanism.": "Both are core: the append-only cryptographic ledger provides tamper evidence, while AI checks semantic support between claims and sources. Removing either breaks the main product promise.",
+          "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product.": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: Each source artifact, claim, and generated output is hashed into an append-only cryptographic event log. An AI verifier compares the semantic content of each claim against its declared source artifacts, flags unsupported or drifted assertions, and records verifier decisions with timestamps and transformation metadata.. Removing it must materially change or break the required implementation.",
+          "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA.": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: Each source artifact, claim, and generated output is hashed into an append-only cryptographic event log. An AI verifier compares the semantic content of each claim against its declared source artifacts, flags unsupported or drifted assertions, and records verifier decisions with timestamps and transformation metadata.. Removing it must materially change or break the required implementation."
+        },
+        "requirement_satisfaction": {
+          "req-core-ai-crypto": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: Each source artifact, claim, and generated output is hashed into an append-only cryptographic event log. An AI verifier compares the semantic content of each claim against its declared source artifacts, flags unsupported or drifted assertions, and records verifier decisions with timestamps and transformation metadata.. Removing it must materially change or break the required implementation.",
+          "req-team-size": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (Each source artifact, claim, and generated output is hashed into an append-only cryptographic event log. An AI verifier compares the semantic content of each claim against its declared source artifacts, flags unsupported or drifted assertions, and records verifier decisions with timestamps and transformation metadata.), produce the result (The pitch team produces a QR-linked provenance stamp for each major claim. A parliamentarian can scan it to see whether the claim is source-supported, what changed since the last version, and which unsupported statements need clarification.), then validate the required submission proof.",
+          "req-pitch-day": "A judge can edit a claim live, resubmit it, and observe a new ledger event plus an updated AI support flag that either cites the matching source note or marks the claim unsupported.",
+          "req-accessible-demo": "A judge can edit a claim live, resubmit it, and observe a new ledger event plus an updated AI support flag that either cites the matching source note or marks the claim unsupported.",
+          "req-in-person-event": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: Each source artifact, claim, and generated output is hashed into an append-only cryptographic event log. An AI verifier compares the semantic content of each claim against its declared source artifacts, flags unsupported or drifted assertions, and records verifier decisions with timestamps and transformation metadata.. Removing it must materially change or break the required implementation.",
+          "artifact:Live or recorded pitch on 2026-09-04": "Produce and validate the required submission artifact: Live or recorded pitch on 2026-09-04.",
+          "artifact:Working demo or observable product demonstration suitable for non-technical parliamentarians": "Produce and validate the required submission artifact: Working demo or observable product demonstration suitable for non-technical parliamentarians."
+        },
+        "data_access_status": "No external dataset is required. The brief does not mandate a public dataset or chain, so the prototype can use local files and an append-only ledger implementation for demonstration.",
+        "data_access_plan": "Prepare a small bundle of fictional policy notes and pitch claims, then allow live edits during the demo. Store hashes, timestamps, actor labels, and verifier outputs in a local append-only log; optionally anchor the final root hash to a public testnet only if the team has time.",
+        "testable_claim": "For a prepared set of local source notes and pitch claims, the prototype can create a tamper-evident claim history and identify at least one unsupported or semantically drifted claim during the live demo.",
+        "demo_proof": "A judge can edit a claim live, resubmit it, and observe a new ledger event plus an updated AI support flag that either cites the matching source note or marks the claim unsupported.",
+        "minimum_demonstrable_loop": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (Each source artifact, claim, and generated output is hashed into an append-only cryptographic event log. An AI verifier compares the semantic content of each claim against its declared source artifacts, flags unsupported or drifted assertions, and records verifier decisions with timestamps and transformation metadata.), produce the result (The pitch team produces a QR-linked provenance stamp for each major claim. A parliamentarian can scan it to see whether the claim is source-supported, what changed since the last version, and which unsupported statements need clarification.), then validate the required submission proof.",
+        "mechanism_family": "verifiable-provenance-ledger",
+        "demo_type": "Working interactive prototype plus live pitch.",
+        "external_evaluation_scores": {
+          "evidence_quality": 1.0,
+          "feasibility": 1.0,
+          "core_depth": 1.0,
+          "actionability": 1.0,
+          "differentiation": 1.0
+        },
+        "novelty_vector": {
+          "track": "No formal tracks are published. Fits the AI and crypto/blockchain theme by making both mechanisms substantive for civic trust, auditability, and accessible technology evaluation.",
+          "user_class": "Civil servants and public-sector officials exposed to AI or crypto/blockchain pitches",
+          "workflow": "Officials hearing compressed technology pitches need to tell whether a proposal's claims are supported by source material, whether outputs changed after review, and whether a demo has silently drifted from its declared evidence base.",
+          "mechanism_family": "verifiable-provenance-ledger",
+          "data": "User-uploaded or locally prepared pitch claims | Local fictional source notes for the demo | Cryptographic hashes and signed transformation metadata generated by the prototype",
+          "last_mile_action": "The pitch team produces a QR-linked provenance stamp for each major claim. A parliamentarian can scan it to see whether the claim is source-supported, what changed since the last version, and which unsupported statements need clarification.",
+          "demo_type": "Working interactive prototype plus live pitch.",
+          "embedding_distances": {}
+        },
+        "gate_results": []
+      }
+    },
+    {
+      "cell": [
+        "ai-assistant-audience",
+        "allocated-be-civil",
+        "administrative-bodies-borderline",
+        "allocation-aware-constraint",
+        "applicants-authored-cases",
+        "allocation-aloud-be",
+        "demo-deployed-live"
+      ],
+      "quality": 1.0,
+      "idea": {
+        "id": "concept-003",
+        "lane": "institutional",
+        "disciplines": [
+          "operations research"
+        ],
+        "working_title": "Fair Queue Explainer",
+        "primary_user": "A small hackathon team pitching to MPs and civil servants who need to show how scarce public resources could be allocated transparently under published rules.",
+        "painful_workflow": "Public bodies often have eligibility rules, priority rules, limited capacity, and borderline cases, but a pitch-day prototype can easily collapse into a generic chatbot or dashboard rather than showing a concrete administrative decision workflow.",
+        "current_workaround": "Teams manually invent a sample spreadsheet, write a few rule checks by hand, and explain fairness verbally in slides without a deterministic allocation result or per-case explanation.",
+        "imported_mechanism": "opp-003 x m-002: use a constraint-aware allocation optimizer from operations research to turn plain-language policy rules into machine-checkable constraints, solve the allocation, and produce explanation certificates.",
+        "mechanism_origin": "operations research",
+        "data_sources": [
+          "Generated fixture applicants/cases",
+          "Locally authored plain-language eligibility and priority rules",
+          "No public dataset required"
+        ],
+        "core_computation": "AI extracts candidate constraints from a short policy text, maps them to applicant fields in a fixture dataset, runs a deterministic solver against limited resource capacity, then emits accepted, rejected, and borderline certificates referencing the active constraints.",
+        "last_mile_action": "Generate a one-page decision pack for a ministerial office or council service: allocation list, infeasible-rule warnings, and per-case explanations that can be read aloud in the pitch.",
+        "visible_transformation": "The demo starts with plain English rules plus applicant rows and ends with a ranked allocation, explicit conflict set, and case-level certificates showing why each decision changed when capacity or priority weights are adjusted.",
+        "sponsor_dependency": "No sponsor SDK or chain dependency; EasyA relevance comes from civic technology framing and an accessible live pitch for the event audience.",
+        "technical_risk": "Medium: constraint extraction can be scoped to a controlled rule grammar for demo reliability, while the solver and certificate generation remain deterministic.",
+        "collision_risk": "unknown",
+        "why_now": "The event is open to people regardless of technical experience and includes a special non-coder prize, yet projects remain constrained by a core AI and/or crypto/blockchain requirement and a live pitch expectation.",
+        "kill_reason": "",
+        "killer_demo": "Use a synthetic constituency grant or casework triage scenario: an MP edits one eligibility sentence, presses run, and immediately sees which cases move, which rule caused the change, and which applicants need human review.",
+        "hard_to_fake_advantage": "The output is not a free-form explanation; it is tied to formal constraints and deterministic solver results, so the same inputs reproduce the same allocation and explanations.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-d39d2793b384",
+          "operator-team-size",
+          "operator-deadline"
+        ],
+        "opportunity_id": "opp-002",
+        "mechanism_id": "m-002",
+        "mutation_history": [],
+        "track_fit": "Fits the Parliament audience because it turns a recognisable government scarcity problem into an observable, explainable AI workflow instead of a generic assistant.",
+        "technology_roles": {
+          "AI and/or crypto/blockchain must be core to the product mechanism.": "AI is core for translating natural-language eligibility and priority rules into candidate formal constraints; removing it would leave only a hand-coded allocator and break the product premise.",
+          "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product.": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: AI extracts candidate constraints from a short policy text, maps them to applicant fields in a fixture dataset, runs a deterministic solver against limited resource capacity, then emits accepted, rejected, and borderline certificates referencing the active constraints.. Removing it must materially change or break the required implementation.",
+          "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA.": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: AI extracts candidate constraints from a short policy text, maps them to applicant fields in a fixture dataset, runs a deterministic solver against limited resource capacity, then emits accepted, rejected, and borderline certificates referencing the active constraints.. Removing it must materially change or break the required implementation."
+        },
+        "requirement_satisfaction": {
+          "req-core-ai-crypto": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: AI extracts candidate constraints from a short policy text, maps them to applicant fields in a fixture dataset, runs a deterministic solver against limited resource capacity, then emits accepted, rejected, and borderline certificates referencing the active constraints.. Removing it must materially change or break the required implementation.",
+          "req-team-size": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (AI extracts candidate constraints from a short policy text, maps them to applicant fields in a fixture dataset, runs a deterministic solver against limited resource capacity, then emits accepted, rejected, and borderline certificates referencing the active constraints.), produce the result (Generate a one-page decision pack for a ministerial office or council service: allocation list, infeasible-rule warnings, and per-case explanations that can be read aloud in the pitch.), then validate the required submission proof.",
+          "req-pitch-day": "A parliamentarian changes capacity from 10 to 7 or adds a priority rule; the app recomputes the allocation and highlights exactly which cases changed and which constraints explain the movement.",
+          "req-accessible-demo": "A parliamentarian changes capacity from 10 to 7 or adds a priority rule; the app recomputes the allocation and highlights exactly which cases changed and which constraints explain the movement.",
+          "req-in-person-event": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: AI extracts candidate constraints from a short policy text, maps them to applicant fields in a fixture dataset, runs a deterministic solver against limited resource capacity, then emits accepted, rejected, and borderline certificates referencing the active constraints.. Removing it must materially change or break the required implementation.",
+          "artifact:Live or recorded pitch on 2026-09-04": "Produce and validate the required submission artifact: Live or recorded pitch on 2026-09-04.",
+          "artifact:Working demo or observable product demonstration suitable for non-technical parliamentarians": "Produce and validate the required submission artifact: Working demo or observable product demonstration suitable for non-technical parliamentarians."
+        },
+        "data_access_status": "Prototype can use generated fixtures and locally authored rules because the brief does not mandate a dataset or public URL.",
+        "data_access_plan": "Create 30-50 synthetic cases with fields such as constituency, vulnerability marker, deadline, income band, prior award, and support need; include a few intentionally conflicting or borderline cases for the pitch.",
+        "testable_claim": "For a fixed fixture dataset and extracted constraint set, repeated runs produce the same allocation and the same cited constraint explanations.",
+        "demo_proof": "A parliamentarian changes capacity from 10 to 7 or adds a priority rule; the app recomputes the allocation and highlights exactly which cases changed and which constraints explain the movement.",
+        "minimum_demonstrable_loop": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (AI extracts candidate constraints from a short policy text, maps them to applicant fields in a fixture dataset, runs a deterministic solver against limited resource capacity, then emits accepted, rejected, and borderline certificates referencing the active constraints.), produce the result (Generate a one-page decision pack for a ministerial office or council service: allocation list, infeasible-rule warnings, and per-case explanations that can be read aloud in the pitch.), then validate the required submission proof.",
+        "mechanism_family": "constraint-aware-allocation-optimizer",
+        "demo_type": "Working local or deployed web demo plus live pitch.",
+        "external_evaluation_scores": {
+          "evidence_quality": 1.0,
+          "feasibility": 1.0,
+          "core_depth": 1.0,
+          "actionability": 1.0,
+          "differentiation": 1.0
+        },
+        "novelty_vector": {
+          "track": "Fits the Parliament audience because it turns a recognisable government scarcity problem into an observable, explainable AI workflow instead of a generic assistant.",
+          "user_class": "A small hackathon team pitching to MPs and civil servants who need to show how scarce public resources could be allocated transparently under published rules.",
+          "workflow": "Public bodies often have eligibility rules, priority rules, limited capacity, and borderline cases, but a pitch-day prototype can easily collapse into a generic chatbot or dashboard rather than showing a concrete administrative decision workflow.",
+          "mechanism_family": "constraint-aware-allocation-optimizer",
+          "data": "Generated fixture applicants/cases | Locally authored plain-language eligibility and priority rules | No public dataset required",
+          "last_mile_action": "Generate a one-page decision pack for a ministerial office or council service: allocation list, infeasible-rule warnings, and per-case explanations that can be read aloud in the pitch.",
+          "demo_type": "Working local or deployed web demo plus live pitch.",
+          "embedding_distances": {}
+        },
+        "gate_results": []
+      }
+    },
+    {
+      "cell": [
+        "ai-audience-auditability",
+        "audit-civil-clear",
+        "alert-are-become",
+        "anomaly-attested-detection",
+        "csv-demo-during",
+        "alert-anomaly-audit",
+        "demo-deployed-live"
+      ],
+      "quality": 1.0,
+      "idea": {
+        "id": "concept-004",
+        "lane": "systems",
+        "disciplines": [
+          "forensic accounting"
+        ],
+        "working_title": "Tamper-Evident Procurement Pulse",
+        "primary_user": "Civil servants, audit teams, or parliamentary committees who need to spot unusual procurement or grant events while preserving a clear evidence trail.",
+        "painful_workflow": "Investigators must review transaction logs, supplier relationships, and event histories manually, and once suspicious patterns are discussed in meetings it can become difficult to prove exactly which raw records supported the alert.",
+        "current_workaround": "Spreadsheet filters, manual sampling, email attachments, and narrative audit notes that are hard to reproduce and easy to detach from the underlying evidence.",
+        "imported_mechanism": "opp-003 x m-003: apply forensic-accounting anomaly detection with cryptographic evidence anchoring to public-sector transaction or grant-event logs.",
+        "mechanism_origin": "forensic accounting",
+        "data_sources": [
+          "Generated procurement or grant-event fixture logs",
+          "Local hash ledger for evidence snapshots",
+          "Optional user-uploaded CSV during demo"
+        ],
+        "core_computation": "A machine-learning anomaly detector scores temporal, relational, and numeric deviations across synthetic procurement events; each raw event snapshot is hashed, and every alert includes feature-level rationale plus the evidence hash references used to produce it.",
+        "last_mile_action": "Produce an audit-ready alert bundle: ranked anomaly cluster, implicated records, rationale, hash references, and a feedback control for marking false positives.",
+        "visible_transformation": "The demo ingests a small event log and transforms it into clustered anomaly cards where each risk score can be traced back to immutable evidence references.",
+        "sponsor_dependency": "No mandatory sponsor dependency; the Web3 angle is a lightweight cryptographic evidence ledger that EasyA’s community can extend after the event.",
+        "technical_risk": "Medium: anomaly scoring can be implemented with simple interpretable features for demo reliability, while cryptographic anchoring is straightforward using content hashes and an append-only local ledger.",
+        "collision_risk": "unknown",
+        "why_now": "Participants may start building on 2026-08-24 and pitch on 2026-09-04, making scope control and demo clarity unusually important for small teams.",
+        "kill_reason": "",
+        "killer_demo": "Show a normal-looking supplier payment stream, then reveal an unusual cluster such as split invoices just below an approval threshold; clicking the alert opens the exact records and their hash receipts.",
+        "hard_to_fake_advantage": "The combination of ML anomaly discovery and evidence anchoring makes the product materially different from a dashboard: prior evidence hashes do not change when the model is updated or feedback is added.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-d39d2793b384",
+          "operator-team-size",
+          "operator-deadline"
+        ],
+        "opportunity_id": "opp-003",
+        "mechanism_id": "m-003",
+        "mutation_history": [],
+        "track_fit": "Fits government and parliamentary oversight because it demonstrates how AI and cryptographic integrity can support auditability without requiring the audience to understand blockchain internals.",
+        "technology_roles": {
+          "AI and/or crypto/blockchain must be core to the product mechanism.": "AI is core for anomaly scoring and clustering; cryptographic hashing or blockchain-style anchoring is core for preserving the chain from alert back to raw evidence. Removing either weakens the core product mechanism.",
+          "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product.": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: A machine-learning anomaly detector scores temporal, relational, and numeric deviations across synthetic procurement events; each raw event snapshot is hashed, and every alert includes feature-level rationale plus the evidence hash references used to produce it.. Removing it must materially change or break the required implementation.",
+          "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA.": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: A machine-learning anomaly detector scores temporal, relational, and numeric deviations across synthetic procurement events; each raw event snapshot is hashed, and every alert includes feature-level rationale plus the evidence hash references used to produce it.. Removing it must materially change or break the required implementation."
+        },
+        "requirement_satisfaction": {
+          "req-core-ai-crypto": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: A machine-learning anomaly detector scores temporal, relational, and numeric deviations across synthetic procurement events; each raw event snapshot is hashed, and every alert includes feature-level rationale plus the evidence hash references used to produce it.. Removing it must materially change or break the required implementation.",
+          "req-team-size": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (A machine-learning anomaly detector scores temporal, relational, and numeric deviations across synthetic procurement events; each raw event snapshot is hashed, and every alert includes feature-level rationale plus the evidence hash references used to produce it.), produce the result (Produce an audit-ready alert bundle: ranked anomaly cluster, implicated records, rationale, hash references, and a feedback control for marking false positives.), then validate the required submission proof.",
+          "req-pitch-day": "Upload or load a fixture CSV, run detection, click the top anomaly, and show the same raw record hash before and after adding model feedback to demonstrate that evidence remains anchored.",
+          "req-accessible-demo": "Upload or load a fixture CSV, run detection, click the top anomaly, and show the same raw record hash before and after adding model feedback to demonstrate that evidence remains anchored.",
+          "req-in-person-event": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: A machine-learning anomaly detector scores temporal, relational, and numeric deviations across synthetic procurement events; each raw event snapshot is hashed, and every alert includes feature-level rationale plus the evidence hash references used to produce it.. Removing it must materially change or break the required implementation.",
+          "artifact:Live or recorded pitch on 2026-09-04": "Produce and validate the required submission artifact: Live or recorded pitch on 2026-09-04.",
+          "artifact:Working demo or observable product demonstration suitable for non-technical parliamentarians": "Produce and validate the required submission artifact: Working demo or observable product demonstration suitable for non-technical parliamentarians."
+        },
+        "data_access_status": "Uses generated fixtures and optional local CSV upload; no public data source is required by the brief.",
+        "data_access_plan": "Generate a reproducible synthetic ledger of suppliers, approvals, invoice amounts, timestamps, departments, and relationships, with seeded anomalies for the live pitch.",
+        "testable_claim": "Changing model feedback can update future risk labels but does not alter prior raw-record hashes or their alert evidence references.",
+        "demo_proof": "Upload or load a fixture CSV, run detection, click the top anomaly, and show the same raw record hash before and after adding model feedback to demonstrate that evidence remains anchored.",
+        "minimum_demonstrable_loop": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (A machine-learning anomaly detector scores temporal, relational, and numeric deviations across synthetic procurement events; each raw event snapshot is hashed, and every alert includes feature-level rationale plus the evidence hash references used to produce it.), produce the result (Produce an audit-ready alert bundle: ranked anomaly cluster, implicated records, rationale, hash references, and a feedback control for marking false positives.), then validate the required submission proof.",
+        "mechanism_family": "anomaly-detection-with-attested-evidence",
+        "demo_type": "Working local or deployed web demo plus live pitch.",
+        "external_evaluation_scores": {
+          "evidence_quality": 1.0,
+          "feasibility": 1.0,
+          "core_depth": 1.0,
+          "actionability": 1.0,
+          "differentiation": 1.0
+        },
+        "novelty_vector": {
+          "track": "Fits government and parliamentary oversight because it demonstrates how AI and cryptographic integrity can support auditability without requiring the audience to understand blockchain internals.",
+          "user_class": "Civil servants, audit teams, or parliamentary committees who need to spot unusual procurement or grant events while preserving a clear evidence trail.",
+          "workflow": "Investigators must review transaction logs, supplier relationships, and event histories manually, and once suspicious patterns are discussed in meetings it can become difficult to prove exactly which raw records supported the alert.",
+          "mechanism_family": "anomaly-detection-with-attested-evidence",
+          "data": "Generated procurement or grant-event fixture logs | Local hash ledger for evidence snapshots | Optional user-uploaded CSV during demo",
+          "last_mile_action": "Produce an audit-ready alert bundle: ranked anomaly cluster, implicated records, rationale, hash references, and a feedback control for marking false positives.",
+          "demo_type": "Working local or deployed web demo plus live pitch.",
+          "embedding_distances": {}
+        },
+        "gate_results": []
+      }
+    },
+    {
+      "cell": [
+        "ai-are-criteria",
+        "ai-blockchain-civil",
+        "affected-amendment-analysis",
+        "ledger-provenance-verifiable",
+        "administrative-amendment-anonymized",
+        "anyone-assumptions-before",
+        "browser-demo-live"
+      ],
+      "quality": 1.0,
+      "idea": {
+        "id": "concept-004-5",
+        "lane": "institutional",
+        "disciplines": [
+          "supply-chain audit"
+        ],
+        "working_title": "Amendment Impact Trace",
+        "primary_user": "Civil servants and public-sector officials exposed to AI or crypto/blockchain pitches",
+        "painful_workflow": "Officials and parliamentarians hear proposed rule or amendment changes in compressed formats, but cannot quickly see which assumptions drive the claimed impact, which groups are affected, or where the analysis becomes uncertain.",
+        "current_workaround": "Teams present slide estimates, spreadsheet extracts, or generic AI summaries that are hard to audit during a short pitch.",
+        "imported_mechanism": "m-000 counterfactual-policy-simulation crossed with opp-001: use retrieval-grounded rule interpretation plus counterfactual simulation to turn a plain-English policy change into inspectable predicates, affected records, uncertainty ranges, and delta explanations.",
+        "mechanism_origin": "supply-chain audit",
+        "data_sources": [
+          "Local generated fixture of anonymized administrative-style records",
+          "User-uploaded CSV if available during demo",
+          "Natural-language policy or amendment text typed during demo"
+        ],
+        "core_computation": "Parse a proposed rule into formal predicates, apply those predicates to a small baseline fixture or uploaded local CSV, simulate current-state versus changed-state outcomes, and attribute aggregate deltas to the specific predicates and population segments that caused them.",
+        "last_mile_action": "Generate a one-page MP-readable briefing and a manual-review list showing exactly which assumptions or records need human scrutiny before anyone repeats the claim publicly.",
+        "visible_transformation": "The demo starts with a plain-language amendment and a baseline table, then visibly produces formal assumptions, affected rows, outcome deltas with uncertainty intervals, and a concise briefing that a non-technical parliamentarian can explain.",
+        "sponsor_dependency": "Does not depend on an EasyA SDK or sponsor dataset; EasyA fit comes from making a Web3/AI community project legible to MPs and civil servants, with a plausible follow-on grant story for public-sector decision support.",
+        "technical_risk": "Medium: the smallest prototype can constrain the policy grammar and use synthetic records, but careless natural-language parsing could overstate precision. The demo must expose assumptions and uncertainty rather than present final policy truth.",
+        "collision_risk": "unknown",
+        "why_now": "The pitch day is 2026-09-04 in Parliament, with MPs, Lords, civil servants, and invited guests in the audience; the supplied organiser summary says demo clarity for non-technical parliamentarians matters.",
+        "kill_reason": "",
+        "killer_demo": "Enter a mock policy change such as changing a grant eligibility threshold; the app highlights the interpreted rule, shows which sample constituents or councils move in or out of scope, displays uncertainty bands, and emits a short 'what changed and why' note.",
+        "hard_to_fake_advantage": "The AI-generated prose is not the product; the inspectable predicate layer and counterfactual delta attribution make it clear whether the model understood the rule and whether the numbers follow from recorded inputs.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-d39d2793b384",
+          "src-19eb9b332a3a",
+          "src-effc6640b768",
+          "opp-001",
+          "m-000"
+        ],
+        "opportunity_id": "opp-000",
+        "mechanism_id": "m-001",
+        "mutation_history": [],
+        "track_fit": "No formal tracks are published; fits the implied government-facing AI substance and parliamentary relevance criteria.",
+        "technology_roles": {
+          "AI and/or crypto/blockchain must be core to the product mechanism.": "AI is core: removing the language-model rule interpretation and assumption extraction would leave only a manual spreadsheet simulator, breaking the main workflow.",
+          "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product.": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: Parse a proposed rule into formal predicates, apply those predicates to a small baseline fixture or uploaded local CSV, simulate current-state versus changed-state outcomes, and attribute aggregate deltas to the specific predicates and population segments that caused them.. Removing it must materially change or break the required implementation.",
+          "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA.": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: Parse a proposed rule into formal predicates, apply those predicates to a small baseline fixture or uploaded local CSV, simulate current-state versus changed-state outcomes, and attribute aggregate deltas to the specific predicates and population segments that caused them.. Removing it must materially change or break the required implementation."
+        },
+        "requirement_satisfaction": {
+          "req-core-ai-crypto": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: Parse a proposed rule into formal predicates, apply those predicates to a small baseline fixture or uploaded local CSV, simulate current-state versus changed-state outcomes, and attribute aggregate deltas to the specific predicates and population segments that caused them.. Removing it must materially change or break the required implementation.",
+          "req-team-size": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (Parse a proposed rule into formal predicates, apply those predicates to a small baseline fixture or uploaded local CSV, simulate current-state versus changed-state outcomes, and attribute aggregate deltas to the specific predicates and population segments that caused them.), produce the result (Generate a one-page MP-readable briefing and a manual-review list showing exactly which assumptions or records need human scrutiny before anyone repeats the claim publicly.), then validate the required submission proof.",
+          "req-pitch-day": "Observable proof is the same input rule producing four linked artifacts: extracted predicates, changed record classifications, delta attribution table, and the briefing. Changing one threshold should immediately change the affected rows and explanation.",
+          "req-accessible-demo": "Observable proof is the same input rule producing four linked artifacts: extracted predicates, changed record classifications, delta attribution table, and the briefing. Changing one threshold should immediately change the affected rows and explanation.",
+          "req-in-person-event": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: Parse a proposed rule into formal predicates, apply those predicates to a small baseline fixture or uploaded local CSV, simulate current-state versus changed-state outcomes, and attribute aggregate deltas to the specific predicates and population segments that caused them.. Removing it must materially change or break the required implementation.",
+          "artifact:Live or recorded pitch on 2026-09-04": "Produce and validate the required submission artifact: Live or recorded pitch on 2026-09-04.",
+          "artifact:Working demo or observable product demonstration suitable for non-technical parliamentarians": "Produce and validate the required submission artifact: Working demo or observable product demonstration suitable for non-technical parliamentarians."
+        },
+        "data_access_status": "No mandated dataset is supplied by the brief; concept can be demonstrated with local generated fixtures and optional user uploads.",
+        "data_access_plan": "Create a small synthetic baseline table with transparent columns such as region, applicant type, income band, current eligibility, and outcome. Keep all values visible in the demo so the audience can verify the transformation without relying on a hidden public dataset.",
+        "testable_claim": "Given a supported policy-change template and baseline fixture, the prototype can show which records change status, calculate aggregate deltas, and cite the predicate responsible for each change.",
+        "demo_proof": "Observable proof is the same input rule producing four linked artifacts: extracted predicates, changed record classifications, delta attribution table, and the briefing. Changing one threshold should immediately change the affected rows and explanation.",
+        "minimum_demonstrable_loop": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (Parse a proposed rule into formal predicates, apply those predicates to a small baseline fixture or uploaded local CSV, simulate current-state versus changed-state outcomes, and attribute aggregate deltas to the specific predicates and population segments that caused them.), produce the result (Generate a one-page MP-readable briefing and a manual-review list showing exactly which assumptions or records need human scrutiny before anyone repeats the claim publicly.), then validate the required submission proof.",
+        "mechanism_family": "verifiable-provenance-ledger",
+        "demo_type": "Working browser demo plus live pitch",
+        "external_evaluation_scores": {
+          "evidence_quality": 1.0,
+          "feasibility": 1.0,
+          "core_depth": 1.0,
+          "actionability": 1.0,
+          "differentiation": 1.0
+        },
+        "novelty_vector": {
+          "track": "No formal tracks are published; fits the implied government-facing AI substance and parliamentary relevance criteria.",
+          "user_class": "Civil servants and public-sector officials exposed to AI or crypto/blockchain pitches",
+          "workflow": "Officials and parliamentarians hear proposed rule or amendment changes in compressed formats, but cannot quickly see which assumptions drive the claimed impact, which groups are affected, or where the analysis becomes uncertain.",
+          "mechanism_family": "verifiable-provenance-ledger",
+          "data": "Local generated fixture of anonymized administrative-style records | User-uploaded CSV if available during demo | Natural-language policy or amendment text typed during demo",
+          "last_mile_action": "Generate a one-page MP-readable briefing and a manual-review list showing exactly which assumptions or records need human scrutiny before anyone repeats the claim publicly.",
+          "demo_type": "Working browser demo plus live pitch",
+          "embedding_distances": {}
+        },
+        "gate_results": []
+      }
+    },
+    {
+      "cell": [
+        "accessible-ai-are",
+        "evaluating-non-parliamentarians",
+        "ai-are-blockchain",
+        "allocation-aware-constraint",
+        "artifacts-claim-demo",
+        "can-card-claim",
+        "browser-demo-live"
+      ],
+      "quality": 1.0,
+      "idea": {
+        "id": "concept-005",
+        "lane": "systems",
+        "disciplines": [
+          "operations research"
+        ],
+        "working_title": "Claim Lineage Ledger",
+        "primary_user": "Non-technical parliamentarians evaluating technology proposals",
+        "painful_workflow": "Parliamentarians hear bold AI or blockchain claims during short pitches, but cannot tell which statements are supported by source material, which were transformed by an AI system, and whether later versions quietly changed the meaning.",
+        "current_workaround": "Pitch teams rely on trust, screenshots, slide footnotes, or repository links that are too slow for non-technical judges to inspect in the room.",
+        "imported_mechanism": "m-001 verifiable-provenance-ledger crossed with opp-000: combine an append-only cryptographic event log with an AI semantic verifier that checks whether a pitch claim remains supported by its declared source lineage.",
+        "mechanism_origin": "operations research",
+        "data_sources": [
+          "User-pasted source text",
+          "Uploaded local pitch notes or policy excerpts",
+          "Generated demo fixtures for source artifacts and claim versions"
+        ],
+        "core_computation": "Hash each source artifact and draft claim, append transformation events to a local or testnet ledger, run an AI verifier comparing claim meaning against cited source snippets or uploaded evidence, and flag unsupported assertions or semantic drift between versions.",
+        "last_mile_action": "Produce a simple traffic-light 'can an MP repeat this claim?' card with evidence links, hash proof, version history, and unsupported-claim warnings.",
+        "visible_transformation": "The demo shows a claim moving from green to amber or red when the wording is exaggerated, while the ledger proves which artifact version was used and when the change happened.",
+        "sponsor_dependency": "No dependency on a specific EasyA toolchain; crypto/Web3 fit is material because the ledger is central to provenance and tamper evidence, while AI provides semantic verification.",
+        "technical_risk": "Medium: a production-grade verifier would need robust source retrieval and careful false-positive handling. The hackathon prototype can keep claims short, source text visible, and verifier outputs framed as support checks rather than legal truth.",
+        "collision_risk": "unknown",
+        "why_now": "Projects must make AI and/or crypto/blockchain core to the product mechanism, while the event’s government setting implies parliamentary relevance is strategically important even though no rubric weight is published.",
+        "kill_reason": "",
+        "killer_demo": "Upload or paste a short source note, generate three pitch claims, then edit one claim from 'may reduce processing time in this sample' to 'will halve national backlogs.' The AI verifier flags the unsupported leap, and the provenance ledger shows the exact version where drift entered.",
+        "hard_to_fake_advantage": "Hash integrity alone cannot detect misleading paraphrase, and AI checking alone cannot prove version history. The combination makes both tampering and semantic overclaiming visible in a few seconds.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-d39d2793b384",
+          "src-19eb9b332a3a",
+          "opp-000",
+          "m-001"
+        ],
+        "opportunity_id": "opp-001",
+        "mechanism_id": "m-002",
+        "mutation_history": [],
+        "track_fit": "No formal tracks are published; fits the implied need for accessible AI/crypto substance in front of MPs, Lords, civil servants, and invited guests.",
+        "technology_roles": {
+          "AI and/or crypto/blockchain must be core to the product mechanism.": "Both are core: blockchain or an equivalent append-only cryptographic ledger provides tamper-evident lineage, while AI verifies semantic support. Removing either breaks the central product promise.",
+          "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product.": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: Hash each source artifact and draft claim, append transformation events to a local or testnet ledger, run an AI verifier comparing claim meaning against cited source snippets or uploaded evidence, and flag unsupported assertions or semantic drift between versions.. Removing it must materially change or break the required implementation.",
+          "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA.": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: Hash each source artifact and draft claim, append transformation events to a local or testnet ledger, run an AI verifier comparing claim meaning against cited source snippets or uploaded evidence, and flag unsupported assertions or semantic drift between versions.. Removing it must materially change or break the required implementation."
+        },
+        "requirement_satisfaction": {
+          "req-core-ai-crypto": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: Hash each source artifact and draft claim, append transformation events to a local or testnet ledger, run an AI verifier comparing claim meaning against cited source snippets or uploaded evidence, and flag unsupported assertions or semantic drift between versions.. Removing it must materially change or break the required implementation.",
+          "req-team-size": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (Hash each source artifact and draft claim, append transformation events to a local or testnet ledger, run an AI verifier comparing claim meaning against cited source snippets or uploaded evidence, and flag unsupported assertions or semantic drift between versions.), produce the result (Produce a simple traffic-light 'can an MP repeat this claim?' card with evidence links, hash proof, version history, and unsupported-claim warnings.), then validate the required submission proof.",
+          "req-pitch-day": "Observable proof is an exaggerated claim being flagged while the prior cautious claim remains supported, with both claim versions tied to immutable hash entries in the provenance timeline.",
+          "req-accessible-demo": "Observable proof is an exaggerated claim being flagged while the prior cautious claim remains supported, with both claim versions tied to immutable hash entries in the provenance timeline.",
+          "req-in-person-event": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: Hash each source artifact and draft claim, append transformation events to a local or testnet ledger, run an AI verifier comparing claim meaning against cited source snippets or uploaded evidence, and flag unsupported assertions or semantic drift between versions.. Removing it must materially change or break the required implementation.",
+          "artifact:Live or recorded pitch on 2026-09-04": "Produce and validate the required submission artifact: Live or recorded pitch on 2026-09-04.",
+          "artifact:Working demo or observable product demonstration suitable for non-technical parliamentarians": "Produce and validate the required submission artifact: Working demo or observable product demonstration suitable for non-technical parliamentarians."
+        },
+        "data_access_status": "No public dataset is required. The concept can use local files, pasted text, or generated fixtures because the brief does not mandate a dataset or repository format.",
+        "data_access_plan": "Prepare a small local evidence pack for the live pitch and allow optional pasted text. Store only hashes and transformation metadata in the ledger view, with source contents shown locally for explainability.",
+        "testable_claim": "For a short source passage and claim version history, the prototype can identify unsupported semantic drift and show the hash-linked event where the drift was introduced.",
+        "demo_proof": "Observable proof is an exaggerated claim being flagged while the prior cautious claim remains supported, with both claim versions tied to immutable hash entries in the provenance timeline.",
+        "minimum_demonstrable_loop": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (Hash each source artifact and draft claim, append transformation events to a local or testnet ledger, run an AI verifier comparing claim meaning against cited source snippets or uploaded evidence, and flag unsupported assertions or semantic drift between versions.), produce the result (Produce a simple traffic-light 'can an MP repeat this claim?' card with evidence links, hash proof, version history, and unsupported-claim warnings.), then validate the required submission proof.",
+        "mechanism_family": "constraint-aware-allocation-optimizer",
+        "demo_type": "Working browser demo plus live pitch",
+        "external_evaluation_scores": {
+          "evidence_quality": 1.0,
+          "feasibility": 1.0,
+          "core_depth": 1.0,
+          "actionability": 1.0,
+          "differentiation": 1.0
+        },
+        "novelty_vector": {
+          "track": "No formal tracks are published; fits the implied need for accessible AI/crypto substance in front of MPs, Lords, civil servants, and invited guests.",
+          "user_class": "Non-technical parliamentarians evaluating technology proposals",
+          "workflow": "Parliamentarians hear bold AI or blockchain claims during short pitches, but cannot tell which statements are supported by source material, which were transformed by an AI system, and whether later versions quietly changed the meaning.",
+          "mechanism_family": "constraint-aware-allocation-optimizer",
+          "data": "User-pasted source text | Uploaded local pitch notes or policy excerpts | Generated demo fixtures for source artifacts and claim versions",
+          "last_mile_action": "Produce a simple traffic-light 'can an MP repeat this claim?' card with evidence links, hash proof, version history, and unsupported-claim warnings.",
+          "demo_type": "Working browser demo plus live pitch",
+          "embedding_distances": {}
+        },
+        "gate_results": []
+      }
+    },
+    {
+      "cell": [
+        "action-administrative-ai",
+        "before-casework-constituency",
+        "against-analyst-asking",
+        "anomaly-attested-detection",
+        "attachments-by-case",
+        "affected-after-applies",
+        "changing-correction-prototype"
+      ],
+      "quality": 1.0,
+      "idea": {
+        "id": "mut-r1-01-casework-correction-receipt",
+        "lane": "institutional",
+        "disciplines": [
+          "forensic accounting"
+        ],
+        "working_title": "Casework Correction Receipt",
+        "primary_user": "MP constituency office staff handling resident casework escalations before a short parliamentary technology demo",
+        "painful_workflow": "A resident or staffer spots a wrong eligibility status, missed evidence item, or misclassified urgency in a casework queue, but the correction path is usually buried in email threads, spreadsheets, and manual notes. The office needs a way to verify the proposed correction against available evidence and write the corrected state back into the workflow without asking a technical analyst to rebuild the queue.",
+        "current_workaround": "Staff manually compare emails, attachments, and spreadsheet rows, then update a tracker with a short note that may not preserve which evidence justified the correction or which downstream task changed.",
+        "imported_mechanism": "m-001 verifiable-provenance-ledger adapted from supply-chain audit to resident casework correction events.",
+        "mechanism_origin": "forensic accounting",
+        "data_sources": [
+          "Generated fictional constituency case records with status, owner, deadline, evidence references, and current workflow step",
+          "Generated fictional evidence notes or attachments represented by local text and hashes",
+          "User-entered correction request during the demo",
+          "Signed correction events and verifier outputs generated by the prototype"
+        ],
+        "core_computation": "An AI verifier reads a proposed correction, compares it with the resident's fictional evidence bundle and existing case record, classifies whether the correction is supported, partially supported, or unsupported, and generates a structured correction patch. The patch is written as a new signed event in an append-only cryptographic ledger and updates the visible case status only when the support threshold and human confirmation are satisfied.",
+        "last_mile_action": "The staffer applies a verified correction directly to the casework queue: the affected field changes, the next owner is notified, and a correction receipt records the before value, after value, supporting evidence hashes, verifier rationale, timestamp, and reviewer confirmation.",
+        "visible_transformation": "A disputed case record goes from an ambiguous complaint in an inbox to a corrected workflow item with a visible receipt showing exactly what changed, why it was accepted, and which evidence supports the change.",
+        "sponsor_dependency": "Low. EasyA provides the parliamentary audience and Web3 context, but the prototype does not depend on a sponsor SDK, sponsor dataset, or specific blockchain.",
+        "technical_risk": "Medium. The main risk is presenting AI verification as final truth. The prototype should frame the verifier as decision support, require human confirmation before applying the patch, and use only fictional records.",
+        "collision_risk": "unknown",
+        "why_now": "Participants may start building on 2026-08-24 and pitch on 2026-09-04, making scope control and demo clarity unusually important for small teams.",
+        "kill_reason": "",
+        "killer_demo": "Load a fictional case marked 'standard priority' despite evidence of an imminent housing deadline. A judge submits a correction request, the AI cites the matching evidence note, the ledger records the before/after status change, and the queue immediately moves the case to urgent review with a QR-verifiable correction receipt.",
+        "hard_to_fake_advantage": "A generic casework chatbot can suggest a correction, but this prototype must produce a structured patch, require human confirmation, update the workflow state, and preserve tamper-evident proof of the evidence and reviewer action.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-d39d2793b384",
+          "src-19eb9b332a3a",
+          "opp-001",
+          "m-001"
+        ],
+        "opportunity_id": "opp-003",
+        "mechanism_id": "m-003",
+        "mutation_history": [
+          "round 1: empty action region: write a verified correction into the workflow"
+        ],
+        "track_fit": "No formal tracks are published. Fits the brief by making AI and cryptographic provenance core to a government-facing workflow and by ending with an observable administrative action a non-technical parliamentarian can understand.",
+        "technology_roles": {
+          "AI and/or crypto/blockchain must be core to the product mechanism.": "AI is required to compare a free-text correction request with case evidence and produce a structured correction patch. The append-only cryptographic ledger is required to make the correction receipt tamper-evident. Removing either breaks the verified correction workflow.",
+          "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product.": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: An AI verifier reads a proposed correction, compares it with the resident's fictional evidence bundle and existing case record, classifies whether the correction is supported, partially supported, or unsupported, and generates a structured correction patch. The patch is written as a new signed event in an append-only cryptographic ledger and updates the visible case status only when the support threshold and human confirmation are satisfied.. Removing it must materially change or break the required implementation.",
+          "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA.": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: An AI verifier reads a proposed correction, compares it with the resident's fictional evidence bundle and existing case record, classifies whether the correction is supported, partially supported, or unsupported, and generates a structured correction patch. The patch is written as a new signed event in an append-only cryptographic ledger and updates the visible case status only when the support threshold and human confirmation are satisfied.. Removing it must materially change or break the required implementation."
+        },
+        "requirement_satisfaction": {
+          "req-core-ai-crypto": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: An AI verifier reads a proposed correction, compares it with the resident's fictional evidence bundle and existing case record, classifies whether the correction is supported, partially supported, or unsupported, and generates a structured correction patch. The patch is written as a new signed event in an append-only cryptographic ledger and updates the visible case status only when the support threshold and human confirmation are satisfied.. Removing it must materially change or break the required implementation.",
+          "req-team-size": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (An AI verifier reads a proposed correction, compares it with the resident's fictional evidence bundle and existing case record, classifies whether the correction is supported, partially supported, or unsupported, and generates a structured correction patch. The patch is written as a new signed event in an append-only cryptographic ledger and updates the visible case status only when the support threshold and human confirmation are satisfied.), produce the result (The staffer applies a verified correction directly to the casework queue: the affected field changes, the next owner is notified, and a correction receipt records the before value, after value, supporting evidence hashes, verifier rationale, timestamp, and reviewer confirmation.), then validate the required submission proof.",
+          "req-pitch-day": "A judge can change a proposed correction live and observe either an accepted workflow update with evidence-backed receipt or a blocked correction with an unsupported rationale.",
+          "req-accessible-demo": "A judge can change a proposed correction live and observe either an accepted workflow update with evidence-backed receipt or a blocked correction with an unsupported rationale.",
+          "req-in-person-event": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: An AI verifier reads a proposed correction, compares it with the resident's fictional evidence bundle and existing case record, classifies whether the correction is supported, partially supported, or unsupported, and generates a structured correction patch. The patch is written as a new signed event in an append-only cryptographic ledger and updates the visible case status only when the support threshold and human confirmation are satisfied.. Removing it must materially change or break the required implementation.",
+          "artifact:Live or recorded pitch on 2026-09-04": "Produce and validate the required submission artifact: Live or recorded pitch on 2026-09-04.",
+          "artifact:Working demo or observable product demonstration suitable for non-technical parliamentarians": "Produce and validate the required submission artifact: Working demo or observable product demonstration suitable for non-technical parliamentarians."
+        },
+        "data_access_status": "No external dataset is required or mandated by the brief. The demo can use generated fictional casework records and local evidence notes so no personal resident data is exposed.",
+        "data_access_plan": "Prepare five to ten fictional case records and evidence notes with documented fields. Hash each evidence note locally, allow a judge to request one correction live, and store the correction event in a local append-only log with reviewer confirmation.",
+        "testable_claim": "For a prepared fictional casework queue, the prototype can verify a correction request against local evidence, apply a supported correction to the workflow, and produce a tamper-evident receipt during the pitch.",
+        "demo_proof": "A judge can change a proposed correction live and observe either an accepted workflow update with evidence-backed receipt or a blocked correction with an unsupported rationale.",
+        "minimum_demonstrable_loop": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (An AI verifier reads a proposed correction, compares it with the resident's fictional evidence bundle and existing case record, classifies whether the correction is supported, partially supported, or unsupported, and generates a structured correction patch. The patch is written as a new signed event in an append-only cryptographic ledger and updates the visible case status only when the support threshold and human confirmation are satisfied.), produce the result (The staffer applies a verified correction directly to the casework queue: the affected field changes, the next owner is notified, and a correction receipt records the before value, after value, supporting evidence hashes, verifier rationale, timestamp, and reviewer confirmation.), then validate the required submission proof.",
+        "mechanism_family": "anomaly-detection-with-attested-evidence",
+        "demo_type": "Workflow-state-changing prototype with QR-verifiable correction receipt.",
+        "external_evaluation_scores": {
+          "evidence_quality": 1.0,
+          "feasibility": 1.0,
+          "core_depth": 1.0,
+          "actionability": 1.0,
+          "differentiation": 1.0
+        },
+        "novelty_vector": {
+          "track": "No formal tracks are published. Fits the brief by making AI and cryptographic provenance core to a government-facing workflow and by ending with an observable administrative action a non-technical parliamentarian can understand.",
+          "user_class": "MP constituency office staff handling resident casework escalations before a short parliamentary technology demo",
+          "workflow": "A resident or staffer spots a wrong eligibility status, missed evidence item, or misclassified urgency in a casework queue, but the correction path is usually buried in email threads, spreadsheets, and manual notes. The office needs a way to verify the proposed correction against available evidence and write the corrected state back into the workflow without asking a technical analyst to rebuild the queue.",
+          "mechanism_family": "anomaly-detection-with-attested-evidence",
+          "data": "Generated fictional constituency case records with status, owner, deadline, evidence references, and current workflow step | Generated fictional evidence notes or attachments represented by local text and hashes | User-entered correction request during the demo | Signed correction events and verifier outputs generated by the prototype",
+          "last_mile_action": "The staffer applies a verified correction directly to the casework queue: the affected field changes, the next owner is notified, and a correction receipt records the before value, after value, supporting evidence hashes, verifier rationale, timestamp, and reviewer confirmation.",
+          "demo_type": "Workflow-state-changing prototype with QR-verifiable correction receipt.",
+          "embedding_distances": {}
+        },
+        "gate_results": []
+      }
+    },
+    {
+      "cell": [
+        "action-ai-are",
+        "actions-after-ai",
+        "action-administrative-after",
+        "allocation-aware-constraint",
+        "as-availability-before",
+        "20-action-are",
+        "calendar-interactive-output"
+      ],
+      "quality": 1.0,
+      "idea": {
+        "id": "mut-r1-02-bounded-next-step-scheduler",
+        "lane": "systems",
+        "disciplines": [
+          "operations research"
+        ],
+        "working_title": "Bounded Next-Step Scheduler",
+        "primary_user": "Civil servants running follow-up actions after hearing AI or crypto/blockchain proposals in a compressed parliamentary event",
+        "painful_workflow": "After a promising pitch, officials often leave with broad intentions such as 'follow up', 'check procurement', or 'ask legal', but no bounded next action, owner, deadline, or evidence condition. The opportunity then stalls because the next administrative step is not converted into a concrete calendar hold or review task.",
+        "current_workaround": "Attendees exchange business cards, forward decks, or write informal notes, then rely on memory and overloaded inboxes to decide what should happen next.",
+        "imported_mechanism": "m-000 counterfactual-policy-simulation repurposed into constraint-aware action scheduling for post-pitch public-sector review.",
+        "mechanism_origin": "operations research",
+        "data_sources": [
+          "User-entered fictional pitch summary or claim list",
+          "Generated stakeholder roles, review constraints, and calendar slots for the demo",
+          "Generated dependency rules such as required evidence before procurement, legal, or data review",
+          "Optional local CSV of fictional availability slots"
+        ],
+        "core_computation": "An AI planner extracts unresolved claims, required evidence, stakeholder roles, and constraints from a short pitch note or demo summary, then simulates feasible next actions against fictional calendar capacity, review deadlines, and dependency rules. It selects the smallest bounded action that reduces uncertainty, explains why broader actions were deferred, and records the scheduling rationale.",
+        "last_mile_action": "The official schedules the next bounded action: a specific 20-minute evidence review, owner, invite list, deadline, required input, and stop condition are written into a calendar-ready task rather than left as a generic follow-up note.",
+        "visible_transformation": "A vague post-pitch intention becomes a concrete next action with owner, timebox, dependency checklist, and evidence gate visible on screen.",
+        "sponsor_dependency": "Low. EasyA's event context supplies the realistic post-pitch situation, but no EasyA-specific integration is required.",
+        "technical_risk": "Low to medium. The risk is over-automating official decision-making. The prototype should schedule only a proposed next review action, expose assumptions, and let the human edit owner, time, and stop condition before export.",
+        "collision_risk": "unknown",
+        "why_now": "The pitch day is 2026-09-04 in Parliament, with MPs, Lords, civil servants, and invited guests in the audience; the supplied organiser summary says demo clarity for non-technical parliamentarians matters.",
+        "kill_reason": "",
+        "killer_demo": "Paste a fictional pitch summary with three unresolved claims. The system identifies the riskiest unanswered claim, simulates which follow-up can fit before the next review point, and produces a calendar-ready 20-minute evidence check assigned to a named role with required documents and a clear stop condition.",
+        "hard_to_fake_advantage": "A generic assistant can draft a follow-up email, but this prototype must choose a bounded action by evaluating constraints, dependencies, uncertainty reduction, and calendar feasibility, then generate an auditable scheduling rationale.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-d39d2793b384",
+          "src-19eb9b332a3a",
+          "src-effc6640b768",
+          "opp-001",
+          "m-000"
+        ],
+        "opportunity_id": "opp-000",
+        "mechanism_id": "m-002",
+        "mutation_history": [
+          "round 1: empty action region: schedule the next bounded action"
+        ],
+        "track_fit": "No formal tracks are published. Fits the brief by using AI as the core planning and constraint-interpretation mechanism for a government-facing workflow that ends in an immediate operational action.",
+        "technology_roles": {
+          "AI and/or crypto/blockchain must be core to the product mechanism.": "AI is essential for extracting claims, dependencies, uncertainty, and feasible bounded actions from a pitch summary. Without AI, the system becomes a static task template and loses its core scheduling judgement.",
+          "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product.": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: An AI planner extracts unresolved claims, required evidence, stakeholder roles, and constraints from a short pitch note or demo summary, then simulates feasible next actions against fictional calendar capacity, review deadlines, and dependency rules. It selects the smallest bounded action that reduces uncertainty, explains why broader actions were deferred, and records the scheduling rationale.. Removing it must materially change or break the required implementation.",
+          "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA.": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: An AI planner extracts unresolved claims, required evidence, stakeholder roles, and constraints from a short pitch note or demo summary, then simulates feasible next actions against fictional calendar capacity, review deadlines, and dependency rules. It selects the smallest bounded action that reduces uncertainty, explains why broader actions were deferred, and records the scheduling rationale.. Removing it must materially change or break the required implementation."
+        },
+        "requirement_satisfaction": {
+          "req-core-ai-crypto": "Required: projects must use AI and/or crypto/blockchain as a material core mechanism; removing it should break the product. is materially used in the core path: An AI planner extracts unresolved claims, required evidence, stakeholder roles, and constraints from a short pitch note or demo summary, then simulates feasible next actions against fictional calendar capacity, review deadlines, and dependency rules. It selects the smallest bounded action that reduces uncertainty, explains why broader actions were deferred, and records the scheduling rationale.. Removing it must materially change or break the required implementation.",
+          "req-team-size": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (An AI planner extracts unresolved claims, required evidence, stakeholder roles, and constraints from a short pitch note or demo summary, then simulates feasible next actions against fictional calendar capacity, review deadlines, and dependency rules. It selects the smallest bounded action that reduces uncertainty, explains why broader actions were deferred, and records the scheduling rationale.), produce the result (The official schedules the next bounded action: a specific 20-minute evidence review, owner, invite list, deadline, required input, and stop condition are written into a calendar-ready task rather than left as a generic follow-up note.), then validate the required submission proof.",
+          "req-pitch-day": "A judge can edit an unresolved claim or deadline live and see the proposed next bounded action change with a plain-English rationale.",
+          "req-accessible-demo": "A judge can edit an unresolved claim or deadline live and see the proposed next bounded action change with a plain-English rationale.",
+          "req-in-person-event": "Required by event details: event is in person at House of Commons, Saint Margaret Street, London SW1A 0AA. is materially used in the core path: An AI planner extracts unresolved claims, required evidence, stakeholder roles, and constraints from a short pitch note or demo summary, then simulates feasible next actions against fictional calendar capacity, review deadlines, and dependency rules. It selects the smallest bounded action that reduces uncertainty, explains why broader actions were deferred, and records the scheduling rationale.. Removing it must materially change or break the required implementation.",
+          "artifact:Live or recorded pitch on 2026-09-04": "Produce and validate the required submission artifact: Live or recorded pitch on 2026-09-04.",
+          "artifact:Working demo or observable product demonstration suitable for non-technical parliamentarians": "Produce and validate the required submission artifact: Working demo or observable product demonstration suitable for non-technical parliamentarians."
+        },
+        "data_access_status": "No mandated external data source is supplied. The scheduler can be demonstrated with fictional roles, constraints, and availability slots prepared locally.",
+        "data_access_plan": "Build a small synthetic calendar and review-rule fixture. Allow a judge to paste or edit a pitch summary live, then show the selected bounded action and the rejected alternatives with reasons.",
+        "testable_claim": "For a prepared synthetic calendar and constraint fixture, the prototype can transform a vague post-pitch follow-up note into a bounded next action with owner, deadline, required evidence, and stop condition during the pitch.",
+        "demo_proof": "A judge can edit an unresolved claim or deadline live and see the proposed next bounded action change with a plain-English rationale.",
+        "minimum_demonstrable_loop": "Within Work may start 2026-08-24; pitch day is 2026-09-04. The in-person event runs Friday 2026-09-04, 12:30-17:30. with team constraint 5, implement the smallest complete loop: prepare the required inputs/resources, build the core transformation (An AI planner extracts unresolved claims, required evidence, stakeholder roles, and constraints from a short pitch note or demo summary, then simulates feasible next actions against fictional calendar capacity, review deadlines, and dependency rules. It selects the smallest bounded action that reduces uncertainty, explains why broader actions were deferred, and records the scheduling rationale.), produce the result (The official schedules the next bounded action: a specific 20-minute evidence review, owner, invite list, deadline, required input, and stop condition are written into a calendar-ready task rather than left as a generic follow-up note.), then validate the required submission proof.",
+        "mechanism_family": "constraint-aware-allocation-optimizer",
+        "demo_type": "Interactive scheduling prototype with calendar-ready task output.",
+        "external_evaluation_scores": {
+          "evidence_quality": 1.0,
+          "feasibility": 1.0,
+          "core_depth": 1.0,
+          "actionability": 1.0,
+          "differentiation": 1.0
+        },
+        "novelty_vector": {
+          "track": "No formal tracks are published. Fits the brief by using AI as the core planning and constraint-interpretation mechanism for a government-facing workflow that ends in an immediate operational action.",
+          "user_class": "Civil servants running follow-up actions after hearing AI or crypto/blockchain proposals in a compressed parliamentary event",
+          "workflow": "After a promising pitch, officials often leave with broad intentions such as 'follow up', 'check procurement', or 'ask legal', but no bounded next action, owner, deadline, or evidence condition. The opportunity then stalls because the next administrative step is not converted into a concrete calendar hold or review task.",
+          "mechanism_family": "constraint-aware-allocation-optimizer",
+          "data": "User-entered fictional pitch summary or claim list | Generated stakeholder roles, review constraints, and calendar slots for the demo | Generated dependency rules such as required evidence before procurement, legal, or data review | Optional local CSV of fictional availability slots",
+          "last_mile_action": "The official schedules the next bounded action: a specific 20-minute evidence review, owner, invite list, deadline, required input, and stop condition are written into a calendar-ready task rather than left as a generic follow-up note.",
+          "demo_type": "Interactive scheduling prototype with calendar-ready task output.",
+          "embedding_distances": {}
+        },
+        "gate_results": []
+      }
+    }
+  ],
+  "replacements_and_kills": []
+}

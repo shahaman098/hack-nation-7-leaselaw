@@ -1,0 +1,298 @@
+{
+  "name": "OpenAI Build Week",
+  "slug": "openai-build-week",
+  "source_urls": [
+    "https://openai.devpost.com/",
+    "https://openai.devpost.com/resources",
+    "https://openai.devpost.com/rules",
+    "https://openai.devpost.com/details/faqs",
+    "https://openai.devpost.com/details/dates"
+  ],
+  "theme": "Global online hackathon to build working projects with Codex and GPT-5.6 across consumer life apps, work/productivity, developer tools, and education.",
+  "tracks": [
+    "Apps for Your Life",
+    "Work and Productivity",
+    "Developer Tools",
+    "Education"
+  ],
+  "sponsors": [
+    "OpenAI OpCo, LLC"
+  ],
+  "deadline": "2026-07-21 17:00 PDT",
+  "team_size": "No limit on team size according to FAQ; entrants may participate as individuals, teams, or organizations. Some prize benefits are capped, including up to two DevDay/Exchange passes for 1st-place teams.",
+  "required_or_encouraged_tech": [
+    "Codex required",
+    "GPT-5.6 required",
+    "OpenAI account required",
+    "/feedback Codex Session ID required from the primary build thread",
+    "Public YouTube demo video under 3 minutes with audio explaining use of Codex and GPT-5.6",
+    "Code repository URL required; public with relevant licensing or private shared with testing@devpost.com and build-week-event@openai.com",
+    "README with setup instructions, sample data if needed, run/test guidance, Codex workflow, key decisions, and GPT-5.6/Codex contribution",
+    "Devpost Hackathons Plugin optional",
+    "Standard libraries, frameworks, third-party SDKs/APIs/data allowed if authorized and licensed"
+  ],
+  "prizes": [
+    "$100,000 total prizes",
+    "1st Place | Apps for Your Life: $15,000 cash, up to two DevDay/Exchange passes, OpenAI Developers promotion, meeting with Codex Team, Pro Account for 1 year",
+    "2nd Place | Apps for Your Life: $10,000 cash, OpenAI Developers promotion, Pro Account for 1 year",
+    "1st Place | Work & Productivity: $15,000 cash, up to two DevDay/Exchange passes, OpenAI Developers promotion, meeting with Codex Team, Pro Account for 1 year",
+    "2nd Place | Work & Productivity: $10,000 cash, OpenAI Developers promotion, Pro Account for 1 year",
+    "1st Place | Developer Tools: $15,000 cash, up to two DevDay/Exchange passes, OpenAI Developers promotion, meeting with Codex Team, Pro Account for 1 year",
+    "2nd Place | Developer Tools: $10,000 cash, OpenAI Developers promotion, Pro Account for 1 year",
+    "1st Place | Education: $15,000 cash, up to two DevDay/Exchange passes, OpenAI Developers promotion, meeting with Codex Team, Pro Account for 1 year",
+    "2nd Place | Education: $10,000 cash, OpenAI Developers promotion, Pro Account for 1 year",
+    "Each project is eligible for one prize"
+  ],
+  "facts": [
+    {
+      "claim": "Registration runs July 9, 2026 10:00 PT to July 21, 2026 17:00 PT; submission period runs July 13, 2026 09:00 PT to July 21, 2026 17:00 PT.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "The schedule page lists submissions ending July 21, 2026 17:00 PDT, judging July 22, 2026 09:00 PDT to August 09, 2026 17:00 PDT, and winners announced August 12, 2026 14:00 PDT.",
+      "source": "https://openai.devpost.com/details/dates",
+      "confidence": "high"
+    },
+    {
+      "claim": "The official rules list judging as July 22, 2026 10:00 PT to August 5, 2026 17:00 PT, creating a discrepancy with the schedule page.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "Eligible entrants include individuals at least the age of majority in their residence, eligible teams, and eligible organizations in OpenAI API-supported countries or territories, subject to exclusions.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "Excluded entrants include unsupported or prohibited jurisdictions, including examples Brazil, Quebec, Russia, Crimea, Cuba, Iran, North Korea, Syria, and other OFAC-designated countries, plus promotion entities, judges, related affiliates, and conflicts of interest.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "Projects must be built with Codex and GPT-5.6 and fit one of four tracks: Apps for Your Life, Work and Productivity, Developer Tools, or Education.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "Submitted projects must install and run consistently on their intended platform and function as shown in the demo or described in text.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "Pre-existing projects are allowed only if meaningfully extended using Codex and/or GPT-5.6 after the submission period start; prior work versus new work must be documented with evidence such as logs or commit history.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "Third-party SDKs, APIs, and data are allowed only when the entrant is authorized to use them under applicable terms or licenses.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "Submission requires a text description, category, demo video under three minutes, public YouTube link, code repository URL, README, and /feedback Codex Session ID.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "The demo video must include a clear demo with audio covering what was built and how Codex and GPT-5.6 were used; judges are not required to watch beyond three minutes.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "Judges may test the project but are not required to; they may judge solely from submission text, images, and video.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "For plugins or developer tools, submissions must include installation instructions, supported platforms, and a testing path such as a demo instance, sandbox, or test account.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "The README guidance says Codex collaboration, workflow acceleration, key decisions, and GPT-5.6/Codex contributions are important to Technical Implementation and Quality of the Idea judging.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "Stage One is a pass/fail viability screen for theme fit and use of required APIs/SDKs; Stage Two uses equally weighted criteria: Technological Implementation, Design, Potential Impact, and Quality of the Idea.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "Tie-breaks compare the tied submissions by the first listed criterion, then subsequent criteria, then judge vote if still tied.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "The Devpost Hackathons Plugin is optional and is explicitly not the official source of hackathon information; official rules, website, updates, and notices prevail.",
+      "source": "https://openai.devpost.com/rules",
+      "confidence": "high"
+    },
+    {
+      "claim": "The resources page says all available $100 Codex credits had been given out, while participants could still join using the free tier.",
+      "source": "https://openai.devpost.com/resources",
+      "confidence": "medium"
+    },
+    {
+      "claim": "The resources page encourages starting with the problem, keeping the repo testable, recording the demo as work progresses, and watching credit usage.",
+      "source": "https://openai.devpost.com/resources",
+      "confidence": "high"
+    },
+    {
+      "claim": "The FAQ says each project can be entered into only one track and entrants should choose the closest match.",
+      "source": "https://openai.devpost.com/details/faqs",
+      "confidence": "high"
+    },
+    {
+      "claim": "The FAQ says Free plan users can participate and have access to GPT-5.6 Terra in Codex; GPT-5.6 need only be used for part of the project.",
+      "source": "https://openai.devpost.com/details/faqs",
+      "confidence": "medium"
+    },
+    {
+      "claim": "OpenAI Help says GPT-5.6 in Codex includes Terra for Free and Go, and Sol, Terra, and Luna for Plus, Pro, Business, and Enterprise, while OpenAI API availability includes Sol, Terra, and Luna.",
+      "source": "https://help.openai.com/en/articles/20001354-gpt-56-in-chatgpt",
+      "confidence": "medium"
+    },
+    {
+      "claim": "OpenAI Help describes Codex as an AI coding agent that can help write, review, and ship code, including pairing locally or delegating work in the cloud.",
+      "source": "https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan.pdf",
+      "confidence": "medium"
+    },
+    {
+      "claim": "OpenAI Help describes Codex CLI as a command-line coding agent that can read, modify, and run code locally, with multimodal inputs and an approvals workflow.",
+      "source": "https://help.openai.com/en/articles/11096431",
+      "confidence": "medium"
+    },
+    {
+      "claim": "The project gallery page had not been published at browse time, so no current submissions, finalists, or winners were available there.",
+      "source": "https://openai.devpost.com/project-gallery",
+      "confidence": "high"
+    }
+  ],
+  "inference": [
+    {
+      "claim": "Technical Implementation is strategically the most important criterion despite equal weights because it is the first tie-break criterion and is reinforced by required Codex/GPT-5.6 evidence in the README, video, and /feedback Session ID.",
+      "rationale": "Rules state equal weighting but tie-breaks start with the first listed criterion; submission requirements repeatedly require specific evidence of Codex and GPT-5.6 use."
+    },
+    {
+      "claim": "Complete runnable product experience is likely a stronger lane than pure model demo because Design explicitly penalizes technical proofs of concept and testing access may determine whether judges can verify function quickly.",
+      "rationale": "Design criterion asks for a complete coherent product experience, and rules say judges may rely on demo/text if they do not test."
+    },
+    {
+      "claim": "Projects that expose Codex as a visible build accelerator or audit trail may align better with sponsor priorities than projects where model use is hidden.",
+      "rationale": "README and video must explain where Codex accelerated workflow, key decisions, and GPT-5.6/Codex contribution."
+    },
+    {
+      "claim": "Underrepresented workflows should emphasize irreversible workflow outcomes, constraint handling, testability, and failure prevention rather than chat wrappers or dashboards.",
+      "rationale": "Judging asks for working non-trivial implementation, credible real-world impact, and novelty; default seed blacklist identifies saturated archetypes."
+    }
+  ],
+  "missing": [
+    "No public finalist or winner data is available yet for this hackathon because winners are scheduled for August 12, 2026 and the project gallery was unpublished at browse time.",
+    "No numeric point weights beyond 'equally weighted' were published for the four Stage Two judging criteria.",
+    "No official dataset is provided by the hackathon materials.",
+    "No explicit maximum team size is listed, although prize benefits may cap some per-team benefits.",
+    "No detailed list of required GPT-5.6 model variants for eligibility is stated beyond requiring GPT-5.6 use.",
+    "No exact judging rubric scoring scale is published.",
+    "No complete current participant/submission distribution by track is available from the public materials.",
+    "No official clarification found for the conflict between the rules judging end date and schedule-page judging end date."
+  ],
+  "potentially_stale": [
+    "Participant count on Devpost pages changed across browsed pages and should be treated as volatile.",
+    "The statement that all $100 Codex credits have been distributed may change only if organizers add credits, but at browse time it was posted as exhausted.",
+    "OpenAI plan/model availability and minimum client versions for GPT-5.6 in Codex are current-help-center claims and may change quickly.",
+    "Supported country/territory eligibility depends on the OpenAI API supported-countries page and sanctions/legal changes.",
+    "Judging period end date is inconsistent: official rules say August 5, 2026 17:00 PT, while schedule page says August 09, 2026 17:00 PDT.",
+    "The project gallery was unpublished at browse time and may become available after submissions close."
+  ],
+  "judging_criteria": [
+    {
+      "name": "Stage One viability screen",
+      "weight_or_priority": "Pass/fail before scored judging",
+      "notes": "Project must reasonably fit the theme and reasonably apply the required APIs/SDKs featured in the hackathon."
+    },
+    {
+      "name": "Technological Implementation",
+      "weight_or_priority": "Equal Stage Two weight; first tie-break priority",
+      "notes": "Assesses thorough and skillful Codex use, genuine effort, and working non-trivial implementation."
+    },
+    {
+      "name": "Design",
+      "weight_or_priority": "Equal Stage Two weight; second tie-break priority",
+      "notes": "Assesses whether the project is working/runnable with a complete coherent product experience, not merely a technical proof of concept."
+    },
+    {
+      "name": "Potential Impact",
+      "weight_or_priority": "Equal Stage Two weight; third tie-break priority",
+      "notes": "Assesses credible, specific real-audience problem framing and whether the demonstrated solution addresses it."
+    },
+    {
+      "name": "Quality of the Idea",
+      "weight_or_priority": "Equal Stage Two weight; fourth tie-break priority",
+      "notes": "Assesses creativity, novelty, and difference from existing concepts."
+    }
+  ],
+  "sponsor_capabilities": [
+    "Codex coding agent for repository-aware software development, debugging, tests, code review, and shipping workflows",
+    "Codex usage through ChatGPT app, Codex CLI, IDE extension, or SDK as accepted by FAQ",
+    "GPT-5.6 model family, including Codex availability by plan as described in OpenAI Help Center",
+    "/feedback Session ID as evidence of primary Codex build thread",
+    "Devpost Hackathons Plugin for hackathon discovery, registration, build assistance, and submission flow, explicitly optional and not source of truth",
+    "OpenAI Discord, office hours, livestreams, Academy sessions, and more than 60 global events as community/support channels",
+    "OpenAI Developers promotion, Codex Team meetings, Pro accounts, and DevDay/Exchange passes as prize/network incentives"
+  ],
+  "available_datasets": [
+    "No official dataset published in the hackathon materials.",
+    "Entrant-provided sample data may be included if needed to run the project.",
+    "Authorized third-party SDKs, APIs, and data may be used subject to applicable terms and licensing.",
+    "Testing credentials, demo links, sandboxes, or test accounts may be provided for judge access."
+  ],
+  "crowding": {
+    "high_collision": [
+      "AI study tutor / quiz / flashcard generator",
+      "Generic mental-health companion or wellness chatbot",
+      "Resume / LinkedIn optimiser",
+      "Document / PDF summariser",
+      "Meeting notes / productivity chatbot",
+      "Generic chatbot wrapper over GPT-5.6 or Codex",
+      "Generic chatbot wrapper over a sponsor API",
+      "Recommendation list with no last-mile action",
+      "Dashboard-only analytics without an irreversible state change",
+      "Carbon-footprint tracker dashboard",
+      "Symptom checker / triage chatbot"
+    ],
+    "medium_collision": [
+      "Scholarship / grant / benefits eligibility navigator (retrieve -> check -> draft)",
+      "Emergency information assistant / crisis tip sheet",
+      "Automated sales outreach multi-agent SDR",
+      "Generic opportunity board for students/job seekers",
+      "Campaign fatigue / ops anomaly dashboard with rewritten ads",
+      "Basic code review bot without repository-specific execution or test evidence",
+      "Generic workflow automation assistant without production-grade integration depth",
+      "Generic personal finance categorizer or travel planner with no transaction/action loop",
+      "Recent similar title: Neilblaze"
+    ],
+    "potentially_underexplored": [
+      "Appeal-pathway reconstruction",
+      "Constraint-based resource allocation under official rules",
+      "Administrative error prevention / form failure-chain detection",
+      "Eligibility inconsistency detection across agencies",
+      "Procedural fairness / case-queue priority simulation",
+      "Demo-failure surface minimisation for live presentations",
+      "Judge-testability hardening workflows for complex projects",
+      "Codex contribution provenance and build-decision audit trails",
+      "Operational workflows that convert analysis into a verified state change rather than a report"
+    ],
+    "do_not_build": [
+      "Any 'navigator' that only ranks and drafts applications from scattered PDFs",
+      "Any personal crisis action planner that maps risk data to a checklist and safe route",
+      "Any ops doctor that uploads CSV and labels campaigns healthy/fatigued",
+      "Any project whose main value is a thin chat UI over GPT-5.6",
+      "Any dashboard-only analytics concept with no durable action, writeback, or tested workflow",
+      "Any education project that is only flashcards, quizzes, summarization, or generic tutoring",
+      "Any developer tool that cannot be installed, tested, or tried without rebuilding from scratch"
+    ]
+  },
+  "sanitized_brief": "Build a working, runnable project using Codex and GPT-5.6 for exactly one track: Apps for Your Life, Work and Productivity, Developer Tools, or Education. Stage One is pass/fail for theme fit and required tool use; Stage Two criteria are equally weighted: Technological Implementation, Design, Potential Impact, and Quality of the Idea, with tie-break priority following that order. Submissions need a text description, public under-3-minute YouTube demo with audio explaining Codex and GPT-5.6 use, repository access, README with setup/test instructions and sample data if needed, and a /feedback Codex Session ID. Sponsor capabilities to foreground are Codex as a coding agent across app/CLI/IDE/SDK workflows, GPT-5.6 integration, testable repos, demo/sandbox/test-account access, and optional Devpost plugin/community support. Blacklist labels: generic chatbot wrapper, AI study tutor/quiz/flashcards, mental-health companion, resume optimizer, PDF summarizer, meeting notes bot, recommendation-only list, dashboard-only analytics, generic opportunity navigator, crisis tip sheet, sales SDR automation, and structural twins that only rank/draft from PDFs or label uploaded CSVs."
+}

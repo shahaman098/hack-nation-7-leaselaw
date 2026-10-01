@@ -1,0 +1,62 @@
+[
+  {
+    "candidate_id": "institutional-foi-failure-chain-tracer-2",
+    "delivery_risk": "medium",
+    "critical_dependencies": [
+      "Managed Postgres for case state"
+    ],
+    "fakeable_parts": [],
+    "non_fakeable_core": "Infer most likely stalled edge in the process graph from timestamps",
+    "minimum_demonstrable_loop": "Show live clock near breach → highlight failing handoff → draft escalation",
+    "kill_recommendation": false,
+    "notes": "fallback feasibility stub | HackRep common stacks: javascript, python, react, node, firebase, flask"
+  },
+  {
+    "candidate_id": "institutional-appeal-path-diff-0",
+    "delivery_risk": "medium",
+    "critical_dependencies": [
+      "Object storage for guidance snapshots (optional)"
+    ],
+    "fakeable_parts": [],
+    "non_fakeable_core": "Diff official rule versions between decision date and today; emit missing-evidence set required for a valid appeal",
+    "minimum_demonstrable_loop": "Paste decision date + letter → show guidance diff → emit required evidence list with timestamps",
+    "kill_recommendation": false,
+    "notes": "fallback feasibility stub | HackRep common stacks: javascript, python, react, node, firebase, flask"
+  },
+  {
+    "candidate_id": "institutional-grant-match-abuse-detector-3",
+    "delivery_risk": "medium",
+    "critical_dependencies": [
+      "none required"
+    ],
+    "fakeable_parts": [],
+    "non_fakeable_core": "Score spend lines against encoded conditions; surface mismatched allocations",
+    "minimum_demonstrable_loop": "Upload ledger + one grant PDF → red exceptions with citations",
+    "kill_recommendation": false,
+    "notes": "fallback feasibility stub | HackRep common stacks: javascript, python, react, node, firebase, flask"
+  },
+  {
+    "candidate_id": "institutional-clinic-no-show-pool-4",
+    "delivery_risk": "medium",
+    "critical_dependencies": [
+      "none required"
+    ],
+    "fakeable_parts": [],
+    "non_fakeable_core": "Rank call order maximizing fill probability under notice-time constraints",
+    "minimum_demonstrable_loop": "Simulate 3 cancellations → show ranked backups and expected seats filled",
+    "kill_recommendation": false,
+    "notes": "fallback feasibility stub | HackRep common stacks: javascript, python, react, node, firebase, flask"
+  },
+  {
+    "candidate_id": "institutional-permit-queue-fairness-simulator-1",
+    "delivery_risk": "medium",
+    "critical_dependencies": [
+      "none required"
+    ],
+    "fakeable_parts": [],
+    "non_fakeable_core": "Solve queue assignment optimizing overdue risk subject to fairness and skill constraints",
+    "minimum_demonstrable_loop": "Upload week's applications → show before/after overdue risk and fairness metric",
+    "kill_recommendation": false,
+    "notes": "fallback feasibility stub | HackRep common stacks: javascript, python, react, node, firebase, flask"
+  }
+]

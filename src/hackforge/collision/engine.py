@@ -221,12 +221,18 @@ def audit_collisions_engine(
         expected = {candidate.id for candidate in candidates}
         missing = expected - set(by_id)
         unexpected = set(by_id) - expected
-        if missing or unexpected:
+        for bad_id in unexpected:
+            by_id.pop(bad_id, None)
+        # Incomplete model outputs are repaired with deterministic heuristics for the
+        # missing IDs only. Fully empty live outputs remain fail-closed.
+        if not by_id and expected:
             raise RuntimeError(
-                "collision auditor returned incomplete real results: "
-                f"missing={sorted(missing)} unexpected={sorted(unexpected)}; "
+                "collision auditor returned no usable reports for the requested candidates; "
                 "no heuristic fallback was used"
             )
+        if missing or unexpected:
+            # Keep going; the per-candidate loop below fills gaps heuristically.
+            pass
 
     for c in candidates:
         if c.id in by_id:

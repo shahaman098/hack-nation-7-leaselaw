@@ -1,0 +1,74 @@
+[
+  {
+    "candidate_id": "concept-group-crypto-call",
+    "delivery_risk": "high",
+    "critical_dependencies": [
+      "Working Solana CPI call to TxLINE validate_stat instruction, which may not exist or be documented for devnet.",
+      "GPT-5.6 natural-language-to-constraint reliability under adversarial or ambiguous predictions (e.g., 'Mbappé hat trick' vs own goal).",
+      "Solana NFT mint with soulbound attributes requiring token-2022 or custom program, not a trivial devnet deployment."
+    ],
+    "fakeable_parts": [
+      "NFT mint can be simulated client-side or replaced with a simple event emit without on-chain proof.",
+      "Constraint solver output can be hardcoded if GPT-5.6 translation fails for edge cases; demo only needs one correct path.",
+      "Live TxLINE feed can be replaced with a prerecorded fixture and manual trigger for the penalty event."
+    ],
+    "non_fakeable_core": "Solana program that verifies a stat via CPI to TxLINE and conditionally mints based on outcome.",
+    "minimum_demonstrable_loop": "Submit one hardcoded prediction text, mock TxLINE update, trigger on-chain resolution, and display NFT receipt in wallet.",
+    "kill_recommendation": false,
+    "notes": "The killer demo describes a Solana app that reads TxLINE and auto-mints NFTs. Without TxLINE API docs for CPI, the team is building against an imaginary interface. Risk collapses if TxLINE test harness ships with a validate_stat equivalent on devnet; otherwise the demo loop is fakeable but the core mechanism is vapor."
+  },
+  {
+    "candidate_id": "conc-feat-health",
+    "delivery_risk": "medium",
+    "critical_dependencies": [
+      "TxLINE data format and availability: must have a stream or fixture that can be ingested in a sliding-window fashion; a single JSON dump is insufficient.",
+      "On-chain Merkle root storage Solana program; writing, deploying, and debugging a new program on devnet within 5 days is tight.",
+      "GPT-5.6 role is unclear—Merkle tree construction and comparison is deterministic; depending on it for anomaly threshold introduces non-reproducibility."
+    ],
+    "fakeable_parts": [
+      "Anomaly threshold and dissimilarity metric can be pre-computed and the alert hardcoded for the demo run.",
+      "On-chain root comparison can be simulated with a Solana PDA that stores a pre-approved root, bypassing live computation.",
+      "Notification webhook can be a console log; no real external agent integration needed."
+    ],
+    "non_fakeable_core": "Continuous Merkle root computation over windows and on-chain verification of the root.",
+    "minimum_demonstrable_loop": "Feed a pre-cut fixture with a gap, compute two Merkle roots, store one on-chain, detect mismatch, emit console alert.",
+    "kill_recommendation": false,
+    "notes": "Feasible if the team has strong Solana and Merkle tree experience. The GPT-5.6 dependency is artificial—this is pure signal processing. The risk is over-engineering: trying to integrate GPT-5.6 will waste time. A tight Rust/Python loop without LLM is more likely to ship."
+  },
+  {
+    "candidate_id": "concept-1",
+    "delivery_risk": "medium",
+    "critical_dependencies": [
+      "Access to full TxLINE Merkle tree leaf data off-chain to compute proofs; a public RPC or API must provide this in devnet.",
+      "On-chain Keccak-256 hash verification via CPI or syscall; team must confirm compatibility with Solana's built-in hash functions.",
+      "A mock 'settled bet' fixture that the verifier can correctly disprove, requiring at least one prebuilt valid proof."
+    ],
+    "fakeable_parts": [
+      "Merkle proof construction can be done offline with a precomputed tree and proof hardcoded for the demo.",
+      "User input UI can be a CLI with a single hardcoded test case, skipping full receipt parsing.",
+      "Green shield/red X display can be a static webpage without real-time backend."
+    ],
+    "non_fakeable_core": "Merkle proof generation from TxLINE data and on-chain verification returning boolean validity.",
+    "minimum_demonstrable_loop": "Load a known TxLINE Merkle root on-chain, reconstruct proof for one stat, submit CPI call, log pass/fail.",
+    "kill_recommendation": false,
+    "notes": "This is the most self-contained candidate and does not require an LLM—it is a pure crypto engineering problem. The main risk is TxLINE's Merkle tree structure and data availability. If TxLINE already publishes roots on-chain and the leaf encoding is documented, this is a solid demo. Otherwise, it's a guessing game."
+  },
+  {
+    "candidate_id": "conc-replay-sandbox",
+    "delivery_risk": "medium",
+    "critical_dependencies": [
+      "A realistic World Cup historical JSON fixture in TxLINE-compatible schema; the cited source (devpost portfolio) is unrelated to sports data.",
+      "Solana program that records replay provenance via CPI; writing and deploying a non-trivial program in 5 days is risky.",
+      "Configurable replay server with timing control; building a reliable stream simulator with speed multiplier requires careful engineering."
+    ],
+    "fakeable_parts": [
+      "On-chain CPI audit trail can be replaced with a simple Solana log entry or transaction memo; no custom program needed.",
+      "Historical data can be fabricated for one match with 10 events instead of a full match; no live accuracy requirement.",
+      "Developer CLI can be a hardcoded Node script with one match, one speed, pre-configured endpoint."
+    ],
+    "non_fakeable_core": "Stream a sequence of TxLINE-formatted data points at a configurable rate and trigger downstream contract resolution.",
+    "minimum_demonstrable_loop": "Load a small JSON fixture, stream it at 5x speed to a mock prediction market program, show resolved outcome matching fixture.",
+    "kill_recommendation": false,
+    "notes": "The idea has genuine hackathon utility, but the cited data source is completely wrong—it is a personal portfolio, not sports data. The team must find or fabricate a World Cup fixture. The provenance program is overkill; dropping it reduces risk significantly. The core value is a simple replay server, which is a 1-day build."
+  }
+]

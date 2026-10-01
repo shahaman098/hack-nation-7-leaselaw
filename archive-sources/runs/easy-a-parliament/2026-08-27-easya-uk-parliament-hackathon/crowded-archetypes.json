@@ -1,0 +1,27 @@
+{
+  "high_collision": [
+    "Generic chatbot wrapper over an AI or blockchain API",
+    "Document / PDF summariser, especially if framed only as policy summarisation",
+    "Dashboard-only analytics without a meaningful downstream action",
+    "Recommendation list with no last-mile action"
+  ],
+  "medium_collision": [
+    "Scholarship / grant / benefits eligibility navigator using retrieve-check-draft flow",
+    "Generic opportunity board for students/job seekers",
+    "Emergency information assistant / crisis tip sheet"
+  ],
+  "potentially_underexplored": [
+    "Appeal-pathway reconstruction",
+    "Constraint-based resource allocation under official rules",
+    "Administrative error prevention / form failure-chain detection",
+    "Eligibility inconsistency detection across agencies",
+    "Procedural fairness / case-queue priority simulation",
+    "Failure-surface minimisation for competition proof or demonstrations"
+  ],
+  "do_not_build": [
+    "Any navigator that only ranks and drafts applications from scattered PDFs",
+    "Any personal crisis action planner that maps risk data to a checklist and safe route",
+    "Any ops doctor that uploads CSV and labels campaigns healthy/fatigued",
+    "A slide-only civic vision with AI/crypto added as a superficial label"
+  ]
+}

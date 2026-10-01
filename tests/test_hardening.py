@@ -17,7 +17,7 @@ from hackforge.diagnostics import doctor_ready_for_live, run_doctor
 from hackforge.memory import build_run_manifest, learn_from_runs, list_runs
 from hackforge.models import EvidenceSource
 from hackforge.paths import FIXTURES_DIR
-from hackforge.pipeline import run_analyse
+from hackforge.pipeline import _collect_initial_evidence, run_analyse
 from hackforge.providers import (
     LLMProvider,
     LLMResponse,
@@ -525,3 +525,125 @@ def test_cli_analyse_rejects_fixture_provider(tmp_path: Path):
     assert result.exit_code != 0
     assert "Invalid value for '--provider'" in result.output
     assert not tmp_path.exists() or not any(tmp_path.iterdir())
+
+
+def test_collect_initial_evidence_combines_url_and_pasted_text(monkeypatch: pytest.MonkeyPatch):
+    pasted = "# Pasted Civic Hackathon\n\nTeams of 1-4. Demo required."
+
+    def fake_crawl(url: str, **_kwargs):
+        assert url == "https://competition.example/event"
+        return [
+            EvidenceSource(
+                id="src-official",
+                url=url,
+                title="Official page",
+                source_kind="official",
+                retrieved_at="2026-08-10T00:00:00+00:00",
+                excerpt="Official rules and prize pool.",
+                fetch_status="ok",
+                http_status=200,
+                verified=True,
+            )
+        ]
+
+    monkeypatch.setattr("hackforge.pipeline.crawl_competition", fake_crawl)
+    raw, sources, evidence = _collect_initial_evidence(
+        input_path=None,
+        url="https://competition.example/event",
+        text=pasted,
+    )
+    assert "Pasted Civic Hackathon" in raw
+    assert "Official rules and prize pool." in raw
+    assert sources == ["inline", "https://competition.example/event"]
+    assert {item.source_kind for item in evidence} == {"input", "official"}
+    assert raw.index("Pasted Civic Hackathon") < raw.index("Official rules")
+
+
+def test_collect_initial_evidence_keeps_paste_when_url_crawl_fails(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    pasted = "# Operator brief\nJudging: impact 50%, demo 50%."
+
+    def fake_crawl(url: str, **_kwargs):
+        return [
+            EvidenceSource(
+                id="src-blocked",
+                url=url,
+                title=url,
+                source_kind="official",
+                retrieved_at="2026-08-10T00:00:00+00:00",
+                fetch_status="blocked",
+                http_status=202,
+                error="possible anti-bot challenge",
+                verified=False,
+            )
+        ]
+
+    monkeypatch.setattr("hackforge.pipeline.crawl_competition", fake_crawl)
+    raw, sources, evidence = _collect_initial_evidence(
+        input_path=None,
+        url="https://competition.example/walled",
+        text=pasted,
+    )
+    assert "Operator brief" in raw
+    assert "https://competition.example/walled" in sources
+    assert any(item.fetch_status == "blocked" for item in evidence)
+    assert any(item.source_kind == "input" for item in evidence)
+
+
+def test_collect_initial_evidence_url_only_still_requires_content(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    monkeypatch.setattr(
+        "hackforge.pipeline.crawl_competition",
+        lambda url, **_kwargs: [
+            EvidenceSource(
+                id="src-failed",
+                url=url,
+                title=url,
+                source_kind="official",
+                retrieved_at="2026-08-10T00:00:00+00:00",
+                fetch_status="failed",
+                http_status=503,
+                error="down",
+                verified=False,
+            )
+        ],
+    )
+    with pytest.raises(RuntimeError, match="Paste the official description"):
+        _collect_initial_evidence(
+            input_path=None,
+            url="https://competition.example/down",
+            text=None,
+        )
+
+
+def test_cli_analyse_accepts_combined_url_and_text(tmp_path: Path):
+    # Private/local URLs are blocked by the SSRF guard, so the paste must carry the brief.
+    result = CliRunner().invoke(
+        main,
+        [
+            "analyse",
+            "--url",
+            "http://127.0.0.1/hackathon",
+            "--text",
+            "# Combined Brief\n48-hour build. Demo required.",
+            "--dry-run",
+            "--fixture-bundle",
+            str(FIXTURES_DIR / "dry-run-bundle.json"),
+            "--search-profile",
+            "fast",
+            "--output-root",
+            str(tmp_path),
+            "--no-visual-report",
+            "--no-live-research",
+        ],
+    )
+    assert result.exit_code == 0, result.output
+    run_dirs = [path for path in tmp_path.iterdir() if path.is_dir()]
+    assert len(run_dirs) == 1
+    manifest = read_json(run_dirs[0] / "run-manifest.json")
+    assert "inline" in manifest["input_sources"]
+    assert "http://127.0.0.1/hackathon" in manifest["input_sources"]
+    brief = read_json(run_dirs[0] / "competition-brief.json")
+    assert "Combined Brief" in brief["name"] or "Combined Brief" in brief.get("sanitized_brief", "")

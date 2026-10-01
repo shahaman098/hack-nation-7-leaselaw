@@ -1,0 +1,164 @@
+[
+  {
+    "candidate_id": "concept-002-3",
+    "delivery_risk": "medium",
+    "critical_dependencies": [
+      "Reliable GPT-5.6 API access with enough quota for repeated repo-analysis, repair, and explanation loops",
+      "A tightly scoped fixture repo with deterministic install/test commands and permissive license",
+      "Sandboxed patch runner that can safely clone, edit, run tests, capture logs, and recover from failures during demo"
+    ],
+    "fakeable_parts": [
+      "Teacher review UI can be a thin local app over precomputed lesson/checkpoint JSON",
+      "Screenshots can be generated once from the fixed fixture and refreshed only on successful verification",
+      "GPT-5.6 constraint suggestions can be cached for the demo as long as live rerun path is shown"
+    ],
+    "non_fakeable_core": "The system must actually apply or reject a repo checkpoint based on real command execution and produce a lesson artifact grounded in the resulting diff and logs.",
+    "minimum_demonstrable_loop": "Use one small public repo, one lesson objective, three checkpoints, and one intentional failing checkpoint. Run verifier, show failure, have Codex/GPT-5.6 repair or revise it, rerun tests, and export a verified lesson bundle with transcripts.",
+    "kill_recommendation": false,
+    "notes": "Feasible only if the team stops trying to support arbitrary repositories. General repo ingestion, screenshots, branch management, and explanation grounding are a large integration surface. The winning proof is not the UI; it is deterministic verification from a fresh clone. Model cost is moderate but repeated repair loops can spike. Main risk is brittle environment setup and flaky generated constraints, not data access."
+  },
+  {
+    "candidate_id": "concept-003",
+    "delivery_risk": "high",
+    "critical_dependencies": [
+      "A synthetic internal-tool repo with known baseline, assisted, and ablated branches plus deterministic metrics",
+      "Clear definition of what counts as a model-dependent change and how ablation is computed",
+      "Git/CI/test orchestration that can create branches, run checks, persist receipts, and survive demo latency"
+    ],
+    "fakeable_parts": [
+      "Approval workflow can be simulated with local user actions and timestamped receipt records",
+      "Ops metrics such as cycle time and completed workflow count can be fixture-derived rather than integrated with a real organization",
+      "Signed receipt can be a structured JSON/Markdown artifact without cryptographic signing"
+    ],
+    "non_fakeable_core": "The project must run identical checks across baseline, assisted, and ablated variants and produce a credible receipt tying requirements, code changes, approvals, tests, and metric deltas together.",
+    "minimum_demonstrable_loop": "Build one tiny CRUD/internal workflow app with one requested change. Capture a baseline plan, apply a Codex-assisted branch, remove or replace the labeled model-dependent patch for ablation, run the same test suite across all three, and emit a receipt showing pass/fail and metric deltas.",
+    "kill_recommendation": true,
+    "notes": "This is over-scoped for the deadline. The causal-inference framing is likely to collapse into a scripted dashboard unless the ablation machinery is real, and real ablation is hard to define defensibly in five days. It also has a wide failure surface: Git operations, tests, approval state, model labeling, metric comparison, and receipt generation. Kill or reduce to a developer-tool receipt generator without causal claims."
+  },
+  {
+    "candidate_id": "mut-r4-01-erratacommit-lab",
+    "delivery_risk": "medium",
+    "critical_dependencies": [
+      "Reliable sandboxed command replay for the selected lab repo",
+      "GPT-5.6 access with enough quota for repeated issue-to-invariant attempts",
+      "A deliberately small fixture where the expected correction is objectively testable"
+    ],
+    "fakeable_parts": [
+      "ERRATA.md prose and rationale",
+      "Rerun badge/status UI",
+      "Student report intake form"
+    ],
+    "non_fakeable_core": "A failing-before and passing-after command transcript tied to an actual repo patch and regression fixture.",
+    "minimum_demonstrable_loop": "One seeded broken lab instruction, one report, one replayed failure, one Codex-applied patch, one passing rerun, and one committed errata record.",
+    "kill_recommendation": false,
+    "notes": "Feasible if scoped to one toy repo and deterministic commands. The 10-defect claim is too large for the deadline; judge against one or two high-quality seeded defects."
+  },
+  {
+    "candidate_id": "mut-r4-02-nextstep-clerk",
+    "delivery_risk": "high",
+    "critical_dependencies": [
+      "Realistic intake policy fixture with unambiguous approval rules",
+      "Calendar/task integration or credible local export path",
+      "Domain validation that selected actions are safe and compliant"
+    ],
+    "fakeable_parts": [
+      "Queue dashboard metrics",
+      "Scheduler stub",
+      "Audit-note explanation text"
+    ],
+    "non_fakeable_core": "Correctly selecting one bounded next action from messy intake evidence under explicit policy constraints.",
+    "minimum_demonstrable_loop": "Five synthetic blocked cases, a deterministic ruleset, GPT-5.6 action recommendation, human approve/edit step, and exported task receipt.",
+    "kill_recommendation": true,
+    "notes": "The workflow needs clinic/community-service policy expertise and risks becoming a generic task generator. Without real policy constraints, the core safety claim is mostly theatrical."
+  },
+  {
+    "candidate_id": "mut-r4-03-labguard-transition-receipt",
+    "delivery_risk": "high",
+    "critical_dependencies": [
+      "Machine-checkable lab safety invariants that are narrow and defensible",
+      "A sandbox runner that actually prevents execution, not just reports after the fact",
+      "Subject-matter review for any robotics, chemistry, actuator, or dosage framing"
+    ],
+    "fakeable_parts": [
+      "Receipt drawer UI",
+      "Remediation hint text",
+      "Verified Safe badge"
+    ],
+    "non_fakeable_core": "Intercepting an unsafe transition before execution based on executable checks and explicit invariants.",
+    "minimum_demonstrable_loop": "One simulated lab script, three simple invariants, one unsafe parameter change blocked before run, one safe patch allowed, and a receipt with command evidence.",
+    "kill_recommendation": true,
+    "notes": "High safety and SME burden. The 40-case and 90/95% claims are not credible for a hackathon. It can survive only if reframed as a toy simulator policy guard, not real lab safety."
+  },
+  {
+    "candidate_id": "mut-r4-04-regressionpatch-drill",
+    "delivery_risk": "medium",
+    "critical_dependencies": [
+      "A small repo fixture with fast deterministic tests",
+      "Robust branch/worktree isolation for baseline, patched, and ablated runs",
+      "GPT-5.6 output constrained enough to generate useful test intent without manual rescue"
+    ],
+    "fakeable_parts": [
+      "Receipt formatting",
+      "Issue decomposition explanation",
+      "Branch status UI"
+    ],
+    "non_fakeable_core": "A generated regression test that fails on baseline, passes on the fix, and fails again when the model-dependent hunk is removed.",
+    "minimum_demonstrable_loop": "One synthetic issue, one generated failing test, one minimal patch, three command runs, and a receipt containing the exact transcripts.",
+    "kill_recommendation": false,
+    "notes": "One of the stronger candidates. The ablation runner is the risky part; keep the target repo tiny and avoid arbitrary-language support."
+  },
+  {
+    "candidate_id": "mut-r4-06-conflictset-review-opener",
+    "delivery_risk": "high",
+    "critical_dependencies": [
+      "A seeded conflict oracle proving the minimized set still covers every conflict",
+      "Reliable extraction of claims, diffs, comments, and failing checks from one repo fixture",
+      "Clear judge-visible definition of minimality"
+    ],
+    "fakeable_parts": [
+      "Review task opener UI",
+      "Collapsed unrelated diffs",
+      "Awaiting-minimal-decision status"
+    ],
+    "non_fakeable_core": "Computing a conflict set that is smaller than the full branch while preserving all known failing requirements and disputed claims.",
+    "minimum_demonstrable_loop": "One noisy seeded branch, known conflict labels, collected test/diff/claim traces, GPT-5.6 minimization, and a generated review task verified against the oracle.",
+    "kill_recommendation": true,
+    "notes": "The minimal hitting set claim is hard to prove and easy to fake. Integration surface across GitHub comments, tests, README claims, and Devpost obligations is too broad for reliable delivery."
+  },
+  {
+    "candidate_id": "mut-r4-07-traceledger-lesson-release",
+    "delivery_risk": "medium",
+    "critical_dependencies": [
+      "A small lesson repo with claims that can be parsed and checked deterministically",
+      "Stable artifact hashing and transcript capture",
+      "A strict ledger schema that avoids vague provenance rows"
+    ],
+    "fakeable_parts": [
+      "Release badge",
+      "Reviewer-ready audit UI",
+      "GPT-5.6 missing-link explanations"
+    ],
+    "non_fakeable_core": "An append-only ledger where every learner-facing claim links to a source file, command transcript, artifact hash, and actor label.",
+    "minimum_demonstrable_loop": "One lesson with several seeded claims, scanner output, command transcript hashes, GPT-5.6 claim-to-evidence mapping, ledger writeback, and blocked-to-verified release status.",
+    "kill_recommendation": false,
+    "notes": "Feasible if treated as provenance instrumentation for a tiny fixture. The external repo/data-source references are inconsistent, so lock one local fixture and document licensing."
+  },
+  {
+    "candidate_id": "mut-r4-08-shiftmirror-counterfactual-s",
+    "delivery_risk": "high",
+    "critical_dependencies": [
+      "A valid scheduling constraint model with availability, coverage, fairness, and overtime rules",
+      "Optimization or search logic that reliably improves the rota",
+      "Approval/export flow that avoids implying real clinical deployment readiness"
+    ],
+    "fakeable_parts": [
+      "Side-by-side comparison UI",
+      "Signed comparison receipt",
+      "GPT-5.6 explanation of deltas"
+    ],
+    "non_fakeable_core": "Producing baseline, assisted, and ablated schedules evaluated by the same constraint engine with reproducible metric deltas.",
+    "minimum_demonstrable_loop": "One fixed 30-shift synthetic rota, deterministic metric runner, one GPT-5.6-assisted swap proposal, one ablated comparison, and approved CSV export.",
+    "kill_recommendation": true,
+    "notes": "Scheduling optimization plus counterfactual attribution is too much unless heavily scripted. Data-source references are inconsistent, and domain stakes make weak constraints look careless."
+  }
+]

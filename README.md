@@ -1,3 +1,16 @@
+# Hackathon Idea Search (HackForge)
+
+**Use this folder** when you want to **find and rank hackathon (or competition) ideas** from an official brief or URL — not to submit to Devpost (see `../Self Submission Agents` for approval-gated submission prep).
+
+| Path | Purpose |
+|------|---------|
+| `briefs/` | Saved competition briefs (markdown) |
+| `runs/` | Your active HackForge run outputs |
+| `corpora/`, `prompts/`, `src/hackforge/` | Engine code, prompts, and reference corpora |
+| `archive-sources/` | Merged runs/corpora from older duplicate engine copies |
+
+---
+
 # HackForge
 
 **A private local search engine for evidence-backed, competition-winning strategies and concepts — not the submitted entry itself.**
@@ -54,9 +67,13 @@ hackforge doctor --provider codex --strict --live
 
 # Analyse any public competition page.
 hackforge analyse --url https://competition.example/ --provider codex --search-profile fast
+
+# Or paste a description (works alone, or combined with a URL/file).
+hackforge analyse --text "48h civic hackathon..." --provider codex --search-profile fast
+hackforge analyse --url https://competition.example/ --text "Extra rules the page missed..." --provider codex
 ```
 
-You can also provide a local brief/file or inline competition text rather than a URL.
+`--url`, `--text`, and `--input` can be combined. Pasted/file text is authoritative operator evidence; the URL adds official pages. Use `--text -` to read a long paste from stdin.
 
 If you prefer the API-backed default, copy `.env.example` to `.env`, set `DEEPSEEK_API_KEY`, then replace `--provider codex` with `--provider deepseek`. DeepSeek failures stop the run; no provider or model fallback is attempted.
 

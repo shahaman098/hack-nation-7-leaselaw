@@ -1,0 +1,110 @@
+{
+  "hackforge_version": "0.4.0",
+  "created_at": "2026-07-19T07:30:48+00:00",
+  "run_dir": "runs/2026-07-19-txodds-world-cup-brief",
+  "competition_name": "Superteam Earn World Cup hackathon powered by TxODDS / TxLINE",
+  "dry_run": false,
+  "prompt_versions": {
+    "competition-research/v1": "74b485be9e87386d5d418b5c8797047bc2d9801f8e183c9fc7f0703ff118e71d",
+    "contrarian-ideation/v1": "3559c98c543744a00a90de6065bac74a5b7fa12196ea53d70510077b29300947",
+    "opportunity-discovery/v1": "051f26a6e69f396b0555f1d09c86a7fe2d7eebac4af0bbeec8d325dd4f112446",
+    "mechanism-mining/v1": "df90590950b8f9d05004e406360e54d282725c97ac3d4605b4a66d62af6d322b",
+    "idea-crossing/v1": "5fafb3af5dca0415e5fb3d2f5b288945beb30fb955b5fc2da9d5df3bb4b2371b",
+    "reflective-mutation/v1": "e837dc472a892228f0722b91d0e1fd8dbdde385e0989f7350c7588c53fcd8691",
+    "collision-audit/v1": "dcd82a4090d77a1032a7abcdf36b0a37c30c553ca8215d665f1d45d206503d62",
+    "feasibility/v1": "6ef34b953f0e48325edfb31190fad991ae146019e12d2bc682042376e5214f0a",
+    "blind-judge/v1": "54053bb7bb6e5ef5221d58d4c6544525bb905ec5ae7db47a5b4d9f256d2eb913",
+    "red-team/v1": "437c9926ecc707ed584333328cb871d82ed3f7c6768bcafc3db85e9ba368443e"
+  },
+  "corpora_version": "2026-07-15",
+  "providers": {
+    "dry_run": false,
+    "selection": "deepseek",
+    "research": "deepseek",
+    "ideation": [
+      "deepseek",
+      "deepseek",
+      "deepseek",
+      "deepseek"
+    ],
+    "collision": "deepseek",
+    "feasibility": "deepseek",
+    "judges": "deepseek",
+    "models": {
+      "research": "deepseek-v4-pro"
+    },
+    "requested_models": {
+      "research": "deepseek-v4-pro"
+    },
+    "usage": {
+      "attempted_calls": 19,
+      "completed_calls": 19,
+      "prompt_tokens": 89794,
+      "completion_tokens": 32572,
+      "total_tokens": 122366,
+      "estimated_cost_usd": 0.067398,
+      "budget": {
+        "max_calls": 60,
+        "max_total_tokens": 750000,
+        "max_cost_usd": 5.0
+      },
+      "pricing_per_million": {
+        "input_usd": 0.435,
+        "output_usd": 0.87,
+        "method": "conservative: all prompt tokens priced as cache misses"
+      }
+    }
+  },
+  "input_sources": [
+    "/Users/efi/Music/Projects/Hackathon July/Solana/runs/txodds-world-cup-brief.md"
+  ],
+  "input_hash": "a138c74e63473f9a9acf222036e93680af50eb995f8e6c98640bce5f7cebba8e",
+  "stage_timings_seconds": {
+    "competition_research": 140.9692149170005,
+    "divergent_search": 212.2716378749974,
+    "hard_gates": 0.0021534169936785474,
+    "collision": 30.60707858299429,
+    "feasibility": 30.037003416997322,
+    "blind_judge": 119.09668233300181,
+    "red_team": 59.56536624999717
+  },
+  "candidate_counts": {
+    "raw": 8,
+    "archive_cells": 8,
+    "collision_shortlist": 4,
+    "judged_finalists": 4,
+    "finalists": 3
+  },
+  "rejections": [
+    {
+      "id": "concept-proof-my-bet",
+      "reason": "gate failure: data_accessible_and_verified"
+    },
+    {
+      "id": "concept-2",
+      "reason": "gate failure: observable_demo_proof"
+    },
+    {
+      "id": "mut-r1-01-proofmybet-auto-fix",
+      "reason": "gate failure: data_accessible_and_verified"
+    },
+    {
+      "id": "mut-r1-02-cryptocall-gatefix",
+      "reason": "outcompeted in quality-diversity/MMR selection"
+    }
+  ],
+  "judgments_path": "blind-judge-results.json",
+  "human_overrides": [],
+  "final_primary_id": "conc-replay-sandbox",
+  "final_backup_id": "concept-group-crypto-call",
+  "hackathon_result": null,
+  "notes": "Update hackathon_result and human_overrides after the competition.",
+  "search_profile": "fast",
+  "target_evaluated_concepts": 8,
+  "final_output_ids": [
+    "conc-replay-sandbox",
+    "concept-group-crypto-call",
+    "conc-feat-health"
+  ],
+  "visual_report": false
+}

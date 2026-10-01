@@ -1,0 +1,93 @@
+[
+  {
+    "id": "src-d39d2793b384",
+    "url": "/Users/efi/Hackathons/Easy A Parliament/idea-forge/engine/evals/ground-truth/easya-uk-parliament-hackathon.md",
+    "title": "/Users/efi/Hackathons/Easy A Parliament/idea-forge/engine/evals/ground-truth/easya-uk-parliament-hackathon.md",
+    "source_kind": "input",
+    "retrieved_at": "2026-08-27T03:32:53.542952+00:00",
+    "excerpt": "# UK Parliament Hackathon with EasyA\n\n**When:** Friday 4 September 2026, 12:30–17:30\n**Where:** House of Commons, Saint Margaret Street, London SW1A 0AA (UK Parliament)\n**Host:** EasyA\n**Cost:** Free to enter. Free food.\n**Event page:** https://www.eventbrite.co.uk/e/uk-parliament-hackathon-with-easya-tickets-1997315118285\n\nThis is billed as the first hackathon held in the UK Parliament. Audience and judges include Members of Parliament, Lords, civil servants, UK startups, recruiters, and VCs.\n\n## Official rules from the organiser (Phil, EasyA co-founder), 27 August 2026\n\nUnlike a same-day build, participants may start building from **Monday 24 August 2026**. Pitch day is 4 September.\n\n1. Projects **must be AI and/or crypto** (blockchain). Other domains are out of scope unless the AI or crypto mechanism is the core of the product.\n2. Maximum team size is **5 people**.\n\nThe on-the-day format is a pitch in front of MPs, civil servants, and invited guests — not a multi-hour coding session. A working demo that a non-technical parliamentarian can understand in a few minutes is the submission that matters.\n\n## What the Eventbrite listing actually says\n\nJoin us for the first ever hackathon in the UK Parliament.\n\nOur EasyA hackathon at the UK Parliament is the opportunity of a lifetime for anyone excited about technology, AI, blockchain or government.\n\nYou'll get to meet members of parliament, Lords from the House of Lords, and some of the UK's fastest-growing startups.\n\nOpen to everyone regardless of technical experience (ideation, marketing, or presenting). There is a **special prize dedicated for non-coders**.\n\nUniversity students and seasoned developers are both in scope.\n\n### What to expect\n\n- Live panels led by UK leaders\n- Workshops, including for people who have never touched tech\n- Competition: opportunity to present your idea\n- Prize money: equity-free funding for the best projects\n- Grants: hundreds of thousands in follow-on grant funding for winning projects\n- Job / internship opportunities: recruiters and VCs on site\n- Venue: wifi and all-day food\n- Duration: 5 hours, in person\n\nEasyA describes itself as a Web3 learning app and notes prior hackathon projects have been funded by a16z, YC, and others.\n\n## Constraints a submitted entry must satisfy\n\n- **Mandatory mechanism:** AI and/or crypto/blockchain must be material to the core path. Removing it should break the product.\n- **Audience:** UK government decision-makers (MPs, Lords, civil servants) plus EasyA's Web3/developer community. A pitch that only makes sense to crypto-native judges is weaker than one an MP can repeat.\n- **Demo:** live or recorded pitch on 4 September in Parliament. Visible transformation in the room beats a slide-only vision.\n- **Team:** at most 5 people.\n- **Build window:** work may start 24 August 2026; pitch is 4 September 2026. Roughly 11 days, not a 5-hour sprint, but the in-person slot is a pitch not a build.\n- **Eligibility:** open to non-coders as well as developers. Non-coder prize exists; do not assume every winning entry is a GitHub repo.\n- **No published judging rubric, tracks, or exact prize amounts** on the Eventbrite page. Do not invent weights. Treat parliamentary relevance, demo clarity, and AI/crypto substance as the implied criteria.\n- Encouraged (not mandatory): government/civic problem, EasyA/Web3 community fit, follow-on grant story.\n\n## What this competition is not\n\n- Not a same-day code-only hackathon.\n- Not a requirement to use a specific model, chain, or sponsor SDK — none are named.\n- Not closed to non-technical teammates.\n",
+    "fetch_status": "ok",
+    "http_status": null,
+    "error": "",
+    "content_hash": "d39d2793b3840b414b686514df092d500202630aa8e32c267902c5b239655c74",
+    "verified": true
+  },
+  {
+    "id": "src-fea19e6e11b3",
+    "url": "https://github.com/3nd03/commitment-ledger",
+    "title": "3nd03/commitment-ledger",
+    "source_kind": "github",
+    "retrieved_at": "2026-08-27T03:33:45.150584+00:00",
+    "excerpt": "AI tool that tracks parliamentary commitments in Hansard and written answers, and surfaces whether they've been followed up. Built for the UK Parliament Hackathon with EasyA.\nTopics: \nUpdated: 2026-08-25T18:03:39Z",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "fea19e6e11b366e53d0827b53bb2e197392961a4558e608c3adcbe1847b9fe39",
+    "verified": true
+  },
+  {
+    "id": "src-b2f34938c0b2",
+    "url": "https://devpost.com/software/zzz-movie-recommender",
+    "title": "ZZZ-MovieSearch-Client",
+    "source_kind": "devpost",
+    "retrieved_at": "2026-08-27T03:33:52.164463+00:00",
+    "excerpt": "Built with: \nDiscovered via public repository: https://github.com/ZZZ-RecSys/ZZZ-MovieSearch-Client",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "b2f34938c0b221812240f4385a05b2579652f2f89f79b49b4b1d823d205bf038",
+    "verified": true
+  },
+  {
+    "id": "src-19eb9b332a3a",
+    "url": "https://www.eventbrite.co.uk/e/uk-parliament-hackathon-with-easya-tickets-1997315118285",
+    "title": "UK Parliament Hackathon with EasyA Tickets, Friday 4 September  •  12:30 PM - 5:30 PM | Eventbrite",
+    "source_kind": "web",
+    "retrieved_at": "2026-08-27T03:33:54.757839+00:00",
+    "excerpt": "# UK Parliament Hackathon with EasyA\n\nByEasyA\n\nHouse of CommonsLondon, England\n\nOverview\n\nJoin us for the first ever hackathon in the UK Parliament!\n\nOur EasyA hackathon at the UK Parliament is the opportunity of a lifetime for anyone excited about technology, AI, blockchain or government.\n\nYou'll get to meet members of parliament, Lords from the House of Lords, and some of the UK's fastest-growing startups. [...] 💼 Job/Internship opportunities - recruiters and VCs will be at the event, so don’t miss out on your next big opportunity!\n\n🏫 Venue - great wifi and all day food.\n\nGet a taste of what to expect by checking out one of our last hackathons here!\n\nWHEN\n\n📆 4 September, 2026\n\nWHERE\n\n📍 UK Parliament\n\nThe event will kick off on 4 September. You won't want to miss this opportunity!\n\nBuilders of all levels are encouraged to build, meet and mingle!\n\nFollow us on Twitter for the latest updates! [...] What’s the best that could happen? Sign up ASAP!\n\nWHAT TO EXPECT\n\n🎤 Live panels - led by the UK's biggest leaders. Ask away and learn information before anyone else!\n\n🛠 Workshops - if you’ve never even touched tech before, the best instructors in the world are here to help.\n\n💻 Competition - opportunity to present your idea.\n\n💰 Prize Money - equity-free funding that will go out to the best projects!\n\n💲 Grants - hundreds of thousands in follow-on grant funding for the winning projects!\nTavily score: 0.79041743",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "19eb9b332a3a65db1339c487926883ac106ddc4b3c06e8ce7ffa184fc0ecec47",
+    "verified": true
+  },
+  {
+    "id": "src-effc6640b768",
+    "url": "https://ukhackathons.com/events/uk-parliament-hackathon-with-easya",
+    "title": "UK Parliament Hackathon with EasyA — UK Hackathons",
+    "source_kind": "web",
+    "retrieved_at": "2026-08-27T03:33:54.758017+00:00",
+    "excerpt": "Join us for the first ever hackathon in the UK Parliament! Our EasyA hackathon at the UK Parliament is the opportunity of a lifetime for anyone excited about technology, AI, blockchain or government. You'll get to meet members of parliament, Lords from the House of Lords, and some of the UK's fastest-growing startups. So whether you're excited about pitching your idea, meeting key decision makers, getting recruited or just meeting other awesome people, this is the place for you! [...] WHEN: 📆 4 September, 2026\n\nWHERE: 📍 UK Parliament. The event will kick off on 4 September. You won't want to miss this opportunity! Builders of all levels are encouraged to build, meet and mingle! Follow us on Twitter for the latest updates!  Check out more EasyA challenges and events on our website here: [...] skip to content\n>\\_HACKATHONSUK\nsubmit hackathon\n\nsubmit hackathon\n\n8 DAYS TO GO\n\n# UK Parliament Hackathon with EasyA\n\nUPEasyA\n\nview event ↗\n\ndate4 Sept 2026\n\nlocationHouse of Commons\n\npriceFree\n\nformatIn-Person\n\norganiserEasyA\n\n## about this event\nTavily score: 0.78154784",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "effc6640b7685c29ac1b516ad755ac7d86f2be1020cc476d3d9f6f95732bf20b",
+    "verified": true
+  },
+  {
+    "id": "src-e3a06d7ed0c7",
+    "url": "https://genfinity.io/2026/08/11/easya-uk-parliament-hackathon-house-of-commons",
+    "title": "EasyA Takes Its Hackathon Inside the House of Commons, Putting Founders in Front of MPs and Lords - Genfinity",
+    "source_kind": "web",
+    "retrieved_at": "2026-08-27T03:33:54.758062+00:00",
+    "excerpt": "The Eventbrite listing places the event at the House of Commons on Saint Margaret Street in London. Doors open at 12:30 PM on Friday, September 4, 2026. The program then runs for five hours. EasyA describes it as the first hackathon staged within UK Parliament. Admission costs nothing, and organizers provide food throughout the afternoon. However, capacity is tight, and EasyA has flagged very limited spots. [...] HomeCryptoEasyA Takes Its Hackathon Inside the House of Commons, Putting Founders in...\n\nCrypto\n\n# EasyA Takes Its Hackathon Inside the House of Commons, Putting Founders in Front of MPs and Lords\n\nEasyA hosts the first UK Parliament hackathon at the House of Commons on September 4, letting founders pitch MPs and Lords as new FCA rules land.\n\nGeneration Infinity\n\nBy Generation Infinity\n\nShare\n\nFacebookXPinterestWhatsApp\n\n August 11, 2026\n\n## Inside the House of Commons on September 4 [...] bitcoinBitcoin(BTC)$78,712.00-0.46%\n ethereumEthereum(ETH)$2,494.161.20%\n tetherTether(USDT)$1.000.00%\n binancecoinBNB(BNB)$702.950.83%\n rippleXRP(XRP)$1.41-2.62%\n usd-coinUSDC(USDC)$1.000.01%\n solanaSolana(SOL)$101.164.09%\n tronTRON(TRX)$0.335112-0.67%\n Figure HelocFigure Heloc(FIGR\\_HELOC)$1.042.44%\n HyperliquidHyperliquid(HYPE)$81.05-0.89%\n dogecoinDogecoin(DOGE)$0.0869120.19%\n zcashZcash(ZEC)$784.200.22%\n RainRain(RAIN)$0.017486-2.40%\n USDSUSDS(USDS)$1.00-0.03%\nTavily score: 0.735737",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "e3a06d7ed0c7a1f129482d6ea39cdc19f0c9f48cbf4c0af4ac02e3ee5408e153",
+    "verified": true
+  },
+  {
+    "id": "src-df62052036e0",
+    "url": "https://parisblockchainweek.com/hackathon",
+    "title": "Hackathon",
+    "source_kind": "web",
+    "retrieved_at": "2026-08-27T03:33:54.758085+00:00",
+    "excerpt": "At least one member capable of writing and shipping production-level code\n Projects must be built during the hackathon window\n All submissions must be open-source (or partially open-source for judging)\n Solutions must align with challenge guidelines provided by protocol partners\n Teams must demo a functional prototype, not just slides\n\n# Prizes to be revealed soon\n\nYour next partnership, insight, and opportunity begins here.\n\nExperience PBW 2026\n\n.png) [...] Protocol engineering, L1/L2 infrastructure, scaling, and security\n Payments, settlement, DeFi infrastructure, and stablecoin rails\n Interoperability, tooling, indexing, and data availability\n Zero-knowledge systems, cryptography, and advanced research implementations\n AI × blockchain integrations or novel infra combinations\n\n## Must-Have Conditions\n\nTo participate, teams should meet the following: [...] ### Curated Strategic Engagement\n\nSponsors gain exclusive access to thought leadership and premium experiences, including a VIP Dinner at and bespoke brand activations designed for lasting impact.\n\n## Hackathon Powered By XRP Ledger\n\n## prizes to be revealed soon\n\n## XRP Ledger Track\n\nChallenge 1: Make Waves   \nChallenge 2: Impact Finance\n\nApply Now\n\n## Hack The Block 2026 Partners\n\n(1).png)\n\n(1).png)\n\n(1).png)\n\n(1).png)\n\n(1).png)\n\n## How the PBW Hackathon Works\n\nApply Now\nTavily score: 0.4403014",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "df62052036e00fc65088d07c886f4564a59b37ca56d791ee5fcf5c5c36e0b8dc",
+    "verified": true
+  }
+]

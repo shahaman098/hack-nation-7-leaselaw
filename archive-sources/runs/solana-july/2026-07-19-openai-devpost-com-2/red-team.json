@@ -1,0 +1,25 @@
+{
+  "primary_id": "concept-005",
+  "fatal_flaws": [
+    "Hidden structural twin: this is essentially an allocation/fairness dashboard plus policy checker, a crowded archetype spanning grant scoring tools, rule engines, workflow approvals, and AI compliance reviewers. The 'commit packet' framing helps, but the demo still risks reading as spreadsheet allocation with better explanations.",
+    "Fragile live dependency: the concept leans on GPT-5.6 to translate written policy into constraints, which is the hardest and least deterministic part. If the model misreads one clause, the solver can look rigorous while validating the wrong policy.",
+    "ChatGPT-replaceable core: for a 30-case seeded food-bank/equipment fixture, ChatGPT could plausibly read the policy, identify the contradiction, explain affected applicants, and draft a rationale without the product wrapper. The prototype must prove the constraint engine, not the narration, is doing irreducible work.",
+    "Unverifiable data claims: 'detects 100% of seeded eligibility contradictions' is only meaningful against self-authored fixtures. It does not prove performance on real messy policy documents, ambiguous exceptions, incomplete applicant data, or adversarial edge cases.",
+    "Demo theatre risk: one hidden contradiction and one tie can be overfit into a polished walkthrough. Judges may see a scripted rule-engine demo rather than a generalizable system unless the app handles unseen policy edits live during judging.",
+    "Sponsor tech risk: GPT-5.6 and Codex are currently described as reasoning/execution helpers, but the durable technical asset appears to be a conventional constraint solver plus UI. The sponsor tech may look decorative unless model outputs are structurally required and auditable.",
+    "Data-source mismatch: the primary lists Procureally flight-recorder as its verified source, but the testable claim embeds Devpost/OpenAI rules and CanopyOps sources from another concept. That inconsistency weakens evidence hygiene and makes the gate results look mechanically pasted.",
+    "Domain risk: allocation of funds, grants, equipment, or staff time can involve legal, ethical, and organizational accountability. A hackathon prototype that 'commits' decisions may overclaim operational readiness without robust appeal, override, bias review, and governance flows."
+  ],
+  "survive_if": [
+    "Scope the demo to a narrow allocation domain with a handwritten policy grammar, not arbitrary natural-language policy ingestion.",
+    "Make GPT-5.6 produce candidate constraints only; require deterministic validation, provenance links, and human approval before any constraint enters the solver.",
+    "During the demo, let judges edit or add an unseen rule and show the system recompute violations and affected statuses live.",
+    "Replace vague fairness claims with fixture-bound claims: contradiction detection, blocked invalid commit, stable audit export, and regression tests over published seeded cases.",
+    "Clean the evidence record so data_sources, evidence_ids, mechanism_id, and testable_claim all refer to the same concept and source set.",
+    "Show the exported decision ledger being consumed by a downstream CSV/API flow, not just displayed in the UI.",
+    "Add explicit uncertainty and appeal states so ambiguous cases are held rather than auto-decided."
+  ],
+  "prefer_backup_instead": true,
+  "backup_reason": "TracePatch Verifier is narrower, more judge-native, and easier to prove in five days. Its input artifacts are concrete repo files and official rules, its writeback is a real patch, and its correctness can be tested with failing setup commands and before/after diffs. FairQueue Diff has higher social-impact upside, but it carries more ambiguity, governance risk, and demo-overfitting risk.",
+  "severity_acceptance": true
+}

@@ -1,0 +1,586 @@
+[
+  {
+    "candidate_id": "concept-a1b2",
+    "passed": false,
+    "results": [
+      {
+        "gate": "evidence_backed",
+        "status": "pass",
+        "reason": "At least one cited source was retrieved and verified",
+        "evidence_ids": [
+          "src-d75e6b52e714"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "data_accessible_and_verified",
+        "status": "fail",
+        "reason": "Named data was not verified against retrieved evidence; synthetic or proposed data is rejected",
+        "evidence_ids": [
+          "src-d75e6b52e714"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "required_model_is_material",
+        "status": "not_applicable",
+        "reason": "GPT-5.6 is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "codex_role_is_material",
+        "status": "not_applicable",
+        "reason": "Codex is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "solo_five_day_loop",
+        "status": "pass",
+        "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "observable_demo_proof",
+        "status": "pass",
+        "reason": "Within the demo video, the filmmaker creates a visual bible containing a character portrait and an environment mood board. They select three consecutive shots from their film's script. The tool propagates the bible parameters as constraints and generates the three shots using Grok Imagine via the fal API. The demo displays the before/after variance of a key visual metric (e.g., RGB histogram of the character's coat), showing the system reduced the variance from 15% (manual) to under 2%.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "specific_track_fit",
+        "status": "pass",
+        "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "testable_claim",
+        "status": "pass",
+        "reason": "A film using the VizBible Constraint Propagator will keep the RGB histogram variance of a character's core outfit under 2% across 5 consecutive AI-generated shots, compared to 10%+ with manual prompt copy-pasting.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      }
+    ],
+    "external_evaluation_scores": {
+      "evidence_quality": 0.5,
+      "feasibility": 1.0,
+      "demo_proof": 1.0,
+      "technical_depth": 1.0,
+      "track_fit": 1.0
+    }
+  },
+  {
+    "candidate_id": "concept-c3d4",
+    "passed": true,
+    "results": [
+      {
+        "gate": "evidence_backed",
+        "status": "pass",
+        "reason": "At least one cited source was retrieved and verified",
+        "evidence_ids": [
+          "src-2ec6e755355c"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "data_accessible_and_verified",
+        "status": "pass",
+        "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+        "evidence_ids": [
+          "src-2ec6e755355c"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "required_model_is_material",
+        "status": "not_applicable",
+        "reason": "GPT-5.6 is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "codex_role_is_material",
+        "status": "not_applicable",
+        "reason": "Codex is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "solo_five_day_loop",
+        "status": "pass",
+        "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "observable_demo_proof",
+        "status": "pass",
+        "reason": "A developer uses their AI tool live. Mid-demo, they deliberately introduce a failure by throttling the network. The SPC engine detects the deviation, the live stream seamlessly cuts to a pre-computed, visually identical segment, the tool alerts 'circuit breaker active,' and the demo continues without the audience or judges ever seeing a frozen frame or error code. The tool then demonstrates the session log showing the anomaly detected and the fallback triggered.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "specific_track_fit",
+        "status": "pass",
+        "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "testable_claim",
+        "status": "pass",
+        "reason": "In a controlled network-degraded environment, the Failsafe Lens library will maintain a 98%+ uninterrupted-demo rate by catching and compensating for at least 90% of real-time AI endpoint failures, compared to a 50%+ visible error rate baseline without the library.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      }
+    ],
+    "external_evaluation_scores": {
+      "evidence_quality": 0.5,
+      "feasibility": 1.0,
+      "demo_proof": 1.0,
+      "technical_depth": 1.0,
+      "track_fit": 1.0
+    }
+  },
+  {
+    "candidate_id": "concept-003-des",
+    "passed": true,
+    "results": [
+      {
+        "gate": "evidence_backed",
+        "status": "pass",
+        "reason": "At least one cited source was retrieved and verified",
+        "evidence_ids": [
+          "src-a9659b5c3171"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "data_accessible_and_verified",
+        "status": "pass",
+        "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+        "evidence_ids": [
+          "src-a9659b5c3171"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "required_model_is_material",
+        "status": "not_applicable",
+        "reason": "GPT-5.6 is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "codex_role_is_material",
+        "status": "not_applicable",
+        "reason": "Codex is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "solo_five_day_loop",
+        "status": "pass",
+        "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "observable_demo_proof",
+        "status": "pass",
+        "reason": "The presenter opens a folder of 8 generated perfume ad videos. They upload a 2-page brand guidelines PDF. Within 30 seconds, a dashboard appears showing a simulation status bar advancing as the clock steps through each frame. The grid populates: video #4 is flagged red—a violation log scrolls showing the logo was missing for 4.2 of 7 seconds. The presenter clicks video #4, the timeline jumps to the exact violation moment, and the screen displays the current frame with a ghosted overlay of the required logo position from the guideline. They check a box and a merged compliance PDF report downloads. The demo ends with the presenter confidently selecting video #7 because the simulation log proves 94% brand compliance vs. a baseline of roughly 60% judged by manual human review.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "specific_track_fit",
+        "status": "pass",
+        "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "testable_claim",
+        "status": "pass",
+        "reason": "BrandCheck reduces the time to objectively eliminate off-brand AI video candidates by more than 60% compared to manual A/B viewing, measured by tracking decision latency from folder-open to 'final two selected'.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      }
+    ],
+    "external_evaluation_scores": {
+      "evidence_quality": 0.5,
+      "feasibility": 1.0,
+      "demo_proof": 1.0,
+      "technical_depth": 1.0,
+      "track_fit": 1.0
+    }
+  },
+  {
+    "candidate_id": "concept-004-ci",
+    "passed": true,
+    "results": [
+      {
+        "gate": "evidence_backed",
+        "status": "pass",
+        "reason": "At least one cited source was retrieved and verified",
+        "evidence_ids": [
+          "src-daee5ad611e1"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "data_accessible_and_verified",
+        "status": "pass",
+        "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+        "evidence_ids": [
+          "src-daee5ad611e1"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "required_model_is_material",
+        "status": "not_applicable",
+        "reason": "GPT-5.6 is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "codex_role_is_material",
+        "status": "not_applicable",
+        "reason": "Codex is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "solo_five_day_loop",
+        "status": "pass",
+        "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "observable_demo_proof",
+        "status": "pass",
+        "reason": "The presenter creates a folder with three images: the artist's original character design sheet, a background color key, and a 1-second clip of 'generic forest anime.' They type 'samurai walks through bamboo forest, long lens, cinematic' and hit generate on a vanilla fal endpoint—the output is clean but plastic-looking. Then they switch to StyleForge, drag the same reference folder, paste the identical prompt, and click 'Generate with Style Treatment.' The tool shows a cascading estimate: 'Estimated style adherence: 37% on control frame.' A progress bar appears as Codex iterates counterfactual corrections. Within a minute, the treated frame appears side-by-side: visible ink lines now mimic the artist's brush weight, the colors match the restricted palette, and the leaf shapes echo the background key. The causal report shows a final treatment effect of 89% style match (baseline: 37%). The presenter exports the treated clip directly to a project timeline.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "specific_track_fit",
+        "status": "pass",
+        "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "testable_claim",
+        "status": "pass",
+        "reason": "StyleForge increases measurable style-attribute match (line weight deviation, palette delta-E, and contour consistency) by at least 40 percentage points over an unaugmented prompt baseline on a set of 10 diverse anime scenes, using a perceptual similarity metric calibrated against the artist's reference pack.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      }
+    ],
+    "external_evaluation_scores": {
+      "evidence_quality": 0.5,
+      "feasibility": 1.0,
+      "demo_proof": 1.0,
+      "technical_depth": 1.0,
+      "track_fit": 1.0
+    }
+  },
+  {
+    "candidate_id": "C5",
+    "passed": true,
+    "results": [
+      {
+        "gate": "evidence_backed",
+        "status": "pass",
+        "reason": "At least one cited source was retrieved and verified",
+        "evidence_ids": [
+          "src-ef8c79839cdd"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "data_accessible_and_verified",
+        "status": "pass",
+        "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+        "evidence_ids": [
+          "src-ef8c79839cdd"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "required_model_is_material",
+        "status": "not_applicable",
+        "reason": "GPT-5.6 is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "codex_role_is_material",
+        "status": "not_applicable",
+        "reason": "Codex is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "solo_five_day_loop",
+        "status": "pass",
+        "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "observable_demo_proof",
+        "status": "pass",
+        "reason": "Live during the 3-minute demo video: the filmmaker imports a 2-sentence character description and 1 environment image. The system auto-constrains 12 shot prompts across 3 locations. The demo shows a side-by-side comparison of (A) manual prompting with visible style drift vs. (B) Bibledex-constrained shots where the character’s face and the golden-hour lighting stay identical. State changes from ‘inconsistent batch’ to ‘lockstep visual continuity’ before the audience’s eyes.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "specific_track_fit",
+        "status": "pass",
+        "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "testable_claim",
+        "status": "pass",
+        "reason": "Bibledex reduces character-identity drift (measured by pairwise CLIP cosine distance between consecutive shots of the same character) by at least 40% compared to a manual re-prompting baseline using the same fal models.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      }
+    ],
+    "external_evaluation_scores": {
+      "evidence_quality": 0.5,
+      "feasibility": 1.0,
+      "demo_proof": 1.0,
+      "technical_depth": 1.0,
+      "track_fit": 1.0
+    }
+  },
+  {
+    "candidate_id": "C6",
+    "passed": true,
+    "results": [
+      {
+        "gate": "evidence_backed",
+        "status": "pass",
+        "reason": "At least one cited source was retrieved and verified",
+        "evidence_ids": [
+          "src-990b738da8c6"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "data_accessible_and_verified",
+        "status": "pass",
+        "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+        "evidence_ids": [
+          "src-990b738da8c6"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "required_model_is_material",
+        "status": "not_applicable",
+        "reason": "GPT-5.6 is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "codex_role_is_material",
+        "status": "not_applicable",
+        "reason": "Codex is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "solo_five_day_loop",
+        "status": "pass",
+        "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "observable_demo_proof",
+        "status": "pass",
+        "reason": "The team shows their actual video tool in a split-screen demo: the left side runs without GraceFrame and hits a simulated API failure, freezing with a ‘504 Gateway Timeout’ error message and an awkward silence. The right side runs the identical tool with GraceFrame active; the same failure occurs, but the frame dissolves elegantly into a soft-focused safety render while a voiceover says ‘recovering stream’. The demo measures the glitch-to-recovery time: 6.1 seconds on the left vs. 0.9 seconds on the right.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "specific_track_fit",
+        "status": "pass",
+        "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "testable_claim",
+        "status": "pass",
+        "reason": "GraceFrame reduces the visible failure surface (total seconds of frozen or error-state UI per 3-minute demo under a 15% random API failure injection rate) by more than 80% compared to a standard try-catch-and-spinner approach.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      }
+    ],
+    "external_evaluation_scores": {
+      "evidence_quality": 0.5,
+      "feasibility": 1.0,
+      "demo_proof": 1.0,
+      "technical_depth": 1.0,
+      "track_fit": 1.0
+    }
+  },
+  {
+    "candidate_id": "mut-r1-01-stylebible-script-analyzer-p",
+    "passed": false,
+    "results": [
+      {
+        "gate": "evidence_backed",
+        "status": "pass",
+        "reason": "At least one cited source was retrieved and verified",
+        "evidence_ids": [
+          "src-d75e6b52e714"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "data_accessible_and_verified",
+        "status": "fail",
+        "reason": "Named data was not verified against retrieved evidence; synthetic or proposed data is rejected",
+        "evidence_ids": [
+          "src-d75e6b52e714"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "required_model_is_material",
+        "status": "not_applicable",
+        "reason": "GPT-5.6 is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "codex_role_is_material",
+        "status": "not_applicable",
+        "reason": "Codex is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "solo_five_day_loop",
+        "status": "pass",
+        "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "observable_demo_proof",
+        "status": "fail",
+        "reason": "The demo begins with a director loading a script. They define a Style Bible for the character 'EVA' (cyan coat). The tool generates a five-shot sequence. Mid-sequence, we deliberately see the coat color drifting to teal. An on-screen SPC chart flags the drift with a red dot violating the CUSUM limit. The system automatically injects a correction into the prompt for the next shot. The final shot's coat is visibly identical to the first. The video ends with a split-screen variance histogram: 8.2% baseline variance (without correction) vs. 1.5% with the SPC-based correction system.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "specific_track_fit",
+        "status": "pass",
+        "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "testable_claim",
+        "status": "pass",
+        "reason": "A filmmaker generating 10 consecutive shots with the StyleBible Script Analyzer will maintain the RGB histogram variance of a character's signature outfit color under 2%, compared to a >10% variance when manually copy-pasting the same style description without automated SPC correction.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      }
+    ],
+    "external_evaluation_scores": {
+      "evidence_quality": 0.5,
+      "feasibility": 1.0,
+      "demo_proof": 0.2,
+      "technical_depth": 1.0,
+      "track_fit": 1.0
+    }
+  },
+  {
+    "candidate_id": "mut-r1-02-glitchless-router-constraint",
+    "passed": true,
+    "results": [
+      {
+        "gate": "evidence_backed",
+        "status": "pass",
+        "reason": "At least one cited source was retrieved and verified",
+        "evidence_ids": [
+          "src-2ec6e755355c"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "data_accessible_and_verified",
+        "status": "pass",
+        "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+        "evidence_ids": [
+          "src-2ec6e755355c"
+        ],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "required_model_is_material",
+        "status": "not_applicable",
+        "reason": "GPT-5.6 is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "codex_role_is_material",
+        "status": "not_applicable",
+        "reason": "Codex is not mandatory for this brief",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "solo_five_day_loop",
+        "status": "pass",
+        "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "observable_demo_proof",
+        "status": "pass",
+        "reason": "A developer live-demos their AI storyboard tool using the fal API. They click 'Generate Next Shot.' As the generation fires, they simulate a severe network throttle. The UI shows a real-time metric: 'Constraint Violation: Latency 8200ms [Limit: 4000ms]'. Instead of an error, a perfectly matched, pre-rendered fallback clip of the same character in a similar pose crossfades in. The demo voiceover states, 'And the Glitchless Router just switched to the constraint-solving backup.' After the demo, they show the console log with the arc-consistency solver's decision tree, proving it wasn't a pre-scripted fake.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "specific_track_fit",
+        "status": "pass",
+        "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      },
+      {
+        "gate": "testable_claim",
+        "status": "pass",
+        "reason": "In a stress test with 50 forced mid-demo API failures, the Glitchless Router will maintain a seamless visual flow (as rated by human judges on a 1-5 coherence scale) with a mean score >4.0, compared to a <2.0 mean score for the baseline approach of simply displaying a pre-rendered loading loop on failure.",
+        "evidence_ids": [],
+        "validator": "deterministic"
+      }
+    ],
+    "external_evaluation_scores": {
+      "evidence_quality": 0.5,
+      "feasibility": 1.0,
+      "demo_proof": 1.0,
+      "technical_depth": 1.0,
+      "track_fit": 1.0
+    }
+  }
+]

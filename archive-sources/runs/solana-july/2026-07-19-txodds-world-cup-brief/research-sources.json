@@ -1,0 +1,80 @@
+[
+  {
+    "id": "src-ab897cd3f142",
+    "url": "/Users/efi/Music/Projects/Hackathon July/Solana/runs/txodds-world-cup-brief.md",
+    "title": "/Users/efi/Music/Projects/Hackathon July/Solana/runs/txodds-world-cup-brief.md",
+    "source_kind": "input",
+    "retrieved_at": "2026-07-19T07:20:43.061484+00:00",
+    "excerpt": "# TxODDS World Cup Hackathon Brief\n\nSuperteam Earn World Cup hackathon powered by TxODDS / TxLINE.\n\nSubmission window: June 24, 2026 15:00 UTC to July 19, 2026 23:59 UTC.\nWinner announcement: July 29, 2026 15:00 UTC.\nTeam size: maximum 3.\nRequired submission: working build, demo video up to 5 minutes, public repo, deployed website or functional API/devnet endpoint, brief technical documentation, TxLINE endpoint list, and API feedback.\n\nAbout TxLINE:\nTxLINE is a high-performance data layer for real-time sports data and consensus betting odds. It provides live World Cup scores, match events, and odds for all 104 matches using a normalized JSON schema. Updates are cryptographically signed and anchored on Solana. Hackathon builders receive free access until the submission deadline.\n\nCommon requirements:\n- TxLINE data must be a primary live input.\n- Products must be functional, not wireframes or pitch decks.\n- Demo video quality matters heavily because live matches may not be active during judging.\n- Notes warn participants to comply with gambling, gaming, financial, consumer protection, and securities laws.\n\nTrack 1: Prediction Markets and Settlement\nPrize pool: 18,000 USDT. First: 12,000 USDT. Second: 4,000 USDT. Third: 2,000 USDT.\nObserved submissions: 112.\nTrack focus: prediction platforms, consumer sportsbook interfaces, data dashboards, decentralized prediction markets, AMMs, escrow settlement engines, and parametric sports insurance or prop bets.\nJudges value smooth TxLINE ingestion, compelling soccer or analytical UX, clean deterministic resolution and validation code, optional Merkle proof verification, and custom Solana settlement logic using TxLINE validation primitives.\nConstraints: TxLINE credit token cannot be used for user wagering or transfers. User funds can be held in other assets such as USDC. Teams are encouraged to use TxLINE Merkle proofs and CPI into TxLINE validate_stat for trustless settlement.\n\nTrack 2: Consumer and Fan Experiences\nPrize pool: 16,000 USDT. First: 10,000 USDT. Second: 4,000 USDT. Third: 2,000 USDT.\nObserved submissions: 113.\nTrack focus: mainstream fan products using live scores, odds, and match events. Example ideas include group sweepstakes, AI pundit bots, and hi-lo stats games.\nJudges value fan accessibility and polish, real-time responsiveness, original consumer interaction models, monetization path, and complete end-to-end execution.\nExtra requirement: sign up through Solana.\n\nTrack 3: Trading Tools and Agents\nPrize pool: 16,000 USDT. First: 10,000 USDT. Second: 4,000 USDT. Third: 2,000 USDT.\nObserved submissions: 91.\nTrack focus: autonomous agents and automated tools that ingest TxLINE feeds and execute defined strategies. Example ideas include sharp movement detector, agent-vs-agent arena, and in-play market maker.\nJudges value core feed ingestion, autonomous operation, deterministic and mathematically defensible strategy logic, novelty, and production readiness for trading teams or market operators.\n\nQuestion to answer:\nRecommend the single best idea most likely to win, and specify the track. Prioritize a buildable idea for a very short deadline with a strong demo video, clear TxLINE dependency, novelty versus listed examples, and lower legal/regulatory risk than direct betting.\n",
+    "fetch_status": "ok",
+    "http_status": null,
+    "error": "",
+    "content_hash": "ab897cd3f14251551c278265255de401b801049653b4757d83f3bd562759f050",
+    "verified": true
+  },
+  {
+    "id": "src-9916f5724eb2",
+    "url": "https://devpost.com/software/goal-gate",
+    "title": "GoalGate-Jamhacks10",
+    "source_kind": "devpost",
+    "retrieved_at": "2026-07-19T07:23:04.030570+00:00",
+    "excerpt": "Built with: \nDiscovered via public repository: https://github.com/Infinityplus6/GoalGate-Jamhacks10",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "9916f5724eb2c93e9c821ab2803d368539efedfac91558b8c5212fd3a30d0fea",
+    "verified": true
+  },
+  {
+    "id": "src-47ac1e0179ec",
+    "url": "https://devpost.com/software/blind-navigator",
+    "title": "LSUDOKO",
+    "source_kind": "devpost",
+    "retrieved_at": "2026-07-19T07:23:04.030950+00:00",
+    "excerpt": "Built with: readme-profile\nDiscovered via public repository: https://github.com/LSUDOKO/LSUDOKO",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "47ac1e0179ec7437f5501037a94679750e66f9a6bbcdbced4bae2348dc54dce1",
+    "verified": true
+  },
+  {
+    "id": "src-664cdcaa2193",
+    "url": "https://devpost.com/software/arpit-portfolio",
+    "title": "LSUDOKO",
+    "source_kind": "devpost",
+    "retrieved_at": "2026-07-19T07:23:04.030971+00:00",
+    "excerpt": "Built with: readme-profile\nDiscovered via public repository: https://github.com/LSUDOKO/LSUDOKO",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "664cdcaa2193dc9e51a4ab5fe2de8ac3968e6d86d4a7a27125dbc89cd91addfc",
+    "verified": true
+  },
+  {
+    "id": "src-38257f125b56",
+    "url": "https://devpost.com/software/speak-pro-ai-wsc64u",
+    "title": "LSUDOKO",
+    "source_kind": "devpost",
+    "retrieved_at": "2026-07-19T07:23:04.030982+00:00",
+    "excerpt": "Built with: readme-profile\nDiscovered via public repository: https://github.com/LSUDOKO/LSUDOKO",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "38257f125b56356927f91260a71cb32a41deda771d3a876c71e32034b7c6fc09",
+    "verified": true
+  },
+  {
+    "id": "src-d98367ce0be5",
+    "url": "https://devpost.com/software/flexy-and-i-know-it",
+    "title": "Flexy",
+    "source_kind": "devpost",
+    "retrieved_at": "2026-07-19T07:23:04.030990+00:00",
+    "excerpt": "Built with: \nDiscovered via public repository: https://github.com/Shameed4/Flexy",
+    "fetch_status": "ok",
+    "http_status": 200,
+    "error": "",
+    "content_hash": "d98367ce0be5c38b80741d450b231cf9d4a8496ef85b7d33d3f7bb7c3cef6b38",
+    "verified": true
+  }
+]

@@ -634,9 +634,13 @@ def _normalize_concept(
         opportunity_id=str(row.get("opportunity_id") or opportunity.id),
         mechanism_id=str(row.get("mechanism_id") or mechanism.id),
         track_fit=track,
-        technology_roles=dict(row.get("technology_roles") or {}),
-        requirement_satisfaction=dict(row.get("requirement_satisfaction") or {}),
-        data_access_status=str(row.get("data_access_status") or _default_data_status(data_sources, brief)),
+        technology_roles=_coerce_string_map(row.get("technology_roles")),
+        requirement_satisfaction=_coerce_string_map(row.get("requirement_satisfaction")),
+        data_access_status=_normalize_data_access_status(
+            str(row.get("data_access_status") or _default_data_status(data_sources, brief)),
+            data_sources=data_sources,
+            plan=str(row.get("data_access_plan") or _default_data_plan(data_sources, brief)),
+        ),
         data_access_plan=str(row.get("data_access_plan") or _default_data_plan(data_sources, brief)),
         testable_claim=str(row.get("testable_claim") or ""),
         demo_proof=str(row.get("demo_proof") or proof),
@@ -647,6 +651,64 @@ def _normalize_concept(
     )
     _apply_requirement_defaults(idea, brief)
     return idea
+
+
+def _normalize_data_access_status(status: str, *, data_sources: list[str], plan: str) -> str:
+    """Map free-form LLM prose onto the closed status vocabulary used by data gates."""
+    allowed = {
+        "verified",
+        "available",
+        "provided",
+        "local",
+        "fixture",
+        "generated_fixture",
+        "synthetic_fixture",
+        "sensor",
+        "user_supplied",
+        "not_required",
+        "unverified",
+        "not_applicable",
+    }
+    text = status.strip().lower()
+    if text in allowed:
+        return text
+    # Exact first token / enum-like prefix.
+    first = re.split(r"[\s:;,.]+", text, maxsplit=1)[0]
+    if first in allowed:
+        return first
+    blob = f"{text}\n{plan}\n{' '.join(data_sources)}".lower()
+    if any(token in blob for token in ("synthetic fixture", "generated fixture", "generated_fixture", "synthetic_fixture")):
+        return "generated_fixture"
+    if "fixture" in blob or "datapack" in blob or "sample data" in blob or "quickstart" in blob:
+        return "fixture"
+    if any(token in blob for token in ("user-supplied", "user supplied", "entrant-owned", "entrant owned", "team-provided", "team provided")):
+        return "user_supplied"
+    if "local" in blob or "repository" in blob or "seed local" in blob:
+        return "local"
+    if "provided" in blob or "competition resource" in blob or "official resource" in blob:
+        return "provided"
+    if "available" in blob or "permitted" in blob or "viable" in blob or "credible" in blob:
+        return "available"
+    if not data_sources:
+        return "not_required"
+    return "unverified"
+
+
+def _coerce_string_map(value: Any) -> dict[str, str]:
+    """Accept dict maps or Codex-safe [{key,value}] arrays."""
+    if isinstance(value, dict):
+        return {str(key): str(item) for key, item in value.items() if str(key).strip() and str(item).strip()}
+    if isinstance(value, list):
+        output: dict[str, str] = {}
+        for row in value:
+            if not isinstance(row, dict):
+                continue
+            key = str(row.get("key") or row.get("name") or row.get("technology") or row.get("requirement") or "").strip()
+            item = str(row.get("value") or row.get("role") or row.get("explanation") or "").strip()
+            if key and item:
+                output[key] = item
+        return output
+    return {}
 
 
 def _apply_requirement_defaults(idea: CandidateIdea, brief: CompetitionBrief) -> None:
@@ -963,18 +1025,49 @@ def _candidate_schema(brief: CompetitionBrief) -> dict[str, Any]:
         {
             "evidence_ids": {"type": "array", "items": {"type": "string"}},
             "data_sources": {"type": "array", "items": {"type": "string"}},
-            "data_access_status": {"type": "string"},
+            "data_access_status": {
+                "type": "string",
+                "enum": [
+                    "verified",
+                    "available",
+                    "provided",
+                    "local",
+                    "fixture",
+                    "generated_fixture",
+                    "synthetic_fixture",
+                    "sensor",
+                    "user_supplied",
+                    "not_required",
+                    "unverified",
+                ],
+            },
             "data_access_plan": {"type": "string"},
             "track_fit": {"type": "string"},
             "sponsor_dependency": {"type": "string"},
             "technical_risk": {"type": "string"},
             "technology_roles": {
-                "type": "object",
-                "additionalProperties": {"type": "string", "minLength": 1},
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "key": {"type": "string", "minLength": 1},
+                        "value": {"type": "string", "minLength": 1},
+                    },
+                    "required": ["key", "value"],
+                    "additionalProperties": False,
+                },
             },
             "requirement_satisfaction": {
-                "type": "object",
-                "additionalProperties": {"type": "string", "minLength": 1},
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "key": {"type": "string", "minLength": 1},
+                        "value": {"type": "string", "minLength": 1},
+                    },
+                    "required": ["key", "value"],
+                    "additionalProperties": False,
+                },
             },
             "minimum_demonstrable_loop": {"type": "string"},
             "demo_proof": {"type": "string"},

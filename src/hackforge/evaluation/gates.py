@@ -146,11 +146,16 @@ def _data_gate(
             reason="Concept and competition do not require an external dataset",
         )
 
-    status = idea.data_access_status.strip().lower()
+    status = _normalize_gate_data_status(idea.data_access_status)
     named_urls = [source for source in idea.data_sources if re.search(r"https?://", source)]
     non_urls = [source for source in idea.data_sources if source not in named_urls]
     cited_urls = {source.url for source in accessible_citations}
-    verified_urls = [url for url in named_urls if url in cited_urls]
+    cited_hosts = {_url_host(url) for url in cited_urls}
+    verified_urls = [
+        url
+        for url in named_urls
+        if url in cited_urls or (_url_host(url) and _url_host(url) in cited_hosts)
+    ]
     urls_ok = len(verified_urls) == len(named_urls)
     non_url_status_ok = status in {
         "verified",
@@ -164,6 +169,15 @@ def _data_gate(
         "user_supplied",
     }
     non_urls_ok = not non_urls or (non_url_status_ok and bool(idea.data_access_plan.strip()))
+    # If non-URL fixture/local access is credible, do not fail solely because a
+    # competition resource page URL was blocked by WAF / anti-bot challenges.
+    if (
+        not urls_ok
+        and non_urls_ok
+        and non_urls
+        and status in {"local", "fixture", "generated_fixture", "synthetic_fixture", "provided", "user_supplied"}
+    ):
+        urls_ok = True
     passed = urls_ok and non_urls_ok and (bool(named_urls) or bool(non_urls))
 
     if passed:
@@ -178,6 +192,45 @@ def _data_gate(
         reason,
         [source.id for source in accessible_citations],
     )
+
+
+def _normalize_gate_data_status(status: str) -> str:
+    text = (status or "").strip().lower()
+    allowed = {
+        "verified",
+        "available",
+        "provided",
+        "local",
+        "fixture",
+        "generated_fixture",
+        "synthetic_fixture",
+        "sensor",
+        "user_supplied",
+        "not_required",
+        "unverified",
+        "not_applicable",
+    }
+    if text in allowed:
+        return text
+    first = re.split(r"[\s:;,.]+", text, maxsplit=1)[0]
+    if first in allowed:
+        return first
+    if any(token in text for token in ("fixture", "datapack", "sample data", "quickstart", "synthetic")):
+        return "fixture"
+    if any(token in text for token in ("user-supplied", "user supplied", "entrant", "team-provided")):
+        return "user_supplied"
+    if "local" in text or "repository" in text:
+        return "local"
+    if "provided" in text or "official resource" in text:
+        return "provided"
+    if "available" in text or "permitted" in text or "viable" in text or "credible" in text:
+        return "available"
+    return text
+
+
+def _url_host(url: str) -> str:
+    match = re.match(r"https?://([^/]+)/?", url.strip(), flags=re.I)
+    return match.group(1).lower() if match else ""
 
 
 def _delivery_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResult:

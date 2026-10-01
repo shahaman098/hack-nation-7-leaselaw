@@ -1,0 +1,210 @@
+{
+  "candidates": [
+    {
+      "blind_id": "A",
+      "internal_id": "institutional-foi-failure-chain-tracer-2"
+    },
+    {
+      "blind_id": "B",
+      "internal_id": "institutional-appeal-path-diff-0"
+    },
+    {
+      "blind_id": "C",
+      "internal_id": "institutional-grant-match-abuse-detector-3"
+    }
+  ],
+  "hard_gates": {
+    "A": {
+      "demonstrable_core": {
+        "passed": true,
+        "notes": "Show live clock near breach → highlight failing handoff → draft escalation"
+      },
+      "real_computation_or_action": {
+        "passed": true,
+        "notes": "Infer most likely stalled edge in the process graph from timestamps"
+      },
+      "data_accessible": {
+        "passed": true,
+        "notes": "Anonymized FOI case log CSV, Team ownership map"
+      },
+      "specific_track_fit": {
+        "passed": true,
+        "notes": "assessed against brief tracks in judge prompt"
+      },
+      "sponsor_tech_material_or_explicitly_unnecessary": {
+        "passed": true,
+        "notes": "Managed Postgres for case state"
+      },
+      "core_loop_deliverable": {
+        "passed": true,
+        "notes": "fallback feasibility stub | HackRep common stacks: javascript, python, react, node, firebase, flask"
+      },
+      "clear_60s_transformation": {
+        "passed": true,
+        "notes": "Blind inbox → pinpointed bottleneck + escalation draft"
+      },
+      "collision_risk_acceptable": {
+        "passed": true,
+        "notes": "medium"
+      }
+    },
+    "B": {
+      "demonstrable_core": {
+        "passed": true,
+        "notes": "Paste decision date + letter → show guidance diff → emit required evidence list with timestamps"
+      },
+      "real_computation_or_action": {
+        "passed": true,
+        "notes": "Diff official rule versions between decision date and today; emit missing-evidence set required for a valid appeal"
+      },
+      "data_accessible": {
+        "passed": true,
+        "notes": "Historical benefits guidance pages (dated snapshots), Decision letter corpus (demo), Appeals timetable rules CSV"
+      },
+      "specific_track_fit": {
+        "passed": true,
+        "notes": "assessed against brief tracks in judge prompt"
+      },
+      "sponsor_tech_material_or_explicitly_unnecessary": {
+        "passed": true,
+        "notes": "Object storage for guidance snapshots (optional)"
+      },
+      "core_loop_deliverable": {
+        "passed": true,
+        "notes": "fallback feasibility stub | HackRep common stacks: javascript, python, react, node, firebase, flask"
+      },
+      "clear_60s_transformation": {
+        "passed": true,
+        "notes": "From 2 hours of version archaeology to a dated, auditable appeal pack outline in under a minute"
+      },
+      "collision_risk_acceptable": {
+        "passed": true,
+        "notes": "medium"
+      }
+    },
+    "C": {
+      "demonstrable_core": {
+        "passed": true,
+        "notes": "Upload ledger + one grant PDF → red exceptions with citations"
+      },
+      "real_computation_or_action": {
+        "passed": true,
+        "notes": "Score spend lines against encoded conditions; surface mismatched allocations"
+      },
+      "data_accessible": {
+        "passed": true,
+        "notes": "Grant condition PDFs, Bank CSV, Ledger export"
+      },
+      "specific_track_fit": {
+        "passed": true,
+        "notes": "assessed against brief tracks in judge prompt"
+      },
+      "sponsor_tech_material_or_explicitly_unnecessary": {
+        "passed": true,
+        "notes": "none required"
+      },
+      "core_loop_deliverable": {
+        "passed": true,
+        "notes": "fallback feasibility stub | HackRep common stacks: javascript, python, react, node, firebase, flask"
+      },
+      "clear_60s_transformation": {
+        "passed": true,
+        "notes": "Unscoped ledger → ranked exceptions with condition citations"
+      },
+      "collision_risk_acceptable": {
+        "passed": true,
+        "notes": "medium"
+      }
+    }
+  },
+  "judge_votes": [
+    {
+      "role": "technical",
+      "preferred_blind_id": "A",
+      "rationale": "Clearest hard-to-fake computation with auditable trail",
+      "scores_by_official_criteria": {
+        "Technical implementation": 9,
+        "Real-world applicability": 8,
+        "Originality": 8,
+        "Design / demo clarity": 8
+      },
+      "hard_gate_failures": [],
+      "demo_failure_risk": "low"
+    },
+    {
+      "role": "product",
+      "preferred_blind_id": "A",
+      "rationale": "Immediate workflow collapse for a constrained user",
+      "scores_by_official_criteria": {},
+      "hard_gate_failures": [],
+      "demo_failure_risk": "low"
+    },
+    {
+      "role": "sponsor",
+      "preferred_blind_id": "B",
+      "rationale": "Stronger optional use of managed data store for state",
+      "scores_by_official_criteria": {},
+      "hard_gate_failures": [],
+      "demo_failure_risk": "medium"
+    },
+    {
+      "role": "domain",
+      "preferred_blind_id": "A",
+      "rationale": "Addresses a real administrative failure mode",
+      "scores_by_official_criteria": {},
+      "hard_gate_failures": [],
+      "demo_failure_risk": "low"
+    },
+    {
+      "role": "demo-risk",
+      "preferred_blind_id": "A",
+      "rationale": "Offline fixture-friendly demo loop",
+      "scores_by_official_criteria": {},
+      "hard_gate_failures": [],
+      "demo_failure_risk": "low"
+    },
+    {
+      "role": "contrarian",
+      "preferred_blind_id": "C",
+      "rationale": "Preserves an outlier optimization story",
+      "scores_by_official_criteria": {},
+      "hard_gate_failures": [],
+      "demo_failure_risk": "medium"
+    }
+  ],
+  "disagreements": [
+    "Judge disagreement — A: technical, product, domain, demo-risk | B: sponsor | C: contrarian",
+    "Do not average automatically; inspect tradeoffs (novelty vs demo reliability vs sponsor fit)."
+  ],
+  "pairwise": [
+    {
+      "pair": [
+        "A",
+        "B"
+      ],
+      "winner": "A",
+      "reason": "Vote tally A=4 vs B=1"
+    },
+    {
+      "pair": [
+        "A",
+        "C"
+      ],
+      "winner": "A",
+      "reason": "Vote tally A=4 vs C=1"
+    },
+    {
+      "pair": [
+        "B",
+        "C"
+      ],
+      "winner": "B",
+      "reason": "Vote tally B=1 vs C=1"
+    }
+  ],
+  "recommendation": {
+    "primary_blind_id": "A",
+    "backup_blind_id": "B",
+    "why": "Votes={'A': 4, 'B': 1, 'C': 1}; disagreements=2"
+  }
+}

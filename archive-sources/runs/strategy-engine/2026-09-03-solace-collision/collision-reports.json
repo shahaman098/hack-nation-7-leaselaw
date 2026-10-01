@@ -1,0 +1,92 @@
+[
+  {
+    "candidate_id": "solace-westminster",
+    "nearest_analogues": [
+      {
+        "name": "institutional-grant-match-abuse-detector-3",
+        "source": "prior-run:2026-07-16-sample-civic-resilience-2026",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": true,
+          "same_demo": false
+        },
+        "differences": [
+          "similarity=0.386"
+        ]
+      },
+      {
+        "name": "institutional-foi-failure-chain-tracer-2",
+        "source": "prior-run:2026-07-16-sample-civic-resilience-2026",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": true,
+          "same_demo": false
+        },
+        "differences": [
+          "similarity=0.354"
+        ]
+      },
+      {
+        "name": "institutional-clinic-no-show-pool-4",
+        "source": "prior-run:2026-07-16-sample-civic-resilience-2026",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "similarity=0.341"
+        ]
+      },
+      {
+        "name": "institutional-permit-queue-fairness-simulator-1",
+        "source": "prior-run:2026-07-16-sample-civic-resilience-2026",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "similarity=0.334"
+        ]
+      },
+      {
+        "name": "Carbon-footprint tracker dashboard",
+        "source": "corpora/crowded-archetypes",
+        "url": "",
+        "similarities": {
+          "same_user": false,
+          "same_problem": false,
+          "same_mechanism": false,
+          "same_data": false,
+          "same_action": false,
+          "same_demo": false
+        },
+        "differences": [
+          "similarity=0.269"
+        ]
+      }
+    ],
+    "collision_risk": "low",
+    "observable_differentiator": "Tested firewall: allocation engine cannot import AI/network/clock/random; privacy HMAC on recipients; doctor checks DB vs on-chain ledger parity",
+    "differentiator_is_substantive": true,
+    "kill_recommendation": false,
+    "notes": "faiss+dimensional heuristic"
+  }
+]

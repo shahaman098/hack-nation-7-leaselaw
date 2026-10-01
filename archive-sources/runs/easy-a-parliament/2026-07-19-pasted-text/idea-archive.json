@@ -1,0 +1,2227 @@
+{
+  "dimensions": [
+    "track",
+    "user_class",
+    "workflow",
+    "mechanism_family",
+    "data",
+    "last_mile_action",
+    "demo_type"
+  ],
+  "occupied_cells": 16,
+  "cells": [
+    {
+      "cell": [
+        "developer",
+        "001-ai-filmmakers",
+        "across-appearance-character",
+        "constraint-solving",
+        "1fa8985a-4170-5439",
+        "click-consistent-constraint",
+        "after-before"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "concept-a1b2",
+        "lane": "systems",
+        "disciplines": [
+          "Artificial Intelligence / Constraint Programming"
+        ],
+        "working_title": "VizBible Constraint Propagator for fal Assets",
+        "primary_user": "AI-native filmmakers producing multi-scene narrative shorts (opp-001).",
+        "painful_workflow": "Struggling to maintain consistent character appearance, lighting, and world details across every new shot. Wasting hackathon time on manual prompt re-entry instead of directing the story.",
+        "current_workaround": "Copy-pasting lengthy style descriptors into every generation prompt and hoping for visual coherence; manually curating the least-bad outputs.",
+        "imported_mechanism": "Constraint Propagation with Interval Arithmetic (M1).",
+        "mechanism_origin": "Artificial Intelligence / Constraint Programming",
+        "data_sources": [
+          "/Users/efi/.codex/attachments/1fa8985a-5439-4170-8757-beaef9998cd2/pasted-text.txt"
+        ],
+        "core_computation": "An AI pipeline builder that transforms a filmmaker's visual bible (character portraits, environment look, color palette) into a constraint graph. GPT-5.6 materializes the bible into structured variables (e.g., `hair_color_rgb`, `lighting_temperature_K`), defining allowable intervals. Codex generates the Workflows API orchestration logic that propagates these visual constraints into every scene's generation prompt, systematically narrowing the solution space until it reaches arc consistency for multi-shot visual identity.",
+        "last_mile_action": "The system outputs a guaranteed consistent, constraint-satisfied prompt for each shot in a storyboard sequence, ready for one-click execution on fal's models or export to Preview.",
+        "visible_transformation": "A filmmaker defines a style bible once, then generates a three-shot sequence where the character's hair color, environmental fog density, and lighting temperature remain visibly identical across all outputs, eliminating manual prompt drift.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The hackathon's judging criteria heavily weights storytelling (35%) and visual consistency under technical capability, while fal's Assets system is purpose-built for reusable character identity but remains underutilized without automated prompt-chain tooling.",
+        "kill_reason": "",
+        "killer_demo": "Within the demo video, the filmmaker creates a visual bible containing a character portrait and an environment mood board. They select three consecutive shots from their film's script. The tool propagates the bible parameters as constraints and generates the three shots using Grok Imagine via the fal API. The demo displays the before/after variance of a key visual metric (e.g., RGB histogram of the character's coat), showing the system reduced the variance from 15% (manual) to under 2%.",
+        "hard_to_fake_advantage": "A novel synthesis of Constraint Programming from symbolic AI onto generative model outputs, achieving deterministic visual coherence—a capability that simple prompt-chaining or embedding-similarity approaches cannot reliably provide.",
+        "cluster_id": "cluster-1-02ac7ad5",
+        "evidence_ids": [
+          "src-d75e6b52e714"
+        ],
+        "opportunity_id": "opp-001",
+        "mechanism_id": "M1",
+        "mutation_history": [],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "A film using the VizBible Constraint Propagator will keep the RGB histogram variance of a character's core outfit under 2% across 5 consecutive AI-generated shots, compared to 10%+ with manual prompt copy-pasting.",
+        "demo_proof": "Within the demo video, the filmmaker creates a visual bible containing a character portrait and an environment mood board. They select three consecutive shots from their film's script. The tool propagates the bible parameters as constraints and generates the three shots using Grok Imagine via the fal API. The demo displays the before/after variance of a key visual metric (e.g., RGB histogram of the character's coat), showing the system reduced the variance from 15% (manual) to under 2%.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Constraint Solving",
+        "demo_type": "before-after",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "AI-native filmmakers producing multi-scene narrative shorts (opp-001).",
+          "workflow": "Struggling to maintain consistent character appearance, lighting, and world details across every new shot. Wasting hackathon time on manual prompt re-entry instead of directing the story.",
+          "mechanism_family": "Constraint Solving",
+          "data": "/Users/efi/.codex/attachments/1fa8985a-5439-4170-8757-beaef9998cd2/pasted-text.txt",
+          "last_mile_action": "The system outputs a guaranteed consistent, constraint-satisfied prompt for each shot in a storyboard sequence, ready for one-click execution on fal's models or export to Preview.",
+          "demo_type": "before-after",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-d75e6b52e714"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "fail",
+            "reason": "Named data was not verified against retrieved evidence; synthetic or proposed data is rejected",
+            "evidence_ids": [
+              "src-d75e6b52e714"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Within the demo video, the filmmaker creates a visual bible containing a character portrait and an environment mood board. They select three consecutive shots from their film's script. The tool propagates the bible parameters as constraints and generates the three shots using Grok Imagine via the fal API. The demo displays the before/after variance of a key visual metric (e.g., RGB histogram of the character's coat), showing the system reduced the variance from 15% (manual) to under 2%.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "A film using the VizBible Constraint Propagator will keep the RGB histogram variance of a character's core outfit under 2% across 5 consecutive AI-generated shots, compared to 10%+ with manual prompt copy-pasting.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "002-ai-building",
+        "3-72-ai",
+        "monitoring-statistical",
+        "borjasolerme-com-filmoss",
+        "any-attempts-custom",
+        "live-replay"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "concept-c3d4",
+        "lane": "edge-users",
+        "disciplines": [
+          "Manufacturing Quality Control"
+        ],
+        "working_title": "Failsafe Lens: SPC-based Demo Guardian for AI Video",
+        "primary_user": "Developer-track participants building AI-video tools under extreme time pressure (opp-002).",
+        "painful_workflow": "Must demonstrate a polished, working tool in a 3-minute demo, but any real-time AI generation glitch or latency spike can ruin the recording and waste precious 72-hour development time.",
+        "current_workaround": "Recording demos a dozen times and praying for no failures, or avoiding live generation entirely by faking it with pre-rendered video clips.",
+        "imported_mechanism": "Statistical Process Control for Anomaly Detection (M2).",
+        "mechanism_origin": "Manufacturing Quality Control",
+        "data_sources": [
+          "https://github.com/borjasolerme/Filmoss"
+        ],
+        "core_computation": "A JavaScript/TypeScript library wrapping the fal client-side SDK. It continuously monitors real-time AI video generation metrics (e.g., request latency, frame generation rate, error status codes) using an X-bar and R control chart. GPT-5.6 establishes the 'in-control' baseline parameters from a historical analysis of the specific fal model endpoint's behavior over the first few minutes of a session. Codex generates the error-handling middleware that, upon SPC anomaly detection (e.g., a Western Electric run rule violation), seamlessly swaps the live stream with a pre-generated, prompt-consistent fallback buffer or gracefully downshifts to a lower-resolution model variant.",
+        "last_mile_action": "The library intercepts a live generation glitch mid-demo and instantly plays a seamless fallback video segment, then invisibly attempts reconnection, protecting the demo without the developer writing any custom error-handling logic.",
+        "visible_transformation": "A developer runs their AI video tool live. The system detects a latency spike outside the control limits, switches to a pre-cached fallback for 2 seconds, and displays a subtle 'stabilizing' indicator, ensuring the demo playback never freezes or shows a raw error stack trace.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The hackathon's Developer Track weights demo impressiveness at 15% but technical execution at 35%; a single visible glitch can destroy both. The 'potentially_underexplored' analysis explicitly calls out demo-failure surface minimization as a high-value gap.",
+        "kill_reason": "",
+        "killer_demo": "A developer uses their AI tool live. Mid-demo, they deliberately introduce a failure by throttling the network. The SPC engine detects the deviation, the live stream seamlessly cuts to a pre-computed, visually identical segment, the tool alerts 'circuit breaker active,' and the demo continues without the audience or judges ever seeing a frozen frame or error code. The tool then demonstrates the session log showing the anomaly detected and the fallback triggered.",
+        "hard_to_fake_advantage": "Borrows mathematically rigorous, 100-year-old manufacturing quality principles (SPC) and applies them to the ephemeral domain of real-time generative AI demos, a cross-disciplinary technique that simple try-catch or timeout-based error handling cannot match.",
+        "cluster_id": "cluster-2-f8e9f1b5",
+        "evidence_ids": [
+          "src-2ec6e755355c"
+        ],
+        "opportunity_id": "opp-002",
+        "mechanism_id": "M2",
+        "mutation_history": [],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "In a controlled network-degraded environment, the Failsafe Lens library will maintain a 98%+ uninterrupted-demo rate by catching and compensating for at least 90% of real-time AI endpoint failures, compared to a 50%+ visible error rate baseline without the library.",
+        "demo_proof": "A developer uses their AI tool live. Mid-demo, they deliberately introduce a failure by throttling the network. The SPC engine detects the deviation, the live stream seamlessly cuts to a pre-computed, visually identical segment, the tool alerts 'circuit breaker active,' and the demo continues without the audience or judges ever seeing a frozen frame or error code. The tool then demonstrates the session log showing the anomaly detected and the fallback triggered.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Statistical Monitoring",
+        "demo_type": "live replay",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "Developer-track participants building AI-video tools under extreme time pressure (opp-002).",
+          "workflow": "Must demonstrate a polished, working tool in a 3-minute demo, but any real-time AI generation glitch or latency spike can ruin the recording and waste precious 72-hour development time.",
+          "mechanism_family": "Statistical Monitoring",
+          "data": "https://github.com/borjasolerme/Filmoss",
+          "last_mile_action": "The library intercepts a live generation glitch mid-demo and instantly plays a seamless fallback video segment, then invisibly attempts reconnection, protecting the demo without the developer writing any custom error-handling logic.",
+          "demo_type": "live replay",
+          "embedding_distances": {
+            "track": 0.0,
+            "user_class": 0.3347200393676758,
+            "workflow": 0.4782182812690735,
+            "mechanism_family": 0.2827936053276062,
+            "data": 0.3862478256225586,
+            "last_mile_action": 0.47170289754867556,
+            "demo_type": 0.47541629076004027
+          }
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-2ec6e755355c"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-2ec6e755355c"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "A developer uses their AI tool live. Mid-demo, they deliberately introduce a failure by throttling the network. The SPC engine detects the deviation, the live stream seamlessly cuts to a pre-computed, visually identical segment, the tool alerts 'circuit breaker active,' and the demo continues without the audience or judges ever seeing a frozen frame or error code. The tool then demonstrates the session log showing the anomaly detected and the fallback triggered.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "In a controlled network-degraded environment, the Failsafe Lens library will maintain a 98%+ uninterrupted-demo rate by catching and compensating for at least 90% of real-time AI endpoint failures, compared to a 50%+ visible error rate baseline without the library.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "advertising-ai-brand",
+        "accuracy-ai-attributes",
+        "simulation",
+        "cocoa-com-devpost",
+        "2-3s-6",
+        "benchmark"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "concept-003-des",
+        "lane": "edge-users",
+        "disciplines": [
+          "Industrial Engineering / Operations Research"
+        ],
+        "working_title": "BrandCheck: Simulated Brand Compliance Comparator for AI Video",
+        "primary_user": "Small brand and advertising creative teams producing short-form AI commercials",
+        "painful_workflow": "They iterate through dozens of AI-generated video drafts to find one that matches brand guidelines, but have no systematic way to compare versions side-by-side on specific brand attributes (logo visibility, color accuracy, tone). Evaluation is purely subjective and slows decision-making.",
+        "current_workaround": "Teams watch all candidate videos sequentially, squint at hex codes, and argue about 'feel' in endless email threads. Some manually screenshot frames and import them into Figma just to eyedropper a single color.",
+        "imported_mechanism": "Discrete Event Simulation (M3)",
+        "mechanism_origin": "Industrial Engineering / Operations Research",
+        "data_sources": [
+          "https://devpost.com/software/cocoa-monster"
+        ],
+        "core_computation": "The system treats each brand guideline check (color palette match, logo presence, tone classification) as an event processor. GPT-5.6 parses the team's uploaded brand guide PDF against extracted frames to generate event rules (e.g., 'HEX #2D2D2D must occupy >30% of non-sky pixels'). A discrete event simulation clock ticks through each frame of generated video candidates; at each tick, Codex executes a Python script calling fal-hosted computer vision endpoints to measure state variables. The simulation log records timestamps where constraints are violated, producing a per-video compliance trace and a time-weighted compliance score.",
+        "last_mile_action": "The tool presents a split-screen grid with synchronized playback of up to 6 candidate videos. Below each video, a live simulation event log highlights exact timestamps of guideline violations (e.g., 'Logo absent at 2.3s'), while a stacked bar shows cumulative time spent in-compliance vs. out-of-compliance. The creative lead clicks a single 'Generate Compliance Report' button to produce a PDF with frame grabs of every violation across all candidates, instantly shareable with the client.",
+        "visible_transformation": "A chaotic folder of 15 AI-generated product ads transforms into a scored, filterable comparison grid where the team objectively eliminates 12 candidates in 90 seconds because the simulation exposes that the brand's cobalt blue appears only 8% of the time instead of the required 35%.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The Generative Media Track includes dedicated Brand & Advertising theme, and the resource guide warns against incremental wrappers, but no current tool addresses the brand-compliance feedback loop—a clear gap for a Developer Track submission that brings measurable user value to Gen Media creators.",
+        "kill_reason": "",
+        "killer_demo": "The presenter opens a folder of 8 generated perfume ad videos. They upload a 2-page brand guidelines PDF. Within 30 seconds, a dashboard appears showing a simulation status bar advancing as the clock steps through each frame. The grid populates: video #4 is flagged red—a violation log scrolls showing the logo was missing for 4.2 of 7 seconds. The presenter clicks video #4, the timeline jumps to the exact violation moment, and the screen displays the current frame with a ghosted overlay of the required logo position from the guideline. They check a box and a merged compliance PDF report downloads. The demo ends with the presenter confidently selecting video #7 because the simulation log proves 94% brand compliance vs. a baseline of roughly 60% judged by manual human review.",
+        "hard_to_fake_advantage": "Unlike a basic prompt wrapper that just asks an LLM 'does this match the brand?', this tool uses a stateful simulation engine that logs the exact moment-to-moment trajectory of each video against quantized brand constraints. The event log creates a non-repudiable audit trail that no generic chat interface can produce, enabling defensible client decisions ('We rejected this shot because the simulation logged logo dropout at frames 72-82') rather than subjective opinions.",
+        "cluster_id": "cluster-3-f214a2e0",
+        "evidence_ids": [
+          "src-a9659b5c3171"
+        ],
+        "opportunity_id": "opp-003",
+        "mechanism_id": "M3",
+        "mutation_history": [],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "BrandCheck reduces the time to objectively eliminate off-brand AI video candidates by more than 60% compared to manual A/B viewing, measured by tracking decision latency from folder-open to 'final two selected'.",
+        "demo_proof": "The presenter opens a folder of 8 generated perfume ad videos. They upload a 2-page brand guidelines PDF. Within 30 seconds, a dashboard appears showing a simulation status bar advancing as the clock steps through each frame. The grid populates: video #4 is flagged red—a violation log scrolls showing the logo was missing for 4.2 of 7 seconds. The presenter clicks video #4, the timeline jumps to the exact violation moment, and the screen displays the current frame with a ghosted overlay of the required logo position from the guideline. They check a box and a merged compliance PDF report downloads. The demo ends with the presenter confidently selecting video #7 because the simulation log proves 94% brand compliance vs. a baseline of roughly 60% judged by manual human review.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Simulation",
+        "demo_type": "benchmark",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "Small brand and advertising creative teams producing short-form AI commercials",
+          "workflow": "They iterate through dozens of AI-generated video drafts to find one that matches brand guidelines, but have no systematic way to compare versions side-by-side on specific brand attributes (logo visibility, color accuracy, tone). Evaluation is purely subjective and slows decision-making.",
+          "mechanism_family": "Simulation",
+          "data": "https://devpost.com/software/cocoa-monster",
+          "last_mile_action": "The tool presents a split-screen grid with synchronized playback of up to 6 candidate videos. Below each video, a live simulation event log highlights exact timestamps of guideline violations (e.g., 'Logo absent at 2.3s'), while a stacked bar shows cumulative time spent in-compliance vs. out-of-compliance. The creative lead clicks a single 'Generate Compliance Report' button to produce a PDF with frame grabs of every violation across all candidates, instantly shareable with the client.",
+          "demo_type": "benchmark",
+          "embedding_distances": {
+            "track": 0.0,
+            "user_class": 0.5388447523117066,
+            "workflow": 0.7327669620513916,
+            "mechanism_family": 0.20842571258544923,
+            "data": 0.4310813665390015,
+            "last_mile_action": 0.4262260913848877,
+            "demo_type": 0.5238723158836365
+          }
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-a9659b5c3171"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-a9659b5c3171"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "The presenter opens a folder of 8 generated perfume ad videos. They upload a 2-page brand guidelines PDF. Within 30 seconds, a dashboard appears showing a simulation status bar advancing as the clock steps through each frame. The grid populates: video #4 is flagged red—a violation log scrolls showing the logo was missing for 4.2 of 7 seconds. The presenter clicks video #4, the timeline jumps to the exact violation moment, and the screen displays the current frame with a ghosted overlay of the required logo position from the guideline. They check a box and a merged compliance PDF report downloads. The demo ends with the presenter confidently selecting video #7 because the simulation log proves 94% brand compliance vs. a baseline of roughly 60% judged by manual human review.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "BrandCheck reduces the time to objectively eliminate off-brand AI video candidates by more than 60% compared to manual A/B viewing, measured by tracking decision latency from folder-open to 'final two selected'.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "anime-artists-creating",
+        "achieve-aesthetic-anime",
+        "causal-inference",
+        "com-devpost-https",
+        "10-22-3",
+        "failure-injection"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "concept-004-ci",
+        "lane": "systems",
+        "disciplines": [
+          "Statistics / Epidemiology"
+        ],
+        "working_title": "StyleForge: Counterfactual Style Injection for Non-Generic Anime",
+        "primary_user": "Solo generative media artists creating anime-style short films",
+        "painful_workflow": "They want to produce high-quality anime with unique, personal art styles, but the default model outputs look generic. To achieve a distinctive aesthetic, they must manually post-process frames or write extremely complex single-prompt style descriptions that still drift.",
+        "current_workaround": "Artists spend hours in Photoshop drawing over individual frames to impose their line-art or color-choice preferences. Others paste 500-word style prompts into the generator, hoping three adjectives survive, then accept the generic output and pretend the 'muted, desaturated cel-shading with weighted ink contours at 45-degree hatching' was intentional.",
+        "imported_mechanism": "Counterfactual Inference using Potential Outcomes (M4)",
+        "mechanism_origin": "Statistics / Epidemiology",
+        "data_sources": [
+          "https://devpost.com/software/scrolla"
+        ],
+        "core_computation": "GPT-5.6 analyzes the artist's reference pack (character sheets, background art, color scripts) and constructs a causal DAG linking style attributes to visual outcomes. Codex then implements an estimation engine that, for each generated frame, computes a style-propensity score by matching observed features against the reference set. For any frame flagged as 'generic' (low estimated treatment effect from the style reference), the system formulates a counterfactual: what would this frame look like if the style treatment had been fully applied? GPT-5.6 generates a targeted inpainting or control signal prompt correction via the fal API—adjusting only the deviating attributes (e.g., 'thicken line weight by estimated delta of 1.4x')—and re-submits the frame for targeted regeneration. This avoids full re-generation and converges toward the style with fewer API calls.",
+        "last_mile_action": "The artist drags their style reference folder (3-10 images) onto the interface. They paste their base scene prompt and click 'Generate with Style Treatment.' A side-by-side viewer shows pairs of frames: the generic 'control' output on the left, the style-treated output on the right. Below each pair, a causal-style report reads 'Line weight confidence: 92% match to reference (up from 43%), color saturation delta applied: -22%.' The artist can adjust sliders to manually weight specific style attributes (line weight, palette adherence, shading gradient) and the counterfactual engine re-calculates treatment effects in real-time, selectively regenerating only the adjusted attributes.",
+        "visible_transformation": "A flat, generic anime clip of a samurai in a forest becomes visually indistinguishable from the artist's personal sketchbook style—heavy ink contours, a restricted palette of ochre-vermillion-teal, and stylized leaf silhouettes—without the artist ever opening Photoshop or guessing at prompt engineering.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "Anime is an explicit Generative Media Track theme, and 'generic anime characters' is flagged as a high-collision risk. The hackathon offers Grok Imagine and Kling via fal API, which could be orchestrated with style-reference injection to escape the generic look—aligning with the 'multi-model synergy beyond chaining' underexplored area.",
+        "kill_reason": "",
+        "killer_demo": "The presenter creates a folder with three images: the artist's original character design sheet, a background color key, and a 1-second clip of 'generic forest anime.' They type 'samurai walks through bamboo forest, long lens, cinematic' and hit generate on a vanilla fal endpoint—the output is clean but plastic-looking. Then they switch to StyleForge, drag the same reference folder, paste the identical prompt, and click 'Generate with Style Treatment.' The tool shows a cascading estimate: 'Estimated style adherence: 37% on control frame.' A progress bar appears as Codex iterates counterfactual corrections. Within a minute, the treated frame appears side-by-side: visible ink lines now mimic the artist's brush weight, the colors match the restricted palette, and the leaf shapes echo the background key. The causal report shows a final treatment effect of 89% style match (baseline: 37%). The presenter exports the treated clip directly to a project timeline.",
+        "hard_to_fake_advantage": "Prompt-chaining tools simply feed the output of one model into another and hope style emerges. StyleForge frames style adherence as a causal estimation problem with measurable deltas per visual attribute. Because it only re-generates attributes where the estimated treatment effect is low, it achieves style convergence with fewer API credits and produces a quantifiable style-match percentage—neither of which is possible with prompt engineering alone.",
+        "cluster_id": "cluster-4-fa8fad2a",
+        "evidence_ids": [
+          "src-daee5ad611e1"
+        ],
+        "opportunity_id": "opp-004",
+        "mechanism_id": "M4",
+        "mutation_history": [],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "StyleForge increases measurable style-attribute match (line weight deviation, palette delta-E, and contour consistency) by at least 40 percentage points over an unaugmented prompt baseline on a set of 10 diverse anime scenes, using a perceptual similarity metric calibrated against the artist's reference pack.",
+        "demo_proof": "The presenter creates a folder with three images: the artist's original character design sheet, a background color key, and a 1-second clip of 'generic forest anime.' They type 'samurai walks through bamboo forest, long lens, cinematic' and hit generate on a vanilla fal endpoint—the output is clean but plastic-looking. Then they switch to StyleForge, drag the same reference folder, paste the identical prompt, and click 'Generate with Style Treatment.' The tool shows a cascading estimate: 'Estimated style adherence: 37% on control frame.' A progress bar appears as Codex iterates counterfactual corrections. Within a minute, the treated frame appears side-by-side: visible ink lines now mimic the artist's brush weight, the colors match the restricted palette, and the leaf shapes echo the background key. The causal report shows a final treatment effect of 89% style match (baseline: 37%). The presenter exports the treated clip directly to a project timeline.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Causal Inference",
+        "demo_type": "failure injection",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "Solo generative media artists creating anime-style short films",
+          "workflow": "They want to produce high-quality anime with unique, personal art styles, but the default model outputs look generic. To achieve a distinctive aesthetic, they must manually post-process frames or write extremely complex single-prompt style descriptions that still drift.",
+          "mechanism_family": "Causal Inference",
+          "data": "https://devpost.com/software/scrolla",
+          "last_mile_action": "The artist drags their style reference folder (3-10 images) onto the interface. They paste their base scene prompt and click 'Generate with Style Treatment.' A side-by-side viewer shows pairs of frames: the generic 'control' output on the left, the style-treated output on the right. Below each pair, a causal-style report reads 'Line weight confidence: 92% match to reference (up from 43%), color saturation delta applied: -22%.' The artist can adjust sliders to manually weight specific style attributes (line weight, palette adherence, shading gradient) and the counterfactual engine re-calculates treatment effects in real-time, selectively regenerating only the adjusted attributes.",
+          "demo_type": "failure injection",
+          "embedding_distances": {
+            "track": 0.0,
+            "user_class": 0.5366417288780212,
+            "workflow": 0.617728304862976,
+            "mechanism_family": 0.3084322214126587,
+            "data": 0.44347262382507324,
+            "last_mile_action": 0.6246715545654297,
+            "demo_type": 0.4860640525817871
+          }
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-daee5ad611e1"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-daee5ad611e1"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "The presenter creates a folder with three images: the artist's original character design sheet, a background color key, and a 1-second clip of 'generic forest anime.' They type 'samurai walks through bamboo forest, long lens, cinematic' and hit generate on a vanilla fal endpoint—the output is clean but plastic-looking. Then they switch to StyleForge, drag the same reference folder, paste the identical prompt, and click 'Generate with Style Treatment.' The tool shows a cascading estimate: 'Estimated style adherence: 37% on control frame.' A progress bar appears as Codex iterates counterfactual corrections. Within a minute, the treated frame appears side-by-side: visible ink lines now mimic the artist's brush weight, the colors match the restricted palette, and the leaf shapes echo the background key. The causal report shows a final treatment effect of 89% style match (baseline: 37%). The presenter exports the treated clip directly to a project timeline.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "StyleForge increases measurable style-attribute match (line weight deviation, palette delta-E, and contour consistency) by at least 40 percentage points over an unaugmented prompt baseline on a set of 10 diverse anime scenes, using a perceptual similarity metric calibrated against the artist's reference pack.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "ai-filmmakers-multi",
+        "10-5-across",
+        "monitoring-statistical",
+        "com-devpost-https",
+        "all-batch-can",
+        "counterfactual"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "C5",
+        "lane": "systems",
+        "disciplines": [
+          "Manufacturing Quality Control"
+        ],
+        "working_title": "Bibledex",
+        "primary_user": "AI-native filmmakers producing multi-scene narrative shorts",
+        "painful_workflow": "The filmmaker defines character portraits, environment style frames, and a color palette once (a visual bible), but must manually re-insert these descriptors into every single shot prompt during a hackathon. As the story progresses across 5–10 scenes, slight wording drift causes character faces, lighting, and world details to mutate, breaking narrative immersion and requiring hours of re-generation to fix.",
+        "current_workaround": "Keeping a separate text file of ‘master prompts’ and copy-pasting with manual tweaks per shot, or using fal Assets only as a static reference image without automated injection into the prompt chain.",
+        "imported_mechanism": "Constraint Propagation with Interval Arithmetic (M1)",
+        "mechanism_origin": "Manufacturing Quality Control",
+        "data_sources": [
+          "https://devpost.com/software/visionaid"
+        ],
+        "core_computation": "Treat each component of a visual bible (character identity, lighting range, color gamut) as a variable with a constrained domain. As the user authors a script, GPT-5.6 parses each shot description into a set of visual constraints (e.g., ‘character A must appear here’, ‘scene is at dusk with warm Kelvin 2500–3500’). The system propagates these constraints through the shot list, narrowing the valid parameter space for each generation call, and automatically injects the constrained descriptors and fal Asset references into the API request for Grok Imagine or Kling.",
+        "last_mile_action": "The tool emits a ready-to-execute fal Workflow JSON payload for every shot in the sequence, with constraints resolved, so the filmmaker can batch-generate all scenes with one click and review a consistent storyboard.",
+        "visible_transformation": "A 10-shot sequence that previously showed 3 different ‘versions’ of the protagonist and inconsistent lighting now renders with locked character identity and a smooth dusk-to-night gradient because the interval constraints prevented parameter drift.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The hackathon's judging criteria heavily weights storytelling (35%) and visual consistency under technical capability, while fal's Assets system is purpose-built for reusable character identity but remains underutilized without automated prompt-chain tooling.",
+        "kill_reason": "",
+        "killer_demo": "Live during the 3-minute demo video: the filmmaker imports a 2-sentence character description and 1 environment image. The system auto-constrains 12 shot prompts across 3 locations. The demo shows a side-by-side comparison of (A) manual prompting with visible style drift vs. (B) Bibledex-constrained shots where the character’s face and the golden-hour lighting stay identical. State changes from ‘inconsistent batch’ to ‘lockstep visual continuity’ before the audience’s eyes.",
+        "hard_to_fake_advantage": "Constraint propagation is not a prompt wrapper; it mathematically narrows generation parameters before the API call, preventing drift at the specification level rather than patching outputs after the fact. Competitors can’t trivially replicate the interval narrowing logic in 72 hours without the specific mechanism.",
+        "cluster_id": "cluster-5-f092d443",
+        "evidence_ids": [
+          "src-ef8c79839cdd"
+        ],
+        "opportunity_id": "opp-001",
+        "mechanism_id": "M2",
+        "mutation_history": [],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "Bibledex reduces character-identity drift (measured by pairwise CLIP cosine distance between consecutive shots of the same character) by at least 40% compared to a manual re-prompting baseline using the same fal models.",
+        "demo_proof": "Live during the 3-minute demo video: the filmmaker imports a 2-sentence character description and 1 environment image. The system auto-constrains 12 shot prompts across 3 locations. The demo shows a side-by-side comparison of (A) manual prompting with visible style drift vs. (B) Bibledex-constrained shots where the character’s face and the golden-hour lighting stay identical. State changes from ‘inconsistent batch’ to ‘lockstep visual continuity’ before the audience’s eyes.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Statistical Monitoring",
+        "demo_type": "counterfactual",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "AI-native filmmakers producing multi-scene narrative shorts",
+          "workflow": "The filmmaker defines character portraits, environment style frames, and a color palette once (a visual bible), but must manually re-insert these descriptors into every single shot prompt during a hackathon. As the story progresses across 5–10 scenes, slight wording drift causes character faces, lighting, and world details to mutate, breaking narrative immersion and requiring hours of re-generation to fix.",
+          "mechanism_family": "Statistical Monitoring",
+          "data": "https://devpost.com/software/visionaid",
+          "last_mile_action": "The tool emits a ready-to-execute fal Workflow JSON payload for every shot in the sequence, with constraints resolved, so the filmmaker can batch-generate all scenes with one click and review a consistent storyboard.",
+          "demo_type": "counterfactual",
+          "embedding_distances": {
+            "track": 0.0,
+            "user_class": 0.47391542196273806,
+            "workflow": 0.6161469578742981,
+            "mechanism_family": 0.2827936053276062,
+            "data": 0.3677417874336243,
+            "last_mile_action": 0.5118766188621521,
+            "demo_type": 0.43285748958587644
+          }
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-ef8c79839cdd"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-ef8c79839cdd"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "Live during the 3-minute demo video: the filmmaker imports a 2-sentence character description and 1 environment image. The system auto-constrains 12 shot prompts across 3 locations. The demo shows a side-by-side comparison of (A) manual prompting with visible style drift vs. (B) Bibledex-constrained shots where the character’s face and the golden-hour lighting stay identical. State changes from ‘inconsistent batch’ to ‘lockstep visual continuity’ before the audience’s eyes.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "Bibledex reduces character-identity drift (measured by pairwise CLIP cosine distance between consecutive shots of the same character) by at least 40% compared to a manual re-prompting baseline using the same fal models.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "ai-building-developer",
+        "3-72-90",
+        "simulation",
+        "com-cycle-devpost",
+        "app-audience-calls",
+        "state-transition"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "C6",
+        "lane": "edge-users",
+        "disciplines": [
+          "Industrial Engineering / Operations Research"
+        ],
+        "working_title": "GraceFrame",
+        "primary_user": "Developer-track participants building AI-video tools under extreme time pressure",
+        "painful_workflow": "The team records a 3-minute demo video that must show a working real-time AI-video pipeline. During recording, a sudden fal API timeout or a Grok Imagine model overload causes the frame to freeze, display a raw JSON error, or crash entirely. Re-recording the seamless demo requires restarting the entire flow, burning 90+ minutes of the remaining 72-hour window.",
+        "current_workaround": "Developers hardcode try-catch blocks that show a blank ‘Loading…’ spinner or restart the generation silently, but judges still perceive the dead air as a glitch. Some teams pre-render the entire demo as a screen recording and pretend it's live, which risks disqualification if audited.",
+        "imported_mechanism": "Statistical Process Control for Anomaly Detection (M2)",
+        "mechanism_origin": "Industrial Engineering / Operations Research",
+        "data_sources": [
+          "https://devpost.com/software/up-cycle"
+        ],
+        "core_computation": "A lightweight runtime monitor tracks the latency and success-rate time-series of every fal API call during the demo. Codex generates a control chart with upper/lower control limits calibrated during a pre-demo ‘burn-in’ phase. When latency exceeds the upper control limit or error rate spikes above a 2-sigma threshold, the SPC rules engine triggers a graceful degradation path: it immediately switches to the most-recent successfully generated frame (held in a ring buffer) and smoothly cross-fades to a pre-warmed, lower-fidelity ‘safety generation’ from a faster model, if available, or scales frame display time subtly to mask the gap.",
+        "last_mile_action": "The developer drops the GraceFrame SDK into their existing app, wraps their fal generation calls, and records their demo. If a failure occurs, the audience sees a seamless crossfade or a slight slow-down, never a spinner or error text.",
+        "visible_transformation": "During a live-demo recording, a 7-second Grok Imagine stall is transformed in real-time into a 0.8-second crossfade from the last good frame to a pre-generated Kling safety frame, then back to the fresh Grok frame once it arrives. The audio description continues uninterrupted because the SPC engine pads the narration timeline automatically.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The hackathon's Developer Track weights demo impressiveness at 15% but technical execution at 35%; a single visible glitch can destroy both. The 'potentially_underexplored' analysis explicitly calls out demo-failure surface minimization as a high-value gap.",
+        "kill_reason": "",
+        "killer_demo": "The team shows their actual video tool in a split-screen demo: the left side runs without GraceFrame and hits a simulated API failure, freezing with a ‘504 Gateway Timeout’ error message and an awkward silence. The right side runs the identical tool with GraceFrame active; the same failure occurs, but the frame dissolves elegantly into a soft-focused safety render while a voiceover says ‘recovering stream’. The demo measures the glitch-to-recovery time: 6.1 seconds on the left vs. 0.9 seconds on the right.",
+        "hard_to_fake_advantage": "SPC-based anomaly detection is predictive (it flags degradation before hard failure, using runs rules on latency trends), not just reactive. Most error-handling libraries only catch exceptions after the fact. The pre‑warmed safety frames and statistical control limits are computationally grounded and not a simple timeout wrapper.",
+        "cluster_id": "cluster-6-95f03b53",
+        "evidence_ids": [
+          "src-990b738da8c6"
+        ],
+        "opportunity_id": "opp-002",
+        "mechanism_id": "M3",
+        "mutation_history": [],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "GraceFrame reduces the visible failure surface (total seconds of frozen or error-state UI per 3-minute demo under a 15% random API failure injection rate) by more than 80% compared to a standard try-catch-and-spinner approach.",
+        "demo_proof": "The team shows their actual video tool in a split-screen demo: the left side runs without GraceFrame and hits a simulated API failure, freezing with a ‘504 Gateway Timeout’ error message and an awkward silence. The right side runs the identical tool with GraceFrame active; the same failure occurs, but the frame dissolves elegantly into a soft-focused safety render while a voiceover says ‘recovering stream’. The demo measures the glitch-to-recovery time: 6.1 seconds on the left vs. 0.9 seconds on the right.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Simulation",
+        "demo_type": "state transition",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "Developer-track participants building AI-video tools under extreme time pressure",
+          "workflow": "The team records a 3-minute demo video that must show a working real-time AI-video pipeline. During recording, a sudden fal API timeout or a Grok Imagine model overload causes the frame to freeze, display a raw JSON error, or crash entirely. Re-recording the seamless demo requires restarting the entire flow, burning 90+ minutes of the remaining 72-hour window.",
+          "mechanism_family": "Simulation",
+          "data": "https://devpost.com/software/up-cycle",
+          "last_mile_action": "The developer drops the GraceFrame SDK into their existing app, wraps their fal generation calls, and records their demo. If a failure occurs, the audience sees a seamless crossfade or a slight slow-down, never a spinner or error text.",
+          "demo_type": "state transition",
+          "embedding_distances": {
+            "track": 0.0,
+            "user_class": 0.33374676704406736,
+            "workflow": 0.5450924754142761,
+            "mechanism_family": 0.20842571258544923,
+            "data": 0.413634192943573,
+            "last_mile_action": 0.49204723834991454,
+            "demo_type": 0.421792209148407
+          }
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-990b738da8c6"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-990b738da8c6"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "The team shows their actual video tool in a split-screen demo: the left side runs without GraceFrame and hits a simulated API failure, freezing with a ‘504 Gateway Timeout’ error message and an awkward silence. The right side runs the identical tool with GraceFrame active; the same failure occurs, but the frame dissolves elegantly into a soft-focused safety render while a voiceover says ‘recovering stream’. The demo measures the glitch-to-recovery time: 6.1 seconds on the left vs. 0.9 seconds on the right.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "GraceFrame reduces the visible failure surface (total seconds of frozen or error-state UI per 3-minute demo under a 15% random API failure injection rate) by more than 80% compared to a standard try-catch-and-spinner approach.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "001-ai-filmmakers",
+        "across-appearance-character",
+        "causal-inference",
+        "1fa8985a-4170-5439",
+        "appends-automatically-coherence",
+        "counterfactual"
+      ],
+      "quality": 0.74,
+      "idea": {
+        "id": "mut-r1-01-stylebible-script-analyzer-p",
+        "lane": "developer-tools",
+        "disciplines": [
+          "Statistics / Epidemiology"
+        ],
+        "working_title": "StyleBible Script Analyzer & Prompt Injector",
+        "primary_user": "AI-native filmmakers producing multi-scene narrative shorts (opp-001).",
+        "painful_workflow": "Struggling to maintain consistent character appearance, lighting, and world details across every new shot. Wasting hackathon time on manual prompt re-entry instead of directing the story.",
+        "current_workaround": "Copy-pasting lengthy style descriptors into every generation prompt and hoping for visual coherence; manually curating the least-bad outputs.",
+        "imported_mechanism": "Statistical Process Control for Anomaly Detection (M2).",
+        "mechanism_origin": "Statistics / Epidemiology",
+        "data_sources": [
+          "/Users/efi/.codex/attachments/1fa8985a-5439-4170-8757-beaef9998cd2/pasted-text.txt"
+        ],
+        "core_computation": "A Python-based pre-processor that parses a filmmaker's script (Final Draft or Fountain format) to extract scene headings and character appearances. It builds a 'Style Bible' data structure with visual parameters (e.g., `character_coat_hex`, `scene_lighting_temp_K`). As the filmmaker iterates through shots, GPT-5.6 analyzes the generated sequence of prompts and their corresponding outputs (via the fal API) to detect 'style drift' using a multivariate CUSUM control chart. When a statistically significant deviation in a visual metric is detected, Codex generates a real-time, minimal corrective injection (e.g., 'cinematic lighting, deep cyan shadows, 3200K warmth') that is appended to the next prompt in the pipeline, bringing the process back into a state of statistical control for visual consistency.",
+        "last_mile_action": "The system automatically appends a corrective style injection to the next shot's prompt in the filmmaker's queue, ensuring visual coherence, and logs the detected drift metric and correction for post-production review.",
+        "visible_transformation": "A filmmaker writes a script containing three scenes with a character named 'EVA'. They highlight EVA's portrait and define 'cyan coat'. The tool sequences five generated shots. After shot 3, the filament color in the coat has shifted from #00FFFF to #1A6B7A. The SPC module detects this drift, alerts the user, and automatically corrects the prompt for shot 4 with '+ cyan color #00FFFF', reverting the coat color. The before/after shows the coat's RGB histogram variance reduced from 8% to 1.5% across all five shots.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "Anime is an explicit Generative Media Track theme, and 'generic anime characters' is flagged as a high-collision risk. The hackathon offers Grok Imagine and Kling via fal API, which could be orchestrated with style-reference injection to escape the generic look—aligning with the 'multi-model synergy beyond chaining' underexplored area.",
+        "kill_reason": "",
+        "killer_demo": "The demo begins with a director loading a script. They define a Style Bible for the character 'EVA' (cyan coat). The tool generates a five-shot sequence. Mid-sequence, we deliberately see the coat color drifting to teal. An on-screen SPC chart flags the drift with a red dot violating the CUSUM limit. The system automatically injects a correction into the prompt for the next shot. The final shot's coat is visibly identical to the first. The video ends with a split-screen variance histogram: 8.2% baseline variance (without correction) vs. 1.5% with the SPC-based correction system.",
+        "hard_to_fake_advantage": "Unlike one-shot prompt generators, this system actively monitors the generative process as a manufacturing line, using SPC to detect and automatically correct for drift. This closes the loop between creation and quality assurance in a way that static constraint propagation cannot.",
+        "cluster_id": "cluster-7-8f6659f5",
+        "evidence_ids": [
+          "src-d75e6b52e714"
+        ],
+        "opportunity_id": "opp-004",
+        "mechanism_id": "M4",
+        "mutation_history": [
+          "round 1: empty action region: write a verified correction into the workflow"
+        ],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "A filmmaker generating 10 consecutive shots with the StyleBible Script Analyzer will maintain the RGB histogram variance of a character's signature outfit color under 2%, compared to a >10% variance when manually copy-pasting the same style description without automated SPC correction.",
+        "demo_proof": "The demo begins with a director loading a script. They define a Style Bible for the character 'EVA' (cyan coat). The tool generates a five-shot sequence. Mid-sequence, we deliberately see the coat color drifting to teal. An on-screen SPC chart flags the drift with a red dot violating the CUSUM limit. The system automatically injects a correction into the prompt for the next shot. The final shot's coat is visibly identical to the first. The video ends with a split-screen variance histogram: 8.2% baseline variance (without correction) vs. 1.5% with the SPC-based correction system.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Causal Inference",
+        "demo_type": "counterfactual",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 0.2,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "AI-native filmmakers producing multi-scene narrative shorts (opp-001).",
+          "workflow": "Struggling to maintain consistent character appearance, lighting, and world details across every new shot. Wasting hackathon time on manual prompt re-entry instead of directing the story.",
+          "mechanism_family": "Causal Inference",
+          "data": "/Users/efi/.codex/attachments/1fa8985a-5439-4170-8757-beaef9998cd2/pasted-text.txt",
+          "last_mile_action": "The system automatically appends a corrective style injection to the next shot's prompt in the filmmaker's queue, ensuring visual coherence, and logs the detected drift metric and correction for post-production review.",
+          "demo_type": "counterfactual",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-d75e6b52e714"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "fail",
+            "reason": "Named data was not verified against retrieved evidence; synthetic or proposed data is rejected",
+            "evidence_ids": [
+              "src-d75e6b52e714"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "fail",
+            "reason": "The demo begins with a director loading a script. They define a Style Bible for the character 'EVA' (cyan coat). The tool generates a five-shot sequence. Mid-sequence, we deliberately see the coat color drifting to teal. An on-screen SPC chart flags the drift with a red dot violating the CUSUM limit. The system automatically injects a correction into the prompt for the next shot. The final shot's coat is visibly identical to the first. The video ends with a split-screen variance histogram: 8.2% baseline variance (without correction) vs. 1.5% with the SPC-based correction system.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "A filmmaker generating 10 consecutive shots with the StyleBible Script Analyzer will maintain the RGB histogram variance of a character's signature outfit color under 2%, compared to a >10% variance when manually copy-pasting the same style description without automated SPC correction.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "002-ai-building",
+        "3-72-ai",
+        "simulation",
+        "borjasolerme-com-filmoss",
+        "automatic-clip-computed",
+        "state-transition"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r1-02-glitchless-router-constraint",
+        "lane": "systems",
+        "disciplines": [
+          "Industrial Engineering / Operations Research"
+        ],
+        "working_title": "Glitchless Router: Constraint-Satisfying Fallback Generator",
+        "primary_user": "Developer-track participants building AI-video tools under extreme time pressure (opp-002).",
+        "painful_workflow": "Must demonstrate a polished, working tool in a 3-minute demo, but any real-time AI generation glitch or latency spike can ruin the recording and waste precious 72-hour development time.",
+        "current_workaround": "Recording demos a dozen times and praying for no failures, or avoiding live generation entirely by faking it with pre-rendered video clips.",
+        "imported_mechanism": "Constraint Propagation with Interval Arithmetic (M1).",
+        "mechanism_origin": "Industrial Engineering / Operations Research",
+        "data_sources": [
+          "https://github.com/borjasolerme/Filmoss"
+        ],
+        "core_computation": "An SDK middleware that defines a 'glitchless demo' constraint satisfaction problem. The variables are the set of all cacheable AI outputs for a demo flow (e.g., `scene_1_shot_2`, `loading_loop`). Domains are the acceptable runtime metrics (e.g., `latency_ms: [500,3000]`, `resolution: [720,1080]`). The constraints are the desired visual continuity. Before the demo, Codex constructs a complete fallback state-space representing a valid demo arc. During the live demo, if a primary fal API call fails (violating a runtime constraint), GPT-5.6 solves the constraint graph in real-time to select the most contextually coherent pre-rendered fallback that maintains narrative and visual flow, arc-consistently blending it into the playback stream.",
+        "last_mile_action": "A developer's tool, upon detecting a real-time generation failure, seamlessly crossfades to the pre-computed, constraint-satisfying optimal fallback clip and schedules an automatic retry of the primary model connection.",
+        "visible_transformation": "In a live coding demo, a developer deliberately throttles their network. Their app attempts to generate a new video segment. The system's overlay shows 'primary request failed – constraint violated: latency > 5000ms'. Instantly, the screen cross-dissolves from a buffering icon to a previously generated, context-perfect clip of a character walking. The demo continues without stutter, and a subtle 'router active' icon appears. The demo log then shows the constraint solver selecting the fallback with a 0.98 similarity match to the intended shot.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The hackathon's judging criteria heavily weights storytelling (35%) and visual consistency under technical capability, while fal's Assets system is purpose-built for reusable character identity but remains underutilized without automated prompt-chain tooling.",
+        "kill_reason": "",
+        "killer_demo": "A developer live-demos their AI storyboard tool using the fal API. They click 'Generate Next Shot.' As the generation fires, they simulate a severe network throttle. The UI shows a real-time metric: 'Constraint Violation: Latency 8200ms [Limit: 4000ms]'. Instead of an error, a perfectly matched, pre-rendered fallback clip of the same character in a similar pose crossfades in. The demo voiceover states, 'And the Glitchless Router just switched to the constraint-solving backup.' After the demo, they show the console log with the arc-consistency solver's decision tree, proving it wasn't a pre-scripted fake.",
+        "hard_to_fake_advantage": "Applies formal Constraint Satisfaction methods to create an optimal, invisible safety net for live demos, generating a contextually perfect fallback state-space rather than just a single static video backup. This guarantees narrative coherence during failure, which a simple try-catch or buffer cannot.",
+        "cluster_id": "cluster-8-c0e4bb7d",
+        "evidence_ids": [
+          "src-2ec6e755355c"
+        ],
+        "opportunity_id": "opp-001",
+        "mechanism_id": "M3",
+        "mutation_history": [
+          "round 1: empty action region: schedule the next bounded action"
+        ],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "In a stress test with 50 forced mid-demo API failures, the Glitchless Router will maintain a seamless visual flow (as rated by human judges on a 1-5 coherence scale) with a mean score >4.0, compared to a <2.0 mean score for the baseline approach of simply displaying a pre-rendered loading loop on failure.",
+        "demo_proof": "A developer live-demos their AI storyboard tool using the fal API. They click 'Generate Next Shot.' As the generation fires, they simulate a severe network throttle. The UI shows a real-time metric: 'Constraint Violation: Latency 8200ms [Limit: 4000ms]'. Instead of an error, a perfectly matched, pre-rendered fallback clip of the same character in a similar pose crossfades in. The demo voiceover states, 'And the Glitchless Router just switched to the constraint-solving backup.' After the demo, they show the console log with the arc-consistency solver's decision tree, proving it wasn't a pre-scripted fake.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Simulation",
+        "demo_type": "state transition",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "Developer-track participants building AI-video tools under extreme time pressure (opp-002).",
+          "workflow": "Must demonstrate a polished, working tool in a 3-minute demo, but any real-time AI generation glitch or latency spike can ruin the recording and waste precious 72-hour development time.",
+          "mechanism_family": "Simulation",
+          "data": "https://github.com/borjasolerme/Filmoss",
+          "last_mile_action": "A developer's tool, upon detecting a real-time generation failure, seamlessly crossfades to the pre-computed, constraint-satisfying optimal fallback clip and schedules an automatic retry of the primary model connection.",
+          "demo_type": "state transition",
+          "embedding_distances": {
+            "track": 0.0,
+            "user_class": 0.3347200393676758,
+            "workflow": 0.4782182812690735,
+            "mechanism_family": 0.20842571258544923,
+            "data": 0.3862478256225586,
+            "last_mile_action": 0.4458657741546631,
+            "demo_type": 0.421792209148407
+          }
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-2ec6e755355c"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-2ec6e755355c"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "A developer live-demos their AI storyboard tool using the fal API. They click 'Generate Next Shot.' As the generation fires, they simulate a severe network throttle. The UI shows a real-time metric: 'Constraint Violation: Latency 8200ms [Limit: 4000ms]'. Instead of an error, a perfectly matched, pre-rendered fallback clip of the same character in a similar pose crossfades in. The demo voiceover states, 'And the Glitchless Router just switched to the constraint-solving backup.' After the demo, they show the console log with the arc-consistency solver's decision tree, proving it wasn't a pre-scripted fake.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "In a stress test with 50 forced mid-demo API failures, the Glitchless Router will maintain a seamless visual flow (as rated by human judges on a 1-5 coherence scale) with a mean score >4.0, compared to a <2.0 mean score for the baseline approach of simply displaying a pre-rendered loading loop on failure.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "002-ai-building",
+        "3-72-ai",
+        "constraint-solving",
+        "1fa8985a-4170-5439",
+        "15-24-5",
+        "counterfactual"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-01-failsafe-lens-verified-spc-c",
+        "lane": "edge-users",
+        "disciplines": [
+          "Artificial Intelligence / Constraint Programming"
+        ],
+        "working_title": "Failsafe Lens: Verified SPC Correction & Next-Action Scheduler",
+        "primary_user": "Developer-track participants building AI-video tools under extreme time pressure (opp-002).",
+        "painful_workflow": "Must demonstrate a polished, working tool in a 3-minute demo, but any real-time AI generation glitch or latency spike can ruin the recording and waste precious 72-hour development time.",
+        "current_workaround": "Recording demos a dozen times and praying for no failures, or avoiding live generation entirely by faking it with pre-rendered video clips.",
+        "imported_mechanism": "Statistical Process Control for Anomaly Detection (M2) with automated incident scheduling.",
+        "mechanism_origin": "Artificial Intelligence / Constraint Programming",
+        "data_sources": [
+          "/Users/efi/.codex/attachments/1fa8985a-5439-4170-8757-beaef9998cd2/pasted-text.txt"
+        ],
+        "core_computation": "A Python library wrapping the fal client-side SDK, continuously monitoring real-time AI video generation metrics (request latency, frame rate, error codes) via an X-bar and R control chart. GPT-5.6 establishes the 'in-control' baseline by analyzing historical fal endpoint behavior over the first few minutes of a session. Codex generates the error-handling middleware that, upon SPC anomaly detection, swaps the live stream with a pre-generated fallback buffer and schedules a bounded reconnection attempt with a 30-second timeout, logging the incident for post-demo review.",
+        "last_mile_action": "After the demo, the library automatically generates a corrective-action schedule: 'Retry model endpoint in 5 minutes; fallback to lower-resolution variant if failure persists; escalate to manual review if error rate exceeds 15% in 24 hours.' The developer receives a calendar-ready action plan.",
+        "visible_transformation": "A developer runs their AI video tool live. The system detects a latency spike, switches to a pre-cached fallback, and displays a 'stabilizing' indicator. After the demo, a dashboard shows the detected anomaly and a scheduled next bounded action: 'Re-test endpoint at 14:30; revert to baseline if still anomalous.'",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The hackathon's judging criteria heavily weights storytelling (35%) and visual consistency under technical capability, while fal's Assets system is purpose-built for reusable character identity but remains underutilized without automated prompt-chain tooling.",
+        "kill_reason": "",
+        "killer_demo": "A developer runs their AI tool live. Mid-demo, they throttle the network. The SPC engine detects the deviation, seamlessly cuts to a pre-computed fallback, and alerts 'circuit breaker active.' After the demo, the tool displays a log showing the anomaly and a scheduled action: 'Next retry window: 18:45 UTC. Timeout: 30s. Fallback: Kling variant.' The developer exports this schedule to their calendar.",
+        "hard_to_fake_advantage": "Combines mathematically rigorous SPC anomaly detection with a structured action-scheduling loop, ensuring the tool not only prevents demo failure but also prescribes the exact next step for recovery—a closed-loop correction no simple try-catch can provide.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-d75e6b52e714"
+        ],
+        "opportunity_id": "opp-001",
+        "mechanism_id": "M1",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: write a verified correction into the workflow"
+        ],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "In a controlled network-degraded environment, Failsafe Lens will maintain a 98% uninterrupted-demo rate and schedule a corrective action within 60 seconds of anomaly detection, compared to a 50% visible error rate baseline and zero automated scheduling without the library.",
+        "demo_proof": "A developer runs their AI tool live. Mid-demo, they throttle the network. The SPC engine detects the deviation, seamlessly cuts to a pre-computed fallback, and alerts 'circuit breaker active.' After the demo, the tool displays a log showing the anomaly and a scheduled action: 'Next retry window: 18:45 UTC. Timeout: 30s. Fallback: Kling variant.' The developer exports this schedule to their calendar.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Constraint Solving",
+        "demo_type": "counterfactual",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "Developer-track participants building AI-video tools under extreme time pressure (opp-002).",
+          "workflow": "Must demonstrate a polished, working tool in a 3-minute demo, but any real-time AI generation glitch or latency spike can ruin the recording and waste precious 72-hour development time.",
+          "mechanism_family": "Constraint Solving",
+          "data": "/Users/efi/.codex/attachments/1fa8985a-5439-4170-8757-beaef9998cd2/pasted-text.txt",
+          "last_mile_action": "After the demo, the library automatically generates a corrective-action schedule: 'Retry model endpoint in 5 minutes; fallback to lower-resolution variant if failure persists; escalate to manual review if error rate exceeds 15% in 24 hours.' The developer receives a calendar-ready action plan.",
+          "demo_type": "counterfactual",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-d75e6b52e714"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "fail",
+            "reason": "Named data was not verified against retrieved evidence; synthetic or proposed data is rejected",
+            "evidence_ids": [
+              "src-d75e6b52e714"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "A developer runs their AI tool live. Mid-demo, they throttle the network. The SPC engine detects the deviation, seamlessly cuts to a pre-computed fallback, and alerts 'circuit breaker active.' After the demo, the tool displays a log showing the anomaly and a scheduled action: 'Next retry window: 18:45 UTC. Timeout: 30s. Fallback: Kling variant.' The developer exports this schedule to their calendar.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "In a controlled network-degraded environment, Failsafe Lens will maintain a 98% uninterrupted-demo rate and schedule a corrective action within 60 seconds of anomaly detection, compared to a 50% visible error rate baseline and zero automated scheduling without the library.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "anime-artists-constraints",
+        "achieve-aesthetic-anime",
+        "causal-inference",
+        "borjasolerme-com-filmoss",
+        "1-20-35",
+        "state-transition"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-02-styleforge-verified-counterf",
+        "lane": "systems",
+        "disciplines": [
+          "Statistics / Epidemiology"
+        ],
+        "working_title": "StyleForge: Verified Counterfactual Workflow with Scheduled Style Treatments",
+        "primary_user": "Solo generative media artists creating anime-style short films under hackathon time constraints.",
+        "painful_workflow": "They want to produce high-quality anime with unique, personal art styles, but the default model outputs look generic. To achieve a distinctive aesthetic, they must manually post-process frames or write extremely complex single-prompt style descriptions that still drift.",
+        "current_workaround": "Artists spend hours in Photoshop drawing over individual frames to impose their line-art or color-choice preferences. Others paste 500-word style prompts, hoping three adjectives survive, then accept the generic output.",
+        "imported_mechanism": "Counterfactual Inference using Potential Outcomes (M4) with bounded style-treatment scheduling.",
+        "mechanism_origin": "Statistics / Epidemiology",
+        "data_sources": [
+          "https://github.com/borjasolerme/Filmoss"
+        ],
+        "core_computation": "GPT-5.6 analyzes the artist's reference pack (character sheets, background art, color scripts) and constructs a causal DAG linking style attributes to visual outcomes. Codex implements an estimation engine that computes a style-propensity score per frame. For frames flagged as generic, the system formulates a counterfactual correction (e.g., 'thicken line weight by delta 1.4x') and schedules a targeted regeneration via the fal API. A dashboard shows the next scheduled treatment: 'Style correction pending for frames 12-15; estimated completion in 2 minutes; will auto-retry once if confidence < 80%.'",
+        "last_mile_action": "The artist drags their style reference folder onto the interface, pastes a base scene prompt, and clicks 'Schedule Style Treatment.' The tool queues targeted regenerations and displays a timeline: 'Next batch: frames 20-35. Estimated time: 1.5 min. Action after completion: export to project library.'",
+        "visible_transformation": "A flat, generic anime clip of a samurai in a forest becomes visually indistinguishable from the artist's personal sketchbook style—heavy ink contours, restricted palette, stylized leaf silhouettes—followed by a scheduled re-evaluation notice: 'Style confidence 89%. Next check: re-apply treatment if any frame drops below 80% match in 24 hours.'",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The hackathon's Developer Track weights demo impressiveness at 15% but technical execution at 35%; a single visible glitch can destroy both. The 'potentially_underexplored' analysis explicitly calls out demo-failure surface minimization as a high-value gap.",
+        "kill_reason": "",
+        "killer_demo": "The presenter loads three reference images and a base prompt into a vanilla fal endpoint—output is generic. They switch to StyleForge, drag the same references, and click 'Schedule Style Treatment.' A progress bar shows cascading corrections. Within a minute, the treated frame appears side-by-side with the original, and a causal report shows 89% style match (baseline: 37%). The dashboard then displays a scheduled action: 'Re-evaluate style adherence in 24h; auto-correct any frame below 80%.'",
+        "hard_to_fake_advantage": "Frames style adherence as a causal estimation problem with measurable deltas and automated scheduling of re-treatment, achieving style convergence with fewer API credits and providing a quantifiable, time-bound corrective plan—impossible with prompt engineering alone.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-2ec6e755355c"
+        ],
+        "opportunity_id": "opp-002",
+        "mechanism_id": "M4",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: schedule the next bounded action"
+        ],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "StyleForge increases measurable style-attribute match by at least 40 percentage points over an unaugmented prompt baseline and schedules a re-treatment action within 30 seconds of detecting <80% match on any frame, compared to zero automated correction scheduling in manual workflows.",
+        "demo_proof": "The presenter loads three reference images and a base prompt into a vanilla fal endpoint—output is generic. They switch to StyleForge, drag the same references, and click 'Schedule Style Treatment.' A progress bar shows cascading corrections. Within a minute, the treated frame appears side-by-side with the original, and a causal report shows 89% style match (baseline: 37%). The dashboard then displays a scheduled action: 'Re-evaluate style adherence in 24h; auto-correct any frame below 80%.'",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Causal Inference",
+        "demo_type": "state transition",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "Solo generative media artists creating anime-style short films under hackathon time constraints.",
+          "workflow": "They want to produce high-quality anime with unique, personal art styles, but the default model outputs look generic. To achieve a distinctive aesthetic, they must manually post-process frames or write extremely complex single-prompt style descriptions that still drift.",
+          "mechanism_family": "Causal Inference",
+          "data": "https://github.com/borjasolerme/Filmoss",
+          "last_mile_action": "The artist drags their style reference folder onto the interface, pastes a base scene prompt, and clicks 'Schedule Style Treatment.' The tool queues targeted regenerations and displays a timeline: 'Next batch: frames 20-35. Estimated time: 1.5 min. Action after completion: export to project library.'",
+          "demo_type": "state transition",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-2ec6e755355c"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-2ec6e755355c"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "The presenter loads three reference images and a base prompt into a vanilla fal endpoint—output is generic. They switch to StyleForge, drag the same references, and click 'Schedule Style Treatment.' A progress bar shows cascading corrections. Within a minute, the treated frame appears side-by-side with the original, and a causal report shows 89% style match (baseline: 37%). The dashboard then displays a scheduled action: 'Re-evaluate style adherence in 24h; auto-correct any frame below 80%.'",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "StyleForge increases measurable style-attribute match by at least 40 percentage points over an unaugmented prompt baseline and schedules a re-treatment action within 30 seconds of detecting <80% match on any frame, compared to zero automated correction scheduling in manual workflows.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "artists-brand-commercials",
+        "ads-ai-any",
+        "simulation",
+        "cocoa-com-devpost",
+        "0-5-artist",
+        "after-before"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-03-safecut-real-time-transition",
+        "lane": "edge-users",
+        "disciplines": [
+          "Industrial Engineering / Operations Research"
+        ],
+        "working_title": "SafeCut: Real-Time Transition Gating for AI Ad Editors",
+        "primary_user": "Solo generative media artists creating short-form brand commercials",
+        "painful_workflow": "They publish AI-generated ads directly from the generation tool, but lack any mechanism to verify that a video transition (e.g., a scene cut) does not inadvertently flash or morph into unsafe or off-brand imagery. A single frame of distorted logo or inappropriate content embedded between approved shots can lead to client rejection or platform flagging, yet no tool inspects these interstitial moments.",
+        "current_workaround": "Artists manually scrub frame-by-frame through every rendered transition in a video editor looking for visual glitches, often missing sub-second flashes, and then re-render the entire sequence when an error is found, wasting hours.",
+        "imported_mechanism": "Constraint Propagation with Interval Arithmetic (M1)",
+        "mechanism_origin": "Industrial Engineering / Operations Research",
+        "data_sources": [
+          "https://devpost.com/software/cocoa-monster"
+        ],
+        "core_computation": "For each scene transition defined by the user, GPT-5.6 parses the surrounding approved frames and brand guidelines to generate a safe-visual constraint interval (e.g., 'luminance must stay within 50-200, logo must not morph into a non-logo shape'). At the transition boundary, Codex executes a Python harness that calls fal-hosted computer vision models to sample the interpolated frames, checking if visual parameters violate the safety interval. An evidence receipt is logged for each transition, either cryptographically signing it as safe or blocking the export and pinpointing the violating frame.",
+        "last_mile_action": "The tool superimposes a 'transition safety overlay' on the editing timeline—green for passing transitions, red for blocked ones. Clicking a red transition opens a side-by-side view of the violating frame with the branded element ghosted correctly. The artist clicks 'Auto-Heal' to command Grok Imagine to re-render only the failing 0.5-second transition segment using the constraint interval as a negative prompt, generating a replacement and re-verifying before unlocking the final export.",
+        "visible_transformation": "A finished 30-second ad that previously required 3 full re-renders due to hidden transition artifacts now passes all safety gates on the first export attempt, producing a tamper-proof evidence receipt that the brand manager can review.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The Generative Media Track includes dedicated Brand & Advertising theme, and the resource guide warns against incremental wrappers, but no current tool addresses the brand-compliance feedback loop—a clear gap for a Developer Track submission that brings measurable user value to Gen Media creators.",
+        "kill_reason": "",
+        "killer_demo": "The presenter loads a seemingly finished 15-second ad into SafeCut. The timeline shows a green checkmark next to each approved scene, but one transition marker glows red. Clicking it reveals a frame at second 4.025 where the brand mascot's face has morphed into a grotesque blob. The presenter clicks 'Auto-Heal', and a progress bar shows Grok Imagine regenerating that 0.5-second clip with a constraint: 'mascot eyes must remain symmetric and above 95% similarity to reference.' The transition turns green, the export unlocks, and a SHA-256 evidence receipt downloads instantly.",
+        "hard_to_fake_advantage": "Unlike a simple NSFW filter that flags an entire video, this tool performs a targeted, physics-inspired constraint check on the state change between two frames, issuing a non-repudiable evidence receipt per transition. No generic moderation API can provide frame-precise, brand-rule-aware gating with cryptographic receipts.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-a9659b5c3171"
+        ],
+        "opportunity_id": "opp-003",
+        "mechanism_id": "M3",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: block an unsafe transition with an evidence receipt"
+        ],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "SafeCut reduces the number of post-render artifact-driven re-exports for AI-generated commercials by more than 70% compared to a baseline workflow without automated transition gating, measured by tracking export count to final approved deliverable.",
+        "demo_proof": "The presenter loads a seemingly finished 15-second ad into SafeCut. The timeline shows a green checkmark next to each approved scene, but one transition marker glows red. Clicking it reveals a frame at second 4.025 where the brand mascot's face has morphed into a grotesque blob. The presenter clicks 'Auto-Heal', and a progress bar shows Grok Imagine regenerating that 0.5-second clip with a constraint: 'mascot eyes must remain symmetric and above 95% similarity to reference.' The transition turns green, the export unlocks, and a SHA-256 evidence receipt downloads instantly.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Simulation",
+        "demo_type": "before-after",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "Solo generative media artists creating short-form brand commercials",
+          "workflow": "They publish AI-generated ads directly from the generation tool, but lack any mechanism to verify that a video transition (e.g., a scene cut) does not inadvertently flash or morph into unsafe or off-brand imagery. A single frame of distorted logo or inappropriate content embedded between approved shots can lead to client rejection or platform flagging, yet no tool inspects these interstitial moments.",
+          "mechanism_family": "Simulation",
+          "data": "https://devpost.com/software/cocoa-monster",
+          "last_mile_action": "The tool superimposes a 'transition safety overlay' on the editing timeline—green for passing transitions, red for blocked ones. Clicking a red transition opens a side-by-side view of the violating frame with the branded element ghosted correctly. The artist clicks 'Auto-Heal' to command Grok Imagine to re-render only the failing 0.5-second transition segment using the constraint interval as a negative prompt, generating a replacement and re-verifying before unlocking the final export.",
+          "demo_type": "before-after",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-a9659b5c3171"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-a9659b5c3171"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "The presenter loads a seemingly finished 15-second ad into SafeCut. The timeline shows a green checkmark next to each approved scene, but one transition marker glows red. Clicking it reveals a frame at second 4.025 where the brand mascot's face has morphed into a grotesque blob. The presenter clicks 'Auto-Heal', and a progress bar shows Grok Imagine regenerating that 0.5-second clip with a constraint: 'mascot eyes must remain symmetric and above 95% similarity to reference.' The transition turns green, the export unlocks, and a SHA-256 evidence receipt downloads instantly.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "SafeCut reduces the number of post-render artifact-driven re-exports for AI-generated commercials by more than 70% compared to a baseline workflow without automated transition gating, measured by tracking export count to final approved deliverable.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "ai-building-developer",
+        "3-automated-background",
+        "monitoring-statistical",
+        "com-devpost-https",
+        "accept-are-as",
+        "live-replay"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-04-scenedoctor-automated-regres",
+        "lane": "systems",
+        "disciplines": [
+          "Manufacturing Quality Control"
+        ],
+        "working_title": "SceneDoctor: Automated Regression Suite for AI Film Consistency",
+        "primary_user": "Developer-track teams building multi-model AI video pipelines for narrative films",
+        "painful_workflow": "When a developer upgrades a model, swaps a component in their fal Workflow, or tweaks a prompt template to improve one scene, they have no automated way to verify that the change hasn't broken the visual continuity of earlier scenes. Characters may subtly shift cheekbone structure, lighting temperatures may drift, or background details may disappear, requiring a manual and time-consuming re-screening of the entire 3-minute film every single iteration.",
+        "current_workaround": "The team manually re-renders the full project after every pipeline change, opens two video players side-by-side, and scrubs through to visually 'spot the differences,' effectively performing manual regression testing with no metric other than subjective human memory.",
+        "imported_mechanism": "Counterfactual Inference using Potential Outcomes (M4)",
+        "mechanism_origin": "Manufacturing Quality Control",
+        "data_sources": [
+          "https://devpost.com/software/scrolla"
+        ],
+        "core_computation": "The system first snapshots the original pipeline's output for each scene as a set of factual embeddings (CLIP, color histograms, detected object bounding boxes). When a developer proposes a change to the pipeline, GPT-5.6 generates a causal DAG showing how the change (treatment) is expected to affect downstream visual variables. Codex builds a Python harness that re-generates only the scenes predicted to be affected, treating the unchanged scenes as a control group. It computes a treatment effect by measuring the embedding shift in the re-generated scenes against the baseline, using the Difference-in-Differences method to isolate the change's impact from inter-scene background noise. A passing regression test means the treatment effect falls within a developer-defined tolerance.",
+        "last_mile_action": "The tool presents a CI/CD-style dashboard showing a 'Regression Suite' with a pass/fail badge for each scene. Failed scenes are visually diffed: the original frame overlays the new frame with changed pixels highlighted in magenta. The developer clicks 'Accept as Baseline' on a scene to update the golden standard or 'Revert' to restore the original prompt, automatically generating a GitHub issue with the computed treatment effect and a side-by-side frame comparison.",
+        "visible_transformation": "A 3-minute film that previously crashed into a 4-hour manual QA cycle after every model swap now completes its regression test suite in under 4 minutes, giving the developer a definitive 'Build Passed' before they ever watch the film, preventing merged bugs that break character consistency.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "Anime is an explicit Generative Media Track theme, and 'generic anime characters' is flagged as a high-collision risk. The hackathon offers Grok Imagine and Kling via fal API, which could be orchestrated with style-reference injection to escape the generic look—aligning with the 'multi-model synergy beyond chaining' underexplored area.",
+        "kill_reason": "",
+        "killer_demo": "The presenter opens a project for a 90-second anime short. They run the regression suite, and all 12 scenes show a green 'Pass'. The presenter then upgrades the style transfer model in their fal Workflow and re-runs the suite. Scene 5 flips to red 'Failed'. The diff view opens, highlighting in magenta that the protagonist’s eye color shifted from amber to generic brown. A score of 'Treatment Effect: 0.42 > Tolerance: 0.15' is displayed. The presenter reverts the change, the suite re-runs and passes in under 60 seconds, and a log of the blocked defect is committed to GitHub.",
+        "hard_to_fake_advantage": "This is not a simple visual diff tool; it applies a formal causal model to isolate the effect of a code change from natural scene variation, producing a falsifiable causal estimate rather than a simple pixel distance. No existing generative media tool offers regression testing with causal attribution.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-daee5ad611e1"
+        ],
+        "opportunity_id": "opp-004",
+        "mechanism_id": "M2",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: generate and run a regression test"
+        ],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "SceneDoctor reduces the time to detect a visual regression introduced by a pipeline change by more than 85% compared to a manual full-film review baseline, measured by time from commit to detection of a specified defect.",
+        "demo_proof": "The presenter opens a project for a 90-second anime short. They run the regression suite, and all 12 scenes show a green 'Pass'. The presenter then upgrades the style transfer model in their fal Workflow and re-runs the suite. Scene 5 flips to red 'Failed'. The diff view opens, highlighting in magenta that the protagonist’s eye color shifted from amber to generic brown. A score of 'Treatment Effect: 0.42 > Tolerance: 0.15' is displayed. The presenter reverts the change, the suite re-runs and passes in under 60 seconds, and a log of the blocked defect is committed to GitHub.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Statistical Monitoring",
+        "demo_type": "live replay",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "Developer-track teams building multi-model AI video pipelines for narrative films",
+          "workflow": "When a developer upgrades a model, swaps a component in their fal Workflow, or tweaks a prompt template to improve one scene, they have no automated way to verify that the change hasn't broken the visual continuity of earlier scenes. Characters may subtly shift cheekbone structure, lighting temperatures may drift, or background details may disappear, requiring a manual and time-consuming re-screening of the entire 3-minute film every single iteration.",
+          "mechanism_family": "Statistical Monitoring",
+          "data": "https://devpost.com/software/scrolla",
+          "last_mile_action": "The tool presents a CI/CD-style dashboard showing a 'Regression Suite' with a pass/fail badge for each scene. Failed scenes are visually diffed: the original frame overlays the new frame with changed pixels highlighted in magenta. The developer clicks 'Accept as Baseline' on a scene to update the golden standard or 'Revert' to restore the original prompt, automatically generating a GitHub issue with the computed treatment effect and a side-by-side frame comparison.",
+          "demo_type": "live replay",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-daee5ad611e1"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-daee5ad611e1"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "The presenter opens a project for a 90-second anime short. They run the regression suite, and all 12 scenes show a green 'Pass'. The presenter then upgrades the style transfer model in their fal Workflow and re-runs the suite. Scene 5 flips to red 'Failed'. The diff view opens, highlighting in magenta that the protagonist’s eye color shifted from amber to generic brown. A score of 'Treatment Effect: 0.42 > Tolerance: 0.15' is displayed. The presenter reverts the change, the suite re-runs and passes in under 60 seconds, and a log of the blocked defect is committed to GitHub.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "SceneDoctor reduces the time to detect a visual regression introduced by a pipeline change by more than 85% compared to a manual full-film review baseline, measured by time from commit to detection of a specified defect.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "002-ai-building",
+        "3-72-ai",
+        "constraint-solving",
+        "com-devpost-https",
+        "anomaly-budget-by",
+        "benchmark"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-05-creditguard-spc-driven-budge",
+        "lane": "edge-users",
+        "disciplines": [
+          "Artificial Intelligence / Constraint Programming"
+        ],
+        "working_title": "CreditGuard: SPC-Driven Budget Allocation for Demo Safety",
+        "primary_user": "Developer-track participants building AI-video tools under extreme time pressure (opp-002).",
+        "painful_workflow": "Must demonstrate a polished, working tool in a 3-minute demo, but any real-time AI generation glitch or latency spike can ruin the recording and waste precious 72-hour development time.",
+        "current_workaround": "Recording demos a dozen times and praying for no failures, or avoiding live generation entirely by faking it with pre-rendered video clips.",
+        "imported_mechanism": "Statistical Process Control for Anomaly Detection (M2) applied to credit consumption rate.",
+        "mechanism_origin": "Artificial Intelligence / Constraint Programming",
+        "data_sources": [
+          "https://devpost.com/software/visionaid"
+        ],
+        "core_computation": "A Python/JavaScript library that monitors the fal API credit consumption rate and request latency. GPT-5.6 establishes a baseline 'in-control' credit burn rate from a historical analysis of a developer's API usage patterns. Codex builds a middleware that, upon SPC detection of an anomaly (e.g., a sudden spike in credit consumption per generation due to model fallbacks or retries), automatically re-allocates remaining credits from a pool, throttles non-critical background requests, or suggests a cost-optimized model variant to prevent budget exhaustion before the demo is complete. This ensures the developer never runs out of credits mid-demo.",
+        "last_mile_action": "The library silently reallocates a constrained resource (fal credits) by throttling a lower-priority generation task when an SPC anomaly predicts a budget shortfall, displaying a non-intrusive 'Budget Optimizing' notification while the critical demo generation continues uninterrupted.",
+        "visible_transformation": "A developer is 2 minutes into their live demo. The SPC system detects an unplanned API consumption surge. Instead of the demo crashing from a 402 error, it seamlessly downgrades a concurrent background asset generation to a smaller model, freeing up just enough credits for the primary demo stream to finish flawlessly, showing a 'Smart Saving: 4 credits preserved' log.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The hackathon's judging criteria heavily weights storytelling (35%) and visual consistency under technical capability, while fal's Assets system is purpose-built for reusable character identity but remains underutilized without automated prompt-chain tooling.",
+        "kill_reason": "",
+        "killer_demo": "A developer runs a live demo that calls two separate AI models: a high-quality one for the main view and a less-critical one for a thumbnail preview. At 1:45s, an SPC rule violation is triggered by a spike in credit burn on the main model. The tool's console shows 'Anomaly Detected: Credit Consumption Spike (+230%)'. The middleware instantly pauses the thumbnail generation, logs 'Action: Credit Reallocation to Primary Model', and the main demo finishes without any visible interruption. The session log proves the intervention preserved 7 credits, preventing a potential $0 balance error.",
+        "hard_to_fake_advantage": "Applies manufacturing SPC principles not to visual fidelity, but to the critical hackathon resource of API credits. This financial guardrail, predicting and preventing budget exhaustion mathematically, is a layer of protection no simple budget tracker or error handler can provide, directly addressing the hackathon's fixed credit constraint.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-ef8c79839cdd"
+        ],
+        "opportunity_id": "opp-001",
+        "mechanism_id": "M1",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: reallocate a constrained resource"
+        ],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "In a live demo scenario with a defined credit budget, the CreditGuard library will prevent a credit-related failure state in 98% of simulated consumption anomaly cases, compared to a 60% failure rate without it when a sudden 2x consumption spike is introduced.",
+        "demo_proof": "A developer runs a live demo that calls two separate AI models: a high-quality one for the main view and a less-critical one for a thumbnail preview. At 1:45s, an SPC rule violation is triggered by a spike in credit burn on the main model. The tool's console shows 'Anomaly Detected: Credit Consumption Spike (+230%)'. The middleware instantly pauses the thumbnail generation, logs 'Action: Credit Reallocation to Primary Model', and the main demo finishes without any visible interruption. The session log proves the intervention preserved 7 credits, preventing a potential $0 balance error.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Constraint Solving",
+        "demo_type": "benchmark",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "Developer-track participants building AI-video tools under extreme time pressure (opp-002).",
+          "workflow": "Must demonstrate a polished, working tool in a 3-minute demo, but any real-time AI generation glitch or latency spike can ruin the recording and waste precious 72-hour development time.",
+          "mechanism_family": "Constraint Solving",
+          "data": "https://devpost.com/software/visionaid",
+          "last_mile_action": "The library silently reallocates a constrained resource (fal credits) by throttling a lower-priority generation task when an SPC anomaly predicts a budget shortfall, displaying a non-intrusive 'Budget Optimizing' notification while the critical demo generation continues uninterrupted.",
+          "demo_type": "benchmark",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-ef8c79839cdd"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-ef8c79839cdd"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "A developer runs a live demo that calls two separate AI models: a high-quality one for the main view and a less-critical one for a thumbnail preview. At 1:45s, an SPC rule violation is triggered by a spike in credit burn on the main model. The tool's console shows 'Anomaly Detected: Credit Consumption Spike (+230%)'. The middleware instantly pauses the thumbnail generation, logs 'Action: Credit Reallocation to Primary Model', and the main demo finishes without any visible interruption. The session log proves the intervention preserved 7 credits, preventing a potential $0 balance error.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "In a live demo scenario with a defined credit budget, the CreditGuard library will prevent a credit-related failure state in 98% of simulated consumption anomaly cases, compared to a 60% failure rate without it when a sudden 2x consumption spike is introduced.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "anime-artists-collaborate",
+        "artist-as-atmosphere",
+        "causal-inference",
+        "com-cycle-devpost",
+        "accept-adjusted-allowing",
+        "failure-injection"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-06-conflictstyle-causal-mediato",
+        "lane": "systems",
+        "disciplines": [
+          "Statistics / Epidemiology"
+        ],
+        "working_title": "ConflictStyle: Causal Mediator Analysis for Collaborative Art Direction",
+        "primary_user": "Solo generative media artists creating anime-style short films who collaborate with a non-technical creative director.",
+        "painful_workflow": "A creative director gives subjective feedback like 'make the character feel more fragile' or 'the atmosphere needs to be more hopeful,' but the artist can only interpret this as new round of vague prompt-engineering, leading to frustrating, multi-hour trial-and-error cycles that drift further from the shared vision.",
+        "current_workaround": "Artists spend hours iterating on prompts based on verbal feedback, generating dozens of variants, and sending screenshots back and forth over Discord. The director gets frustrated by the lack of direct, quantifiable control, and the artist burns through API credits and their 72-hour timeline on translation rather than creation.",
+        "imported_mechanism": "Counterfactual Inference using Potential Outcomes (M4) to solve the visual translation conflict.",
+        "mechanism_origin": "Statistics / Epidemiology",
+        "data_sources": [
+          "https://devpost.com/software/up-cycle"
+        ],
+        "core_computation": "GPT-5.6 analyzes a set of video frames and the director's high-level textual feedback (e.g., 'more hopeful'). It constructs a causal DAG linking actionable visual mediators (e.g., color palette warmth, contrast, character posture openness, lighting direction) to the perceived semantic attribute ('hopefulness'). Codex implements an engine that computes the minimal set of visual mediators to adjust. It formulates a counterfactual query: 'What minimal change to these visual attributes would maximize the director's stated intent?' The system then auto-generates a targeted inpainting/control signal prompt for the fal API, adjusting only the identified mediators. It then opens a review task presenting the original frame, the director's conflict statement, and the minimally adjusted frame, clearly labeling the changed mediators (e.g., 'Palette shifted: +15% warmth, -10% contrast') for the director to approve, resolving the interpretation conflict.",
+        "last_mile_action": "The system opens a review task in a web interface containing the original frame, the director's conflicting feedback text, and the minimally-adjusted output. A sidebar displays the 'Conflict Mediation Report' showing which specific visual attributes were altered and by how much, allowing the director to accept or reject the precise, quantifiable intervention in one click.",
+        "visible_transformation": "A director reviews an anime clip of a warrior standing in a dark alley and types 'make this feel more triumphant.' Instead of the artist spending 45 minutes re-prompting, the tool opens a review panel with the original frame and a new frame where only the lighting direction, color warmth, and character posture have been counterfactually adjusted. A report shows 'Triumph Score: estimated 87% (baseline 22%). Mediators Adjusted: Light Angle, Palette Warmth, Spinal Inclination.' The director clicks 'Approve' and the change is applied to the full clip.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The hackathon's Developer Track weights demo impressiveness at 15% but technical execution at 35%; a single visible glitch can destroy both. The 'potentially_underexplored' analysis explicitly calls out demo-failure surface minimization as a high-value gap.",
+        "kill_reason": "",
+        "killer_demo": "A creative director labels a generated anime clip of a character under a tree as 'too lonely, needs to feel peaceful.' The filmmaker drags the clip into ConflictStyle, types the feedback, and clicks 'Mediate.' The system generates a single A/B comparison. The original is on the left. The mediated version on the right has subtle, critical changes: the character's shoulders are slightly relaxed, shadows are softer, and a few cherry blossom petals are added. A causal report is displayed: 'Peaceful Metric increased to 91% (from 14%) via minimal conflict set: Posture Tension (-22%), Shadow Sharpness (-40%), Environmental Element Added.' The director approves the change in seconds, and the clip is updated.",
+        "hard_to_fake_advantage": "Frames subjective creative conflict as a causal inference problem, identifying and altering the minimum set of physical image attributes to resolve a semantic gap. This creates a quantifiable, reviewable audit trail from director feedback to pixel change, which is fundamentally impossible with free-form prompt iteration or simple style-transfer models.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-990b738da8c6"
+        ],
+        "opportunity_id": "opp-002",
+        "mechanism_id": "M4",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: open a review task containing the minimal conflict set"
+        ],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "ConflictStyle will reduce the number of revision cycles required to resolve a semantic directorial feedback from an average of 4.5 cycles with prompt-engineering alone to 1.2 cycles, as measured on a set of 20 standardized anime scenes with defined semantic shift targets.",
+        "demo_proof": "A creative director labels a generated anime clip of a character under a tree as 'too lonely, needs to feel peaceful.' The filmmaker drags the clip into ConflictStyle, types the feedback, and clicks 'Mediate.' The system generates a single A/B comparison. The original is on the left. The mediated version on the right has subtle, critical changes: the character's shoulders are slightly relaxed, shadows are softer, and a few cherry blossom petals are added. A causal report is displayed: 'Peaceful Metric increased to 91% (from 14%) via minimal conflict set: Posture Tension (-22%), Shadow Sharpness (-40%), Environmental Element Added.' The director approves the change in seconds, and the clip is updated.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Causal Inference",
+        "demo_type": "failure injection",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "Solo generative media artists creating anime-style short films who collaborate with a non-technical creative director.",
+          "workflow": "A creative director gives subjective feedback like 'make the character feel more fragile' or 'the atmosphere needs to be more hopeful,' but the artist can only interpret this as new round of vague prompt-engineering, leading to frustrating, multi-hour trial-and-error cycles that drift further from the shared vision.",
+          "mechanism_family": "Causal Inference",
+          "data": "https://devpost.com/software/up-cycle",
+          "last_mile_action": "The system opens a review task in a web interface containing the original frame, the director's conflicting feedback text, and the minimally-adjusted output. A sidebar displays the 'Conflict Mediation Report' showing which specific visual attributes were altered and by how much, allowing the director to accept or reject the precise, quantifiable intervention in one click.",
+          "demo_type": "failure injection",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-990b738da8c6"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-990b738da8c6"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "A creative director labels a generated anime clip of a character under a tree as 'too lonely, needs to feel peaceful.' The filmmaker drags the clip into ConflictStyle, types the feedback, and clicks 'Mediate.' The system generates a single A/B comparison. The original is on the left. The mediated version on the right has subtle, critical changes: the character's shoulders are slightly relaxed, shadows are softer, and a few cherry blossom petals are added. A causal report is displayed: 'Peaceful Metric increased to 91% (from 14%) via minimal conflict set: Posture Tension (-22%), Shadow Sharpness (-40%), Environmental Element Added.' The director approves the change in seconds, and the clip is updated.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "ConflictStyle will reduce the number of revision cycles required to resolve a semantic directorial feedback from an average of 4.5 cycles with prompt-engineering alone to 1.2 cycles, as measured on a set of 20 standardized anime scenes with defined semantic shift targets.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "ai-compliance-financial",
+        "across-ad-against",
+        "simulation",
+        "com-devpost-historacle",
+        "append-audit-auditor",
+        "counterfactual"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-07-simevidence-objectively-bran",
+        "lane": "developer-tools",
+        "disciplines": [
+          "Industrial Engineering / Operations Research"
+        ],
+        "working_title": "SimEvidence: Objectively Brand-Compliant AI Video Auditor with Provenance Logging",
+        "primary_user": "Regulated marketing compliance officers in pharmaceutical and financial services firms producing AI-generated promotional material",
+        "painful_workflow": "Compliance officers must manually review dozens of AI-generated video ad candidates to certify that required legal disclaimers appear, remain on-screen for a mandated duration, and are rendered in a specific, contractually-obligated contrast ratio against the background. There is no systematic way to verify these constraints continuously across every frame, making audits subjective and legally risky.",
+        "current_workaround": "Officers play back videos in standard media players, use a stopwatch to measure disclaimer duration, and take screenshots to sample color contrast with an external eyedropper tool, compiling a manual review document in a word processor.",
+        "imported_mechanism": "Discrete Event Simulation (M3)",
+        "mechanism_origin": "Industrial Engineering / Operations Research",
+        "data_sources": [
+          "https://devpost.com/software/historacle"
+        ],
+        "core_computation": "The system ingests a compliance rulebook and a video file. GPT-5.6, acting as a regulatory reasoning engine, parses the rulebook to extract discrete events and state-defining thresholds (e.g., `disclaimer_text_legible` must be TRUE for >= 5 consecutive seconds). A simulation clock advances frame-by-frame. At each tick, Codex-built validation calls to a constrained computer-vision endpoint (analyzing OCR text presence, text-background contrast ratio, and logo placement) update a state vector. A persistent event log timestamps every state change, violation start, and restoration. Codex builds the mutable app database that holds all event logs, tying every compliance attestation back to the frame-level evidence.",
+        "last_mile_action": "The tool compiles an immutable audit-ready compliance verification report and simultaneously emits a cryptographically signed provenance record to an append-only ledger. This record contains the hash of the source video, the rulebook version, the complete frame-by-frame event log, and the final compliance verdict, enabling a third-party auditor to independently verify the decision history without re-running the simulation.",
+        "visible_transformation": "A chaotic marketing approval workflow, where each video review took a fragmented 45 minutes and produced a subjective email, transforms into a 60-second automated audit trail. An officer receives a dashboard with a green 'Certified Compliant' badge and a one-click button to publish the non-repudiable provenance record to a shared, auditable ledger.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "The Generative Media Track includes dedicated Brand & Advertising theme, and the resource guide warns against incremental wrappers, but no current tool addresses the brand-compliance feedback loop—a clear gap for a Developer Track submission that brings measurable user value to Gen Media creators.",
+        "kill_reason": "",
+        "killer_demo": "The presenter opens a financial services ad and uploads a 3-page regulatory requirement PDF. The dashboard's simulation clock begins ticking. At 3.7 seconds, the screen flashes red as the log shows 'SUPER text contrast ratio dropped to 2.1:1 (required >3:1)'. The presenter freezes the simulation, overlays the frame with the color sampler proving the violation, then fixes the source prompt. On re-import, the simulation log turns all-green. Finally, the presenter clicks 'Attest & Record', and a public dashboard updates with a new immutable block containing the cryptographic evidence hash.",
+        "hard_to_fake_advantage": "Unlike a simple AI reviewer generating an opinion, this tool generates a deterministic, timestamped audit trail rooted in frame-level state transitions defined by a formal regulatory grammar. The cryptographic ledger entry creates permanent, externally verifiable proof of compliance that can survive a regulatory audit, something no standard prompt-based analysis can provide.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-b9abf6e505ae"
+        ],
+        "opportunity_id": "opp-003",
+        "mechanism_id": "M3",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: update a provenance ledger"
+        ],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "SimEvidence reduces the mean time to produce a fully evidenced, third-party-auditable compliance report for a 30-second AI video by more than 70% compared to the manual stopwatch-and-screenshot baseline.",
+        "demo_proof": "The presenter opens a financial services ad and uploads a 3-page regulatory requirement PDF. The dashboard's simulation clock begins ticking. At 3.7 seconds, the screen flashes red as the log shows 'SUPER text contrast ratio dropped to 2.1:1 (required >3:1)'. The presenter freezes the simulation, overlays the frame with the color sampler proving the violation, then fixes the source prompt. On re-import, the simulation log turns all-green. Finally, the presenter clicks 'Attest & Record', and a public dashboard updates with a new immutable block containing the cryptographic evidence hash.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Simulation",
+        "demo_type": "counterfactual",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "Regulated marketing compliance officers in pharmaceutical and financial services firms producing AI-generated promotional material",
+          "workflow": "Compliance officers must manually review dozens of AI-generated video ad candidates to certify that required legal disclaimers appear, remain on-screen for a mandated duration, and are rendered in a specific, contractually-obligated contrast ratio against the background. There is no systematic way to verify these constraints continuously across every frame, making audits subjective and legally risky.",
+          "mechanism_family": "Simulation",
+          "data": "https://devpost.com/software/historacle",
+          "last_mile_action": "The tool compiles an immutable audit-ready compliance verification report and simultaneously emits a cryptographically signed provenance record to an append-only ledger. This record contains the hash of the source video, the rulebook version, the complete frame-by-frame event log, and the final compliance verdict, enabling a third-party auditor to independently verify the decision history without re-running the simulation.",
+          "demo_type": "counterfactual",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-b9abf6e505ae"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-b9abf6e505ae"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "The presenter opens a financial services ad and uploads a 3-page regulatory requirement PDF. The dashboard's simulation clock begins ticking. At 3.7 seconds, the screen flashes red as the log shows 'SUPER text contrast ratio dropped to 2.1:1 (required >3:1)'. The presenter freezes the simulation, overlays the frame with the color sampler proving the violation, then fixes the source prompt. On re-import, the simulation log turns all-green. Finally, the presenter clicks 'Attest & Record', and a public dashboard updates with a new immutable block containing the cryptographic evidence hash.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "SimEvidence reduces the mean time to produce a fully evidenced, third-party-auditable compliance report for a 30-second AI video by more than 70% compared to the manual stopwatch-and-screenshot baseline.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    },
+    {
+      "cell": [
+        "developer",
+        "across-actively-ai",
+        "actively-after-appearances",
+        "monitoring-statistical",
+        "com-devpost-https",
+        "0-01-48",
+        "state-transition"
+      ],
+      "quality": 0.9,
+      "idea": {
+        "id": "mut-r4-08-biblediff-counterfactual-vis",
+        "lane": "creator-workspaces",
+        "disciplines": [
+          "Manufacturing Quality Control"
+        ],
+        "working_title": "BibleDiff: Counterfactual Visual Continuity Auditor for AI Filmmakers",
+        "primary_user": "Independent AI film directors producing long-form content who need to prove visual consistency was actively maintained across hundreds of shots for festival submissions and distribution",
+        "painful_workflow": "Directors spend hours after a film is completed manually comparing shots in an editing timeline to prove that character appearances, lighting schemes, and world details didn't wander unintentionally. They have no objective metric to show investors or judges that their director-driven prompt engineering actively preserved continuity versus a random generation baseline.",
+        "current_workaround": "Directors place side-by-side frame exports in Figma or Miro boards, draw arrows to point out differences, and write subjective notes in a shared document to argue that any drift was either intentional or minimal.",
+        "imported_mechanism": "Counterfactual Inference using Potential Outcomes (M4)",
+        "mechanism_origin": "Manufacturing Quality Control",
+        "data_sources": [
+          "https://devpost.com/software/verisage"
+        ],
+        "core_computation": "The system defines a 'treatment' as active visual bible constraint injection and the 'outcome' as a per-shot visual drift vector. A reference manual-prompt baseline generates a factual trajectory of CLIP embeddings across a sequence. GPT-5.6 is the experimental designer, parsing the visual bible to define the constrained 'treatment' protocol and generating the specific, testable counterfactual question: 'What would the pairwise CLIP cosine distance be for this sequence if the bible constraints were NOT applied, given the same base prompts?' Codex builds the automated evaluation harness which orchestrates two full generation passes across the sequence using the treatment and control protocols, computes the effect size (average reduction in drift), and statistically tests the significance of the director's intentional constraint-application.",
+        "last_mile_action": "The tool produces a 'Continuity Audit Certificate' featuring a causal forest plot that visually answers the counterfactual. It states: 'Evidence-based conclusion: Active visual bible constraints caused a statistically significant 48% reduction in unintended character drift (p < 0.01) compared to the counterfactual unconstrained scenario.' This certificate is directly embeddable in a pitch deck or festival submission package.",
+        "visible_transformation": "A subjective claim of 'I maintained visual consistency' transforms into a data-backed, publishable statement: 'Our causal analysis demonstrates we actively prevented style drift, achieving near-lockstep character identity versus a high-drift what-if scenario.' The director can now objectively win an argument about creative control.",
+        "sponsor_dependency": "GPT-5.6 reasoning and Codex-built evaluation harness",
+        "technical_risk": "quality of the fixed evaluation fixture",
+        "collision_risk": "unknown",
+        "why_now": "Anime is an explicit Generative Media Track theme, and 'generic anime characters' is flagged as a high-collision risk. The hackathon offers Grok Imagine and Kling via fal API, which could be orchestrated with style-reference injection to escape the generic look—aligning with the 'multi-model synergy beyond chaining' underexplored area.",
+        "kill_reason": "",
+        "killer_demo": "The presenter loads a 12-shot sequence project. On the left, a 'Factual World: Constrained' video player shows consistent shots. On the right, a 'Counterfactual World: Unconstrained' player shows visibly drifting character faces generated from the same base prompts without bible injection. A live graph plots the CLIP cosine distance for both worlds, shot-by-shot; the constrained line is low and flat, the unconstrained line spikes wildly. The demo ends by clicking 'Publish Causal Report,' which generates a professionally formatted document showing a statistically significant treatment effect, validating the director's workflow.",
+        "hard_to_fake_advantage": "This is not a simple A/B comparison. It's a formal causal inference engine that explicitly estimates what *would have happened* without the director's tooling. This probabilistic, counterfactual claim is computationally expensive to generate and mathematically impossible to assert without systematically running the 'what-if' scenario, creating a defensible moat against tools that only report simple before-and-after metrics.",
+        "cluster_id": null,
+        "evidence_ids": [
+          "src-f6dd07e39dfe"
+        ],
+        "opportunity_id": "opp-004",
+        "mechanism_id": "M2",
+        "mutation_history": [
+          "round 4: repair every failed hard gate; also diversify toward empty action region: trigger a counterfactual comparison"
+        ],
+        "track_fit": "Developer",
+        "gpt_5_6_role": "GPT-5.6 performs the central constrained reasoning transformation and emits evidence-linked structured decisions",
+        "codex_build_role": "Codex builds the executable prototype, test fixtures, evaluation harness, and records the required session",
+        "data_access_status": "verified",
+        "data_access_plan": "Fetch the cited public source, cache a fixed fixture, and verify every demo input against it",
+        "testable_claim": "BibleDiff can demonstrate, with 95% statistical confidence, that active visual bible constraint injection causes a measurable reduction in frame-to-frame CLIP drift compared to the machine-estimated counterfactual outcome, achieving at least a 35% larger effect size than a simple naive baseline comparison.",
+        "demo_proof": "The presenter loads a 12-shot sequence project. On the left, a 'Factual World: Constrained' video player shows consistent shots. On the right, a 'Counterfactual World: Unconstrained' player shows visibly drifting character faces generated from the same base prompts without bible injection. A live graph plots the CLIP cosine distance for both worlds, shot-by-shot; the constrained line is low and flat, the unconstrained line spikes wildly. The demo ends by clicking 'Publish Causal Report,' which generates a professionally formatted document showing a statistically significant treatment effect, validating the director's workflow.",
+        "minimum_demonstrable_loop": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+        "mechanism_family": "Statistical Monitoring",
+        "demo_type": "state transition",
+        "external_evaluation_scores": {
+          "evidence_quality": 0.5,
+          "feasibility": 1.0,
+          "demo_proof": 1.0,
+          "technical_depth": 1.0,
+          "track_fit": 1.0
+        },
+        "novelty_vector": {
+          "track": "Developer",
+          "user_class": "Independent AI film directors producing long-form content who need to prove visual consistency was actively maintained across hundreds of shots for festival submissions and distribution",
+          "workflow": "Directors spend hours after a film is completed manually comparing shots in an editing timeline to prove that character appearances, lighting schemes, and world details didn't wander unintentionally. They have no objective metric to show investors or judges that their director-driven prompt engineering actively preserved continuity versus a random generation baseline.",
+          "mechanism_family": "Statistical Monitoring",
+          "data": "https://devpost.com/software/verisage",
+          "last_mile_action": "The tool produces a 'Continuity Audit Certificate' featuring a causal forest plot that visually answers the counterfactual. It states: 'Evidence-based conclusion: Active visual bible constraints caused a statistically significant 48% reduction in unintended character drift (p < 0.01) compared to the counterfactual unconstrained scenario.' This certificate is directly embeddable in a pitch deck or festival submission package.",
+          "demo_type": "state transition",
+          "embedding_distances": {}
+        },
+        "gate_results": [
+          {
+            "gate": "evidence_backed",
+            "status": "pass",
+            "reason": "At least one cited source was retrieved and verified",
+            "evidence_ids": [
+              "src-f6dd07e39dfe"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "data_accessible_and_verified",
+            "status": "pass",
+            "reason": "Every named data URL exactly matches retrieved, verified cited evidence",
+            "evidence_ids": [
+              "src-f6dd07e39dfe"
+            ],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "required_model_is_material",
+            "status": "not_applicable",
+            "reason": "GPT-5.6 is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "codex_role_is_material",
+            "status": "not_applicable",
+            "reason": "Codex is not mandatory for this brief",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "solo_five_day_loop",
+            "status": "pass",
+            "reason": "Day 1 fixture and metric; days 2-3 core transformation; day 4 UI/action; day 5 recorded before/after demo",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "observable_demo_proof",
+            "status": "pass",
+            "reason": "The presenter loads a 12-shot sequence project. On the left, a 'Factual World: Constrained' video player shows consistent shots. On the right, a 'Counterfactual World: Unconstrained' player shows visibly drifting character faces generated from the same base prompts without bible injection. A live graph plots the CLIP cosine distance for both worlds, shot-by-shot; the constrained line is low and flat, the unconstrained line spikes wildly. The demo ends by clicking 'Publish Causal Report,' which generates a professionally formatted document showing a statistically significant treatment effect, validating the director's workflow.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "specific_track_fit",
+            "status": "pass",
+            "reason": "Declared track 'Developer'; official tracks: Generative Media (Film & Animation, Brand & Advertising, Anime, Open), Developer (tools/workflows for creating/editing/producing AI-generated video)",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          },
+          {
+            "gate": "testable_claim",
+            "status": "pass",
+            "reason": "BibleDiff can demonstrate, with 95% statistical confidence, that active visual bible constraint injection causes a measurable reduction in frame-to-frame CLIP drift compared to the machine-estimated counterfactual outcome, achieving at least a 35% larger effect size than a simple naive baseline comparison.",
+            "evidence_ids": [],
+            "validator": "deterministic"
+          }
+        ]
+      }
+    }
+  ],
+  "replacements_and_kills": []
+}

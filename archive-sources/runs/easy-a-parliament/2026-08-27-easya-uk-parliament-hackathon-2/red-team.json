@@ -1,0 +1,23 @@
+{
+  "primary_id": "concept-000",
+  "fatal_flaws": [
+    "Hidden structural twin of the crowded 'policy simulator / AI impact dashboard' archetype: natural-language rule in, before/after charts out, plain-English brief. Without a uniquely constrained domain or proprietary workflow integration, judges may read it as a polished civic-tech dashboard rather than a new mechanism.",
+    "The core depends on fragile live LLM parsing. If the parser turns a parliamentarian's rule into the wrong predicates, the demo either silently misleads or exposes that the product cannot safely handle the very ambiguity it claims to solve.",
+    "ChatGPT-replaceable surface is high. A generic chatbot plus a spreadsheet can already summarize a proposed rule, list assumptions, and produce caveats. The proposed hard-to-fake advantage only survives if the executable predicates and attribution are visibly rigorous, not just JSON-shaped LLM output.",
+    "The data claims are inherently unverifiable because the baseline dataset is synthetic. The demo can show internal consistency, but it cannot prove real-world policy consequence validity, constituency relevance, distributional fairness, or administrative feasibility.",
+    "Demo theatre risk is severe: changing one sentence and watching charts move is visually convincing even if the predicates, uncertainty bands, and segment deltas are hand-tuned around a small fixture. Judges may discount it as an impressive toy model.",
+    "Sponsor and event fit are weak. EasyA/Web3 context is mostly audience decoration; there is no sponsor SDK, blockchain primitive, or venue-specific capability materially improving the system. The technology role text even treats the in-person venue as if it were part of the core mechanism, which is a credibility smell.",
+    "Uncertainty ranges may look scientific without a defensible statistical model. On a generated fixture, uncertainty is likely arbitrary sensitivity analysis rather than calibrated uncertainty, which creates overclaim risk in exactly the institutional setting the concept targets."
+  ],
+  "survive_if": [
+    "Narrow the demo to one concrete fictional policy domain with a published schema, deterministic rule DSL, and 3-5 rule types the system can parse reliably.",
+    "Make the LLM produce a constrained intermediate representation that users can edit before simulation, with validation failures shown clearly instead of forcing every natural-language input through.",
+    "Replace broad 'policy consequence' claims with 'scenario consistency check on a declared synthetic baseline' and label uncertainty as sensitivity bounds, not prediction.",
+    "Add adversarial demo cases where unsupported or ambiguous rule text is rejected, so the product proves restraint rather than only producing attractive output.",
+    "Show an audit trail from source fields to predicates to affected records to aggregate deltas, with at least one judge-edited rule that was not pre-scripted.",
+    "Tie the pitch to a real last-mile parliamentary workflow, such as scrutiny questions or committee brief preparation, rather than a generic impact dashboard."
+  ],
+  "prefer_backup_instead": true,
+  "backup_reason": "The backup has a stronger hard-to-fake action: it verifies a correction, writes workflow state, and produces a tamper-evident receipt. Its crypto/provenance role is materially connected to the outcome, while the primary risks being a synthetic policy dashboard with LLM-generated explanations.",
+  "severity_acceptance": true
+}

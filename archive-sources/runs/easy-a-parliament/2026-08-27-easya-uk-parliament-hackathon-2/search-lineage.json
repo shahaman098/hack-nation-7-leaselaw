@@ -1,0 +1,78 @@
+[
+  {
+    "idea_id": "concept-000",
+    "parent_ids": [],
+    "opportunity_id": "opp-000",
+    "mechanism_id": "m-000",
+    "mutation_round": 0,
+    "mutation_target": "initial_cross",
+    "mutation_notes": ""
+  },
+  {
+    "idea_id": "concept-001",
+    "parent_ids": [],
+    "opportunity_id": "opp-001",
+    "mechanism_id": "m-001",
+    "mutation_round": 0,
+    "mutation_target": "initial_cross",
+    "mutation_notes": ""
+  },
+  {
+    "idea_id": "concept-003",
+    "parent_ids": [],
+    "opportunity_id": "opp-002",
+    "mechanism_id": "m-002",
+    "mutation_round": 0,
+    "mutation_target": "initial_cross",
+    "mutation_notes": ""
+  },
+  {
+    "idea_id": "concept-004",
+    "parent_ids": [],
+    "opportunity_id": "opp-003",
+    "mechanism_id": "m-003",
+    "mutation_round": 0,
+    "mutation_target": "initial_cross",
+    "mutation_notes": ""
+  },
+  {
+    "idea_id": "concept-004-5",
+    "parent_ids": [],
+    "opportunity_id": "opp-000",
+    "mechanism_id": "m-001",
+    "mutation_round": 0,
+    "mutation_target": "initial_cross",
+    "mutation_notes": ""
+  },
+  {
+    "idea_id": "concept-005",
+    "parent_ids": [],
+    "opportunity_id": "opp-001",
+    "mechanism_id": "m-002",
+    "mutation_round": 0,
+    "mutation_target": "initial_cross",
+    "mutation_notes": ""
+  },
+  {
+    "idea_id": "mut-r1-01-casework-correction-receipt",
+    "parent_ids": [
+      "concept-000"
+    ],
+    "opportunity_id": "opp-003",
+    "mechanism_id": "m-003",
+    "mutation_round": 1,
+    "mutation_target": "empty action region: write a verified correction into the workflow",
+    "mutation_notes": "Changed at least two structural dimensions."
+  },
+  {
+    "idea_id": "mut-r1-02-bounded-next-step-scheduler",
+    "parent_ids": [
+      "concept-001"
+    ],
+    "opportunity_id": "opp-000",
+    "mechanism_id": "m-002",
+    "mutation_round": 1,
+    "mutation_target": "empty action region: schedule the next bounded action",
+    "mutation_notes": "Changed at least two structural dimensions."
+  }
+]

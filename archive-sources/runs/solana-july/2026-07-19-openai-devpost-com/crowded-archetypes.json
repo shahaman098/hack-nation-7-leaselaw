@@ -1,0 +1,53 @@
+{
+  "high_collision": [
+    "AI study tutor / quiz / flashcard generator",
+    "Generic mental-health companion or wellness chatbot",
+    "Resume / LinkedIn optimiser",
+    "Document / PDF summariser",
+    "Meeting notes / productivity chatbot",
+    "Generic workflow automation chatbot for teams",
+    "Generic customer-support chatbot",
+    "Generic analytics dashboard without action or state change",
+    "Generic DevOps assistant over logs or CI output",
+    "Generic agentic code reviewer without runnable integration depth",
+    "Generic chatbot wrapper over GPT-5.6 or Codex",
+    "Recommendation list with no last-mile action",
+    "Dashboard-only analytics without an irreversible state change",
+    "Generic family/travel/personal-finance assistant"
+  ],
+  "medium_collision": [
+    "Scholarship / grant / benefits eligibility navigator",
+    "Emergency information assistant / crisis tip sheet",
+    "Automated sales outreach multi-agent SDR",
+    "Generic opportunity board for students/job seekers",
+    "Campaign fatigue / ops anomaly dashboard with rewritten ads",
+    "Test generation or QA assistant without deep repo integration",
+    "Security scanner summary UI without remediation workflow",
+    "Teacher lesson-plan generator",
+    "Personal productivity planner with calendar/task summaries",
+    "Creative writing or image-prompt companion",
+    "Recent similar title: Neilblaze"
+  ],
+  "potentially_underexplored": [
+    "Appeal-pathway reconstruction",
+    "Constraint-based resource allocation under official rules",
+    "Administrative error prevention / form failure-chain detection",
+    "Eligibility inconsistency detection across agencies",
+    "Procedural fairness / case-queue priority simulation",
+    "Demo-failure surface minimisation for live presentations",
+    "Judge-testability hardening workflows",
+    "Evidence-backed Codex contribution traceability",
+    "Multi-step tool workflows with auditable state transitions",
+    "Human approval and review loops for irreversible actions"
+  ],
+  "do_not_build": [
+    "Any 'navigator' that only ranks and drafts applications from scattered PDFs",
+    "Any personal crisis action planner that maps risk data to a checklist and safe route",
+    "Any ops doctor that uploads CSV and labels campaigns healthy/fatigued",
+    "Any generic chatbot wrapper over sponsor APIs",
+    "Any dashboard-only project that never changes external state or completes a workflow",
+    "Any clone of common tutor, flashcard, resume, PDF, meeting-notes, or wellness assistant patterns",
+    "Any demo that cannot be run, tested, or understood without judges rebuilding from scratch",
+    "Any project relying on unauthorized third-party data, copyrighted media, trademarks, or unclear licensing"
+  ]
+}

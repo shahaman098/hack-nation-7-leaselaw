@@ -1,0 +1,36 @@
+2026-07-19T07:04:31+00:00 INFO run initialized provider='codex' search_profile='fast'
+2026-07-19T07:04:31+00:00 INFO stage started stage='provider_selection'
+2026-07-19T07:04:33+00:00 INFO stage started stage='competition_research'
+2026-07-19T07:06:21+00:00 INFO stage started stage='divergent_search'
+2026-07-19T07:06:21+00:00 INFO stage started stage='opportunity_discovery' requested=4
+2026-07-19T07:06:47+00:00 INFO stage started stage='mechanism_mining' requested=4
+2026-07-19T07:07:08+00:00 INFO stage started stage='concept_crossing' requested=6
+2026-07-19T07:09:03+00:00 INFO stage started stage='mutation_round_1' requested=2
+2026-07-19T07:09:39+00:00 INFO stage started stage='hard_gates' candidates=8
+2026-07-19T07:09:50+00:00 INFO stage started stage='collision_audit' candidates=4
+2026-07-19T07:10:42+00:00 INFO stage started stage='feasibility' candidates=2
+2026-07-19T07:15:32+00:00 INFO stage started stage='blind_judging' candidates=4
+2026-07-19T07:15:34+00:00 ERROR run failed stage='blind_judging' error_type='RuntimeError' error='Codex exec failed (1): {"type":"thread.started","thread_id":"019f793a-ecda-7243-bb7c-7f9d096d19a5"}\n{"type":"turn.started"}\n{"type":"error","message":"{\\n  \\"type\\": \\"error\\",\\n  \\"error\\": {\\n    \\"type\\": \\"invalid_request_error\\",\\n    \\"code\\": \\"invalid_json_schema\\",\\n    \\"message\\": \\"Invalid schema for response_format \'codex_output_schema\': In context=(), \'required\' is required to be supplied and to be an array including every key in properties. Extra required key \'scores_by_official_criteria\' supplied.\\",\\n    \\"param\\": \\"text.format.schema\\"\\n  },\\n  \\"status\\": 400\\n}"}\n{"type":"turn.failed","error":{"message":"{\\n  \\"type\\": \\"error\\",\\n  \\"error\\": {\\n    \\"type\\": \\"invalid_request_error\\",\\n    \\"code\\": \\"invalid_json_schema\\",\\n    \\"message\\": \\"Invalid schema for response_format \'codex_output_schema\': In context=(), \'required\' is required to be supplied and to be an array including every key in properties. Extra required key \'scores_by_official_criteria\' supplied.\\",\\n    \\"param\\": \\"text.format.schema\\"\\n  },\\n  \\"status\\": 400\\n}"}}'
+Traceback (most recent call last):
+  File "/Users/efi/Music/Projects/Hackathon July/Solana/src/hackforge/pipeline/__init__.py", line 641, in run_analyse
+    return _run_analyse_impl(_journal=journal, **kwargs)
+  File "/Users/efi/Music/Projects/Hackathon July/Solana/src/hackforge/pipeline/__init__.py", line 361, in _run_analyse_impl
+    evaluation = blind_judge(providers.judges, brief, judged, collisions, feasibility)
+  File "/Users/efi/Music/Projects/Hackathon July/Solana/src/hackforge/evaluation/__init__.py", line 188, in blind_judge
+    raw = provider.complete_json(
+        system,
+        f"Official criteria: {criteria}\nCandidates: {anonymized}",
+        schema=None if isinstance(provider, DryRunProvider) else vote_schema,
+    )
+  File "/Users/efi/Music/Projects/Hackathon July/Solana/src/hackforge/providers/__init__.py", line 210, in complete_json
+    response = self._execute(system + suffix, user, schema=output_schema)
+  File "/Users/efi/Music/Projects/Hackathon July/Solana/src/hackforge/providers/__init__.py", line 228, in _execute
+    return self._execute_once(system, user, schema=schema)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/efi/Music/Projects/Hackathon July/Solana/src/hackforge/providers/__init__.py", line 293, in _execute_once
+    raise RuntimeError(f"Codex exec failed ({completed.returncode}): {detail[-2000:]}")
+RuntimeError: Codex exec failed (1): {"type":"thread.started","thread_id":"019f793a-ecda-7243-bb7c-7f9d096d19a5"}
+{"type":"turn.started"}
+{"type":"error","message":"{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"code\": \"invalid_json_schema\",\n    \"message\": \"Invalid schema for response_format 'codex_output_schema': In context=(), 'required' is required to be supplied and to be an array including every key in properties. Extra required key 'scores_by_official_criteria' supplied.\",\n    \"param\": \"text.format.schema\"\n  },\n  \"status\": 400\n}"}
+{"type":"turn.failed","error":{"message":"{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"code\": \"invalid_json_schema\",\n    \"message\": \"Invalid schema for response_format 'codex_output_schema': In context=(), 'required' is required to be supplied and to be an array including every key in properties. Extra required key 'scores_by_official_criteria' supplied.\",\n    \"param\": \"text.format.schema\"\n  },\n  \"status\": 400\n}"}}
+
