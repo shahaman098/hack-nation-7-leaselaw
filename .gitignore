@@ -21,6 +21,9 @@ venv/
 .coverage
 htmlcov/
 
+# Merged legacy engine copies — local-only reference data, never tracked
+archive-sources/
+
 # Run artifacts may contain competition materials — keep structure, ignore contents by default
 runs/*
 !runs/.gitkeep

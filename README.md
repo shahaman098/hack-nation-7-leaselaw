@@ -7,7 +7,7 @@
 | `briefs/` | Saved competition briefs (markdown) |
 | `runs/` | Your active HackForge run outputs |
 | `corpora/`, `prompts/`, `src/hackforge/` | Engine code, prompts, and reference corpora |
-| `archive-sources/` | Merged runs/corpora from older duplicate engine copies |
+| `archive-sources/` | Merged runs/corpora from older duplicate engine copies (local-only, untracked) |
 
 ---
 

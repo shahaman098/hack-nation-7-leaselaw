@@ -1,6 +1,0 @@
-{
-  "source": "hackrep-default",
-  "common_48h_stacks": ["javascript", "python", "react", "node", "firebase", "flask", "nextjs"],
-  "notes": "Default priors for feasibility. Run hackforge corpus pull --source hackrep to refresh Zenodo metadata. Not for ideation.",
-  "zenodo": "https://zenodo.org/records/17572684"
-}
