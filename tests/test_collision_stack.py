@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
@@ -13,6 +14,7 @@ from hackforge.collision.engine import (
 )
 from hackforge.models import CandidateIdea, SimilarityDims
 from hackforge.paths import FIXTURES_DIR
+from hackforge.providers import LLMProvider
 
 
 def _idea(**kwargs) -> CandidateIdea:
@@ -92,6 +94,69 @@ def test_collision_schema_bounds_detail_per_candidate():
     analogue = report["properties"]["nearest_analogues"]
     assert analogue["maxItems"] == 3
     assert analogue["items"]["properties"]["differences"]["maxItems"] == 2
+
+
+def test_audit_payload_drops_fields_the_auditor_never_reads():
+    from hackforge.collision.engine import _AUDIT_CANDIDATE_FIELDS, audit_collisions_engine
+
+    class CaptureProvider(LLMProvider):
+        def complete(self, system, user, **kwargs):
+            raise AssertionError("complete_json expected")
+
+        def complete_json(self, system, user, **kwargs):
+            self.user = user
+            return {
+                "reports": [
+                    {
+                        "candidate_id": "idea-1",
+                        "nearest_analogues": [],
+                        "collision_risk": "low",
+                        "observable_differentiator": "demo",
+                        "differentiator_is_substantive": True,
+                        "kill_recommendation": False,
+                        "notes": "checked",
+                    }
+                ]
+            }
+
+    idea = _idea(
+        requirement_satisfaction={"tech": "a very long per-requirement explanation " * 50},
+        technology_roles={"api": "another unused prose block " * 50},
+    )
+    provider = CaptureProvider()
+    audit_collisions_engine(provider, [idea], live_enrich=False)
+    payload = json.loads(provider.user)
+    sent = payload["candidates"][0]
+    # Only audited dimensions cross the wire, and they are valid JSON (no Python repr).
+    assert set(sent) == set(_AUDIT_CANDIDATE_FIELDS)
+    assert "requirement_satisfaction" not in sent
+    assert "technology_roles" not in sent
+    assert sent["primary_user"] == "social-care caseworkers"
+
+
+def test_audit_payload_fails_loud_instead_of_truncating_json(monkeypatch):
+    from hackforge.collision import engine
+
+    class CaptureProvider(LLMProvider):
+        def complete(self, system, user, **kwargs):
+            raise AssertionError("complete_json expected")
+
+        def complete_json(self, system, user, **kwargs):
+            raise AssertionError("payload must be rejected before any LLM call")
+
+    # Force the ceiling below the rendered size to prove the guard fires first.
+    monkeypatch.setattr(engine, "_MAX_PAYLOAD_CHARS", 10)
+    with pytest.raises(RuntimeError, match="refusing to truncate JSON mid-object"):
+        engine.audit_collisions_engine(CaptureProvider(), [_idea()], live_enrich=False)
+
+
+def test_collision_prompt_disables_live_tool_looking():
+    from hackforge.utils import load_prompt
+
+    template, _ = load_prompt("collision-audit")
+    # Live web search made the audit exceed its timeout; the payload is self-contained.
+    assert "Do NOT use web search" in template
+    assert "Answer immediately from that payload alone" in template
 
 
 def test_promptfoo_config_writable():

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from hackforge.collision.corpus_loader import collision_markdown, load_analogue_corpus
@@ -7,6 +8,31 @@ from hackforge.collision.embed_index import EmbedIndex, structural_text
 from hackforge.models import Analogue, CandidateIdea, CollisionReport, SimilarityDims
 from hackforge.providers import DryRunProvider, LLMProvider
 from hackforge.utils import load_prompt
+
+# Fields the auditor actually weighs: identity plus the user/problem/mechanism/
+# data/action/demo dimensions named in the prompt. Sending every CandidateIdea
+# field triples the payload with prose the audit never reads (requirement_satisfaction
+# alone is ~14k chars per candidate), which historically pushed the request past the
+# cap below and forced a mid-sentence truncation of the JSON.
+_AUDIT_CANDIDATE_FIELDS = (
+    "id",
+    "working_title",
+    "primary_user",
+    "painful_workflow",
+    "current_workaround",
+    "imported_mechanism",
+    "data_sources",
+    "last_mile_action",
+    "core_computation",
+    "killer_demo",
+    "visible_transformation",
+    "hard_to_fake_advantage",
+)
+
+# Hard ceiling on the rendered request. Exceeding it fails loudly rather than
+# slicing the payload: a truncated JSON object is unreadable and produced a
+# non-terminating audit rather than a degraded one.
+_MAX_PAYLOAD_CHARS = 120_000
 
 
 def dimensional_similarity(candidate: CandidateIdea, analogue: dict[str, Any]) -> SimilarityDims:
@@ -186,12 +212,26 @@ def audit_collisions_engine(
         if provider is None:
             raise RuntimeError("LLM collision audit was requested without a live provider")
         payload = {
-            "candidates": [c.model_dump() for c in candidates],
+            "candidates": [
+                {
+                    key: value
+                    for key, value in c.model_dump().items()
+                    if key in _AUDIT_CANDIDATE_FIELDS
+                }
+                for c in candidates
+            ],
             "nearest_by_candidate": retrieved_map,
         }
+        rendered = json.dumps(payload, ensure_ascii=False)
+        if len(rendered) > _MAX_PAYLOAD_CHARS:
+            raise RuntimeError(
+                f"Collision audit payload is {len(rendered)} chars, over the "
+                f"{_MAX_PAYLOAD_CHARS} limit; refusing to truncate JSON mid-object. "
+                "Reduce the shortlist size or analogue depth."
+            )
         try:
             schema = None if isinstance(provider, DryRunProvider) else _collision_schema(len(candidates))
-            raw = provider.complete_json(template, str(payload)[:120_000], schema=schema)
+            raw = provider.complete_json(template, rendered, schema=schema)
             items = raw if isinstance(raw, list) else (raw.get("reports") if isinstance(raw, dict) else [])
         except Exception:
             if not isinstance(provider, DryRunProvider):
