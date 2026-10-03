@@ -26,7 +26,9 @@ Legacy pointer folder `/Users/efi/Hackathons/Hack Nation` is empty except a READ
 **Ship LeaseLaw Navigator for Track 02 RealPage** so judges see: address → cited rules → as-of toggle → T1–T5 green → score panel on `/`.
 
 Live coordination board: [`docs/WIN_BOARD.md`](docs/WIN_BOARD.md)  
-Advice between agents: [`docs/AGENT_ADVICE_LOG.md`](docs/AGENT_ADVICE_LOG.md) (append-only)
+Ops runbook (ports, artifacts, deploy, troubleshooting): [`docs/OPS_RUNBOOK.md`](docs/OPS_RUNBOOK.md)  
+Advice between agents: [`docs/AGENT_ADVICE_LOG.md`](docs/AGENT_ADVICE_LOG.md) (append-only)  
+Machine snapshot: [`docs/STATUS.md`](docs/STATUS.md)
 
 ### Done (do not redo blindly)
 
@@ -105,9 +107,12 @@ Claims discipline: do not say “done / working / deployed” without measuring 
 
 ---
 
-## Claude / Codex / OpenCode / ZCode
+## Claude / Gemini / Copilot / Codex / OpenCode / ZCode
 
-- **Claude Code:** also see [`CLAUDE.md`](CLAUDE.md) (points here).
+- **Ops (all tools):** [`docs/OPS_RUNBOOK.md`](docs/OPS_RUNBOOK.md)
+- **Claude Code:** [`CLAUDE.md`](CLAUDE.md) (points here + runbook).
+- **Gemini:** [`GEMINI.md`](GEMINI.md) (points here + runbook).
+- **GitHub Copilot:** [`.github/copilot-instructions.md`](.github/copilot-instructions.md)
 - **Cursor:** `.cursor/rules/` always-apply project rule.
 - **OpenCode prompt:** `docs/opencode-win-prompt.txt`
 - **ZCode goal:** `docs/zcode-build-goal.md`

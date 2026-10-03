@@ -1,6 +1,6 @@
 # Hackathon Idea Search
 
-**AI agents: start at [`AGENTS.md`](AGENTS.md)** · Claude also reads [`CLAUDE.md`](CLAUDE.md) · live board [`docs/WIN_BOARD.md`](docs/WIN_BOARD.md) · snapshot [`docs/STATUS.md`](docs/STATUS.md).
+**AI agents: start at [`AGENTS.md`](AGENTS.md)** · ops [`docs/OPS_RUNBOOK.md`](docs/OPS_RUNBOOK.md) · Claude [`CLAUDE.md`](CLAUDE.md) · Gemini [`GEMINI.md`](GEMINI.md) · live board [`docs/WIN_BOARD.md`](docs/WIN_BOARD.md) · snapshot [`docs/STATUS.md`](docs/STATUS.md).
 
 ## Two things in this repo
 

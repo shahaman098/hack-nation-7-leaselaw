@@ -1,6 +1,6 @@
 # LeaseLaw — agent notes (scoped)
 
-Parent contract: repo-root [`AGENTS.md`](../../AGENTS.md) + [`docs/WIN_BOARD.md`](../../docs/WIN_BOARD.md).
+Parent contract: repo-root [`AGENTS.md`](../../AGENTS.md) + [`docs/OPS_RUNBOOK.md`](../../docs/OPS_RUNBOOK.md) + [`docs/WIN_BOARD.md`](../../docs/WIN_BOARD.md).
 
 ## Product one-liner
 

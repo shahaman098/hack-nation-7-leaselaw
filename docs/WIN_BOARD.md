@@ -3,7 +3,7 @@
 **Mission:** Absolute Track 02 podium. Solo.  
 **Repo:** `/Users/efi/Hackathons/Hackathon-Idea-Search`  
 **App:** `apps/leaselaw/`  
-**AI entrypoints:** `AGENTS.md` · `CLAUDE.md` · `docs/STATUS.md`
+**AI entrypoints:** `AGENTS.md` · `docs/OPS_RUNBOOK.md` · `CLAUDE.md` · `GEMINI.md` · `docs/STATUS.md`
 
 ## Protocol (mandatory)
 

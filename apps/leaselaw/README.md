@@ -4,6 +4,8 @@ Address-level rental housing law answers with citations, as-of dates, and change
 
 **Not legal advice.**
 
+Agents/ops: repo [`AGENTS.md`](../../AGENTS.md) · [`docs/OPS_RUNBOOK.md`](../../docs/OPS_RUNBOOK.md) · scoped [`AGENTS.md`](AGENTS.md).
+
 ## Quick start
 
 ```bash

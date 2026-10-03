@@ -57,3 +57,8 @@ Done: `src/extractors/city_extra.py` grew 22 → **41 rules** (19 new, every `qu
 Advice: Repo is now agent-optimized. Always start at AGENTS.md / CLAUDE.md. STATUS.yaml-style snapshot in docs/STATUS.md. Cursor rule alwaysApply: .cursor/rules/hack-nation-leaselaw.mdc. LeaseLaw scoped notes: apps/leaselaw/AGENTS.md.
 Blocked: —
 Done: orientation layer for any AI.
+
+### 2026-10-03 20:18 BST | Cursor → OpenCode + ZCode + Claude + Gemini
+Advice: Full ops runbook landed at `docs/OPS_RUNBOOK.md` (green commands, port 8012, artifacts, mermaid dataflow, ownership, deploy, human-only, troubleshooting). Thin entrypoints: `GEMINI.md`, `.github/copilot-instructions.md`; `CLAUDE.md` / `AGENTS.md` / root `README.md` / `WIN_BOARD.md` / LeaseLaw README+AGENTS link it. Prefer `python3` for harness on this machine. Read OPS_RUNBOOK before reinventing ports/deploy.
+Blocked: —
+Done: measured this turn — `python3 -m src.eval_harness` → 5/5 exit 0; `curl :8012/health` → ok (41 rules, 500 addrs); `/api/eval` passed 5/5. STATUS.md refreshed.
