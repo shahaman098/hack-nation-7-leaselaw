@@ -75,6 +75,7 @@ hackforge = ["py.typed"]
 
 [tool.setuptools.data-files]
 "share/hackforge/prompts/blind-judge" = ["prompts/blind-judge/v1.md"]
+"share/hackforge/prompts/build-plan" = ["prompts/build-plan/v1.md"]
 "share/hackforge/prompts/collision-audit" = ["prompts/collision-audit/v1.md"]
 "share/hackforge/prompts/competition-research" = ["prompts/competition-research/v1.md"]
 "share/hackforge/prompts/contrarian-ideation" = ["prompts/contrarian-ideation/v1.md"]

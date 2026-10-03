@@ -59,6 +59,8 @@ def test_fixture_batch(tmp_path: Path):
         ordered = total_order(run_dir)
         assert len(ordered) == len({idea["id"] for idea in ordered}) == row["pool_size"]
         assert read_json(run_dir / "run-manifest.json")["source"] == "backtest"
+        assert read_json(run_dir / "run-manifest.json")["optional_stage_call_budget"]["build_plan"] == 0
+        assert not (run_dir / "build-plan.json").exists()
         assert row["leakage"]["live_research"] is False
     assert result.with_suffix(".md").exists()
 

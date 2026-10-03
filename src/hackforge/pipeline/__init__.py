@@ -46,6 +46,8 @@ from hackforge.run_state import RunJournal
 from hackforge.telemetry import trace_stage
 from hackforge.utils import env_flag, make_run_dir, sha256_text, write_json, write_text
 
+from .build_plan import build_plan_markdown, create_build_plan
+
 
 def _run_analyse_impl(
     *,
@@ -66,6 +68,7 @@ def _run_analyse_impl(
     visual_report: bool = True,
     collision_excludes: list[str] | None = None,
     execution_providers: ProviderBundle | None = None,
+    build_plan: bool = True,
     _journal: RunJournal,
 ) -> Path:
     del seeds_per_lane  # retained for API compatibility; profiles now own search breadth.
@@ -403,6 +406,19 @@ def _run_analyse_impl(
         outputs[0], outputs[1] = outputs[1], outputs[0]
     timings["red_team"] = time.perf_counter() - t0
 
+    if build_plan:
+        _journal.checkpoint("build_plan", candidates=1)
+        t0 = time.perf_counter()
+        selected_feasibility = next(
+            (report for report in feasibility if report.candidate_id == outputs[0].id), None
+        )
+        if selected_feasibility is None:
+            raise RuntimeError("Selected primary has no existing feasibility report for build planning")
+        plan = create_build_plan(providers.feasibility, brief, outputs[0], selected_feasibility, red)
+        write_json(run_dir / "build-plan.json", plan.model_dump())
+        write_text(run_dir / "build-plan.md", build_plan_markdown(plan))
+        timings["build_plan"] = time.perf_counter() - t0
+
     output_ids = {idea.id for idea in outputs}
     rejected_ideas = [idea for idea in ideas if idea.id not in output_ids]
     dossier = build_decision_dossier(
@@ -449,6 +465,7 @@ def _run_analyse_impl(
         "ideation": [getattr(item, "name", "unknown") for item in providers.ideation_lanes],
         "collision": getattr(providers.collision, "name", "unknown"),
         "feasibility": getattr(providers.feasibility, "name", "unknown"),
+        "build_plan": getattr(providers.feasibility, "name", "unknown") if build_plan else None,
         "judges": getattr(providers.judges, "name", "unknown"),
         "models": {"research": getattr(providers.research, "model", None)},
         "requested_models": {"research": getattr(providers.research, "requested_model", None)},
@@ -483,6 +500,8 @@ def _run_analyse_impl(
             "target_evaluated_concepts": profile.evaluated_concepts,
             "final_output_ids": [idea.id for idea in outputs],
             "visual_report": visual_report,
+            "build_plan": build_plan,
+            "optional_stage_call_budget": {"build_plan": int(build_plan)},
         }
     )
     write_json(run_dir / "run-manifest.json", manifest)

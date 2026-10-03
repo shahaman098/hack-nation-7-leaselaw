@@ -208,7 +208,7 @@ def run_backtest(cases_path: Path, *, provider: str = "fixture", live: bool = Fa
             run_dir = run_analyse(text=text, dry_run=provider == "fixture", provider=provider,
                                   fixture_bundle=bundle, live_research=False, collision_excludes=excludes,
                                   runs_root=results_dir / "_runs", visual_report=False,
-                                  execution_providers=providers)
+                                  execution_providers=providers, build_plan=False)
         manifest = read_json(run_dir / "run-manifest.json")
         manifest.update(source="backtest", backtest_case=case["slug"])
         write_json(run_dir / "run-manifest.json", manifest)

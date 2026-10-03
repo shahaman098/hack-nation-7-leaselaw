@@ -24,3 +24,8 @@ One live-naive call per case is the only additional inference for evaluation.
 
 Real cases lacking confirmed winner lists are deliberately blocked, not replaced
 by synthetic winners or historical pipeline recommendations.
+
+Implementation-sequencing amendment: the user explicitly authorized implementing
+Phase 2 while the real backtest remains inconclusive. The empirical decision rule
+above is unchanged. Backtest ranking runs pass build_plan=False to preserve their
+original inference budget and isolate the ranking experiment.

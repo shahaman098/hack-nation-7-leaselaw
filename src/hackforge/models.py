@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 ClaimConfidence = Literal["high", "medium", "low"]
 CollisionRisk = Literal["low", "medium", "high", "unknown"]
@@ -256,6 +256,45 @@ class FeasibilityReport(BaseModel):
     minimum_demonstrable_loop: str = ""
     kill_recommendation: bool = False
     notes: str = ""
+
+
+class BuildTask(BaseModel):
+    id: str = Field(min_length=1)
+    title: str = Field(min_length=1)
+    owner_role: str = Field(min_length=1)
+    depends_on: list[str] = Field(default_factory=list)
+    deliverable: str = Field(min_length=1)
+    acceptance_test: str = Field(min_length=1)
+    time_slot: str | None = None
+
+
+class BuildPlan(BaseModel):
+    candidate_id: str
+    scheduling_status: Literal["scheduled", "unscheduled"]
+    build_window: str | None = None
+    summary: str = Field(min_length=1)
+    architecture: list[str] = Field(min_length=1)
+    tasks: list[BuildTask] = Field(min_length=1, max_length=8)
+    demo_script: list[str] = Field(min_length=1)
+    cut_scope: list[str] = Field(default_factory=list)
+    submission_checklist: list[str] = Field(default_factory=list)
+    feasibility_report: FeasibilityReport
+
+    @model_validator(mode="after")
+    def validate_execution_constraints(self) -> BuildPlan:
+        if self.feasibility_report.candidate_id != self.candidate_id:
+            raise ValueError("Build plan and original feasibility candidate IDs must match")
+        if self.scheduling_status == "unscheduled":
+            if self.build_window is not None or any(task.time_slot is not None for task in self.tasks):
+                raise ValueError("Unscheduled plans cannot invent a build window or task time slots")
+        elif not self.build_window or not self.build_window.strip():
+            raise ValueError("Scheduled plans require the supplied build window")
+        seen: set[str] = set()
+        for task in self.tasks:
+            if task.id in seen or not set(task.depends_on).issubset(seen):
+                raise ValueError("Build tasks must have unique IDs and depend only on earlier tasks")
+            seen.add(task.id)
+        return self
 
 
 class JudgeVote(BaseModel):

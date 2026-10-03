@@ -40,6 +40,7 @@ PROMPT_VERSIONS = {
     "feasibility": "v1",
     "blind-judge": "v1",
     "red-team": "v1",
+    "build-plan": "v1",
 }
 
 # Broad mechanism-discovery lanes. They are intentionally format-neutral: a

@@ -27,6 +27,7 @@ _GENERATION_MARKERS = (
     "reflective-mutation-engine",
 )
 _CONSTRAINED_REVIEW_MARKERS = (
+    "competition build-plan planner",
     "collision auditor",
     "feasibility reviewer",
 )

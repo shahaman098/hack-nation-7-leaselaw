@@ -124,6 +124,7 @@ Every search writes artifacts including:
 - `collision-reports.json`
 - `feasibility-reports.json`
 - `blind-judge-results.json`
+- `build-plan.json` and `build-plan.md` (unless `--no-build-plan`)
 - `final-recommendation.md`
 - `idea-landscape.html` (unless disabled)
 - `run-manifest.json`
@@ -131,6 +132,18 @@ Every search writes artifacts including:
 - `run.log`
 
 Balanced search evaluates 48 concepts: 32 initial crosses plus 16 directed mutations over two rounds, collision-audits 12, judges up to 6, and returns 3 outputs.
+
+The build-plan stage follows red-team selection and plans the **final primary**,
+including any backup swap. It adds one bounded, schema-validated call through the
+existing feasibility provider; existing DeepSeek budgets still apply. Use
+`--no-build-plan` to save that call and omit both plan artifacts. The manifest
+records the flag, stage timing and optional-stage call budget.
+
+Plans contain architecture, dependency-ordered tasks with acceptance tests, demo
+steps, scope cuts, and submission checks. They embed the original feasibility
+report unchanged rather than regenerating delivery risk or estimates. If the
+brief has no `build_window`, the plan is **unscheduled** with null task time slots;
+a submission deadline alone never becomes an invented build timebox.
 
 ### Winner backtests
 
@@ -151,8 +164,10 @@ accounting, so live batches require `--max-cases` and fail fast.
 The five real cases and verification status are in `evals/backtest/cases.json`.
 Unverified winner lists block execution; unknown model cutoffs are reported
 separately and cannot establish post-cutoff performance. The frozen decision rule
-is in [`evals/backtest/protocol.md`](evals/backtest/protocol.md). Build-plan work
-remains gated on a valid real-world backtest rather than a passing fixture run.
+is in [`evals/backtest/protocol.md`](evals/backtest/protocol.md). Build-plan
+implementation was explicitly authorized despite the inconclusive backtest;
+that does not establish winner prediction. Backtests disable build planning so
+their inference budget remains the ranking run plus one live-naive call.
 
 ## Requirement-driven gates
 

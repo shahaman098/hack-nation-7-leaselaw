@@ -1,4 +1,16 @@
 {
+  "build_plan": {
+    "summary": "Build the selected concept's smallest demonstrable loop, preserving its real computation and evidence.",
+    "architecture": ["Input fixture and evidence loader", "Selected concept core computation", "Observable result and proof surface"],
+    "tasks": [
+      {"id": "inputs", "title": "Prepare traceable inputs", "owner_role": "data owner", "depends_on": [], "deliverable": "Deterministic input fixture and source manifest", "acceptance_test": "Every input has a source and the fixture loads reproducibly", "time_slot": null},
+      {"id": "core", "title": "Implement the non-fakeable core", "owner_role": "core builder", "depends_on": ["inputs"], "deliverable": "Working minimum demonstrable loop", "acceptance_test": "A changed input produces the expected observable state change or proof", "time_slot": null},
+      {"id": "demo", "title": "Rehearse and package the proof", "owner_role": "demo owner", "depends_on": ["core"], "deliverable": "Reproducible demonstration and required submission materials", "acceptance_test": "Reset and repeat the demonstration; handle one malformed input without a false success", "time_slot": null}
+    ],
+    "demo_script": ["Load the traceable input fixture", "Execute the selected core computation", "Show the output change and its evidence", "Reset and repeat with one invalid input"],
+    "cut_scope": ["Do not add a second user workflow before the minimum loop is proven"],
+    "submission_checklist": ["Verify the official required technologies", "Include the brief's submission artifacts and demo proof"]
+  },
   "competition_research": {
     "name": "Sample Civic Resilience Hackathon 2026",
     "slug": "sample-civic-resilience-2026",

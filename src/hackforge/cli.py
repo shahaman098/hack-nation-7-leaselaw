@@ -72,6 +72,7 @@ def main() -> None:
 @click.option("--finalists", type=click.IntRange(3, 8), default=3, show_default=True)
 @click.option("--output-root", type=click.Path(file_okay=False, path_type=Path))
 @click.option("--no-visual-report", is_flag=True, default=False)
+@click.option("--no-build-plan", is_flag=True, default=False, help="Skip the final build-plan call and artifacts.")
 @click.option(
     "--live-research/--no-live-research",
     default=None,
@@ -91,6 +92,7 @@ def analyse(
     finalists: int,
     output_root: Path | None,
     no_visual_report: bool,
+    no_build_plan: bool,
     live_research: bool | None,
 ) -> None:
     """Run evidence → idea search → collision → feasibility → blind judging.
@@ -122,6 +124,7 @@ def analyse(
         search_profile=search_profile,
         finalists=finalists,
         visual_report=not no_visual_report,
+        build_plan=not no_build_plan,
     )
     print(f"[bold green]HackForge complete:[/bold green] {run_dir}")
 
