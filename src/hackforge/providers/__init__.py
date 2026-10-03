@@ -383,13 +383,33 @@ def _is_codex_transient_failure(detail: str) -> bool:
     return any(marker in text for marker in markers)
 
 
+# Keywords Codex's strict response_format rejects outright (HTTP 400
+# invalid_json_schema). They are dropped from the wire copy only: the caller's
+# schema is never mutated, so local jsonschema validation still enforces them
+# after the response arrives.
+_CODEX_UNSUPPORTED_KEYWORDS = frozenset(
+    {"$schema", "$id", "title", "uniqueItems", "allOf", "if", "then", "else", "not"}
+)
+
+
 def _codex_strict_schema(schema: dict[str, Any]) -> dict[str, Any]:
     """Normalize JSON Schema to the strict object subset accepted by Codex."""
     normalized: dict[str, Any] = {}
     for key, value in schema.items():
-        if key in {"$schema", "$id", "title"}:
+        if key in _CODEX_UNSUPPORTED_KEYWORDS:
             continue
         if key == "additionalProperties":
+            continue
+        if key == "properties" and isinstance(value, dict):
+            # `properties` maps field names to schemas: its keys are data, not
+            # annotations. A field literally called "title" must survive, and it
+            # used to be stripped alongside the `title` keyword of the same name,
+            # which removed it from the wire schema and left local validation
+            # waiting for a field Codex was never asked to produce.
+            normalized[key] = {
+                name: _codex_strict_schema(sub) if isinstance(sub, dict) else sub
+                for name, sub in value.items()
+            }
             continue
         if isinstance(value, dict):
             normalized[key] = _codex_strict_schema(value)
