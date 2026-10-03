@@ -1,15 +1,17 @@
 [
   {
     "slug": "hack-nation", "brief_path": "briefs/hacknation-global-ai-2026.md",
-    "cutoff_class": "unknown", "verified": false, "winners": [],
+    "cutoff_class": "post-cutoff", "verified": false, "winners": [],
+    "cutoff_note": "Generator pinned to gpt-5.6-sol (HACKFORGE_CODEX_MODEL); knowledge cutoff Feb 16, 2026 documented at https://developers.openai.com/api/docs/models/gpt-5.6-sol (fetched 2026-10-03). Event (July 2026) is after the cutoff.",
     "verification_note": "Official carousel podium images visually reviewed; names transcribed in winner-verification.md. User/problem/mechanism descriptions remain unsupported and one third-place project is unnamed. Settle first-place versus all-podium denominator before a confirmatory run; generator cutoff remains unknown.",
     "winner_source": "https://www.instagram.com/p/DblRB9sCPQd"
   },
   {
     "slug": "openai-build-week",
     "brief_path": "archive-sources/runs/solana-july/2026-07-19-openai-devpost-com/competition-brief.json",
-    "cutoff_class": "unknown", "verified": true, "verified_on": "2026-10-03",
-    "verification_note": "Manually transcribed eight winner-ribbon projects from official gallery. Descriptions summarize gallery taglines, not technology guesses. Generator model training cutoff unknown: excluded from decision gate.",
+    "cutoff_class": "post-cutoff", "verified": true, "verified_on": "2026-10-03",
+    "cutoff_note": "Generator pinned to gpt-5.6-sol (HACKFORGE_CODEX_MODEL); knowledge cutoff Feb 16, 2026 documented at https://developers.openai.com/api/docs/models/gpt-5.6-sol (fetched 2026-10-03). Event (2026-07-19) is after the cutoff.",
+    "verification_note": "Manually transcribed eight winner-ribbon projects from official gallery. Descriptions summarize gallery taglines, not technology guesses.",
     "winner_source": "https://openai.devpost.com/project-gallery?sorting=winner",
     "winners": [
       {"title":"Second Voice","url":"https://devpost.com/software/second-voice-uk1peq","user":"People with dysarthria","problem":"Unclear speech impedes communication","mechanism":"GPT-5.6 turns unclear speech into confirmable sentences and speaks them aloud"},
@@ -25,14 +27,16 @@
   {
     "slug":"uk-parliament-easya",
     "brief_path":"archive-sources/runs/easy-a-parliament/2026-08-27-easya-uk-parliament-hackathon-2/competition-brief.json",
-    "cutoff_class":"unknown","verified":false,"winners":[],
+    "cutoff_class":"post-cutoff","verified":false,"winners":[],
+    "cutoff_note":"Generator pinned to gpt-5.6-sol (HACKFORGE_CODEX_MODEL); knowledge cutoff Feb 16, 2026 documented at https://developers.openai.com/api/docs/models/gpt-5.6-sol (fetched 2026-10-03). Event (2026-09-04) is after the cutoff.",
     "verification_note":"Event listings found, but no complete official winner list confirmed."
   },
   {
     "slug":"txodds-world-cup","brief_path":"archive-sources/runs/solana-july/txodds-world-cup-brief.md",
-    "cutoff_class":"unknown","verified":true,"verified_on":"2026-10-03",
+    "cutoff_class":"post-cutoff","verified":true,"verified_on":"2026-10-03",
+    "cutoff_note":"Generator pinned to gpt-5.6-sol (HACKFORGE_CODEX_MODEL); knowledge cutoff Feb 16, 2026 documented at https://developers.openai.com/api/docs/models/gpt-5.6-sol (fetched 2026-10-03). Event (recap published 2026-08-04, hackathon July 2026) is after the cutoff.",
     "winner_source":"https://www.linkedin.com/pulse/meet-winners-txodds-x-solana-world-cup-hackathon-txodds-lv7te",
-    "verification_note":"Organizer recap published August 4 names all nine podium projects. Honorable mentions excluded from winner denominator. User labels inferred from stated use cases; mechanism summaries limited to recap. Model cutoff unknown.",
+    "verification_note":"Organizer recap published August 4 names all nine podium projects. Honorable mentions excluded from winner denominator. User labels inferred from stated use cases; mechanism summaries limited to recap.",
     "winners":[
       {"title":"Touchline","user":"Prediction market traders","problem":"Betting on whether win probability touches a called level rather than final score","mechanism":"Win probability level touch prediction market"},
       {"title":"Onyx","user":"World Cup prop market traders","problem":"Instant settlement of World Cup prop markets","mechanism":"Solana protocol for instant prop market settlement"},
@@ -48,8 +52,14 @@
   {
     "slug":"fal-sequoia-video-hack",
     "brief_path":"archive-sources/runs/easy-a-parliament/2026-07-19-pasted-text/competition-brief.json",
-    "cutoff_class":"unknown","verified":false,"winners":[],
-    "winner_source":"https://www.linkedin.com/posts/features-and-labels_last-week-fal-and-sequoia-capital-hosted-activity-7485770665753591808-geDp",
-    "verification_note":"Organizer recap confirms event and promises winner announcements; does not list projects."
+    "cutoff_class":"post-cutoff","verified":true,"verified_on":"2026-10-03","winners":[
+      {"title":"Pamplemousse","url":"https://x.com/Christian_Luoma/status/2079006026699837486",
+       "user":"Audience for AI-generated short films (the entry is a film, not an app)",
+       "problem":"Produce an absurd, character-consistent comedy short entirely with generative video within the 72-hour event",
+       "mechanism":"AI-generated short film produced on fal's generative video platform; the creator's event post tags the Seedance 2 video model"}
+    ],
+    "cutoff_note":"Generator pinned to gpt-5.6-sol (HACKFORGE_CODEX_MODEL); knowledge cutoff Feb 16, 2026 documented at https://developers.openai.com/api/docs/models/gpt-5.6-sol (fetched 2026-10-03). Event (2026-07-17 to 07-19) is after the cutoff.",
+    "winner_source":"https://x.com/fal/status/2079046655354302714",
+    "verification_note":"fal's official X account quote-tweeted the creator naming Pamplemousse the first-place winner (fetched 2026-10-03); creator portfolio christianluoma.com self-confirms the win. Denominator is first place only: organizers publicly named no other placements (recap promised more; Cerebral Valley gallery is login-gated and all public gallery URLs 404). Description fields are restricted to fetched evidence (creator X post text/hashtags, YouTube title); model attribution via #seedance2 hashtag is noted as an inference."
   }
 ]

@@ -3,18 +3,26 @@
 - Phase 0 completed in commits `46f4581` and `3a99638`; archive files remain on disk.
 - Phase 1 harness implemented with ranking, matching, three control arms,
   sensitivity, cutoff splits, leakage filtering and offline integration tests.
-- Official winner lists verified for OpenAI Build Week (eight winner ribbons)
-  and TxODDS (nine podium projects). Three other lists are still unverified.
-- No generator model training cutoff is documented. All five real cases are
-  therefore classified **unknown**, not assumed post-cutoff based on event dates.
-- The tracked fixture report is an offline harness baseline only. It has verdict
-  **insufficient_data**, not a claim that rankings predict real winners.
-- One exploratory Codex smoke was initiated while the protocol was written but
-  before its commit. It was interrupted after discovering absent semantic-ranking
-  extras; it produced no completed backtest. It must not count as a confirmatory
-  experiment. New live runs preflight the missing dependency before paid calls.
-- The full live batch was not run: it would fail validation for the three missing
-  winner lists. The first failure stops a batch rather than silently skipping cases.
+- Official winner lists verified for OpenAI Build Week (eight winner ribbons),
+  TxODDS (nine podium projects) and fal × Sequoia (first place only — the only
+  placement organizers ever published; documented denominator caveat in
+  `cases.json`). Three cases remain unverified: HackNation (two of six first-place
+  winners lack any describable source: Vera AI undescribed, Amira mechanism
+  unknown) and UK Parliament/EasyA (no public winner list exists; see
+  `winner-verification.md`).
+- Generator model and cutoff now documented (2026-10-03): all live backtests pin
+  `HACKFORGE_CODEX_MODEL=gpt-5.6-sol`; its knowledge cutoff (Feb 16, 2026) was
+  read from the official per-model docs page
+  `https://developers.openai.com/api/docs/models/gpt-5.6-sol` (fetched). The
+  account rejects `gpt-6.1-sol` ("not supported with a ChatGPT account"), so the
+  pinned default is the only documented-cutoff generator available. All five real
+  events are after the cutoff: every real case is `cutoff_class: post-cutoff`
+  with a `cutoff_note`. The former `verification-research.md` was removed from
+  the working tree by a concurrent edit; its cutoff evidence is consolidated in
+  `winner-verification.md`.
+- One-case live smoke (`openai-build-week`, Codex) launched 2026-10-03; the full
+  three-case live batch follows on success. Earlier fixture verdict
+  `insufficient_data` remains the standing verdict until the live batch lands.
 - Phase 2 implementation was explicitly authorized by the user despite the
   inconclusive backtest. The build-plan stage, schema, prompt, CLI flag and offline
   tests are now implemented. This waiver changes implementation sequencing only,
