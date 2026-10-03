@@ -297,6 +297,64 @@ class BuildPlan(BaseModel):
         return self
 
 
+class DevScaffold(BaseModel):
+    stack: str = Field(min_length=1)
+    entry_point: str = Field(min_length=1)
+    run_command: str | None = None
+    url: str | None = None
+    notes: str = ""
+
+
+class DevFile(BaseModel):
+    path: str = Field(min_length=1)
+    content: str = ""
+
+
+class DevTaskOutput(BaseModel):
+    files: list[DevFile] = Field(min_length=1)
+    check_command: str | None = None
+    notes: str = ""
+
+
+class DevTaskRecord(BaseModel):
+    task_id: str = Field(min_length=1)
+    title: str = Field(min_length=1)
+    status: Literal["implemented", "failed"]
+    files_written: list[str] = Field(default_factory=list)
+    check_command: str | None = None
+    check_status: Literal["passed", "failed", "not_run"] = "not_run"
+    repair_attempts: int = 0
+    notes: str = ""
+
+
+class GuiSmoke(BaseModel):
+    attempted: bool
+    ok: bool = False
+    command: str | None = None
+    url: str | None = None
+    http_status: int | None = None
+    notes: str = ""
+
+
+class DevelopmentReport(BaseModel):
+    candidate_id: str
+    product_root: str
+    checks_executed: bool
+    scaffold: DevScaffold
+    tasks: list[DevTaskRecord] = Field(min_length=1)
+    gui_smoke: GuiSmoke | None = None
+    notes: str = ""
+
+    @model_validator(mode="after")
+    def validate_task_ids(self) -> DevelopmentReport:
+        seen: set[str] = set()
+        for record in self.tasks:
+            if record.task_id in seen:
+                raise ValueError("Development report task records must have unique task IDs")
+            seen.add(record.task_id)
+        return self
+
+
 class JudgeVote(BaseModel):
     role: str
     preferred_blind_id: str

@@ -17,8 +17,10 @@ from hackforge.evals.promptfoo_runner import run_promptfoo
 from hackforge.integrations.corpus_pull import build_index_from_cache as build_corpus_index
 from hackforge.integrations.corpus_pull import pull_sources as pull_corpora
 from hackforge.memory import append_human_override, learn_from_runs, list_runs
+from hackforge.models import BuildPlan, CompetitionBrief
 from hackforge.paths import EVALS_DIR
 from hackforge.pipeline import run_analyse
+from hackforge.pipeline.develop import develop_product
 from hackforge.providers import load_providers
 from hackforge.research import search_devpost_projects
 from hackforge.utils import env_flag, read_json, write_json, write_text
@@ -79,7 +81,9 @@ def main() -> None:
 )
 @click.option("--output-root", type=click.Path(file_okay=False, path_type=Path))
 @click.option("--no-visual-report", is_flag=True, default=False)
-@click.option("--no-build-plan", is_flag=True, default=False, help="Skip the final build-plan call and artifacts.")
+@click.option(
+    "--no-build-plan", is_flag=True, default=False, help="Skip the final build-plan call and artifacts."
+)
 @click.option(
     "--live-research/--no-live-research",
     default=None,
@@ -236,26 +240,74 @@ def eval_command(ctx: click.Context, provider: str, promptfoo: bool) -> None:
 
 
 @eval_command.command("backtest")
-@click.option("--cases", type=click.Path(exists=True, path_type=Path), default=EVALS_DIR / "backtest" / "cases.json")
+@click.option(
+    "--cases", type=click.Path(exists=True, path_type=Path), default=EVALS_DIR / "backtest" / "cases.json"
+)
 @click.option("--provider", type=click.Choice(["fixture", "deepseek", "codex", "litellm"]), default="fixture")
 @click.option("--live", is_flag=True, help="Explicitly authorize live calls.")
 @click.option("--max-cases", type=click.IntRange(1))
 @click.option("--scorer", type=click.Choice(["token", "embed"]), default="token")
 @click.option("--threshold", type=click.FloatRange(0, 1), default=0.30)
 @click.option("--case", "case_slugs", multiple=True, help="Select a case slug (repeatable).")
-def eval_backtest(cases: Path, provider: str, live: bool, max_cases: int | None, scorer: str, threshold: float,
-                  case_slugs: tuple[str, ...]) -> None:
+def eval_backtest(
+    cases: Path,
+    provider: str,
+    live: bool,
+    max_cases: int | None,
+    scorer: str,
+    threshold: float,
+    case_slugs: tuple[str, ...],
+) -> None:
     """Score rankings against verified winners; all three controls are included."""
     try:
         selected = [case for case in load_cases(cases) if not case_slugs or case["slug"] in case_slugs]
         count = min(len(selected), max_cases or len(selected))
         if provider != "fixture":
-            print(f"Live estimate: {count} full runs plus {count} naive calls. DeepSeek caps: 40 calls/$2 per run; Codex has no accounting.")
-        output = run_backtest(cases, provider=provider, live=live, max_cases=max_cases, scorer=scorer,
-                              threshold=threshold, case_slugs=case_slugs)
+            print(
+                f"Live estimate: {count} full runs plus {count} naive calls. DeepSeek caps: 40 calls/$2 per run; Codex has no accounting."
+            )
+        output = run_backtest(
+            cases,
+            provider=provider,
+            live=live,
+            max_cases=max_cases,
+            scorer=scorer,
+            threshold=threshold,
+            case_slugs=case_slugs,
+        )
     except (ValueError, RuntimeError) as exc:
         raise click.ClickException(str(exc)) from exc
     print(f"[green]Backtest:[/green] {output}")
+
+
+@main.command("develop")
+@click.argument("run_dir", type=click.Path(exists=True, file_okay=False, path_type=Path))
+@click.option("--provider", type=click.Choice(["deepseek", "codex", "litellm"]), default="deepseek")
+@click.option(
+    "--execute",
+    is_flag=True,
+    help="Run each task's acceptance check and the GUI boot smoke locally (files are always written).",
+)
+@click.option("--dry-run", is_flag=True, help="Use deterministic fixture responses; no live calls.")
+@click.option("--fixture-bundle", type=click.Path(exists=True, path_type=Path))
+def develop_command(
+    run_dir: Path, provider: str, execute: bool, dry_run: bool, fixture_bundle: Path | None
+) -> None:
+    """Implement RUN_DIR's build plan into a working product under RUN_DIR/product."""
+    if fixture_bundle and not dry_run:
+        raise click.ClickException("--fixture-bundle requires --dry-run")
+    try:
+        brief = CompetitionBrief.model_validate(read_json(run_dir / "competition-brief.json"))
+        plan = BuildPlan.model_validate(read_json(run_dir / "build-plan.json"))
+        bundle = read_json(fixture_bundle) if fixture_bundle else None
+        providers = load_providers(dry_run=dry_run, fixture_bundle=bundle, provider=provider)
+        report = develop_product(
+            providers.feasibility, brief, plan, run_dir / "product", execute_checks=execute
+        )
+        write_json(run_dir / "development-report.json", report.model_dump())
+    except (ValueError, RuntimeError) as exc:
+        raise click.ClickException(str(exc)) from exc
+    print(f"[green]Development report:[/green] {run_dir / 'development-report.json'}")
 
 
 @main.command()
@@ -265,8 +317,16 @@ def eval_backtest(cases: Path, provider: str, live: bool, max_cases: int | None,
     default="deepseek",
     show_default=True,
 )
-@click.option("--strict", is_flag=True, default=False, help="Exit non-zero when required selected capabilities fail.")
-@click.option("--live", "live_probe", is_flag=True, default=False, help="Probe selected backend and optional enrichments.")
+@click.option(
+    "--strict", is_flag=True, default=False, help="Exit non-zero when required selected capabilities fail."
+)
+@click.option(
+    "--live",
+    "live_probe",
+    is_flag=True,
+    default=False,
+    help="Probe selected backend and optional enrichments.",
+)
 def doctor(provider: str, strict: bool, live_probe: bool) -> None:
     """Check selected runtime, resources, and optional integrations."""
     checks = run_doctor(live_probe=live_probe, provider=provider)

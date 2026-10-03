@@ -41,6 +41,7 @@ PROMPT_VERSIONS = {
     "blind-judge": "v1",
     "red-team": "v1",
     "build-plan": "v1",
+    "develop": "v1",
     "winner-patterns": "v1",
 }
 

@@ -133,6 +133,10 @@ class DryRunProvider(LLMProvider):
         blob = (system + "\n" + user).lower()
         if "competition build-plan planner" in blob:
             return "build_plan"
+        if "develop scaffold call" in blob:
+            return "develop_scaffold"
+        if "develop task call" in blob:
+            return "develop_task"
         if "winner-pattern-analyst" in blob:
             return "winner_patterns"
         if "competition-intelligence" in blob or "do not generate product ideas" in blob:

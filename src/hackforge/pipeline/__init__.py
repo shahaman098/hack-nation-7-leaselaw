@@ -29,7 +29,8 @@ from hackforge.ideation import (
     structural_distance,
 )
 from hackforge.memory import build_run_manifest
-from hackforge.models import CandidateIdea, EvidenceSource, IdeaLineage
+from hackforge.models import BuildPlan, CandidateIdea, EvidenceSource, IdeaLineage
+from hackforge.profiles import apply_profile_defaults, load_competition_profile, resolve_tracks_fixture
 from hackforge.providers import ProviderBundle, load_providers
 from hackforge.research import (
     build_competition_brief,
@@ -42,7 +43,6 @@ from hackforge.research import (
     search_devpost_projects,
     search_github_projects,
 )
-from hackforge.profiles import apply_profile_defaults, load_competition_profile, resolve_tracks_fixture
 from hackforge.run_state import RunJournal
 from hackforge.telemetry import trace_stage
 from hackforge.utils import env_flag, make_run_dir, sha256_text, write_json, write_text
@@ -55,6 +55,7 @@ from hackforge.winners import (
 )
 
 from .build_plan import build_plan_markdown, create_build_plan
+from .develop import develop_product
 
 
 def _run_analyse_impl(
@@ -77,6 +78,7 @@ def _run_analyse_impl(
     collision_excludes: list[str] | None = None,
     execution_providers: ProviderBundle | None = None,
     build_plan: bool = True,
+    develop: bool = False,
     competition_profile: str | None = None,
     training_cutoff: str | None = None,
     inspiration_min: float | None = None,
@@ -95,6 +97,8 @@ def _run_analyse_impl(
         raise ValueError("Provide input_path, url, and/or text (they can be combined)")
     if finalists < 3:
         raise ValueError("finalists must be at least 3 (one winner and two structurally different backups)")
+    if develop and not build_plan:
+        raise ValueError("develop requires build_plan: the development stage implements the generated plan")
 
     search_profile, finalists, training_cutoff, inspiration_min = (
         apply_profile_defaults(
@@ -473,6 +477,7 @@ def _run_analyse_impl(
         outputs[0], outputs[1] = outputs[1], outputs[0]
     timings["red_team"] = time.perf_counter() - t0
 
+    plan: BuildPlan | None = None
     if build_plan:
         _journal.checkpoint("build_plan", candidates=1)
         t0 = time.perf_counter()
@@ -485,6 +490,15 @@ def _run_analyse_impl(
         write_json(run_dir / "build-plan.json", plan.model_dump())
         write_text(run_dir / "build-plan.md", build_plan_markdown(plan))
         timings["build_plan"] = time.perf_counter() - t0
+
+    if develop:
+        if plan is None:
+            raise RuntimeError("Development stage requires a generated build plan")
+        _journal.checkpoint("development", tasks=len(plan.tasks))
+        t0 = time.perf_counter()
+        dev_report = develop_product(providers.feasibility, brief, plan, run_dir / "product")
+        write_json(run_dir / "development-report.json", dev_report.model_dump())
+        timings["develop"] = time.perf_counter() - t0
 
     output_ids = {idea.id for idea in outputs}
     rejected_ideas = [idea for idea in ideas if idea.id not in output_ids]
@@ -537,6 +551,7 @@ def _run_analyse_impl(
         "collision": getattr(providers.collision, "name", "unknown"),
         "feasibility": getattr(providers.feasibility, "name", "unknown"),
         "build_plan": getattr(providers.feasibility, "name", "unknown") if build_plan else None,
+        "develop": getattr(providers.feasibility, "name", "unknown") if develop else None,
         "judges": getattr(providers.judges, "name", "unknown"),
         "models": {"research": getattr(providers.research, "model", None)},
         "requested_models": {"research": getattr(providers.research, "requested_model", None)},
@@ -572,7 +587,8 @@ def _run_analyse_impl(
             "final_output_ids": [idea.id for idea in outputs],
             "visual_report": visual_report,
             "build_plan": build_plan,
-            "optional_stage_call_budget": {"build_plan": int(build_plan)},
+            "develop": develop,
+            "optional_stage_call_budget": {"build_plan": int(build_plan), "develop": int(develop)},
             "competition_profile": competition_profile,
             "inspiration_min": inspiration_min,
             "training_cutoff": training_cutoff,
