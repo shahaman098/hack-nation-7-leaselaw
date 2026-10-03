@@ -28,7 +28,7 @@ def load_verified_winners(corpus_path: Path | str | None = None) -> list[Verifie
         return []
     winners: list[VerifiedWinner] = []
     with path.open(encoding="utf-8") as handle:
-        for line_no, line in enumerate(handle, start=1):
+        for _line_no, line in enumerate(handle, start=1):
             line = line.strip()
             if not line:
                 continue

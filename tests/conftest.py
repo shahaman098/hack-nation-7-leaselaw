@@ -1,10 +1,8 @@
-from __future__ import annotations
+"""Shared test paths for apps/api (AppealPath smoke tests)."""
 
-import pytest
+import sys
+from pathlib import Path
 
-
-@pytest.fixture(autouse=True)
-def explicit_fixture_semantic_mode(monkeypatch: pytest.MonkeyPatch):
-    """Unit tests opt out explicitly; trusted live runs require semantic collision search."""
-    monkeypatch.setenv("HACKFORGE_USE_SENTENCE_TRANSFORMERS", "0")
-    monkeypatch.setenv("HACKFORGE_REQUIRE_SEMANTIC_COLLISION", "0")
+API_SRC = Path(__file__).resolve().parents[1] / "apps" / "api" / "src"
+if str(API_SRC) not in sys.path:
+    sys.path.insert(0, str(API_SRC))

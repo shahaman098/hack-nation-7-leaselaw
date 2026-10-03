@@ -29,10 +29,14 @@ runs/*
 !runs/.gitkeep
 evals/baseline-results/_runs/
 
+# Node
+node_modules/
+
 # OS / IDE
 .DS_Store
 .idea/
 .vscode/
+.zcode/
 *.swp
 
 # Private competition dumps (commit only sanitized research)

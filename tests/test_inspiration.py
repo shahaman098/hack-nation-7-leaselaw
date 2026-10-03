@@ -6,7 +6,7 @@ import pytest
 
 from hackforge.collision.corpus_loader import load_candidates
 from hackforge.models import CandidateIdea
-from hackforge.paths import CORPORA_DIR, FIXTURES_DIR
+from hackforge.paths import FIXTURES_DIR
 from hackforge.pipeline import _collect_initial_evidence, run_analyse
 from hackforge.profiles import load_competition_profile
 from hackforge.utils import read_json

@@ -5,17 +5,13 @@ Submit **this repository** as the project: a meta hackathon intelligence CLI, no
 ## Demo script (~3 minutes)
 
 1. **Problem (20s):** Hackathons publish tracks and judging weights; most “idea bots” ignore verified winners and clone crowded chat wrappers.
-2. **Paste tracks (30s):** Open `fixtures/hack-nation-tracks.md` (swap for kickoff text at event time).
+2. **Paste tracks (30s):** Paste official HackOS challenge text into `briefs/hack-nation-7-kickoff.md`.
 3. **Run (show terminal):**
 
 ```bash
-source .venv/bin/activate
-hackforge analyse \
-  --profile hack-nation \
-  --input fixtures/hack-nation-tracks.md \
-  --provider codex \
-  --search-profile fast \
-  --no-visual-report
+./scripts/run-hack-nation-idea-search.sh live
+# Smoke without API (fixture tracks):
+./scripts/run-hack-nation-idea-search.sh dry
 ```
 
 4. **Artifacts (90s):** Walk through the run folder:
