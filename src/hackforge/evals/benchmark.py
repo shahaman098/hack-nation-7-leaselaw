@@ -6,12 +6,14 @@ from typing import Any
 
 from hackforge.paths import EVALS_DIR, FIXTURES_DIR, REPO_ROOT
 from hackforge.pipeline import run_analyse
-from hackforge.providers import DryRunProvider
+from hackforge.providers import DryRunProvider, LLMProvider
 from hackforge.utils import read_json, write_json, write_text
 
 
-def naive_baseline(brief_text: str, fixture_bundle: dict[str, Any]) -> list[str]:
-    provider = DryRunProvider(fixture_bundle)
+def naive_baseline(
+    brief_text: str, fixture_bundle: dict[str, Any], *, provider: LLMProvider | None = None
+) -> list[str]:
+    provider = provider or DryRunProvider(fixture_bundle)
     resp = provider.complete(
         "You are a hackathon idea generator.",
         f"Here is the hackathon description. Give me ten winning ideas.\n\n{brief_text}",

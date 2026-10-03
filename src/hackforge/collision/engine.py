@@ -156,6 +156,7 @@ def audit_collisions_engine(
     use_llm: bool = True,
     supplemental_analogues: list[dict[str, Any]] | None = None,
     require_semantic: bool = False,
+    exclude: list[str] | None = None,
 ) -> list[CollisionReport]:
     index = EmbedIndex()
     template, _ = load_prompt("collision-audit")
@@ -172,6 +173,14 @@ def audit_collisions_engine(
         )
         if supplemental_analogues:
             retrieved_map[c.id].extend(_rank_supplemental(c, supplemental_analogues, k=5))
+        needles = [value.casefold().strip() for value in (exclude or []) if value.strip()]
+        retrieved_map[c.id] = [
+            hit for hit in retrieved_map[c.id]
+            if not any(
+                needle in str(hit.get(key) or "").casefold()
+                for needle in needles for key in ("name", "title", "url")
+            )
+        ]
 
     if use_llm:
         if provider is None:

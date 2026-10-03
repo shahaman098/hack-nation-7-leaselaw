@@ -132,6 +132,28 @@ Every search writes artifacts including:
 
 Balanced search evaluates 48 concepts: 32 initial crosses plus 16 directed mutations over two rounds, collision-audits 12, judges up to 6, and returns 3 outputs.
 
+### Winner backtests
+
+```bash
+# Offline two-case integration check; not evidence of winner prediction
+hackforge eval backtest --cases evals/backtest/fixtures/cases.json
+# Explicit, bounded live smoke; includes one additional naive-control call
+hackforge eval backtest --provider codex --live --max-cases 1 --case openai-build-week
+```
+
+Reports (`backtest-*.json` and `.md`) go to `evals/baseline-results/`; private run
+artifacts stay in its ignored `_runs/`, outside `runs learn`. The harness disables
+live research and removes the case's own winner titles/URLs from collision
+retrieval, including repair paths. All three controls use the same matcher.
+DeepSeek's existing call/cost caps include the live-naive call; Codex has no cost
+accounting, so live batches require `--max-cases` and fail fast.
+
+The five real cases and verification status are in `evals/backtest/cases.json`.
+Unverified winner lists block execution; unknown model cutoffs are reported
+separately and cannot establish post-cutoff performance. The frozen decision rule
+is in [`evals/backtest/protocol.md`](evals/backtest/protocol.md). Build-plan work
+remains gated on a valid real-world backtest rather than a passing fixture run.
+
 ## Requirement-driven gates
 
 The deterministic gate layer is derived from the current brief:

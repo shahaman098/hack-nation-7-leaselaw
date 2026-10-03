@@ -1,0 +1,55 @@
+[
+  {
+    "slug": "hack-nation", "brief_path": "briefs/hacknation-global-ai-2026.md",
+    "cutoff_class": "unknown", "verified": false, "winners": [],
+    "verification_note": "Organizer Instagram announcement confirms six winning teams but accessible text does not name them. Need official project list and generator model cutoff.",
+    "winner_source": "https://www.instagram.com/p/DblRB9sCPQd"
+  },
+  {
+    "slug": "openai-build-week",
+    "brief_path": "archive-sources/runs/solana-july/2026-07-19-openai-devpost-com/competition-brief.json",
+    "cutoff_class": "unknown", "verified": true, "verified_on": "2026-10-03",
+    "verification_note": "Manually transcribed eight winner-ribbon projects from official gallery. Descriptions summarize gallery taglines, not technology guesses. Generator model training cutoff unknown: excluded from decision gate.",
+    "winner_source": "https://openai.devpost.com/project-gallery?sorting=winner",
+    "winners": [
+      {"title":"Second Voice","url":"https://devpost.com/software/second-voice-uk1peq","user":"People with dysarthria","problem":"Unclear speech impedes communication","mechanism":"GPT-5.6 turns unclear speech into confirmable sentences and speaks them aloud"},
+      {"title":"AirBridge for Windows","url":"https://devpost.com/software/airbridge-for-windows","user":"Windows PC users with AirPlay compatible speakers","problem":"Wireless audio output from Windows to AirPlay speakers","mechanism":"GPT-5.6 agent in the wireless audio control loop"},
+      {"title":"veTriage—Safety-First Vet Phone Triage PWA Built in a Week","url":"https://devpost.com/software/veterinary-four-color-triage-app","user":"Veterinary clinic staff","problem":"Screening sick pet phone calls safely","mechanism":"Structured clinical triage expertise in a progressive web app"},
+      {"title":"Pulse","url":"https://devpost.com/software/pulse-ewjaf9","user":"Cardiac arrest team leaders","problem":"Tracking rhythm shocks drug timings and hands off time","mechanism":"Listening AI teammate with deterministic state engine and no LLM in clinical loop"},
+      {"title":"Echo Canvas","url":"https://devpost.com/software/echo-canvas-ujzksi","user":"Spatial audio authors","problem":"Hearing and explaining spatial acoustics before committing to audio pipeline","mechanism":"Interactive browser workbench for authoring spatial acoustics"},
+      {"title":"Sentinel","url":"https://devpost.com/software/sentinel-way5bd","user":"MCP server developers","problem":"Finding security holes before shipping MCP servers","mechanism":"Static rules GPT-5.6 review and Docker sandboxed probes mapped to OWASP Agentic Top 10"},
+      {"title":"Mechanica — A Digital Museum of Ancient Chinese Machines","url":"https://devpost.com/software/xiaoqiang","user":"Museum learners","problem":"Exploring lost ancient Chinese machines","mechanism":"Physically simulated source cited interactive exhibits with GPT-5.6 docent"},
+      {"title":"Dấu - See your Vietnamese tones","url":"https://devpost.com/software/d-u-see-your-vietnamese-tones","user":"Vietnamese language learners","problem":"Understanding and correcting spoken tones","mechanism":"Record words compare pitch with validated contours and visualize meaning and physical correction"}
+    ]
+  },
+  {
+    "slug":"uk-parliament-easya",
+    "brief_path":"archive-sources/runs/easy-a-parliament/2026-08-27-easya-uk-parliament-hackathon-2/competition-brief.json",
+    "cutoff_class":"unknown","verified":false,"winners":[],
+    "verification_note":"Event listings found, but no complete official winner list confirmed."
+  },
+  {
+    "slug":"txodds-world-cup","brief_path":"archive-sources/runs/solana-july/txodds-world-cup-brief.md",
+    "cutoff_class":"unknown","verified":true,"verified_on":"2026-10-03",
+    "winner_source":"https://www.linkedin.com/pulse/meet-winners-txodds-x-solana-world-cup-hackathon-txodds-lv7te",
+    "verification_note":"Organizer recap published August 4 names all nine podium projects. Honorable mentions excluded from winner denominator. User labels inferred from stated use cases; mechanism summaries limited to recap. Model cutoff unknown.",
+    "winners":[
+      {"title":"Touchline","user":"Prediction market traders","problem":"Betting on whether win probability touches a called level rather than final score","mechanism":"Win probability level touch prediction market"},
+      {"title":"Onyx","user":"World Cup prop market traders","problem":"Instant settlement of World Cup prop markets","mechanism":"Solana protocol for instant prop market settlement"},
+      {"title":"Proofline","user":"Cross chain match result consumers","problem":"Accessing Solana match results on other chains","mechanism":"Primitive bridging Solana match results to other chains"},
+      {"title":"TouchLine MM","user":"Sports market makers","problem":"Protecting the book against one sided flow during dangerous match states","mechanism":"Automated market making bot withdraws quotes as matches turn dangerous"},
+      {"title":"LineWatch","user":"AI agents trading World Cup betting markets","problem":"Detecting sharp money in World Cup betting markets","mechanism":"Sharp money detection built for AI agents"},
+      {"title":"TxAgent","user":"Prop bet traders","problem":"Pricing prop bets and finding a counterparty","mechanism":"AI counterparty prices and takes the other side of prop bets"},
+      {"title":"Ticker","user":"Football fans","problem":"Interactive experience connected to their team live match","mechanism":"Tamagotchi heartbeat wired to live match"},
+      {"title":"Mundial","user":"Football fans on X","problem":"Calling scorelines before kickoff","mechanism":"X native score prediction game"},
+      {"title":"Battlefield","user":"World Cup spectators","problem":"Experiencing live match through game visualization","mechanism":"Live World Cup match rendered as war between two armies"}
+    ]
+  },
+  {
+    "slug":"fal-sequoia-video-hack",
+    "brief_path":"archive-sources/runs/easy-a-parliament/2026-07-19-pasted-text/competition-brief.json",
+    "cutoff_class":"unknown","verified":false,"winners":[],
+    "winner_source":"https://www.linkedin.com/posts/features-and-labels_last-week-fal-and-sequoia-capital-hosted-activity-7485770665753591808-geDp",
+    "verification_note":"Organizer recap confirms event and promises winner announcements; does not list projects."
+  }
+]

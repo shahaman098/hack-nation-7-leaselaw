@@ -12,6 +12,7 @@ from hackforge.collision import audit_collisions_engine, collision_markdown
 from hackforge.collision.corpus_loader import load_candidates
 from hackforge.diagnostics import doctor_ready_for_live, run_doctor
 from hackforge.evals import run_benchmark
+from hackforge.evals.backtest import load_cases, run_backtest
 from hackforge.evals.promptfoo_runner import run_promptfoo
 from hackforge.integrations.corpus_pull import build_index_from_cache as build_corpus_index
 from hackforge.integrations.corpus_pull import pull_sources as pull_corpora
@@ -206,17 +207,43 @@ def research_exists(query: str, limit: int) -> None:
     print(json.dumps([source.model_dump() for source in rows], indent=2))
 
 
-@main.command("eval")
+@main.group("eval", invoke_without_command=True)
 @click.option("--provider", type=click.Choice(["fixture", "deepseek", "litellm"]), default="fixture")
 @click.option("--promptfoo/--no-promptfoo", default=True)
-def eval_command(provider: str, promptfoo: bool) -> None:
+@click.pass_context
+def eval_command(ctx: click.Context, provider: str, promptfoo: bool) -> None:
     """Run baseline competition benchmarks and optional Promptfoo evaluation."""
+    if ctx.invoked_subcommand:
+        return
     dry_run = provider == "fixture"
     results_path = run_benchmark(EVALS_DIR / "benchmarks", dry_run=dry_run)
     print(f"[green]Baseline benchmark:[/green] {results_path}")
     if promptfoo:
         promptfoo_result = run_promptfoo(dry_run=dry_run)
         print(f"[green]Promptfoo:[/green] {promptfoo_result}")
+
+
+@eval_command.command("backtest")
+@click.option("--cases", type=click.Path(exists=True, path_type=Path), default=EVALS_DIR / "backtest" / "cases.json")
+@click.option("--provider", type=click.Choice(["fixture", "deepseek", "codex", "litellm"]), default="fixture")
+@click.option("--live", is_flag=True, help="Explicitly authorize live calls.")
+@click.option("--max-cases", type=click.IntRange(1))
+@click.option("--scorer", type=click.Choice(["token", "embed"]), default="token")
+@click.option("--threshold", type=click.FloatRange(0, 1), default=0.30)
+@click.option("--case", "case_slugs", multiple=True, help="Select a case slug (repeatable).")
+def eval_backtest(cases: Path, provider: str, live: bool, max_cases: int | None, scorer: str, threshold: float,
+                  case_slugs: tuple[str, ...]) -> None:
+    """Score rankings against verified winners; all three controls are included."""
+    try:
+        selected = [case for case in load_cases(cases) if not case_slugs or case["slug"] in case_slugs]
+        count = min(len(selected), max_cases or len(selected))
+        if provider != "fixture":
+            print(f"Live estimate: {count} full runs plus {count} naive calls. DeepSeek caps: 40 calls/$2 per run; Codex has no accounting.")
+        output = run_backtest(cases, provider=provider, live=live, max_cases=max_cases, scorer=scorer,
+                              threshold=threshold, case_slugs=case_slugs)
+    except (ValueError, RuntimeError) as exc:
+        raise click.ClickException(str(exc)) from exc
+    print(f"[green]Backtest:[/green] {output}")
 
 
 @main.command()

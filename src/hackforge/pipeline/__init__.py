@@ -64,6 +64,8 @@ def _run_analyse_impl(
     search_profile: str = "balanced",
     finalists: int = 3,
     visual_report: bool = True,
+    collision_excludes: list[str] | None = None,
+    execution_providers: ProviderBundle | None = None,
     _journal: RunJournal,
 ) -> Path:
     del seeds_per_lane  # retained for API compatibility; profiles now own search breadth.
@@ -81,7 +83,7 @@ def _run_analyse_impl(
     run_dir = make_run_dir(_provisional_run_name(input_path, url), runs_root=runs_root)
     _journal.attach(run_dir, provider=provider, search_profile=search_profile)
     _journal.checkpoint("provider_selection")
-    providers = load_providers(dry_run=dry_run, fixture_bundle=fixture_bundle, provider=provider)
+    providers = execution_providers or load_providers(dry_run=dry_run, fixture_bundle=fixture_bundle, provider=provider)
     do_live = live_research if live_research is not None else (not providers.dry_run)
     timings: dict[str, float] = {}
     rejections: list[dict[str, str]] = []
@@ -261,6 +263,7 @@ def _run_analyse_impl(
             shortlist,
             corpus=_public_analogues(evidence),
             live_enrich=False,
+            exclude=collision_excludes,
         )
         timings["collision"] = time.perf_counter() - t0
     write_text(run_dir / "collision-analysis.md", collision_markdown(collisions))
@@ -285,6 +288,7 @@ def _run_analyse_impl(
             archive,
             evidence,
             profile.mutation_rounds + 2,
+            collision_excludes,
         )
         collisions.extend(added_collisions)
         lineage.extend(added_lineage)
@@ -334,6 +338,7 @@ def _run_analyse_impl(
                 repair_gated,
                 corpus=_public_analogues(evidence),
                 live_enrich=False,
+                exclude=collision_excludes,
             )
             if repair_gated
             else []
@@ -593,6 +598,7 @@ def _repair_all_killed(
     archive: SparseIdeaArchive,
     evidence: list[EvidenceSource],
     round_number: int,
+    collision_excludes: list[str] | None = None,
 ) -> tuple[list[CandidateIdea], list[Any], list[IdeaLineage]]:
     mutations, lineage = _emergency_mutation(
         providers,
@@ -616,6 +622,7 @@ def _repair_all_killed(
             gated,
             corpus=_public_analogues(evidence),
             live_enrich=False,
+            exclude=collision_excludes,
         )
         if gated
         else []

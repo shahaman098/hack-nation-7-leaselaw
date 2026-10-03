@@ -15,6 +15,7 @@ def audit_collisions(
     corpus: list[dict[str, Any]] | None = None,
     *,
     live_enrich: bool = True,
+    exclude: list[str] | None = None,
 ) -> list[CollisionReport]:
     """Semantic/local/public analogue audit with optional strict index enforcement.
 
@@ -30,6 +31,7 @@ def audit_collisions(
         live_enrich=live_enrich,
         use_llm=True,
         supplemental_analogues=corpus,
+        exclude=exclude,
         require_semantic=env_flag("HACKFORGE_REQUIRE_SEMANTIC_COLLISION", default=False),
     )
 
