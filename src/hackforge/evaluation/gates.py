@@ -4,6 +4,9 @@ import re
 
 from hackforge.models import CandidateIdea, CompetitionBrief, EvidenceSource, GateResult
 
+_TRACK_SCOPE_RE = re.compile(r"For an? (.+?) entry,", re.IGNORECASE)
+
+
 REQUIRED_GATES = (
     "evidence_backed",
     "required_technology_fit",
@@ -97,7 +100,9 @@ def _requirement_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResul
     required = [
         requirement
         for requirement in brief.requirements
-        if requirement.required and requirement.category != "eligibility"
+        if requirement.required
+        and requirement.category != "eligibility"
+        and _requirement_applies_to_idea(requirement, idea, brief)
     ]
     artifact_keys = [f"artifact:{artifact}" for artifact in brief.submission_artifacts]
     if not required and not artifact_keys:
@@ -130,9 +135,12 @@ def _data_gate(
     brief: CompetitionBrief,
     accessible_citations: list[EvidenceSource],
 ) -> GateResult:
-    requires_data = bool(brief.data_requirements) or any(
-        requirement.required and requirement.category == "data" for requirement in brief.requirements
-    )
+    requires_data = any(
+        requirement.required
+        and requirement.category == "data"
+        and _requirement_applies_to_idea(requirement, idea, brief)
+        for requirement in brief.requirements
+    ) or any(_line_applies_to_track(line, idea, brief) for line in brief.data_requirements)
     if not idea.data_sources:
         if requires_data:
             return _result(
@@ -277,7 +285,7 @@ def _delivery_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResult:
 
 
 def _demo_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResult:
-    if not _brief_requires_demo(brief):
+    if not _demo_required_for_idea(idea, brief):
         return GateResult(
             gate="demo_fit",
             status="not_applicable",
@@ -305,6 +313,55 @@ def _track_gate(idea: CandidateIdea, brief: CompetitionBrief) -> GateResult:
         passed,
         f"Declared track {idea.track_fit!r}; official tracks: {', '.join(brief.tracks)}",
     )
+
+
+def _requirement_applies_to_idea(
+    requirement,
+    idea: CandidateIdea,
+    brief: CompetitionBrief,
+) -> bool:
+    match = _TRACK_SCOPE_RE.search(requirement.description or "")
+    if not match:
+        return True
+    scope = _norm(match.group(1))
+    fit = _norm(idea.track_fit)
+    if not fit:
+        return False
+    for track in brief.tracks:
+        track_norm = _norm(track)
+        if track_norm in fit or fit in track_norm:
+            return scope in track_norm or track_norm in scope
+    return scope in fit or fit in scope
+
+
+def _line_applies_to_track(line: str, idea: CandidateIdea, brief: CompetitionBrief) -> bool:
+    fit = _norm(idea.track_fit)
+    if not fit:
+        return False
+    line_norm = _norm(line)
+    mentioned = [track for track in brief.tracks if _norm(track) in line_norm]
+    if not mentioned:
+        return " entries" not in line.lower() and " entry," not in line.lower()
+    return any(_norm(track) in fit or fit in _norm(track) for track in mentioned)
+
+
+def _demo_required_for_idea(idea: CandidateIdea, brief: CompetitionBrief) -> bool:
+    scoped_demo_reqs = [
+        requirement
+        for requirement in brief.requirements
+        if requirement.required
+        and requirement.category == "demo"
+        and _requirement_applies_to_idea(requirement, idea, brief)
+    ]
+    if scoped_demo_reqs:
+        return True
+    if any(_line_applies_to_track(line, idea, brief) for line in brief.demo_requirements):
+        return True
+    if brief.demo_requirements or any(
+        requirement.required and requirement.category == "demo" for requirement in brief.requirements
+    ):
+        return False
+    return _brief_requires_demo(brief)
 
 
 def _brief_requires_demo(brief: CompetitionBrief) -> bool:

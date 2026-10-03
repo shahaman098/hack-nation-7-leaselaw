@@ -51,6 +51,7 @@ def discover_opportunities(
     brief: CompetitionBrief,
     evidence: list[EvidenceSource],
     count: int,
+    winner_patterns: dict[str, Any] | None = None,
 ) -> list[OpportunityCard]:
     template, _ = load_prompt("opportunity-discovery")
     rows: list[Any] = []
@@ -68,6 +69,8 @@ def discover_opportunities(
                 if source.fetch_status == "ok"
             ],
         }
+        if winner_patterns:
+            payload["winner_patterns"] = winner_patterns
         try:
             raw = provider.complete_json(template, str(payload), schema=schema)
             value = raw.get("opportunities") if isinstance(raw, dict) else None
@@ -172,6 +175,7 @@ def cross_concepts(
     mechanisms: list[MechanismCard],
     count: int,
     evidence: list[EvidenceSource] | None = None,
+    winner_patterns: dict[str, Any] | None = None,
 ) -> tuple[list[CandidateIdea], list[IdeaLineage]]:
     if not opportunities or not mechanisms:
         raise ValueError("cross_concepts requires opportunities and mechanisms")
@@ -204,6 +208,8 @@ def cross_concepts(
             ],
             "crowding_is_negative_evidence": brief.crowding.model_dump(),
         }
+        if winner_patterns:
+            payload["winner_patterns"] = winner_patterns
         try:
             raw = provider.complete_json(template, str(payload), schema=schema)
             value = raw.get("concepts") if isinstance(raw, dict) else None

@@ -130,6 +130,42 @@ def test_grant_eligibility_is_not_scored_as_an_idea_property():
     assert "eligibility-affiliation" not in requirement_gate.reason
 
 
+def test_multitrack_requirements_apply_only_to_declared_track():
+    brief = CompetitionBrief(
+        name="Hack-Nation",
+        tracks=["AI for Public Services", "Open Innovation"],
+        requirements=[
+            CompetitionRequirement(
+                id="req-track-public-services",
+                category="track",
+                description="For an AI for Public Services entry, deliver measurable civil-service outcomes.",
+                required=True,
+            ),
+            CompetitionRequirement(
+                id="req-track-open-verification",
+                category="data",
+                description="For an Open Innovation entry, provide a verifiable data loop.",
+                required=True,
+            ),
+        ],
+        data_requirements=["Open Innovation entries must use a verifiable data loop."],
+        demo_requirements=["Sustainable Infrastructure entries require a live constraint demo."],
+    )
+    idea = _idea("public-services")
+    idea.track_fit = "AI for Public Services"
+    idea.requirement_satisfaction = {
+        "req-track-public-services": "Workflow metrics dashboard for caseworkers",
+    }
+    idea.data_sources = []
+    idea.data_access_status = "not_required"
+
+    evaluate_gates(idea, brief, [_evidence()])
+    statuses = {result.gate: result.status for result in idea.gate_results}
+    assert statuses["requirement_compliance"] == "pass"
+    assert statuses["data_viability"] == "not_applicable"
+    assert statuses["demo_fit"] == "not_applicable"
+
+
 def test_benchmark_suite_covers_six_distinct_formats():
     briefs = list((EVALS_DIR / "benchmark-hackathons").glob("*.md"))
     headings = {path.read_text(encoding="utf-8").splitlines()[0] for path in briefs}

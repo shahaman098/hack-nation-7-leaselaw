@@ -29,6 +29,7 @@ def cross_concepts(
     mechanisms: list[Any],
     count: int,
     evidence: list[Any] | None = None,
+    winner_patterns: dict[str, Any] | None = None,
 ):
     """Public concept crossing with competition-derived defaults."""
     ideas, lineage = _search_cross_concepts(
@@ -38,6 +39,7 @@ def cross_concepts(
         mechanisms,
         count,
         evidence=evidence,
+        winner_patterns=winner_patterns,
     )
     for idea in ideas:
         _apply_competition_requirements(idea, brief)

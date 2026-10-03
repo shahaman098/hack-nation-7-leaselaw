@@ -42,9 +42,17 @@ from hackforge.research import (
     search_devpost_projects,
     search_github_projects,
 )
+from hackforge.profiles import apply_profile_defaults, load_competition_profile, resolve_tracks_fixture
 from hackforge.run_state import RunJournal
 from hackforge.telemetry import trace_stage
 from hackforge.utils import env_flag, make_run_dir, sha256_text, write_json, write_text
+from hackforge.winners import (
+    build_inspiration_report,
+    build_winner_patterns,
+    filter_training_cutoff,
+    inspiration_markdown,
+    load_verified_winners,
+)
 
 from .build_plan import build_plan_markdown, create_build_plan
 
@@ -69,14 +77,36 @@ def _run_analyse_impl(
     collision_excludes: list[str] | None = None,
     execution_providers: ProviderBundle | None = None,
     build_plan: bool = True,
+    competition_profile: str | None = None,
+    training_cutoff: str | None = None,
+    inspiration_min: float | None = None,
     _journal: RunJournal,
 ) -> Path:
     del seeds_per_lane  # retained for API compatibility; profiles now own search breadth.
+    profile_config = load_competition_profile(competition_profile) if competition_profile else None
+    # Profile track pack fills in only when the operator did not already supply
+    # competition text (avoids doubling a pasted/official brief with the fixture).
+    if profile_config and not any([input_path, url, text]):
+        tracks_path = resolve_tracks_fixture(profile_config)
+        if tracks_path and tracks_path.exists():
+            text, _ = ingest_file(tracks_path)
+
     if not any([input_path, url, text]):
         raise ValueError("Provide input_path, url, and/or text (they can be combined)")
     if finalists < 3:
         raise ValueError("finalists must be at least 3 (one winner and two structurally different backups)")
 
+    search_profile, finalists, training_cutoff, inspiration_min = (
+        apply_profile_defaults(
+            profile_config,
+            search_profile=search_profile,
+            finalists=finalists,
+            training_cutoff=training_cutoff,
+            inspiration_min=inspiration_min,
+        )
+        if profile_config
+        else (search_profile, finalists, training_cutoff, inspiration_min)
+    )
     profile = get_search_profile(search_profile)
     if finalists > profile.judged_finalists:
         raise ValueError(
@@ -87,6 +117,8 @@ def _run_analyse_impl(
     _journal.attach(run_dir, provider=provider, search_profile=search_profile)
     _journal.checkpoint("provider_selection")
     providers = execution_providers or load_providers(dry_run=dry_run, fixture_bundle=fixture_bundle, provider=provider)
+    if providers.dry_run and os.getenv("HACKFORGE_USE_SENTENCE_TRANSFORMERS") is None:
+        os.environ["HACKFORGE_USE_SENTENCE_TRANSFORMERS"] = "0"
     do_live = live_research if live_research is not None else (not providers.dry_run)
     timings: dict[str, float] = {}
     rejections: list[dict[str, str]] = []
@@ -158,6 +190,17 @@ def _run_analyse_impl(
                 enrich_brief_with_live_crowding(brief, force=True, sources=verified_devpost)
         timings["competition_research"] = time.perf_counter() - t0
 
+    corpus_ref = profile_config.winner_corpus if profile_config else None
+    verified_winners = load_verified_winners(str(corpus_ref) if corpus_ref else None)
+    verified_winners = filter_training_cutoff(verified_winners, cutoff=training_cutoff)
+    with trace_stage("winner_patterns", {"corpus_size": len(verified_winners)}):
+        _journal.checkpoint("winner_patterns")
+        t0 = time.perf_counter()
+        winner_patterns = build_winner_patterns(providers.research, brief, verified_winners)
+        timings["winner_patterns"] = time.perf_counter() - t0
+    write_json(run_dir / "winner-patterns.json", winner_patterns.model_dump())
+    winner_patterns_payload = winner_patterns.model_dump()
+
     write_json(run_dir / "research-sources.json", [source.model_dump() for source in evidence])
     write_json(run_dir / "competition-brief.json", brief.model_dump())
     write_text(run_dir / "verified-research.md", research_markdown(brief))
@@ -175,7 +218,13 @@ def _run_analyse_impl(
         _journal.checkpoint("divergent_search")
         t0 = time.perf_counter()
         _journal.checkpoint("opportunity_discovery", requested=profile.opportunities)
-        opportunities = discover_opportunities(providers.research, brief, evidence, profile.opportunities)
+        opportunities = discover_opportunities(
+            providers.research,
+            brief,
+            evidence,
+            profile.opportunities,
+            winner_patterns=winner_patterns_payload,
+        )
         _journal.checkpoint("mechanism_mining", requested=profile.mechanisms)
         mechanisms = mine_mechanisms(providers.ideation_lanes[0], brief, profile.mechanisms)
         _journal.checkpoint("concept_crossing", requested=profile.initial_concepts)
@@ -186,6 +235,7 @@ def _run_analyse_impl(
             mechanisms,
             profile.initial_concepts,
             evidence=evidence,
+            winner_patterns=winner_patterns_payload,
         )
         archive = SparseIdeaArchive()
         for idea in ideas:
@@ -386,6 +436,23 @@ def _run_analyse_impl(
     judged = mmr_select(feasible, min(profile.judged_finalists, len(feasible)), minimum_distance=0.20)
     if len(judged) < required_finalists:
         raise RuntimeError("Fewer than three structurally viable finalists survived fail-closed evaluation")
+
+    inspiration_report = build_inspiration_report(
+        judged,
+        verified_winners,
+        inspiration_min=inspiration_min,
+        training_cutoff=training_cutoff,
+    )
+    write_json(run_dir / "inspiration-report.json", inspiration_report.model_dump())
+    for row in inspiration_report.candidates:
+        if row.clone_guard:
+            rejections.append(
+                {
+                    "id": row.candidate_id,
+                    "reason": "inspiration clone guard: user/problem/mechanism alignment too high vs verified winner",
+                }
+            )
+
     t0 = time.perf_counter()
     _journal.checkpoint("blind_judging", candidates=len(judged))
     evaluation = blind_judge(providers.judges, brief, judged, collisions, feasibility)
@@ -438,6 +505,10 @@ def _run_analyse_impl(
             f"- Mechanism: {outputs[2].imported_mechanism}\n"
             f"- Proof/demo: {outputs[2].killer_demo}\n"
         )
+    dossier += "\n\n" + inspiration_markdown(
+        inspiration_report,
+        titles_by_id={idea.id: idea.working_title for idea in judged},
+    )
     write_text(run_dir / "final-recommendation.md", dossier)
 
     if visual_report:
@@ -502,6 +573,15 @@ def _run_analyse_impl(
             "visual_report": visual_report,
             "build_plan": build_plan,
             "optional_stage_call_budget": {"build_plan": int(build_plan)},
+            "competition_profile": competition_profile,
+            "inspiration_min": inspiration_min,
+            "training_cutoff": training_cutoff,
+            "winner_patterns_version": "v1",
+            "inspiration_summary": {
+                "corpus_size": inspiration_report.corpus_size,
+                "flagged_finalists": sum(1 for row in inspiration_report.candidates if row.flagged),
+                "clone_guard_hits": sum(1 for row in inspiration_report.candidates if row.clone_guard),
+            },
         }
     )
     write_json(run_dir / "run-manifest.json", manifest)

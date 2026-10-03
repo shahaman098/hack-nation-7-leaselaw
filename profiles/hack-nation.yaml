@@ -1,0 +1,13 @@
+id: hack-nation
+display_name: Hack-Nation Global Hackathon
+description: >
+  Multi-track global hackathon profile with verified-winner pattern mining and
+  inspiration scoring on finalists. Defaults to the bundled Hack-Nation brief.
+# Default pack when analyse is invoked with --profile and no --input/--url/--text.
+# For the live event, prefer: --input briefs/hacknation-global-ai-2026.md
+tracks_fixture: fixtures/hack-nation-tracks.md
+winner_corpus: corpora/verified-winners/seed.jsonl
+training_cutoff: "2023-12-31"
+inspiration_min: 0.30
+search_profile: fast
+finalists: 3

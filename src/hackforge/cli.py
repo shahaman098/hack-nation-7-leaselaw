@@ -70,6 +70,13 @@ def main() -> None:
     show_default=True,
 )
 @click.option("--finalists", type=click.IntRange(3, 8), default=3, show_default=True)
+@click.option(
+    "--profile",
+    "competition_profile",
+    type=str,
+    default=None,
+    help="Named competition profile (e.g. hack-nation) for tracks, winner corpus, and inspiration defaults.",
+)
 @click.option("--output-root", type=click.Path(file_okay=False, path_type=Path))
 @click.option("--no-visual-report", is_flag=True, default=False)
 @click.option("--no-build-plan", is_flag=True, default=False, help="Skip the final build-plan call and artifacts.")
@@ -90,6 +97,7 @@ def analyse(
     provider: str,
     search_profile: str,
     finalists: int,
+    competition_profile: str | None,
     output_root: Path | None,
     no_visual_report: bool,
     no_build_plan: bool,
@@ -125,6 +133,7 @@ def analyse(
         finalists=finalists,
         visual_report=not no_visual_report,
         build_plan=not no_build_plan,
+        competition_profile=competition_profile,
     )
     print(f"[bold green]HackForge complete:[/bold green] {run_dir}")
 
