@@ -1,13 +1,25 @@
-# Hackathon Idea Search (HackForge)
+# Hackathon Idea Search
 
-**Use this folder** when you want to **find and rank hackathon (or competition) ideas** from an official brief or URL — not to submit to Devpost (see `../Self Submission Agents` for approval-gated submission prep).
+**AI agents: start at [`AGENTS.md`](AGENTS.md)** · Claude also reads [`CLAUDE.md`](CLAUDE.md) · live board [`docs/WIN_BOARD.md`](docs/WIN_BOARD.md) · snapshot [`docs/STATUS.md`](docs/STATUS.md).
 
-| Path | Purpose |
-|------|---------|
-| `briefs/` | Saved competition briefs (markdown) |
-| `runs/` | Your active HackForge run outputs |
-| `corpora/`, `prompts/`, `src/hackforge/` | Engine code, prompts, and reference corpora |
-| `archive-sources/` | Merged runs/corpora from older duplicate engine copies (local-only, untracked) |
+## Two things in this repo
+
+| | |
+|--|--|
+| **LeaseLaw (active HN7 entry)** | `apps/leaselaw/` — Track 02 RealPage housing-law navigator |
+| **HackForge** | Idea search/ranking engine — `src/hackforge/`, `briefs/`, `runs/` |
+
+Hack-Nation playbook/CV: `hack-nation/`.
+
+### LeaseLaw quick start
+
+```bash
+cd apps/leaselaw
+pip install -r requirements.txt
+python -m src.export_outputs
+python -m src.eval_harness    # expect 5/5
+uvicorn src.main:app --port 8012
+```
 
 ---
 

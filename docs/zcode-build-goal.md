@@ -1,27 +1,35 @@
-# ZCode Goal — AppealPath Diff (start building)
+# ZCode Goal — LeaseLaw ABSOLUTE WIN (Track 02)
 
-**When planning is approved in ZCode, click Start building / approve the plan, then execute this goal.**
+**Approve plan → Start building. Read `docs/WIN_BOARD.md` + append to `docs/AGENT_ADVICE_LOG.md` after each step.**
 
 ## Outcome
 
-Ship a judge-demo-ready **Appeal Path Diff** product aligned with `runs/2026-10-03-hack-nation-tracks/final-recommendation.md` (primary concept `idea-01-appeal-path-diff`).
+Make LeaseLaw submission-proof for Hack-Nation 7 Track 02 RealPage.
+
+## You own
+
+1. **Durable public deploy** of `apps/leaselaw` (not only laptop tunnel). Prefer whatever is already authed (`wrangler` is on PATH). Keep API on a public HTTPS URL.
+2. **Submission pack** under `docs/hn7-submission-pack/` — LIVE_URL, checklist, exact demo clicks.
+3. Advise OpenCode/Cursor on the board if deploy needs Dockerfile / env changes.
+
+## Do not own / do not break
+
+- Do not rewrite `extract_rules.py` / `engine.py` / `eval_harness.py` unless Cursor marks `HANDOFF:`.
+- Do not submit HackOS or Google Form.
+- Do not kill Cursor’s local `:8012` without replacing it.
 
 ## Acceptance
 
-1. `apps/api/src/main.py` serves `/api/analyze` with deterministic rule-version diff + evidence checklist.
-2. **No web UI** — terminal demo via `python cli.py --sample case-03-deadline-miscalculation`.
-3. Optional API on port **8012** for `/api/analyze`.
-4. `pytest tests/test_appeal_api.py` passes.
-5. No demo video unless the human asks.
-
-## Commands
-
 ```bash
-cd apps/api/src && python -m uvicorn main:app --reload --port 8001
-cd apps/api/src && python cli.py --sample case-03-deadline-miscalculation
-pytest tests/test_appeal_api.py -q
+cd /Users/efi/Hackathons/Hackathon-Idea-Search/apps/leaselaw
+python -m src.eval_harness   # must stay 5/5
+# Public URL returns /health ok:true
+# docs/hn7-submission-pack/LIVE_URL.txt updated
+# Append advice to docs/AGENT_ADVICE_LOG.md
 ```
 
-## Cursor orchestrator status
+## Context for teammates
 
-Cursor completed the minimum loop (API + GUI + tests + `AGENTS.md`). ZCode should harden styling, add calendar export, and wire Hack-Nation track copy if time remains.
+- OpenCode (Mimo free): score panel UI + more corpus rules.
+- Cursor: orchestrator, harness, scoring-pack hunt, integration.
+- Product: address → cited rules → as-of toggle → T1–T5.

@@ -1,0 +1,69 @@
+[
+  {
+    "rule_id": "CA-AB1482",
+    "category": "rent_increase_limits",
+    "jurisdiction": {"level": "state", "state": "CA", "city": null},
+    "requirement": "Statewide rent cap 5%+CPI max 10% for covered dwellings.",
+    "coverage_conditions": {"states": ["CA"]},
+    "exemptions": [],
+    "effective_date": "2019-01-01",
+    "status": "enacted",
+    "source_citation": "Cal. Civ. Code §1947.12",
+    "quoted_span": "may not increase the gross rental rate ... more than 5 percent plus the percentage change in the cost of living",
+    "superseded_by_local": true
+  },
+  {
+    "rule_id": "SF-CH37",
+    "category": "rent_increase_limits",
+    "jurisdiction": {"level": "city", "state": "CA", "city": "San Francisco"},
+    "requirement": "SF Rent Ordinance applies to units with certificate of occupancy on or before 6/13/1979; local formula governs increases.",
+    "coverage_conditions": {
+      "states": ["CA"],
+      "cities": ["San Francisco"],
+      "max_certificate_of_occupancy": "1979-06-13"
+    },
+    "exemptions": [],
+    "effective_date": "1979-06-13",
+    "status": "enacted",
+    "source_citation": "S.F. Admin. Code ch. 37",
+    "quoted_span": "Residential Rent Stabilization and Arbitration Ordinance",
+    "supersedes_state_rule_ids": ["CA-AB1482"]
+  },
+  {
+    "rule_id": "CA-AB325",
+    "category": "algorithmic_rent_setting",
+    "jurisdiction": {"level": "state", "state": "CA", "city": null},
+    "requirement": "State restrictions on common pricing algorithms (AB 325 / SB 763).",
+    "coverage_conditions": {"states": ["CA"]},
+    "exemptions": [],
+    "effective_date": "2026-01-01",
+    "status": "enacted",
+    "source_citation": "AB 325 / SB 763 (eff. 1/1/2026)",
+    "quoted_span": "common pricing algorithms"
+  },
+  {
+    "rule_id": "MA-S2983",
+    "category": "algorithmic_rent_setting",
+    "jurisdiction": {"level": "state", "state": "MA", "city": null},
+    "requirement": "Pending MA algorithmic pricing bills (illustrative pending status).",
+    "coverage_conditions": {"states": ["MA"]},
+    "exemptions": [],
+    "effective_date": "2027-01-01",
+    "status": "pending",
+    "source_citation": "MA S.2983 / H.5222 (pending)",
+    "quoted_span": "pending algorithmic pricing legislation"
+  },
+  {
+    "rule_id": "MA-40P",
+    "category": "rent_increase_limits",
+    "jurisdiction": {"level": "state", "state": "MA", "city": null},
+    "requirement": "State law bars local rent control; no local rent-cap ordinance may apply.",
+    "coverage_conditions": {"states": ["MA"]},
+    "exemptions": [],
+    "effective_date": "1994-01-01",
+    "status": "enacted",
+    "source_citation": "MA G.L. c.40P",
+    "quoted_span": "state bar on local rent control",
+    "effect": "no_local_rent_cap"
+  }
+]

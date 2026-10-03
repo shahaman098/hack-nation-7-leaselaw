@@ -26,3 +26,6 @@ def test_deadline_miscalculation_flags_wrong_rule():
     body = r.json()
     assert body["wrongful_application_detected"] is True
     assert body["statutory_window_days_current"] == 60
+    assert "loop_iterations" in body
+    assert len(body["loop_iterations"]) >= 3
+    assert body["audit_trail"]["loop_cycle_count"] == len(body["loop_iterations"])

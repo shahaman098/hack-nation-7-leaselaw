@@ -1,0 +1,14 @@
+Google Form: https://forms.gle/VS65tsovASMuBwEn9
+(Paste values yourself — do not auto-submit.)
+
+Team name: ________________
+Challenge: 02 - Realpage: Rental Housing Law Navigator
+Project title: LeaseLaw Navigator
+One-line: Address-level rental housing law with citations, as-of dates, and change tracking.
+GitHub: ________________
+Live demo: ________________
+Video Team: ________________
+Video Demo: ________________
+Video Technical: ________________
+score.py / eval summary: ________________
+Notes: Not legal advice. Built on RealPage starter corpus + automated extraction.

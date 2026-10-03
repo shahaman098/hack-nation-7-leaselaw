@@ -1,0 +1,24 @@
+ABSOLUTE WIN mode — Hack-Nation Track 02 LeaseLaw.
+
+Repo: /Users/efi/Hackathons/Hackathon-Idea-Search
+Work ONLY under apps/leaselaw/ plus docs/WIN_BOARD.md and docs/AGENT_ADVICE_LOG.md.
+
+Protocol:
+1) Read docs/WIN_BOARD.md and the end of docs/AGENT_ADVICE_LOG.md.
+2) Do the work below.
+3) Append advice for ZCode and Cursor to docs/AGENT_ADVICE_LOG.md.
+4) Update Status checkboxes in WIN_BOARD.md.
+
+Your jobs (in order):
+A) Add GET /api/eval that returns apps/leaselaw/out/eval-report.json (generate via python -m src.eval_harness if missing).
+B) Add a visible "Judge score panel" on the home page HTML in src/main.py showing T1–T5 pass/fail from /api/eval. Keep "Not legal advice." Keep AB325 before/after button.
+C) Improve src/extractors/city_extra.py with more corpus-backed rules (real quoted_span substrings from briefs/.../corpus/text/). Do not rewrite extract_rules.py or engine.py.
+D) Run: python -m src.export_outputs && python -m src.eval_harness — must remain 5/5.
+
+Constraints:
+- Model work is free Mimo path; stay efficient.
+- Never git push, never submit forms, never send email.
+- If blocked, write the blocker on the advice log and stop that subtask.
+
+Advise ZCode: what URL path and port the deploy must expose.
+Advise Cursor: any engine bugs you hit.

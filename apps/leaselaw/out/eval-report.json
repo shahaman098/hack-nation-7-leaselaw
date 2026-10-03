@@ -1,0 +1,32 @@
+{
+  "passed": 5,
+  "total": 5,
+  "change_tests": [
+    {
+      "test_id": "T1",
+      "pass": true,
+      "detail": "250/250 CA addresses"
+    },
+    {
+      "test_id": "T2",
+      "pass": true,
+      "detail": "hob=40 jc=50 newark=50"
+    },
+    {
+      "test_id": "T3",
+      "pass": true,
+      "detail": "nj=140"
+    },
+    {
+      "test_id": "T4",
+      "pass": true,
+      "detail": "ma=110"
+    },
+    {
+      "test_id": "T5",
+      "pass": true,
+      "detail": "rent_cap_applies_hits=0"
+    }
+  ],
+  "gold": []
+}

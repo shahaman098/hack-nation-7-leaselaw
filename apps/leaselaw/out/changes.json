@@ -1,0 +1,721 @@
+{
+  "T1": {
+    "title": "California AB 325 / SB 763 takes effect",
+    "description": "not_yet_effective before, applies after, for every CA address.",
+    "rule_ids": [
+      "CA-ALG-01"
+    ],
+    "sample_address_id": "A0001",
+    "before": {
+      "address_id": "A0001",
+      "street": "6238 DE LONGPRE AVE",
+      "postal_city": "Los Angeles",
+      "state": "CA",
+      "as_of": "2025-12-31",
+      "jurisdiction_stack": [
+        "CA",
+        "Los Angeles"
+      ],
+      "disclaimer": "Not legal advice. For Hack-Nation demo / research only.",
+      "rules": [
+        {
+          "team_rule_id": "CA-ALG-01",
+          "category": "algorithmic_rent_setting",
+          "result": "not_yet_effective",
+          "citation": "AB 325 / SB 763 (2025\u20132026)",
+          "quoted_span": "d Professions Code, to read: 16729. (a) It shall be unlawful for a person to use or distribute a common pricing algorithm as part of a contract, combination in t",
+          "plain_language": "California makes it unlawful to use or distribute a common pricing algorithm as part of a contract or conspiracy to fix rents.",
+          "explanation": "California makes it unlawful to use or distribute a common pricing algorithm as part of a contract or conspiracy to fix rents.",
+          "status": "in_force",
+          "effective_date": "2026-01-01",
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "CA-RENT-01",
+          "category": "rent_increase_limits",
+          "result": "applies",
+          "citation": "Cal. Civ. Code \u00a71947.12",
+          "quoted_span": ", an owner of residential real property shall not, over the course of any 12-month period, increase the gross rental rate for a dwelling or a unit more than 5 pe",
+          "plain_language": "Statewide rent increase cap: owner shall not increase gross rental rate more than 5 percent plus CPI (max 10%) over 12 months for covered dwellings.",
+          "explanation": "Statewide rent increase cap: owner shall not increase gross rental rate more than 5 percent plus CPI (max 10%) over 12 months for covered dwellings.",
+          "status": "in_force",
+          "effective_date": "2019-01-01",
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "LA-JCO-01",
+          "category": "just_cause_eviction",
+          "result": "applies",
+          "citation": "City of Los Angeles Just Cause For Eviction Ordinance (LAHD)",
+          "quoted_span": "It prohibits terminations of tenancies without just cause and requires relocation assistance for no-fault evictions.",
+          "plain_language": "The JCO prohibits terminating tenancies without just cause and requires relocation assistance for no-fault evictions for most City of Los Angeles residential property that is not regulated by the Rent Stabilization Ordinance.",
+          "explanation": "The JCO prohibits terminating tenancies without just cause and requires relocation assistance for no-fault evictions for most City of Los Angeles residential property that is not regulated by the Rent Stabilization Ordinance.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "LA-JCO-02",
+          "category": "just_cause_eviction",
+          "result": "applies",
+          "citation": "LAHD \u2014 Evictions for Non-Payment of Rent (RSO & JCO)",
+          "quoted_span": "Effective March 27, 2023, landlords may not evict a tenant who falls behind in rent unless the tenant owes an amount higher than the Fair Market Rent (FMR)",
+          "plain_language": "For every RSO and JCO rental unit in Los Angeles, a landlord may not evict for nonpayment unless the tenant owes more than the Fair Market Rent for the unit's bedroom size.",
+          "explanation": "For every RSO and JCO rental unit in Los Angeles, a landlord may not evict for nonpayment unless the tenant owes more than the Fair Market Rent for the unit's bedroom size.",
+          "status": "in_force",
+          "effective_date": "2023-03-27",
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "LA-RSO-01",
+          "category": "rent_increase_limits",
+          "result": "applies",
+          "citation": "L.A. Mun. Code ch. XV (RSO) \u2014 LAHD RSO overview",
+          "quoted_span": "Rent may be increased once every 12 months by the allowable rent increase\u00a0percentage",
+          "plain_language": "Rental property first built on or before October 1, 1978 may receive a rent increase only once every 12 months and only at the LAHD allowable percentage; increases needing LAHD approval are listed separately by LAHD.",
+          "explanation": "Rental property first built on or before October 1, 1978 may receive a rent increase only once every 12 months and only at the LAHD allowable percentage; increases needing LAHD approval are listed separately by LAHD.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "LA-RSO-02",
+          "category": "rent_increase_limits",
+          "result": "applies",
+          "citation": "LAHD RSO Rent Increase Calculator",
+          "quoted_span": "Annual rent increases for rental units subject to the City of Los Angeles Rent Stabilization Ordinance (RSO), effective\nJuly 1, 2025, through June 30, 2026",
+          "plain_language": "For the LAHD-published window July 1, 2025 through June 30, 2026 the maximum annual allowable rent increase for RSO units is 3%; LAHD sets a new percentage each July, so confirm the current window before relying on the figure.",
+          "explanation": "For the LAHD-published window July 1, 2025 through June 30, 2026 the maximum annual allowable rent increase for RSO units is 3%; LAHD sets a new percentage each July, so confirm the current window before relying on the figure.",
+          "status": "in_force",
+          "effective_date": "2025-07-01",
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "LA-RELOC-01",
+          "category": "just_cause_eviction",
+          "result": "applies",
+          "citation": "LAHD Relocation Assistance Bulletin (A & B)",
+          "quoted_span": "All tenant not- at-fault evictions require payment of relocation assistance and the filing of a \nDeclaration of Intent to Evict form",
+          "plain_language": "Every no-fault (not-at-fault) eviction of an RSO or JCO tenant requires payment of relocation assistance and filing a Declaration of Intent to Evict with the LA Housing Department before the tenant may be served with a termination notice.",
+          "explanation": "Every no-fault (not-at-fault) eviction of an RSO or JCO tenant requires payment of relocation assistance and filing a Declaration of Intent to Evict with the LA Housing Department before the tenant may be served with a termination notice.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        }
+      ]
+    },
+    "after": {
+      "address_id": "A0001",
+      "street": "6238 DE LONGPRE AVE",
+      "postal_city": "Los Angeles",
+      "state": "CA",
+      "as_of": "2026-01-02",
+      "jurisdiction_stack": [
+        "CA",
+        "Los Angeles"
+      ],
+      "disclaimer": "Not legal advice. For Hack-Nation demo / research only.",
+      "rules": [
+        {
+          "team_rule_id": "CA-ALG-01",
+          "category": "algorithmic_rent_setting",
+          "result": "applies",
+          "citation": "AB 325 / SB 763 (2025\u20132026)",
+          "quoted_span": "d Professions Code, to read: 16729. (a) It shall be unlawful for a person to use or distribute a common pricing algorithm as part of a contract, combination in t",
+          "plain_language": "California makes it unlawful to use or distribute a common pricing algorithm as part of a contract or conspiracy to fix rents.",
+          "explanation": "California makes it unlawful to use or distribute a common pricing algorithm as part of a contract or conspiracy to fix rents.",
+          "status": "in_force",
+          "effective_date": "2026-01-01",
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "CA-RENT-01",
+          "category": "rent_increase_limits",
+          "result": "applies",
+          "citation": "Cal. Civ. Code \u00a71947.12",
+          "quoted_span": ", an owner of residential real property shall not, over the course of any 12-month period, increase the gross rental rate for a dwelling or a unit more than 5 pe",
+          "plain_language": "Statewide rent increase cap: owner shall not increase gross rental rate more than 5 percent plus CPI (max 10%) over 12 months for covered dwellings.",
+          "explanation": "Statewide rent increase cap: owner shall not increase gross rental rate more than 5 percent plus CPI (max 10%) over 12 months for covered dwellings.",
+          "status": "in_force",
+          "effective_date": "2019-01-01",
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "LA-JCO-01",
+          "category": "just_cause_eviction",
+          "result": "applies",
+          "citation": "City of Los Angeles Just Cause For Eviction Ordinance (LAHD)",
+          "quoted_span": "It prohibits terminations of tenancies without just cause and requires relocation assistance for no-fault evictions.",
+          "plain_language": "The JCO prohibits terminating tenancies without just cause and requires relocation assistance for no-fault evictions for most City of Los Angeles residential property that is not regulated by the Rent Stabilization Ordinance.",
+          "explanation": "The JCO prohibits terminating tenancies without just cause and requires relocation assistance for no-fault evictions for most City of Los Angeles residential property that is not regulated by the Rent Stabilization Ordinance.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "LA-JCO-02",
+          "category": "just_cause_eviction",
+          "result": "applies",
+          "citation": "LAHD \u2014 Evictions for Non-Payment of Rent (RSO & JCO)",
+          "quoted_span": "Effective March 27, 2023, landlords may not evict a tenant who falls behind in rent unless the tenant owes an amount higher than the Fair Market Rent (FMR)",
+          "plain_language": "For every RSO and JCO rental unit in Los Angeles, a landlord may not evict for nonpayment unless the tenant owes more than the Fair Market Rent for the unit's bedroom size.",
+          "explanation": "For every RSO and JCO rental unit in Los Angeles, a landlord may not evict for nonpayment unless the tenant owes more than the Fair Market Rent for the unit's bedroom size.",
+          "status": "in_force",
+          "effective_date": "2023-03-27",
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "LA-RSO-01",
+          "category": "rent_increase_limits",
+          "result": "applies",
+          "citation": "L.A. Mun. Code ch. XV (RSO) \u2014 LAHD RSO overview",
+          "quoted_span": "Rent may be increased once every 12 months by the allowable rent increase\u00a0percentage",
+          "plain_language": "Rental property first built on or before October 1, 1978 may receive a rent increase only once every 12 months and only at the LAHD allowable percentage; increases needing LAHD approval are listed separately by LAHD.",
+          "explanation": "Rental property first built on or before October 1, 1978 may receive a rent increase only once every 12 months and only at the LAHD allowable percentage; increases needing LAHD approval are listed separately by LAHD.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "LA-RSO-02",
+          "category": "rent_increase_limits",
+          "result": "applies",
+          "citation": "LAHD RSO Rent Increase Calculator",
+          "quoted_span": "Annual rent increases for rental units subject to the City of Los Angeles Rent Stabilization Ordinance (RSO), effective\nJuly 1, 2025, through June 30, 2026",
+          "plain_language": "For the LAHD-published window July 1, 2025 through June 30, 2026 the maximum annual allowable rent increase for RSO units is 3%; LAHD sets a new percentage each July, so confirm the current window before relying on the figure.",
+          "explanation": "For the LAHD-published window July 1, 2025 through June 30, 2026 the maximum annual allowable rent increase for RSO units is 3%; LAHD sets a new percentage each July, so confirm the current window before relying on the figure.",
+          "status": "in_force",
+          "effective_date": "2025-07-01",
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "LA-RELOC-01",
+          "category": "just_cause_eviction",
+          "result": "applies",
+          "citation": "LAHD Relocation Assistance Bulletin (A & B)",
+          "quoted_span": "All tenant not- at-fault evictions require payment of relocation assistance and the filing of a \nDeclaration of Intent to Evict form",
+          "plain_language": "Every no-fault (not-at-fault) eviction of an RSO or JCO tenant requires payment of relocation assistance and filing a Declaration of Intent to Evict with the LA Housing Department before the tenant may be served with a termination notice.",
+          "explanation": "Every no-fault (not-at-fault) eviction of an RSO or JCO tenant requires payment of relocation assistance and filing a Declaration of Intent to Evict with the LA Housing Department before the tenant may be served with a termination notice.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        }
+      ]
+    },
+    "affected_count": 250
+  },
+  "T2": {
+    "title": "Hoboken vs Jersey City local algorithmic bans",
+    "description": "HOB-ALG-01 only for Hoboken addresses; JC-ALG-01 only for Jersey City addresses; neither for Newark.",
+    "rule_ids": [
+      "HOB-ALG-01",
+      "JC-ALG-01"
+    ],
+    "as_of": "2026-10-01",
+    "hoboken": {
+      "address_id": "A0002",
+      "street": "1031-1035 CLINTON ST",
+      "postal_city": "Hoboken",
+      "state": "NJ",
+      "as_of": "2026-10-01",
+      "jurisdiction_stack": [
+        "NJ",
+        "Hoboken"
+      ],
+      "disclaimer": "Not legal advice. For Hack-Nation demo / research only.",
+      "rules": [
+        {
+          "team_rule_id": "HOB-ALG-01",
+          "category": "algorithmic_rent_setting",
+          "result": "applies",
+          "citation": "Hoboken municipal code (algorithmic rent-setting)",
+          "quoted_span": "Hoboken algorithmic rent-setting ordinance (corpus link-only; see ecode360 capture D034)",
+          "plain_language": "Hoboken prohibits covered algorithmic rent-setting devices for residential units within city limits.",
+          "explanation": "Hoboken prohibits covered algorithmic rent-setting devices for residential units within city limits.",
+          "status": "in_force",
+          "effective_date": "2025-07-01",
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "NJ-ALG-01",
+          "category": "algorithmic_rent_setting",
+          "result": "not_yet_effective",
+          "citation": "NJ FAIR Act, P.L.2026, c.43",
+          "quoted_span": "shall be known and may be cited as the \u201cForbidding the Algorithmic Inflation of Rent (FAIR) Act.\u201d 2. The Legislature finds and declares that: a. New Jers",
+          "plain_language": "New Jersey FAIR Act restricts algorithmic devices and parallel pricing coordination for residential dwelling units; takes effect twelve months after enactment (demo effective 2027-07-01).",
+          "explanation": "New Jersey FAIR Act restricts algorithmic devices and parallel pricing coordination for residential dwelling units; takes effect twelve months after enactment (demo effective 2027-07-01).",
+          "status": "not_yet_effective",
+          "effective_date": "2027-07-01",
+          "conflict_flag": true
+        },
+        {
+          "team_rule_id": "NJ-DEP-01",
+          "category": "security_deposits",
+          "result": "applies",
+          "citation": "N.J.S.A. 46:8-21.1 (Truth in Renting)",
+          "quoted_span": "Within 30 days after the termination of a tenancy, a landlord must return the security \ndeposit, plus interest earned less deductions, to the tenant",
+          "plain_language": "Within 30 days after a tenancy ends, a New Jersey landlord must return the security deposit plus interest, less lawful deductions, by personal delivery, registered mail, or certified mail, with an itemized list of any deductions.",
+          "explanation": "Within 30 days after a tenancy ends, a New Jersey landlord must return the security deposit plus interest, less lawful deductions, by personal delivery, registered mail, or certified mail, with an itemized list of any deductions.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "NJ-DEP-02",
+          "category": "security_deposits",
+          "result": "applies",
+          "citation": "N.J.S.A. 46:8-26 (Truth in Renting)",
+          "quoted_span": "If a landlord fails to return the security deposit within 30 days, or the tenant disagrees with \nthe amount deducted, the tenant may sue for double the amount",
+          "plain_language": "If a landlord fails to return the security deposit within 30 days, or the tenant disputes the deductions, the tenant may sue for double the amount of the security deposit.",
+          "explanation": "If a landlord fails to return the security deposit within 30 days, or the tenant disputes the deductions, the tenant may sue for double the amount of the security deposit.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        }
+      ]
+    },
+    "jersey_city": {
+      "address_id": "A0008",
+      "street": "1065 SUMMIT AVENUE",
+      "postal_city": "Jersey City",
+      "state": "NJ",
+      "as_of": "2026-10-01",
+      "jurisdiction_stack": [
+        "NJ",
+        "Jersey City"
+      ],
+      "disclaimer": "Not legal advice. For Hack-Nation demo / research only.",
+      "rules": [
+        {
+          "team_rule_id": "JC-ALG-01",
+          "category": "algorithmic_rent_setting",
+          "result": "applies",
+          "citation": "Jersey City council RealPage ban / Ch. 260 context",
+          "quoted_span": "Relations administers and enforces the Rent Control Ordinance, Chapter 260 of the Jersey City Municipal Code and provides education, information and referrals",
+          "plain_language": "Jersey City restricts algorithmic rent-setting devices for residential rentals within city limits (council-approved RealPage-style ban).",
+          "explanation": "Jersey City restricts algorithmic rent-setting devices for residential rentals within city limits (council-approved RealPage-style ban).",
+          "status": "in_force",
+          "effective_date": "2025-06-01",
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "NJ-ALG-01",
+          "category": "algorithmic_rent_setting",
+          "result": "not_yet_effective",
+          "citation": "NJ FAIR Act, P.L.2026, c.43",
+          "quoted_span": "shall be known and may be cited as the \u201cForbidding the Algorithmic Inflation of Rent (FAIR) Act.\u201d 2. The Legislature finds and declares that: a. New Jers",
+          "plain_language": "New Jersey FAIR Act restricts algorithmic devices and parallel pricing coordination for residential dwelling units; takes effect twelve months after enactment (demo effective 2027-07-01).",
+          "explanation": "New Jersey FAIR Act restricts algorithmic devices and parallel pricing coordination for residential dwelling units; takes effect twelve months after enactment (demo effective 2027-07-01).",
+          "status": "not_yet_effective",
+          "effective_date": "2027-07-01",
+          "conflict_flag": true
+        },
+        {
+          "team_rule_id": "JC-RENT-01",
+          "category": "rent_increase_limits",
+          "result": "applies",
+          "citation": "Jersey City Rent Control Ordinance, Ch. 260",
+          "quoted_span": "All 1-4 Unit Properties are exempt from rent control",
+          "plain_language": "Jersey City's Rent Control Ordinance (Ch. 260) regulates covered rental property, but all 1-4 unit properties are exempt from rent control; verify a property's rent control status with the City before applying a cap.",
+          "explanation": "Jersey City's Rent Control Ordinance (Ch. 260) regulates covered rental property, but all 1-4 unit properties are exempt from rent control; verify a property's rent control status with the City before applying a cap.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "NJ-DEP-01",
+          "category": "security_deposits",
+          "result": "applies",
+          "citation": "N.J.S.A. 46:8-21.1 (Truth in Renting)",
+          "quoted_span": "Within 30 days after the termination of a tenancy, a landlord must return the security \ndeposit, plus interest earned less deductions, to the tenant",
+          "plain_language": "Within 30 days after a tenancy ends, a New Jersey landlord must return the security deposit plus interest, less lawful deductions, by personal delivery, registered mail, or certified mail, with an itemized list of any deductions.",
+          "explanation": "Within 30 days after a tenancy ends, a New Jersey landlord must return the security deposit plus interest, less lawful deductions, by personal delivery, registered mail, or certified mail, with an itemized list of any deductions.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "NJ-DEP-02",
+          "category": "security_deposits",
+          "result": "applies",
+          "citation": "N.J.S.A. 46:8-26 (Truth in Renting)",
+          "quoted_span": "If a landlord fails to return the security deposit within 30 days, or the tenant disagrees with \nthe amount deducted, the tenant may sue for double the amount",
+          "plain_language": "If a landlord fails to return the security deposit within 30 days, or the tenant disputes the deductions, the tenant may sue for double the amount of the security deposit.",
+          "explanation": "If a landlord fails to return the security deposit within 30 days, or the tenant disputes the deductions, the tenant may sue for double the amount of the security deposit.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        }
+      ]
+    },
+    "newark": {
+      "address_id": "A0003",
+      "street": "876-878 S 14TH ST",
+      "postal_city": "Newark",
+      "state": "NJ",
+      "as_of": "2026-10-01",
+      "jurisdiction_stack": [
+        "NJ",
+        "Newark"
+      ],
+      "disclaimer": "Not legal advice. For Hack-Nation demo / research only.",
+      "rules": [
+        {
+          "team_rule_id": "NJ-ALG-01",
+          "category": "algorithmic_rent_setting",
+          "result": "not_yet_effective",
+          "citation": "NJ FAIR Act, P.L.2026, c.43",
+          "quoted_span": "shall be known and may be cited as the \u201cForbidding the Algorithmic Inflation of Rent (FAIR) Act.\u201d 2. The Legislature finds and declares that: a. New Jers",
+          "plain_language": "New Jersey FAIR Act restricts algorithmic devices and parallel pricing coordination for residential dwelling units; takes effect twelve months after enactment (demo effective 2027-07-01).",
+          "explanation": "New Jersey FAIR Act restricts algorithmic devices and parallel pricing coordination for residential dwelling units; takes effect twelve months after enactment (demo effective 2027-07-01).",
+          "status": "not_yet_effective",
+          "effective_date": "2027-07-01",
+          "conflict_flag": true
+        },
+        {
+          "team_rule_id": "NJ-DEP-01",
+          "category": "security_deposits",
+          "result": "applies",
+          "citation": "N.J.S.A. 46:8-21.1 (Truth in Renting)",
+          "quoted_span": "Within 30 days after the termination of a tenancy, a landlord must return the security \ndeposit, plus interest earned less deductions, to the tenant",
+          "plain_language": "Within 30 days after a tenancy ends, a New Jersey landlord must return the security deposit plus interest, less lawful deductions, by personal delivery, registered mail, or certified mail, with an itemized list of any deductions.",
+          "explanation": "Within 30 days after a tenancy ends, a New Jersey landlord must return the security deposit plus interest, less lawful deductions, by personal delivery, registered mail, or certified mail, with an itemized list of any deductions.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "NJ-DEP-02",
+          "category": "security_deposits",
+          "result": "applies",
+          "citation": "N.J.S.A. 46:8-26 (Truth in Renting)",
+          "quoted_span": "If a landlord fails to return the security deposit within 30 days, or the tenant disagrees with \nthe amount deducted, the tenant may sue for double the amount",
+          "plain_language": "If a landlord fails to return the security deposit within 30 days, or the tenant disputes the deductions, the tenant may sue for double the amount of the security deposit.",
+          "explanation": "If a landlord fails to return the security deposit within 30 days, or the tenant disputes the deductions, the tenant may sue for double the amount of the security deposit.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        }
+      ]
+    }
+  },
+  "T3": {
+    "title": "NJ FAIR Act: enacted, not yet effective; possible preemption",
+    "description": "not_yet_effective on 2026-10-01, applies on 2027-07-02 for every NJ address; Jersey City and Hoboken addresses carry a conflict flag for human review.",
+    "rule_ids": [
+      "NJ-ALG-01"
+    ],
+    "sample_address_id": "A0008",
+    "before": {
+      "address_id": "A0008",
+      "street": "1065 SUMMIT AVENUE",
+      "postal_city": "Jersey City",
+      "state": "NJ",
+      "as_of": "2026-10-01",
+      "jurisdiction_stack": [
+        "NJ",
+        "Jersey City"
+      ],
+      "disclaimer": "Not legal advice. For Hack-Nation demo / research only.",
+      "rules": [
+        {
+          "team_rule_id": "JC-ALG-01",
+          "category": "algorithmic_rent_setting",
+          "result": "applies",
+          "citation": "Jersey City council RealPage ban / Ch. 260 context",
+          "quoted_span": "Relations administers and enforces the Rent Control Ordinance, Chapter 260 of the Jersey City Municipal Code and provides education, information and referrals",
+          "plain_language": "Jersey City restricts algorithmic rent-setting devices for residential rentals within city limits (council-approved RealPage-style ban).",
+          "explanation": "Jersey City restricts algorithmic rent-setting devices for residential rentals within city limits (council-approved RealPage-style ban).",
+          "status": "in_force",
+          "effective_date": "2025-06-01",
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "NJ-ALG-01",
+          "category": "algorithmic_rent_setting",
+          "result": "not_yet_effective",
+          "citation": "NJ FAIR Act, P.L.2026, c.43",
+          "quoted_span": "shall be known and may be cited as the \u201cForbidding the Algorithmic Inflation of Rent (FAIR) Act.\u201d 2. The Legislature finds and declares that: a. New Jers",
+          "plain_language": "New Jersey FAIR Act restricts algorithmic devices and parallel pricing coordination for residential dwelling units; takes effect twelve months after enactment (demo effective 2027-07-01).",
+          "explanation": "New Jersey FAIR Act restricts algorithmic devices and parallel pricing coordination for residential dwelling units; takes effect twelve months after enactment (demo effective 2027-07-01).",
+          "status": "not_yet_effective",
+          "effective_date": "2027-07-01",
+          "conflict_flag": true
+        },
+        {
+          "team_rule_id": "JC-RENT-01",
+          "category": "rent_increase_limits",
+          "result": "applies",
+          "citation": "Jersey City Rent Control Ordinance, Ch. 260",
+          "quoted_span": "All 1-4 Unit Properties are exempt from rent control",
+          "plain_language": "Jersey City's Rent Control Ordinance (Ch. 260) regulates covered rental property, but all 1-4 unit properties are exempt from rent control; verify a property's rent control status with the City before applying a cap.",
+          "explanation": "Jersey City's Rent Control Ordinance (Ch. 260) regulates covered rental property, but all 1-4 unit properties are exempt from rent control; verify a property's rent control status with the City before applying a cap.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "NJ-DEP-01",
+          "category": "security_deposits",
+          "result": "applies",
+          "citation": "N.J.S.A. 46:8-21.1 (Truth in Renting)",
+          "quoted_span": "Within 30 days after the termination of a tenancy, a landlord must return the security \ndeposit, plus interest earned less deductions, to the tenant",
+          "plain_language": "Within 30 days after a tenancy ends, a New Jersey landlord must return the security deposit plus interest, less lawful deductions, by personal delivery, registered mail, or certified mail, with an itemized list of any deductions.",
+          "explanation": "Within 30 days after a tenancy ends, a New Jersey landlord must return the security deposit plus interest, less lawful deductions, by personal delivery, registered mail, or certified mail, with an itemized list of any deductions.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "NJ-DEP-02",
+          "category": "security_deposits",
+          "result": "applies",
+          "citation": "N.J.S.A. 46:8-26 (Truth in Renting)",
+          "quoted_span": "If a landlord fails to return the security deposit within 30 days, or the tenant disagrees with \nthe amount deducted, the tenant may sue for double the amount",
+          "plain_language": "If a landlord fails to return the security deposit within 30 days, or the tenant disputes the deductions, the tenant may sue for double the amount of the security deposit.",
+          "explanation": "If a landlord fails to return the security deposit within 30 days, or the tenant disputes the deductions, the tenant may sue for double the amount of the security deposit.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        }
+      ]
+    },
+    "after": {
+      "address_id": "A0008",
+      "street": "1065 SUMMIT AVENUE",
+      "postal_city": "Jersey City",
+      "state": "NJ",
+      "as_of": "2027-07-02",
+      "jurisdiction_stack": [
+        "NJ",
+        "Jersey City"
+      ],
+      "disclaimer": "Not legal advice. For Hack-Nation demo / research only.",
+      "rules": [
+        {
+          "team_rule_id": "JC-ALG-01",
+          "category": "algorithmic_rent_setting",
+          "result": "applies",
+          "citation": "Jersey City council RealPage ban / Ch. 260 context",
+          "quoted_span": "Relations administers and enforces the Rent Control Ordinance, Chapter 260 of the Jersey City Municipal Code and provides education, information and referrals",
+          "plain_language": "Jersey City restricts algorithmic rent-setting devices for residential rentals within city limits (council-approved RealPage-style ban).",
+          "explanation": "Jersey City restricts algorithmic rent-setting devices for residential rentals within city limits (council-approved RealPage-style ban).",
+          "status": "in_force",
+          "effective_date": "2025-06-01",
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "NJ-ALG-01",
+          "category": "algorithmic_rent_setting",
+          "result": "applies",
+          "citation": "NJ FAIR Act, P.L.2026, c.43",
+          "quoted_span": "shall be known and may be cited as the \u201cForbidding the Algorithmic Inflation of Rent (FAIR) Act.\u201d 2. The Legislature finds and declares that: a. New Jers",
+          "plain_language": "New Jersey FAIR Act restricts algorithmic devices and parallel pricing coordination for residential dwelling units; takes effect twelve months after enactment (demo effective 2027-07-01).",
+          "explanation": "New Jersey FAIR Act restricts algorithmic devices and parallel pricing coordination for residential dwelling units; takes effect twelve months after enactment (demo effective 2027-07-01).",
+          "status": "not_yet_effective",
+          "effective_date": "2027-07-01",
+          "conflict_flag": true
+        },
+        {
+          "team_rule_id": "JC-RENT-01",
+          "category": "rent_increase_limits",
+          "result": "applies",
+          "citation": "Jersey City Rent Control Ordinance, Ch. 260",
+          "quoted_span": "All 1-4 Unit Properties are exempt from rent control",
+          "plain_language": "Jersey City's Rent Control Ordinance (Ch. 260) regulates covered rental property, but all 1-4 unit properties are exempt from rent control; verify a property's rent control status with the City before applying a cap.",
+          "explanation": "Jersey City's Rent Control Ordinance (Ch. 260) regulates covered rental property, but all 1-4 unit properties are exempt from rent control; verify a property's rent control status with the City before applying a cap.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "NJ-DEP-01",
+          "category": "security_deposits",
+          "result": "applies",
+          "citation": "N.J.S.A. 46:8-21.1 (Truth in Renting)",
+          "quoted_span": "Within 30 days after the termination of a tenancy, a landlord must return the security \ndeposit, plus interest earned less deductions, to the tenant",
+          "plain_language": "Within 30 days after a tenancy ends, a New Jersey landlord must return the security deposit plus interest, less lawful deductions, by personal delivery, registered mail, or certified mail, with an itemized list of any deductions.",
+          "explanation": "Within 30 days after a tenancy ends, a New Jersey landlord must return the security deposit plus interest, less lawful deductions, by personal delivery, registered mail, or certified mail, with an itemized list of any deductions.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "NJ-DEP-02",
+          "category": "security_deposits",
+          "result": "applies",
+          "citation": "N.J.S.A. 46:8-26 (Truth in Renting)",
+          "quoted_span": "If a landlord fails to return the security deposit within 30 days, or the tenant disagrees with \nthe amount deducted, the tenant may sue for double the amount",
+          "plain_language": "If a landlord fails to return the security deposit within 30 days, or the tenant disputes the deductions, the tenant may sue for double the amount of the security deposit.",
+          "explanation": "If a landlord fails to return the security deposit within 30 days, or the tenant disputes the deductions, the tenant may sue for double the amount of the security deposit.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        }
+      ]
+    },
+    "conflict_with": [
+      "JC-ALG-01",
+      "HOB-ALG-01"
+    ],
+    "affected_count": 140
+  },
+  "T4": {
+    "title": "Massachusetts pending bills S.2983 and H.5222",
+    "description": "Reported as pending (not in force) for every Boston and Cambridge address; affected set = all MA addresses if enacted.",
+    "rule_ids": [
+      "MA-ALG-P1",
+      "MA-ALG-P2"
+    ],
+    "as_of": "2026-10-01",
+    "sample_address_id": "A0006",
+    "as_of_lookup": {
+      "address_id": "A0006",
+      "street": "69-71 WESTLAND AV",
+      "postal_city": "Boston",
+      "state": "MA",
+      "as_of": "2026-10-01",
+      "jurisdiction_stack": [
+        "MA",
+        "Boston"
+      ],
+      "disclaimer": "Not legal advice. For Hack-Nation demo / research only.",
+      "rules": [
+        {
+          "team_rule_id": "MA-ALG-P1",
+          "category": "algorithmic_rent_setting",
+          "result": "pending",
+          "citation": "MA S.2983",
+          "quoted_span": "gislature Search the Legislature Search An Act prohibiting algorithmic rent setting Senate, March 12, 2026 -- The committee on Housing, to whom was referred the",
+          "plain_language": "Pending Massachusetts bill prohibiting algorithmic rent setting; not in force.",
+          "explanation": "Pending Massachusetts bill prohibiting algorithmic rent setting; not in force.",
+          "status": "pending",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "MA-ALG-P2",
+          "category": "algorithmic_rent_setting",
+          "result": "pending",
+          "citation": "MA H.5222",
+          "quoted_span": "gislature Search the Legislature Search An Act relative to preventing algorithmic rent fixing in the rental housing market View Text Print Preview Download PDF",
+          "plain_language": "Pending Massachusetts bill relative to preventing algorithmic rent fixing; not in force.",
+          "explanation": "Pending Massachusetts bill relative to preventing algorithmic rent fixing; not in force.",
+          "status": "pending",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "BOS-HSNA-01",
+          "category": "just_cause_eviction",
+          "result": "applies",
+          "citation": "Boston HSNA (Ord. passed Oct. 2020) \u2014 City of Boston",
+          "quoted_span": "requires any landlord planning to end a tenancy\nagreement to provide the tenant with a Notice",
+          "plain_language": "A Boston landlord ending a tenancy must give the tenant a Notice of Tenants' Rights and Resources at the same time as the Notice to Quit, and must send a copy of the Notice to Quit together with a Certificate of Compliance/Service to the City's Office of Housing Stability.",
+          "explanation": "A Boston landlord ending a tenancy must give the tenant a Notice of Tenants' Rights and Resources at the same time as the Notice to Quit, and must send a copy of the Notice to Quit together with a Certificate of Compliance/Service to the City's Office of Housing Stability.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "BOS-FH-01",
+          "category": "screening_restrictions",
+          "result": "applies",
+          "citation": "Boston Fair Housing Regulations (BFHEC)",
+          "quoted_span": "illegal to discriminate when renting, buying, selling, or securing financing for any housing",
+          "plain_language": "It is illegal in Boston to discriminate in renting, buying, selling, or financing housing \u2014 including refusing a household because it uses rental assistance such as Section 8 vouchers.",
+          "explanation": "It is illegal in Boston to discriminate in renting, buying, selling, or financing housing \u2014 including refusing a household because it uses rental assistance such as Section 8 vouchers.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        }
+      ]
+    },
+    "affected_count": 110
+  },
+  "T5": {
+    "title": "Massachusetts rent-control ballot question struck",
+    "description": "No rent cap reported for any Boston or Cambridge address; IP 25-21 recorded as failed. Affected set is empty.",
+    "rule_ids": [
+      "MA-RENT-P1"
+    ],
+    "as_of": "2026-10-01",
+    "sample_address_id": "A0006",
+    "as_of_lookup": {
+      "address_id": "A0006",
+      "street": "69-71 WESTLAND AV",
+      "postal_city": "Boston",
+      "state": "MA",
+      "as_of": "2026-10-01",
+      "jurisdiction_stack": [
+        "MA",
+        "Boston"
+      ],
+      "disclaimer": "Not legal advice. For Hack-Nation demo / research only.",
+      "rules": [
+        {
+          "team_rule_id": "MA-ALG-P1",
+          "category": "algorithmic_rent_setting",
+          "result": "pending",
+          "citation": "MA S.2983",
+          "quoted_span": "gislature Search the Legislature Search An Act prohibiting algorithmic rent setting Senate, March 12, 2026 -- The committee on Housing, to whom was referred the",
+          "plain_language": "Pending Massachusetts bill prohibiting algorithmic rent setting; not in force.",
+          "explanation": "Pending Massachusetts bill prohibiting algorithmic rent setting; not in force.",
+          "status": "pending",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "MA-ALG-P2",
+          "category": "algorithmic_rent_setting",
+          "result": "pending",
+          "citation": "MA H.5222",
+          "quoted_span": "gislature Search the Legislature Search An Act relative to preventing algorithmic rent fixing in the rental housing market View Text Print Preview Download PDF",
+          "plain_language": "Pending Massachusetts bill relative to preventing algorithmic rent fixing; not in force.",
+          "explanation": "Pending Massachusetts bill relative to preventing algorithmic rent fixing; not in force.",
+          "status": "pending",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "BOS-HSNA-01",
+          "category": "just_cause_eviction",
+          "result": "applies",
+          "citation": "Boston HSNA (Ord. passed Oct. 2020) \u2014 City of Boston",
+          "quoted_span": "requires any landlord planning to end a tenancy\nagreement to provide the tenant with a Notice",
+          "plain_language": "A Boston landlord ending a tenancy must give the tenant a Notice of Tenants' Rights and Resources at the same time as the Notice to Quit, and must send a copy of the Notice to Quit together with a Certificate of Compliance/Service to the City's Office of Housing Stability.",
+          "explanation": "A Boston landlord ending a tenancy must give the tenant a Notice of Tenants' Rights and Resources at the same time as the Notice to Quit, and must send a copy of the Notice to Quit together with a Certificate of Compliance/Service to the City's Office of Housing Stability.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        },
+        {
+          "team_rule_id": "BOS-FH-01",
+          "category": "screening_restrictions",
+          "result": "applies",
+          "citation": "Boston Fair Housing Regulations (BFHEC)",
+          "quoted_span": "illegal to discriminate when renting, buying, selling, or securing financing for any housing",
+          "plain_language": "It is illegal in Boston to discriminate in renting, buying, selling, or financing housing \u2014 including refusing a household because it uses rental assistance such as Section 8 vouchers.",
+          "explanation": "It is illegal in Boston to discriminate in renting, buying, selling, or financing housing \u2014 including refusing a household because it uses rental assistance such as Section 8 vouchers.",
+          "status": "in_force",
+          "effective_date": null,
+          "conflict_flag": false
+        }
+      ]
+    },
+    "rent_cap_applies_count": 0
+  },
+  "_spot": {
+    "T1_before": "not_yet_effective",
+    "T1_after": "applies",
+    "T2_hob": "applies",
+    "T2_jc": "applies",
+    "T2_newark_hob": null,
+    "T2_newark_jc": null,
+    "T3_before": "not_yet_effective",
+    "T3_after": "applies",
+    "T4_p1": "pending",
+    "T4_p2": "pending",
+    "T5_rent_caps": 0
+  }
+}

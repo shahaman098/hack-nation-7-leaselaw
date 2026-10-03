@@ -1,0 +1,31 @@
+---
+description: Hack-Nation 7 LeaseLaw + repo orientation for all agents
+alwaysApply: true
+---
+
+# This workspace
+
+Canonical root: `/Users/efi/Hackathons/Hackathon-Idea-Search`.
+
+Read **AGENTS.md** first. Active competition product is **LeaseLaw** at `apps/leaselaw/` (Track 02 RealPage), not the HackForge idea engine unless the user asks about HackForge.
+
+## Coordination
+
+- Status: `docs/WIN_BOARD.md`
+- Cross-agent advice: append to `docs/AGENT_ADVICE_LOG.md`
+- ZCode goal: `docs/zcode-build-goal.md`
+- OpenCode: `docs/opencode-win-prompt.txt`
+
+## Non-negotiables
+
+- User submits only (no HackOS/Form/email send/`git push` unless asked)
+- Keep “Not legal advice” on LeaseLaw UI/API
+- `cd apps/leaselaw && python -m src.eval_harness` must stay **5/5** after rule/engine changes
+- Demo port **8012**
+- Prefer measuring over claiming done
+
+## Ownership (avoid edit fights)
+
+- Cursor: `extract_rules.py`, `engine.py`, `eval_harness.py`
+- OpenCode: `apps/leaselaw/src/extractors/**`
+- ZCode: deploy + `docs/hn7-submission-pack/`

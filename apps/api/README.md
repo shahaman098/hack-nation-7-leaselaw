@@ -13,6 +13,8 @@ python cli.py --sample case-03-deadline-miscalculation
 python cli.py --sample case-03-deadline-miscalculation --json
 ```
 
+Human output includes a **Verification:** section (✓ pass / ✗ fail / – skip) for each deterministic check against the rules corpus. Unverifiable notices exit with code **2**; the API returns HTTP **422** with `status: UNVERIFIED`.
+
 ## Optional HTTP API
 
 ```bash

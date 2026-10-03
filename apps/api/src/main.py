@@ -1,9 +1,18 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from typing import List, Dict, Any, Optional
-from datetime import date, datetime
+from typing import List, Dict, Any, Optional, Tuple, Literal
+from datetime import date, datetime, timedelta, timezone
+import hashlib
 import re
+
+from verify import (
+    Check,
+    extract_agency_claims,
+    parse_date,
+    run_checks,
+    summarize_defects,
+)
 
 app = FastAPI(
     title="AppealPath Diff API",
@@ -31,6 +40,7 @@ RULES_DB = {
         "income_ceiling_single": 1825.0,
         "lookback_period_months": 3,
         "statutory_appeal_window_days": 30,
+        "accepted_medical_signers": ["MD", "DO"],
         "required_evidence": [
             "Proof of residency (utility bill or lease within 60 days)",
             "3 consecutive paystubs or verified benefit award letter",
@@ -64,6 +74,7 @@ RULES_DB = {
         "income_ceiling_single": 1950.0,
         "lookback_period_months": 1,
         "statutory_appeal_window_days": 45,
+        "accepted_medical_signers": ["MD", "DO", "PA", "APRN"],
         "required_evidence": [
             "Proof of residency (utility bill or digital address attestation within 90 days)",
             "1 prior month paystub or verified bank statement",
@@ -97,6 +108,7 @@ RULES_DB = {
         "income_ceiling_single": 2100.0,
         "lookback_period_months": 1,
         "statutory_appeal_window_days": 60,
+        "accepted_medical_signers": ["MD", "DO", "PA", "APRN"],
         "required_evidence": [
             "Proof of residency (digital tax/utility record)",
             "1 prior month income statement with automatic 20% medical expense deduction allowance",
@@ -191,61 +203,90 @@ class EvidenceItem(BaseModel):
     is_missing_or_vulnerable: bool
     actionable_remedy: str
 
+class LoopIteration(BaseModel):
+    iteration: int
+    stage: str
+    target: str
+    result: Literal["pass", "fail", "adjusted"]
+    feedback: str
+
 class AnalysisResult(BaseModel):
-    case_number: str
-    claimant_name: str
+    case_number: Optional[str]
+    claimant_name: Optional[str]
     decision_date: str
     governing_rule_version: str
     current_rule_version: str
     statutory_window_days_applied: int
     statutory_window_days_current: int
+    statutory_window_days_agency: Optional[int]
     appeal_filing_deadline: str
     days_remaining_or_overdue: int
     wrongful_application_detected: bool
     wrongful_application_summary: Optional[str]
     clause_diffs: List[ClauseDiff]
     required_evidence_checklist: List[EvidenceItem]
+    checks: List[Check]
+    loop_iterations: List[LoopIteration] = Field(default_factory=list)
     audit_trail: Dict[str, Any]
 
 # --- Helper Functions ---
-def find_governing_rule(dt_str: str) -> Dict[str, Any]:
-    try:
-        target_date = datetime.strptime(dt_str, "%Y-%m-%d").date()
-    except Exception:
-        target_date = date(2025, 5, 1)
+def find_governing_rule(dt_str: Optional[str]) -> Optional[Dict[str, Any]]:
+    if not dt_str:
+        return None
+    target_date = parse_date(dt_str)
+    if target_date is None:
+        return None
 
-    for rule_id, rule in RULES_DB.items():
+    for rule in RULES_DB.values():
         start = datetime.strptime(rule["effective_from"], "%Y-%m-%d").date()
         end = datetime.strptime(rule["effective_to"], "%Y-%m-%d").date()
         if start <= target_date <= end:
             return rule
-    return RULES_DB["SNAP-MED-2026-CURRENT"]
+    return None
 
-def extract_notice_metadata(text: str, fallback_date: Optional[str] = None):
+
+def extract_notice_metadata(
+    text: str, fallback_date: Optional[str] = None
+) -> Tuple[Optional[str], Optional[str], Optional[str]]:
     case_match = re.search(r"Case (?:Number|ID):\s*([A-Za-z0-9\-]+)", text, re.IGNORECASE)
-    case_number = case_match.group(1) if case_match else "CASE-UNKNOWN"
+    case_number = case_match.group(1) if case_match else None
 
     name_match = re.search(r"(?:Claimant|Applicant|Recipient):\s*([^\n\r]+)", text, re.IGNORECASE)
-    claimant_name = name_match.group(1).strip() if name_match else "Jane Doe"
+    claimant_name = name_match.group(1).strip() if name_match else None
 
-    extracted_date = None
+    extracted_date: Optional[str] = None
     if fallback_date:
-        extracted_date = fallback_date
+        if parse_date(fallback_date):
+            extracted_date = fallback_date
     else:
-        date_match = re.search(r"(?:Date of Notice|Mailing Date|Decision Date):\s*([^\n\r]+)", text, re.IGNORECASE)
+        date_match = re.search(
+            r"(?:Date of Notice|Mailing Date|Decision Date):\s*([^\n\r]+)",
+            text,
+            re.IGNORECASE,
+        )
         if date_match:
             raw_dt = date_match.group(1).strip()
-            for fmt in ["%B %d, %Y", "%b %d, %Y", "%Y-%m-%d"]:
-                try:
-                    dt = datetime.strptime(raw_dt, fmt).date()
-                    extracted_date = dt.strftime("%Y-%m-%d")
-                    break
-                except ValueError:
-                    continue
-        if not extracted_date:
-            extracted_date = "2025-05-12"
+            parsed = parse_date(raw_dt)
+            if parsed:
+                extracted_date = parsed.strftime("%Y-%m-%d")
 
     return case_number, claimant_name, extracted_date
+
+
+def _checks_passed_label(checks: List[Check]) -> str:
+    non_skip = [c for c in checks if c.status != "skip"]
+    passed = sum(1 for c in non_skip if c.status == "pass")
+    return f"{passed}/{len(non_skip)}"
+
+
+def _unverified_response(checks: List[Check]) -> None:
+    raise HTTPException(
+        status_code=422,
+        detail={
+            "status": "UNVERIFIED",
+            "checks": [c.model_dump() for c in checks],
+        },
+    )
 
 # --- Endpoints ---
 
@@ -263,26 +304,28 @@ def get_rules():
 
 @app.post("/api/analyze", response_model=AnalysisResult)
 def analyze_notice(req: AnalyzeRequest):
-    case_number, claimant_name, decision_date = extract_notice_metadata(req.notice_text, req.notice_date)
-    
+    claims = extract_agency_claims(req.notice_text)
+    case_number, claimant_name, decision_date = extract_notice_metadata(
+        req.notice_text, req.notice_date
+    )
     governing_rule = find_governing_rule(decision_date)
+    checks = run_checks(decision_date, governing_rule, claims)
+
+    if any(c.blocking and c.status == "fail" for c in checks):
+        _unverified_response(checks)
+
+    assert governing_rule is not None and decision_date is not None
     current_rule = RULES_DB["SNAP-MED-2026-CURRENT"]
 
-    # Calculate statutory deadline based on governing rule
-    dec_dt = datetime.strptime(decision_date, "%Y-%m-%d").date()
+    dec_dt = parse_date(decision_date)
+    assert dec_dt is not None
     deadline_days = governing_rule["statutory_appeal_window_days"]
-    from datetime import timedelta
     statutory_deadline = dec_dt + timedelta(days=deadline_days)
-    
-    # Reference date (today or simulated)
+
     today = date(2026, 10, 3)
     days_remaining = (statutory_deadline - today).days
 
-    # Clause Diffs
     clause_diffs = []
-    wrongful_application_detected = False
-    wrongful_application_summary = None
-
     gov_clauses = {c["clause_id"]: c for c in governing_rule["clauses"]}
     cur_clauses = {c["clause_id"]: c for c in current_rule["clauses"]}
 
@@ -306,46 +349,121 @@ def analyze_notice(req: AnalyzeRequest):
             impact_note=impact
         ))
 
-    # Wrongful application detection heuristics
-    if "Nurse Practitioner" in req.notice_text or "APRN" in req.notice_text:
-        if governing_rule["id"] in ["SNAP-MED-2025-V2", "SNAP-MED-2026-CURRENT"]:
-            wrongful_application_detected = True
-            wrongful_application_summary = "CRITICAL LEGAL DEFECT: The agency denied this claim under outdated V1 physician-only rules, but on the decision date, V2 explicitly authorized APRN/NP endorsements. Strong grounds for immediate reversal."
-    elif "dismissed as untimely" in req.notice_text.lower() or "30 calendar days" in req.notice_text:
-        if dec_dt >= date(2026, 4, 1) and "30" in req.notice_text:
-            wrongful_application_detected = True
-            wrongful_application_summary = "CRITICAL LEGAL DEFECT: The agency applied a 30-day appeal limit from 2024 guidance. Under governing 2026 guidance, claimant had 60 calendar days. The dismissal was unlawful."
+    wrongful_application_detected = any(c.status == "fail" for c in checks)
+    wrongful_application_summary = summarize_defects(checks)
 
-    # Evidence Checklist
-    checklist = [
+    checklist: List[EvidenceItem] = [
         EvidenceItem(
-            requirement="Certified copy of Initial Application & Date-Stamped Receipt",
-            is_missing_or_vulnerable=False,
-            actionable_remedy="Attached via case repository."
-        ),
-        EvidenceItem(
-            requirement=f"Income documentation matching governing period ({governing_rule['lookback_period_months']}-month lookback)",
+            requirement=req_text,
             is_missing_or_vulnerable=True,
-            actionable_remedy=f"Submit verified paystubs under governing lookback requirement ({governing_rule['lookback_period_months']} month)."
-        ),
-        EvidenceItem(
-            requirement="Medical disability documentation endorsed under effective statutory standard",
-            is_missing_or_vulnerable=True,
-            actionable_remedy="Attach provider license credential verifying APRN/PA authorization active on decision date."
-        ),
+            actionable_remedy=f"Obtain and attach: {req_text}",
+        )
+        for req_text in governing_rule["required_evidence"]
+    ]
+    checklist.append(
         EvidenceItem(
             requirement=f"Notice of Appeal signed within governing statutory window ({deadline_days} days)",
             is_missing_or_vulnerable=False,
-            actionable_remedy=f"Generate Form AP-900 with statutory citation to {governing_rule['id']} SEC-102.C."
+            actionable_remedy=f"Generate Form AP-900 with statutory citation to {governing_rule['id']} SEC-102.C.",
         )
-    ]
+    )
 
+    loop_iterations: List[LoopIteration] = []
+
+    # Iteration 1: Parse & Validate Notice Grounding
+    if decision_date:
+        loop_iterations.append(
+            LoopIteration(
+                iteration=1,
+                stage="Notice Ingestion & Grounding",
+                target="decision_date",
+                result="pass",
+                feedback=f"Successfully anchored decision date to {decision_date}.",
+            )
+        )
+    else:
+        loop_iterations.append(
+            LoopIteration(
+                iteration=1,
+                stage="Notice Ingestion & Grounding",
+                target="decision_date",
+                result="fail",
+                feedback="Unanchored decision date; cannot ground rule without temporal baseline.",
+            )
+        )
+
+    # Iteration 2: Temporal Corpus Lookup & Validation
+    if governing_rule is not None:
+        loop_iterations.append(
+            LoopIteration(
+                iteration=2,
+                stage="Corpus Rule Evaluation",
+                target="governing_rule",
+                result="pass",
+                feedback=(
+                    f"Verified temporal match {governing_rule['id']} "
+                    f"[{governing_rule['effective_from']} to {governing_rule['effective_to']}]."
+                ),
+            )
+        )
+    else:
+        loop_iterations.append(
+            LoopIteration(
+                iteration=2,
+                stage="Corpus Rule Evaluation",
+                target="governing_rule",
+                result="fail",
+                feedback="No statutory corpus coverage for provided date.",
+            )
+        )
+
+    # Iteration 3: Agency Defense / Defect Evaluator Check
+    failed_checks = [c for c in checks if c.status == "fail" and not c.blocking]
+    if failed_checks:
+        loop_iterations.append(
+            LoopIteration(
+                iteration=3,
+                stage="Agency Defect Evaluator",
+                target="statutory_admissibility",
+                result="fail",
+                feedback=(
+                    f"Flagged {len(failed_checks)} unlawful agency deviations. "
+                    f"Optimizer: Synthesizing statutory defense & evidence delta."
+                ),
+            )
+        )
+        loop_iterations.append(
+            LoopIteration(
+                iteration=4,
+                stage="Appeal Remedy Optimizer",
+                target="remedy_synthesis",
+                result="adjusted",
+                feedback=(
+                    f"Adjusted appeal window from agency-claimed {claims.window_days or 'unspecified'} days "
+                    f"to statutory {deadline_days} days under {governing_rule['id']} SEC-102.C. "
+                    "Generated required evidentiary checklist."
+                ),
+            )
+        )
+    else:
+        loop_iterations.append(
+            LoopIteration(
+                iteration=3,
+                stage="Agency Defect Evaluator",
+                target="statutory_admissibility",
+                result="pass",
+                feedback="Agency decision conforms with governing standard. No unlawful procedural defect found.",
+            )
+        )
+
+    notice_hash = hashlib.sha256(req.notice_text.encode()).hexdigest()
     audit_trail = {
         "engine": "AppealPath Diff v1.0",
-        "timestamp_utc": datetime.utcnow().isoformat(),
-        "hash_verification": f"sha256-{abs(hash(req.notice_text)) % 1000000:06d}",
+        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "hash_verification": f"sha256-{notice_hash}",
         "statutory_corpus_snapshot": governing_rule["version_tag"],
-        "compliance_notes": "WCAG 2.2 AA auditable trail; zero synthetic hallucinations; deterministic clause diff."
+        "checks_passed": _checks_passed_label(checks),
+        "loop_cycle_count": len(loop_iterations),
     }
 
     return AnalysisResult(
@@ -356,12 +474,15 @@ def analyze_notice(req: AnalyzeRequest):
         current_rule_version=f"{current_rule['id']} ({current_rule['version_tag']})",
         statutory_window_days_applied=deadline_days,
         statutory_window_days_current=current_rule["statutory_appeal_window_days"],
+        statutory_window_days_agency=claims.window_days,
         appeal_filing_deadline=statutory_deadline.strftime("%Y-%m-%d"),
         days_remaining_or_overdue=days_remaining,
         wrongful_application_detected=wrongful_application_detected,
         wrongful_application_summary=wrongful_application_summary,
         clause_diffs=clause_diffs,
         required_evidence_checklist=checklist,
+        checks=checks,
+        loop_iterations=loop_iterations,
         audit_trail=audit_trail
     )
 

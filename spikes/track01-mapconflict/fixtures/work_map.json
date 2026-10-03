@@ -1,0 +1,38 @@
+{
+  "workflow_id": "ap-invoice-sandbox-v1",
+  "title": "Accounts payable — three supplier invoices (sandbox)",
+  "steps": [
+    {
+      "step_id": "S4-cost-center",
+      "screen_moment": "03:12 invoice 4471 cost center field",
+      "decision": "Re-code from opex 4711 to capex 0400",
+      "reason": "Equipment over €5,000 is always capex.",
+      "guardrails": [
+        "No asset number → no capex booking",
+        "Unknown supplier → stop and ask controller"
+      ],
+      "confirmation": "conflict",
+      "evidence": [
+        {
+          "claim_id": "C1",
+          "text": "Equipment over €5,000 is always capex.",
+          "source_audio": "fixtures/audio/expert_a_why.wav",
+          "conditions": ["amount_eur >= 5000", "line_type == equipment"]
+        },
+        {
+          "claim_id": "C2",
+          "text": "In an emergency handoff, book to opex first and fix at month-end.",
+          "source_audio": "fixtures/audio/expert_b_handoff.wav",
+          "conditions": ["amount_eur >= 5000", "context == emergency_handoff"]
+        }
+      ]
+    }
+  ],
+  "lessons": [
+    {
+      "lesson_id": "L1-capex-threshold",
+      "depends_on_step": "S4-cost-center",
+      "state": "verification_hold"
+    }
+  ]
+}

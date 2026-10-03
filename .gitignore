@@ -53,3 +53,13 @@ corpora/**/*.faiss
 corpora/**/*.npy
 *.faiss
 promptfoo-results/
+
+# RealPage / HN7 local packs (large; do not commit)
+participant-final*.zip
+briefs/hack-nation-7-realpage-starter/
+briefs/hack-nation-7-pdfs/
+
+# Local agent / runtime noise
+.playwright-mcp/
+apps/leaselaw/logs/
+hack-nation/*.pdf

@@ -8,6 +8,8 @@ import json
 import sys
 from pathlib import Path
 
+from fastapi import HTTPException
+
 from main import SAMPLE_NOTICES, analyze_notice, AnalyzeRequest
 
 
@@ -24,12 +26,38 @@ def _load_notice(args: argparse.Namespace) -> str:
     raise SystemExit("Provide --sample, --file, or --text")
 
 
+def _print_checks(checks: list, indent: str = "  ") -> None:
+    for c in checks:
+        if isinstance(c, dict):
+            status = c["status"]
+            name = c["name"]
+            expected = c.get("expected")
+            observed = c.get("observed")
+        else:
+            status = c.status
+            name = c.name
+            expected = c.expected
+            observed = c.observed
+        mark = "✓" if status == "pass" else "✗" if status == "fail" else "–"
+        extra = ""
+        if expected is not None or observed is not None:
+            extra = f" (expected {expected}, observed {observed})"
+        print(f"{indent}{mark} {name}{extra}")
+
+
 def _print_human(result) -> None:
     data = result.model_dump()
     print(f"Case: {data['case_number']} — {data['claimant_name']}")
     print(f"Decision date: {data['decision_date']}")
     print(f"Governing rules: {data['governing_rule_version']}")
-    print(f"Appeal deadline (governing): {data['appeal_filing_deadline']} ({data['days_remaining_or_overdue']}d vs today)")
+    print("Verification:")
+    _print_checks(data["checks"])
+    if data.get("loop_iterations"):
+        print("\nAgent Loop Execution (Evaluator-Optimizer):")
+        for step in data["loop_iterations"]:
+            mark = "✓" if step["result"] == "pass" else "✗" if step["result"] == "fail" else "↻"
+            print(f"  [{step['iteration']}] {mark} {step['stage']} ({step['target']}): {step['feedback']}")
+    print(f"\nAppeal deadline (governing): {data['appeal_filing_deadline']} ({data['days_remaining_or_overdue']}d vs today)")
     if data["wrongful_application_detected"]:
         print(f"\n⚠ {data['wrongful_application_summary']}\n")
     print("Clause diff:")
@@ -58,7 +86,20 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     notice = _load_notice(args)
-    result = analyze_notice(AnalyzeRequest(notice_text=notice))
+    try:
+        result = analyze_notice(AnalyzeRequest(notice_text=notice))
+    except HTTPException as exc:
+        detail = exc.detail if isinstance(exc.detail, dict) else {"detail": exc.detail}
+        if args.json:
+            print(json.dumps(detail, indent=2))
+        else:
+            print("UNVERIFIED — no analysis produced")
+            checks = detail.get("checks", [])
+            if checks:
+                print("Verification:")
+                _print_checks(checks)
+        return 2
+
     if args.json:
         print(json.dumps(result.model_dump(), indent=2))
     else:
