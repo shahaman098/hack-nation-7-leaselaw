@@ -1,4 +1,0 @@
-[
-  {"slug":"fixture-pre","brief_path":"fixtures/sample-hackathon.md","cutoff_class":"pre-cutoff","verified":true,"synthetic":true,"winners":[{"title":"Fixture Appeal","user":"Social-care caseworkers filing benefit appeal packs","problem":"Reconstructing which form version deadline clock and evidence checklist applied on the decision date","mechanism":"Configuration drift detection temporal fault trees"}]},
-  {"slug":"fixture-post","brief_path":"fixtures/sample-hackathon.md","cutoff_class":"post-cutoff","verified":true,"synthetic":true,"winners":[{"title":"Fixture Appeal","user":"Social-care caseworkers filing benefit appeal packs","problem":"Reconstructing which form version deadline clock and evidence checklist applied on the decision date","mechanism":"Configuration drift detection temporal fault trees"}]}
-]

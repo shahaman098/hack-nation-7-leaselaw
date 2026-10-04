@@ -59,6 +59,21 @@ participant-final*.zip
 briefs/hack-nation-7-realpage-starter/
 briefs/hack-nation-7-pdfs/
 
+# HackForge — local only; not part of public LeaseLaw submission repo
+/src/hackforge/
+/tests/
+/evals/
+/prompts/
+/briefs/
+/runs/
+/spikes/
+/corpora/
+/schemas/
+/apps/api/
+/pyproject.toml
+/MANIFEST.in
+/Makefile
+
 # Local agent / runtime noise
 .playwright-mcp/
 apps/leaselaw/logs/
