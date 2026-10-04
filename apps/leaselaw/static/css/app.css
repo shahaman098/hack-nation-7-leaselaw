@@ -479,6 +479,28 @@ body {
   gap: 0.5rem;
 }
 
+.rule-cat {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.card-intro {
+  margin: -0.25rem 0 0.75rem;
+}
+
+.stack-label {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.stack-block {
+  text-align: right;
+}
+
 .rule-id {
   font-family: var(--font-mono);
   font-size: 0.78rem;
