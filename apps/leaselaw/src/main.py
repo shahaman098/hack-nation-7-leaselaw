@@ -11,7 +11,7 @@ from fastapi.staticfiles import StaticFiles
 
 from .data import load_addresses, load_change_tests, load_rules, starter_stats
 from .engine import lookup_address
-from .ui_html import home_page, pipeline_page_html
+from .ui_html import _LOGO, home_page, pipeline_page_html
 
 _APP_ROOT = Path(__file__).resolve().parents[1]
 
@@ -102,7 +102,7 @@ def api_open_questions() -> dict:
                 "team_rule_id": "BERK-ALG-01",
                 "jurisdiction": "Berkeley, CA",
                 "citation": by_id.get("BERK-ALG-01", {}).get("citation", "Berkeley Ord. §13.63.030"),
-                "sample_address_id": "A0016",
+                "sample_address_id": "A0005",
                 "published_dates": ["2026-03-01 (Ordinance text)", "2026-01-01 (Law firm bulletin)"],
                 "explanation": (
                     "Berkeley's algorithmic rent-setting ban (ch. 13.63) has two published "
@@ -148,7 +148,7 @@ def api_open_questions() -> dict:
                 "team_rule_id": "BERK-SCR-01",
                 "jurisdiction": "Berkeley / California",
                 "citation": by_id.get("BERK-SCR-01", {}).get("citation", "Cal. Civ. Code §1950.6 / BMC §13.78.010"),
-                "sample_address_id": "A0016",
+                "sample_address_id": "A0005",
                 "explanation": (
                     "California's screening-fee cap under Cal. Civ. Code § 1950.6 has no single official "
                     "2026 dollar figure published statewide; municipal ordinances like Berkeley explicitly cap "
@@ -240,9 +240,10 @@ def audit_page(address_id: str, as_of: str = Query("2026-10-01")) -> str:
     body = json.dumps(data, indent=2)
     return f"""<!doctype html>
 <html lang="en"><head><title>Audit {address_id}</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml"/>
 <link rel="stylesheet" href="/static/css/app.css"/>
 </head>
-<body data-theme="light"><div class="shell"><nav class="nav"><a class="logo" href="/">← LeaseLaw</a></nav>
+<body data-theme="light"><div class="shell"><nav class="nav">{_LOGO}<a href="/" class="btn-icon" style="text-decoration:none;margin-left:auto">← Home</a></nav>
 <h1>Audit · {address_id}</h1>
 <p class="disclaimer-banner"><strong>Not legal advice</strong></p>
 <pre class="json-dump">{body}</pre></div></body></html>"""
@@ -317,6 +318,11 @@ def _demo_addresses() -> list[dict]:
             ),
             None,
         )
+        if hit:
+            picked.append(hit)
+    return picked or all_addrs[:10]
+
+
 @app.get("/api/demo-presets")
 def api_demo_presets() -> dict:
     return {
@@ -331,10 +337,10 @@ def api_demo_presets() -> dict:
             {"id": "T5", "label": "T5 MA Struck Ballot", "address_id": "A0006", "as_of": "2026-10-01"},
         ],
         "open_questions": [
-            {"id": "Q1", "label": "Berkeley Dual Dates (Ch. 13.63)", "address_id": "A0016", "as_of": "2026-10-01", "rule_id": "BERK-ALG-01"},
+            {"id": "Q1", "label": "Berkeley Dual Dates (Ch. 13.63)", "address_id": "A0005", "as_of": "2026-10-01", "rule_id": "BERK-ALG-01"},
             {"id": "Q2", "label": "NJ FAIR Preemption", "address_id": "A0002", "as_of": "2027-07-02", "rule_id": "NJ-ALG-01"},
             {"id": "Q3", "label": "LA RSO Dual Dates", "address_id": "A0001", "as_of": "2026-10-01", "rule_id": "LA-RSO-02"},
-            {"id": "Q4", "label": "CA Screening Fee Gap", "address_id": "A0016", "as_of": "2026-10-01", "rule_id": "BERK-SCR-01"},
+            {"id": "Q4", "label": "CA Screening Fee Gap", "address_id": "A0005", "as_of": "2026-10-01", "rule_id": "BERK-SCR-01"},
         ],
         "disclaimer": "Not legal advice.",
     }

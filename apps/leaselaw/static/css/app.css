@@ -103,20 +103,37 @@ body {
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   text-decoration: none;
   color: var(--text);
-  font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: -0.02em;
 }
 
-.logo-mark {
-  width: 28px;
-  height: 28px;
+.logo-mark-img {
+  display: block;
+  flex-shrink: 0;
   border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent), #6366f1);
-  box-shadow: 0 0 20px var(--accent-glow);
+  box-shadow: 0 0 0 1px var(--border), 0 4px 14px var(--accent-glow);
+}
+
+.logo-word {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+  gap: 0.05rem;
+}
+
+.logo-name {
+  font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: -0.03em;
+}
+
+.logo-tag {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
 
 .nav-links {
@@ -618,6 +635,90 @@ pre.json-dump {
   padding: 1rem;
   overflow: auto;
   max-height: 400px;
+}
+
+.city-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.6rem;
+}
+
+.city-btn {
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.city-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.q-btn {
+  border-color: rgba(217, 119, 6, 0.3) !important;
+  color: var(--warn) !important;
+}
+
+.q-btn:hover {
+  border-color: var(--warn) !important;
+  background: rgba(217, 119, 6, 0.1) !important;
+}
+
+.chip-accent {
+  background: rgba(217, 119, 6, 0.15);
+  border-color: rgba(217, 119, 6, 0.35);
+  color: var(--warn);
+  font-weight: 600;
+}
+
+.open-q-box {
+  background: var(--bg-elevated);
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: var(--shadow);
+}
+
+.open-q-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.open-q-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.open-q-card {
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.open-q-card h4 {
+  margin: 0 0 0.35rem;
+  font-size: 0.85rem;
+  color: var(--warn);
+}
+
+.open-q-card p {
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text-muted);
 }
 
 @media (max-width: 640px) {
