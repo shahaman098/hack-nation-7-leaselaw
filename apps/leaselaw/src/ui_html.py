@@ -27,7 +27,7 @@ def home_page(n_addresses: int, n_rules: int) -> str:
     return f"""<!doctype html>
 <html lang="en">
 <head>
-  <title>LeaseLaw Navigator — rental rules by address</title>
+  <title>LeaseLaw Navigator | rental rules by address</title>
 {_HEAD}
 </head>
 <body data-page="home">
@@ -43,9 +43,9 @@ def home_page(n_addresses: int, n_rules: int) -> str:
     </nav>
 
     <header class="hero">
-      <p class="disclaimer-banner"><strong data-i18n="notLegal">Not legal advice</strong> · For information only</p>
+      <p class="disclaimer-banner"><strong data-i18n="notLegal">Not legal advice</strong> | <span data-i18n="infoOnly">Information only</span></p>
       <h1 data-i18n="tagline">What rental rules apply to your address?</h1>
-      <p class="sub" data-i18n="sub">Plain-language summary with links to the original law text. Pick your address and the date you care about.</p>
+      <p class="sub" data-i18n="sub">Short summary and a link to the official law text. Enter your address and pick a date.</p>
 
       <div class="search-panel">
         <div class="search-row">
@@ -65,7 +65,7 @@ def home_page(n_addresses: int, n_rules: int) -> str:
     <section class="strip strip-human">
       <div class="card">
         <h3 data-i18n="tryExample">Try an example</h3>
-        <p class="meta-row card-intro">Tap one — we fill the search for you.</p>
+        <p class="meta-row card-intro" data-i18n="exampleIntro">Pick one. We fill in the address for you.</p>
         <div class="test-strip">
           <button class="test-btn" type="button" data-test="T1" data-i18n="exampleCAJan">California — before new 2026 rules</button>
           <button class="test-btn" type="button" data-test="T1b" data-i18n="exampleCAAfter">California — after Jan 1, 2026</button>
@@ -76,7 +76,7 @@ def home_page(n_addresses: int, n_rules: int) -> str:
       </div>
       <div class="card">
         <h3 data-i18n="pickCity">Browse by city</h3>
-        <p class="meta-row"><strong>{n_addresses}</strong> <span data-i18n="addressesHint">sample addresses</span> · <strong>{n_rules}</strong> <span data-i18n="rulesHint">housing rules in our library</span></p>
+        <p class="meta-row"><strong>{n_addresses}</strong> <span data-i18n="browseMeta">sample addresses and</span> <strong>{n_rules}</strong> <span data-i18n="rulesInLibrary">housing rules</span></p>
         <div class="city-strip">
           <button type="button" class="city-btn" data-city="San Francisco">San Francisco</button>
           <button type="button" class="city-btn" data-city="Los Angeles">Los Angeles</button>
@@ -109,7 +109,7 @@ def pipeline_page_html() -> str:
     return f"""<!doctype html>
 <html lang="en">
 <head>
-  <title>About · LeaseLaw Navigator</title>
+  <title>About | LeaseLaw Navigator</title>
 {_HEAD}
 </head>
 <body data-page="pipeline">
@@ -122,7 +122,7 @@ def pipeline_page_html() -> str:
     </nav>
     <header class="hero" style="text-align:left;padding-top:1rem">
       <h1 style="max-width:none;margin-left:0">How this tool works</h1>
-      <p class="sub" style="margin-left:0">We read public housing laws, match them to your address and move-in date, and show what applies. <strong>Not legal advice.</strong></p>
+      <p class="sub" style="margin-left:0">We read public housing laws and match them to your address and date. Not legal advice.</p>
     </header>
     <div id="pipeline-steps"></div>
   </div>

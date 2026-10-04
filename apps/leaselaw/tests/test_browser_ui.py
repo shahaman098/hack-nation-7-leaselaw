@@ -48,7 +48,7 @@ async def run_browser_test():
         await page.wait_for_timeout(400)
         berk = page.locator('.rule-card[data-rule-id="BERK-ALG-01"]')
         assert await berk.count() >= 1
-        assert "Unclear or conflicting" in await berk.first.text_content()
+        assert "Needs a second look" in await berk.first.text_content()
 
         await page.click("#lang-toggle")
         await page.wait_for_timeout(300)

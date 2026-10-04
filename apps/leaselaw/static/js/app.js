@@ -93,16 +93,26 @@ function esc(s) {
   return d.innerHTML;
 }
 
+function cleanDisplayText(s) {
+  if (!s) return "";
+  return String(s)
+    .replace(/\s[—–]\s/g, ", ")
+    .replace(/[—–]/g, ", ")
+    .replace(/\s·\s/g, ", ")
+    .replace(/…/g, "...");
+}
+
 function ruleSummary(r) {
-  if (lang === "es" && r.plain_language_es) return r.plain_language_es;
-  return r.plain_language || r.explanation || r.title || "";
+  const raw =
+    lang === "es" && r.plain_language_es ? r.plain_language_es : r.plain_language || r.explanation || r.title || "";
+  return cleanDisplayText(raw);
 }
 
 function renderRuleCard(r) {
   const conf = Math.round((r.confidence ?? 0.75) * 100);
   const badge = resultLabel(lang, r.result);
   const cat = categoryLabel(lang, r.category);
-  const title = r.title || r.citation || cat;
+  const title = cleanDisplayText(r.title || r.citation || cat);
   return `
     <article class="rule-card" data-rule-id="${esc(r.team_rule_id || "")}">
       <div class="rule-top">
@@ -113,7 +123,7 @@ function renderRuleCard(r) {
         <span class="result-badge ${esc(r.result)}">${esc(badge)}</span>
       </div>
       <p class="plain">${esc(ruleSummary(r))}</p>
-      ${r.conflict_flag ? `<span class="conflict">⚠ ${esc(t(lang, "conflict"))}${r.conflict_note ? ": " + esc(r.conflict_note) : ""}</span>` : ""}
+      ${r.conflict_flag ? `<span class="conflict">Note: ${esc(t(lang, "conflict"))}${r.conflict_note ? ". " + esc(cleanDisplayText(r.conflict_note)) : ""}</span>` : ""}
       <div class="conf-bar" aria-label="${esc(t(lang, "sureness"))}"><span style="width:${conf}%"></span></div>
       <details class="source">
         <summary>${esc(t(lang, "source"))}</summary>
@@ -212,22 +222,22 @@ async function runCompare() {
       const b = before.get(id);
       const a = after.get(id);
       if (!b && !a) continue;
-      const br = b?.result || "—";
-      const ar = a?.result || "—";
+      const br = b?.result || "none";
+      const ar = a?.result || "none";
       if (br !== ar) {
         const name = a?.title || b?.title || a?.citation || b?.citation || categoryLabel(lang, a?.category || b?.category);
         changes.push({ name, br, ar, a: a || b });
       }
     }
     let html = `<h2 class="section-title">${esc(t(lang, "compareTitle"))}</h2>`;
-    html += `<p class="meta-row">${esc(t(lang, "compareBefore"))}: Dec 31, 2025 · ${esc(t(lang, "compareAfter"))}: Jan 2, 2026</p>`;
+    html += `<p class="meta-row">${esc(t(lang, "compareBefore"))}: ${esc(t(lang, "compareRange"))}</p>`;
     if (!changes.length) {
-      html += `<p class="empty">No rule status changes between these dates for this address.</p>`;
+      html += `<p class="empty">${esc(t(lang, "compareNone"))}</p>`;
     } else {
       for (const c of changes) {
         html += `<article class="rule-card">
           <div class="rule-title">${esc(c.name)}</div>
-          <p class="plain">${esc(resultLabel(lang, c.br))} → ${esc(resultLabel(lang, c.ar))}</p>
+          <p class="plain">${esc(resultLabel(lang, c.br))} ${esc(t(lang, "changedTo"))} ${esc(resultLabel(lang, c.ar))}</p>
         </article>`;
       }
     }
