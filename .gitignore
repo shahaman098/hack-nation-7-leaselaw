@@ -74,7 +74,7 @@ briefs/hack-nation-7-pdfs/
 /MANIFEST.in
 /Makefile
 
-# Local agent / runtime noise
+docs/hn7-submission-pack/videos/out/
 .playwright-mcp/
 apps/leaselaw/logs/
 hack-nation/*.pdf

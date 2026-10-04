@@ -1,0 +1,13 @@
+This is LeaseLaw Navigator on the public demo site. The banner says not legal advice, information only.
+
+I will search for an example address. Under Try an example, I pick California before 2026 rules. The app fills the search. I click Check my address. For this date, the statewide algorithm pricing rule shows not in effect yet. I expand Read the original text to show the statute excerpt.
+
+Now I pick California after January first, 2026. The same rule shows Applies. That is the kind of date change operators care about.
+
+Next, Hoboken local rules. Then Boston. Boston shows bills still pending and no active rent cap applied to the address.
+
+I switch to Spanish with the ES button so the labels change for tenants who prefer Spanish.
+
+I click How we decided to show plain notes for each rule on this address, not a black box.
+
+Finally, the score report. Five out of five change tests pass on all sample addresses, plus ten gold checks. That JSON is linked from the site for judges. Again, this tool is for research and demos, not a substitute for a lawyer.

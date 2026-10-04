@@ -1,0 +1,11 @@
+This is the technical walkthrough for LeaseLaw Navigator.
+
+Module A is extraction. We read the official starter corpus, propose rules, and verify that each quote is copied exactly from the source file. Failed quotes are dropped. You can see the audit log on the about page.
+
+Module B is matching addresses. We map postal cities to legal cities, like Boston neighborhoods and San Ysidro to San Diego. The engine checks building year, units, and certificate dates when the law requires them. If a fact is missing, the result is need more information, not a guess. When a local rent rule applies, a statewide cap can show replaced by a local rule.
+
+Module C is change tracking. The eval harness runs tests T1 through T5 on all five hundred addresses and writes rules, lookups, and changes JSON in the submission format.
+
+In the terminal, python3 minus m src dot eval harness exits zero with five of five tests and ten of ten gold cases. The Docker image bundles the starter pack and runs the same check at build time.
+
+Live deploy is on Render. The repo is public. Reproduce locally with the commands in the submission pack README.
