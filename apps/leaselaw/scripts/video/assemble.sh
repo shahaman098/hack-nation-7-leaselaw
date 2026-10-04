@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Mux ElevenLabs MP3 + Playwright WebM → submission MP4
 set -euo pipefail
-REPO="$(cd "$(dirname "$0")/../../.." && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO="$(cd "$SCRIPT_DIR/../../../.." && pwd)"
 BASE="$REPO/docs/hn7-submission-pack/videos/out"
 AUDIO="$BASE/audio"
 SCREEN="$BASE/screen"
