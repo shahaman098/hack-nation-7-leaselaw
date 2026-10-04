@@ -15,6 +15,8 @@ from src.engine import lookup_address  # noqa: E402
 from src.extract_rules import extract_all  # noqa: E402
 
 OUT = ROOT / "out"
+DEBUG = OUT / "debug"
+DEFAULT_AS_OF = "2026-10-01"
 
 
 def _by_state(addresses: list[dict], state: str) -> list[dict]:
@@ -41,7 +43,70 @@ def _rule_result(lookup: dict, rule_id: str) -> str | None:
     return None
 
 
-def build_changes(addresses: list[dict], rules: list[dict]) -> dict:
+def _submission_row(rule_row: dict) -> dict:
+    return {
+        "team_rule_id": rule_row["team_rule_id"],
+        "result": rule_row["result"],
+        "explanation": rule_row.get("explanation") or rule_row.get("plain_language") or "",
+        "conflict_flag": bool(rule_row.get("conflict_flag")),
+    }
+
+
+def build_lookups_submission(addresses: list[dict], rules: list[dict], as_of: str) -> dict:
+    lookups: dict[str, list[dict]] = {}
+    for a in addresses:
+        full = lookup_address(a, rules, as_of)
+        lookups[a["address_id"]] = [_submission_row(r) for r in full.get("rules") or []]
+    return {"as_of": as_of, "lookups": lookups}
+
+
+def build_changes_submission(addresses: list[dict], rules: list[dict]) -> dict:
+    tests = {t["test_id"]: t for t in load_change_tests()}
+    ca = _by_state(addresses, "CA")
+    nj = _by_state(addresses, "NJ")
+    ma = _by_state(addresses, "MA")
+    hob = _by_city(addresses, "Hoboken", "NJ")
+    jc = _by_city(addresses, "Jersey City", "NJ")
+
+    t1 = tests["T1"]
+    t3 = tests["T3"]
+    t4 = tests["T4"]
+    t5 = tests["T5"]
+
+    t2_affected = [a["address_id"] for a in hob + jc]
+    t3_conflicts = [a["address_id"] for a in hob + jc]
+
+    return {
+        "T1": {
+            "affected_address_ids": [a["address_id"] for a in ca],
+            "conflict_flag_address_ids": [],
+            "notes": t1["expected_behavior"],
+        },
+        "T2": {
+            "affected_address_ids": t2_affected,
+            "conflict_flag_address_ids": [],
+            "notes": tests["T2"]["expected_behavior"],
+        },
+        "T3": {
+            "affected_address_ids": [a["address_id"] for a in nj],
+            "conflict_flag_address_ids": t3_conflicts,
+            "notes": t3["expected_behavior"],
+        },
+        "T4": {
+            "affected_address_ids": [a["address_id"] for a in ma],
+            "conflict_flag_address_ids": [],
+            "notes": t4["expected_behavior"],
+        },
+        "T5": {
+            "affected_address_ids": [],
+            "conflict_flag_address_ids": [],
+            "notes": t5["expected_behavior"],
+        },
+    }
+
+
+def build_changes_detail(addresses: list[dict], rules: list[dict]) -> dict:
+    """Rich before/after payloads for demo + eval smoke."""
     tests = {t["test_id"]: t for t in load_change_tests()}
     ca = _by_state(addresses, "CA")
     nj = _by_state(addresses, "NJ")
@@ -125,7 +190,6 @@ def build_changes(addresses: list[dict], rules: list[dict]) -> dict:
             ),
         },
     }
-    # attach per-test spot checks used by eval
     changes["_spot"] = {
         "T1_before": _rule_result(changes["T1"]["before"], "CA-ALG-01"),
         "T1_after": _rule_result(changes["T1"]["after"], "CA-ALG-01"),
@@ -142,19 +206,30 @@ def build_changes(addresses: list[dict], rules: list[dict]) -> dict:
     return changes
 
 
+def build_changes(addresses: list[dict], rules: list[dict]) -> dict:
+    """Backward-compatible: submission-shaped changes (eval smoke)."""
+    return build_changes_submission(addresses, rules)
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    # Prefer freshly extracted rules
+    DEBUG.mkdir(parents=True, exist_ok=True)
     rules = extract_all()
     (OUT / "rules.json").write_text(json.dumps(rules, indent=2) + "\n")
     addresses = load_addresses()
-    lookups = [lookup_address(a, rules, "2026-10-01") for a in addresses]
-    (OUT / "lookups.json").write_text(json.dumps(lookups, indent=2) + "\n")
-    changes = build_changes(addresses, rules)
-    (OUT / "changes.json").write_text(json.dumps(changes, indent=2) + "\n")
+    detail = [lookup_address(a, rules, DEFAULT_AS_OF) for a in addresses]
+    (DEBUG / "lookups_detail.json").write_text(json.dumps(detail, indent=2) + "\n")
+    submission = build_lookups_submission(addresses, rules, DEFAULT_AS_OF)
+    (OUT / "lookups.json").write_text(json.dumps(submission, indent=2) + "\n")
+    (DEBUG / "changes_detail.json").write_text(
+        json.dumps(build_changes_detail(addresses, rules), indent=2) + "\n"
+    )
+    (OUT / "changes.json").write_text(
+        json.dumps(build_changes_submission(addresses, rules), indent=2) + "\n"
+    )
     print(
         f"Wrote {OUT}/rules.json ({len(rules)} rules), "
-        f"lookups.json ({len(lookups)}), changes.json T1–T5"
+        f"lookups.json ({len(submission['lookups'])}), changes.json T1–T5"
     )
 
 

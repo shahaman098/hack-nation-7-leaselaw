@@ -1,6 +1,6 @@
 ABSOLUTE WIN mode — Hack-Nation Track 02 LeaseLaw.
 
-Repo: /Users/efi/Hackathons/Hackathon-Idea-Search
+Repo: /Users/efi/Hackathons/Hack-Nation-7
 Work ONLY under apps/leaselaw/ plus docs/WIN_BOARD.md and docs/AGENT_ADVICE_LOG.md.
 
 Protocol:

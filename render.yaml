@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: leaselaw-navigator
+    runtime: docker
+    dockerfilePath: ./apps/leaselaw/Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: LEASELAW_OFFLINE
+        value: "1"
+      - key: PORT
+        value: "8012"

@@ -1,7 +1,7 @@
 # LeaseLaw — Cursor × OpenCode × ZCode
 
 **Product:** LeaseLaw Navigator · Hack-Nation 7 Track 02 RealPage  
-**Repo:** `/Users/efi/Hackathons/Hackathon-Idea-Search`  
+**Repo:** `/Users/efi/Hackathons/Hack-Nation-7`  
 **App:** `apps/leaselaw/`
 
 **Live coordination:** `docs/WIN_BOARD.md` + append-only `docs/AGENT_ADVICE_LOG.md`  

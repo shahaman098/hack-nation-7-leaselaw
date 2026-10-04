@@ -1,46 +1,75 @@
 {
   "as_of_cases": [
     {
-      "case_id": "T1-style-AB325",
-      "address_id": "SF-20U-1962",
+      "case_id": "T1-AB325-before-LA",
+      "address_id": "A0001",
       "as_of": "2025-12-31",
-      "rule_id": "CA-AB325",
-      "expected_result": "not_yet_effective",
-      "citation_required": true
+      "rule_id": "CA-ALG-01",
+      "expected_result": "not_yet_effective"
     },
     {
-      "case_id": "T1-style-AB325-after",
-      "address_id": "SF-20U-1962",
+      "case_id": "T1-AB325-after-LA",
+      "address_id": "A0001",
       "as_of": "2026-01-02",
-      "rule_id": "CA-AB325",
-      "expected_result": "applies",
-      "citation_required": true
+      "rule_id": "CA-ALG-01",
+      "expected_result": "applies"
     },
     {
-      "case_id": "SF-local-supersede",
-      "address_id": "SF-20U-1962",
-      "as_of": "2026-10-01",
-      "rule_id": "SF-CH37",
-      "expected_result": "applies",
-      "notes": "Local rent ordinance applies; AB1482 marked superseded for this category."
+      "case_id": "T1-AB325-after-SF",
+      "address_id": "A0016",
+      "as_of": "2026-01-02",
+      "rule_id": "CA-ALG-01",
+      "expected_result": "applies"
     },
     {
-      "case_id": "BOS-no-rent-cap",
-      "address_id": "BOS-12U-1990",
+      "case_id": "T2-hoboken-gets-HOB",
+      "address_id": "A0002",
       "as_of": "2026-10-01",
-      "category": "rent_increase_limits",
-      "expected_result": "no_rule_at_local",
-      "expected_rule_ids": ["MA-40P"],
-      "notes": "Must not invent a Boston rent cap."
+      "rule_id": "HOB-ALG-01",
+      "expected_result": "applies"
     },
     {
-      "case_id": "MA-pending-algo",
-      "address_id": "BOS-12U-1990",
+      "case_id": "T2-hoboken-no-JC",
+      "address_id": "A0002",
       "as_of": "2026-10-01",
-      "rule_id": "MA-S2983",
-      "expected_result": "pending",
-      "citation_required": true
+      "rule_id": "JC-ALG-01",
+      "must_not_be": "applies"
+    },
+    {
+      "case_id": "T3-FAIR-before-Hoboken",
+      "address_id": "A0002",
+      "as_of": "2026-10-01",
+      "rule_id": "NJ-ALG-01",
+      "expected_result": "not_yet_effective"
+    },
+    {
+      "case_id": "T3-FAIR-after-Hoboken",
+      "address_id": "A0002",
+      "as_of": "2027-07-02",
+      "rule_id": "NJ-ALG-01",
+      "expected_result": "applies"
+    },
+    {
+      "case_id": "T4-MA-S2983-pending-Boston",
+      "address_id": "A0006",
+      "as_of": "2026-10-01",
+      "rule_id": "MA-ALG-P1",
+      "expected_result": "pending"
+    },
+    {
+      "case_id": "T4-MA-H5222-pending-Boston",
+      "address_id": "A0006",
+      "as_of": "2026-10-01",
+      "rule_id": "MA-ALG-P2",
+      "expected_result": "pending"
+    },
+    {
+      "case_id": "T5-no-MA-rent-cap-Boston",
+      "address_id": "A0006",
+      "as_of": "2026-10-01",
+      "rule_id": "MA-RENT-P1",
+      "must_not_be": "applies"
     }
   ],
-  "disclaimer": "Fixture gold answers for spike only — not legal advice; not the official held-out key."
+  "disclaimer": "Fixture gold answers derived from the pack's documented T1-T5 expected behavior (README section 7 and dev/change_tests.json) — not legal advice; not the official held-out key."
 }

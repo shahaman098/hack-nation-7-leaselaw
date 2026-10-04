@@ -3,7 +3,7 @@
 **Audience:** Claude / Cursor / OpenCode / ZCode / Gemini / Copilot / future tools.  
 **Start here after** [`AGENTS.md`](../AGENTS.md). Live board: [`WIN_BOARD.md`](WIN_BOARD.md). Snapshot: [`STATUS.md`](STATUS.md).
 
-**Canonical repo:** `/Users/efi/Hackathons/Hackathon-Idea-Search`  
+**Canonical repo:** `/Users/efi/Hackathons/Hack-Nation-7`  
 **Product:** `apps/leaselaw/` · Hack-Nation 7 · Track **02 RealPage**  
 **Disclaimer:** Not legal advice (must stay on UI + API).
 
@@ -115,7 +115,7 @@ This pack is **participant-no-scoring** — no official `score.py`.
 ## 5. Day-one commands
 
 ```bash
-cd /Users/efi/Hackathons/Hackathon-Idea-Search/apps/leaselaw
+cd /Users/efi/Hackathons/Hack-Nation-7/apps/leaselaw
 python3 -m venv .venv && source .venv/bin/activate   # if needed
 pip install -r requirements.txt
 

@@ -5,7 +5,7 @@ alwaysApply: true
 
 # This workspace
 
-Canonical root: `/Users/efi/Hackathons/Hackathon-Idea-Search`.
+Canonical root: `/Users/efi/Hackathons/Hack-Nation-7`.
 
 Read **AGENTS.md** first. Active competition product is **LeaseLaw** at `apps/leaselaw/` (Track 02 RealPage), not the HackForge idea engine unless the user asks about HackForge.
 

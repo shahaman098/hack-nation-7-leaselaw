@@ -21,7 +21,7 @@ Make LeaseLaw submission-proof for Hack-Nation 7 Track 02 RealPage.
 ## Acceptance
 
 ```bash
-cd /Users/efi/Hackathons/Hackathon-Idea-Search/apps/leaselaw
+cd /Users/efi/Hackathons/Hack-Nation-7/apps/leaselaw
 python -m src.eval_harness   # must stay 5/5
 # Public URL returns /health ok:true
 # docs/hn7-submission-pack/LIVE_URL.txt updated

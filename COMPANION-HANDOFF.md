@@ -1,6 +1,6 @@
 # Companion handoff — Cursor ↔ ZCode
 
-**Canonical repo (use this one):** `/Users/efi/Hackathons/Hackathon-Idea-Search`
+**Canonical repo (use this one):** `/Users/efi/Hackathons/Hack-Nation-7`
 
 Do **not** continue editing `/Users/efi/Organized/05_Projects/Projects/Hackathon Engine` — that was a divergent Cursor copy. Winner-inspiration work has been ported here.
 

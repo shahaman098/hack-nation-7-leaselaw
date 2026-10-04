@@ -89,6 +89,7 @@ def _base(**fields) -> dict:
         "confidence": 0.85,
         "conflict_flag": False,
         "conflict_note": None,
+        "plain_es": None,
     }
     record.update(fields)
     return record
@@ -202,6 +203,17 @@ def _berkeley(starter: Path, man: dict) -> list[dict]:
         ),
         citation="Berkeley Mun. Code §13.78.010 (tenant screening fees)",
         confidence=0.88,
+        conflict_flag=True,
+        conflict_note=(
+            "Open question (pack §9): California's screening-fee cap under Cal. Civ. Code § 1950.6 "
+            "has no single official 2026 dollar figure published statewide; Berkeley caps at $68.96 "
+            "while inflation adjustments vary across jurisdictions."
+        ),
+        plain_es=(
+            "Los propietarios de Berkeley no pueden cobrar más del tope de tarifa de evaluación de $68.96 "
+            "(2026) y deben entregar copia del informe crediticio; existe incertidumbre estatal (pregunta abierta "
+            "del pack §9) sobre la cifra única oficial aplicable en toda California."
+        ),
     )
     if rec:
         out.append(rec)
@@ -628,6 +640,11 @@ def _los_angeles(starter: Path, man: dict) -> list[dict]:
         # resolves to "applies" inside its jurisdiction.
         citation="L.A. Mun. Code ch. XV (RSO) — LAHD RSO overview",
         confidence=0.85,
+        plain_es=(
+            "Las unidades residenciales construidas en o antes del 1 de octubre de 1978 "
+            "en Los Ángeles están sujetas a la ordenanza RSO; los aumentos de alquiler se limitan "
+            "a una vez cada 12 meses según el porcentaje fijado por LAHD."
+        ),
     )
     if rec:
         out.append(rec)
@@ -655,6 +672,16 @@ def _los_angeles(starter: Path, man: dict) -> list[dict]:
         effective_date="2025-07-01",
         citation="LAHD RSO Rent Increase Calculator",
         confidence=0.82,
+        conflict_flag=True,
+        conflict_note=(
+            "Open question (pack §9): Los Angeles's new RSO formula has two published "
+            "effective dates: 2026-02-02 per LAHD vs 2026-01-24 per landlord association."
+        ),
+        plain_es=(
+            "El aumento anual permitido bajo LA RSO para la ventana actual es del 3%; "
+            "existe discrepancia documentada en fuentes oficiales (pregunta abierta §9) sobre "
+            "si la nueva fórmula RSO rige desde el 2026-02-02 (LAHD) o el 2026-01-24 (asociación de arrendadores)."
+        ),
     )
     if rec:
         out.append(rec)

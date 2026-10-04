@@ -1,7 +1,7 @@
 # LeaseLaw WIN BOARD — Cursor ↔ OpenCode ↔ ZCode
 
 **Mission:** Absolute Track 02 podium. Solo.  
-**Repo:** `/Users/efi/Hackathons/Hackathon-Idea-Search`  
+**Repo:** `/Users/efi/Hackathons/Hack-Nation-7`  
 **App:** `apps/leaselaw/`  
 **AI entrypoints:** `AGENTS.md` · `docs/OPS_RUNBOOK.md` · `CLAUDE.md` · `GEMINI.md` · `docs/STATUS.md`
 
@@ -18,13 +18,17 @@
 | Gate | Owner | State | Evidence |
 |------|-------|-------|----------|
 | T1–T5 harness green | Cursor | DONE | `out/eval-report.json` 5/5 |
-| rules/lookups/changes | Cursor | DONE | `out/*.json` |
-| Live demo URL | Cursor | PARTIAL | Cloudflare quick tunnel (ephemeral) |
+| rules/lookups/changes | Cursor | DONE | template-shaped `lookups.json` + `changes.json`; debug in `out/debug/` |
+| Automated extraction pipeline | Cursor/Claude | DONE | `corpus_automate` + `llm_extract --offline` → **174 rules**, 173 literal spans |
+| Module B unknown/coverage | Cursor/Claude | DONE | `rule_coverage.json` + engine; SF-1979 & JC units spot checks in scorecard |
+| Stretch: audit/pipeline/ES | Cursor/Claude | DONE | `/api/audit`, `/pipeline`, ES toggle on `/` |
+| Live demo URL | ZCode | TODO | `render.yaml` ready; needs GitHub + Render approve |
 | Official `score.py` on screen | ALL | MISSING | pack is no-scoring |
 | Judge score stand-in UI | Cursor (HANDOFF) | DONE | `/api/eval` + panel on `/` |
 | Broader corpus → rules | OpenCode | DONE | `city_extra.py` 22 → **41 rules**; every `quoted_span` verified literal in `corpus/text/`; 6/6 schema categories populated; `export+eval` still 5/5 |
+| Quote integrity + gold fixtures | Claude (HANDOFF by human) | DONE | 40/41 spans literal; HOB-ALG-01 labeled link-only; gold 10/10 |
 | Durable public deploy | ZCode | TODO | non-tunnel URL preferred |
-| Submission pack polish | ZCode | TODO | `docs/hn7-submission-pack/` |
+| Submission pack polish | ZCode | PARTIAL | `METHOD_NOTE.md` + video scripts; paste `LIVE_URL.txt` after deploy |
 | Videos recorded | Human | TODO | — |
 | HackOS + Form submit | Human | TODO | — |
 

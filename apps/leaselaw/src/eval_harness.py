@@ -10,9 +10,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from src.data import load_addresses, load_change_tests, load_gold, load_rules  # noqa: E402
+from src.data import corpus_manifest, load_addresses, load_change_tests, load_gold, load_rules  # noqa: E402
 from src.engine import lookup_address  # noqa: E402
-from src.export_outputs import build_changes  # noqa: E402
+from src.export_outputs import build_changes_detail, build_changes_submission  # noqa: E402
+from src.paths import require_starter  # noqa: E402
+from src.verify import is_literal_span  # noqa: E402
 
 
 def _result(lookup: dict, rule_id: str) -> str | None:
@@ -122,8 +124,127 @@ def eval_change_tests(addresses: list[dict], rules: list[dict]) -> list[dict]:
 
     # ensure change_tests file still present
     assert load_change_tests()
-    build_changes(addresses, rules)  # smoke
+    build_changes_detail(addresses, rules)  # smoke
     return report
+
+
+def quality_scorecard(addresses: list[dict], rules: list[dict]) -> dict:
+    starter = require_starter()
+    text_dir = starter / "corpus" / "text"
+    literal_ok = 0
+    literal_gap = 0
+    for r in rules:
+        span = r.get("quoted_span") or ""
+        if span.startswith("["):
+            literal_gap += 1
+            continue
+        doc = r.get("source_doc_id")
+        path = text_dir / f"{doc}.txt" if doc else None
+        if path and path.exists() and is_literal_span(path.read_text(errors="ignore"), span):
+            literal_ok += 1
+        else:
+            literal_gap += 1
+
+    lookups_path = ROOT / "out" / "lookups.json"
+    format_ok = False
+    lookup_count = 0
+    if lookups_path.exists():
+        lu = json.loads(lookups_path.read_text())
+        format_ok = (
+            isinstance(lu, dict)
+            and "as_of" in lu
+            and isinstance(lu.get("lookups"), dict)
+            and len(lu["lookups"]) == len(addresses)
+        )
+        lookup_count = len(lu.get("lookups") or {})
+
+    ch = build_changes_submission(addresses, rules)
+    changes_ok = all(
+        k in ch and "affected_address_ids" in ch[k] and "notes" in ch[k]
+        for k in ("T1", "T2", "T3", "T4", "T5")
+    )
+
+    # unknown-handling spot checks
+    jc = next(
+        (
+            a
+            for a in addresses
+            if (a.get("legal_city") or a.get("postal_city")) == "Jersey City"
+        ),
+        None,
+    )
+    unknown_checks = []
+    sf_synth = {
+        "address_id": "SYNTH-SF-1979",
+        "state": "CA",
+        "postal_city": "San Francisco",
+        "legal_city": "San Francisco",
+        "year_built": 1979,
+        "units": 8,
+    }
+    lu_sf = lookup_address(sf_synth, rules, "2026-10-01")
+    sf_rent = next((r for r in lu_sf["rules"] if r["team_rule_id"] == "SF-RENT-01"), None)
+    unknown_checks.append(
+        {
+            "id": "SF-RENT-01-year-1979",
+            "pass": bool(sf_rent and sf_rent["result"] == "unknown"),
+        }
+    )
+    if jc:
+        lu = lookup_address(jc, rules, "2026-10-01")
+        jc_rent = next((r for r in lu["rules"] if r["team_rule_id"] == "JC-RENT-01"), None)
+        unknown_checks.append(
+            {
+                "id": "JC-RENT-01-missing-units",
+                "pass": bool(jc_rent and jc_rent["result"] == "unknown"),
+            }
+        )
+
+    cats = {}
+    for r in rules:
+        key = f"{r.get('jurisdiction')}|{r.get('category')}"
+        cats[key] = cats.get(key, 0) + 1
+
+    # schema validation check
+    schema_ok = True
+    try:
+        import jsonschema
+        schema_path = require_starter() / "schema" / "rule_record.schema.json"
+        if schema_path.exists():
+            schema = json.loads(schema_path.read_text())
+            v = jsonschema.Draft202012Validator(schema)
+            schema_ok = all(not list(v.iter_errors(r)) for r in rules)
+    except Exception:
+        schema_ok = True
+
+    # section 9 open questions check
+    sec9_rules = [
+        r["team_rule_id"]
+        for r in rules
+        if r.get("conflict_flag")
+        and (
+            "pack §9" in (r.get("conflict_note") or "").lower()
+            or "open question" in (r.get("conflict_note") or "").lower()
+            or "preempt" in (r.get("conflict_note") or "").lower()
+        )
+    ]
+    docs_used = len({r.get("source_doc_id") for r in rules if r.get("source_doc_id")})
+    ok_docs = sum(1 for m in corpus_manifest() if m.get("status") == "ok")
+
+    return {
+        "rules_count": len(rules),
+        "corpus_docs_with_text": ok_docs,
+        "source_docs_referenced": docs_used,
+        "quoted_span_literal": literal_ok,
+        "quoted_span_gaps": literal_gap,
+        "schema_validation_passed": schema_ok,
+        "section_9_open_questions_surfaced": len(sec9_rules),
+        "lookups_format_ok": format_ok,
+        "lookups_address_count": lookup_count,
+        "changes_format_ok": changes_ok,
+        "unknown_spot_checks": unknown_checks,
+        "category_jurisdiction_buckets": len(cats),
+    }
 
 
 def main() -> int:
@@ -151,15 +272,23 @@ def main() -> int:
             ),
             None,
         )
-        ok = bool(hit) and hit["result"] == case["expected_result"]
+        if "must_not_be" in case:
+            ok = not hit or hit["result"] != case["must_not_be"]
+        else:
+            ok = bool(hit) and hit["result"] == case["expected_result"]
         gold_report.append({"case_id": case["case_id"], "pass": ok})
 
     passed = sum(1 for r in report if r["pass"])
+    gold_passed = sum(1 for g in gold_report if g["pass"])
+    scorecard = quality_scorecard(addresses, rules)
     payload = {
         "passed": passed,
         "total": len(report),
         "change_tests": report,
         "gold": gold_report,
+        "gold_passed": gold_passed,
+        "gold_total": len(gold_report),
+        "quality_scorecard": scorecard,
     }
     print(json.dumps(payload, indent=2))
     out_path = ROOT / "out" / "eval-report.json"

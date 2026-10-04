@@ -66,6 +66,8 @@ def load_rules() -> list[dict]:
             data = json.loads(candidate.read_text())
             if isinstance(data, list) and data:
                 return data
+            if isinstance(data, dict) and isinstance(data.get("rules"), list) and data["rules"]:
+                return data["rules"]
     return []
 
 

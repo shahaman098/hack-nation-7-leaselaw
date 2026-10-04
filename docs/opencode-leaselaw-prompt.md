@@ -3,7 +3,7 @@
 Paste into OpenCode `run` (model `opencode/mimo-v2.6-flash-free`):
 
 ```
-Work in /Users/efi/Hackathons/Hackathon-Idea-Search/apps/leaselaw only.
+Work in /Users/efi/Hackathons/Hack-Nation-7/apps/leaselaw only.
 
 Cursor owns extract_rules.py / engine.py / eval_harness.py — do not rewrite them.
 Your job:

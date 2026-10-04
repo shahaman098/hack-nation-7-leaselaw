@@ -1,4 +1,6 @@
-# Hackathon Idea Search
+# Hack-Nation-7
+
+Local workspace for Hack-Nation 7 (LeaseLaw Track 02 + HackForge). GitHub remote may still be `hackathon-idea-search`.
 
 **AI agents: start at [`AGENTS.md`](AGENTS.md)** · ops [`docs/OPS_RUNBOOK.md`](docs/OPS_RUNBOOK.md) · Claude [`CLAUDE.md`](CLAUDE.md) · Gemini [`GEMINI.md`](GEMINI.md) · live board [`docs/WIN_BOARD.md`](docs/WIN_BOARD.md) · snapshot [`docs/STATUS.md`](docs/STATUS.md).
 

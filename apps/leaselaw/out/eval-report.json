@@ -28,5 +28,71 @@
       "detail": "rent_cap_applies_hits=0"
     }
   ],
-  "gold": []
+  "gold": [
+    {
+      "case_id": "T1-AB325-before-LA",
+      "pass": true
+    },
+    {
+      "case_id": "T1-AB325-after-LA",
+      "pass": true
+    },
+    {
+      "case_id": "T1-AB325-after-SF",
+      "pass": true
+    },
+    {
+      "case_id": "T2-hoboken-gets-HOB",
+      "pass": true
+    },
+    {
+      "case_id": "T2-hoboken-no-JC",
+      "pass": true
+    },
+    {
+      "case_id": "T3-FAIR-before-Hoboken",
+      "pass": true
+    },
+    {
+      "case_id": "T3-FAIR-after-Hoboken",
+      "pass": true
+    },
+    {
+      "case_id": "T4-MA-S2983-pending-Boston",
+      "pass": true
+    },
+    {
+      "case_id": "T4-MA-H5222-pending-Boston",
+      "pass": true
+    },
+    {
+      "case_id": "T5-no-MA-rent-cap-Boston",
+      "pass": true
+    }
+  ],
+  "gold_passed": 10,
+  "gold_total": 10,
+  "quality_scorecard": {
+    "rules_count": 50,
+    "corpus_docs_with_text": 54,
+    "source_docs_referenced": 33,
+    "quoted_span_literal": 49,
+    "quoted_span_gaps": 1,
+    "schema_validation_passed": true,
+    "section_9_open_questions_surfaced": 4,
+    "lookups_format_ok": true,
+    "lookups_address_count": 500,
+    "changes_format_ok": true,
+    "unknown_spot_checks": [
+      {
+        "id": "SF-RENT-01-year-1979",
+        "pass": true
+      },
+      {
+        "id": "JC-RENT-01-missing-units",
+        "pass": true
+      }
+    ],
+    "category_jurisdiction_buckets": 31
+  }
 }

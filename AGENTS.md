@@ -1,6 +1,6 @@
 # AGENTS.md — read this first (any AI)
 
-**Repo root:** `/Users/efi/Hackathons/Hackathon-Idea-Search`  
+**Repo root:** `/Users/efi/Hackathons/Hack-Nation-7`  
 **Human:** solo · Hack-Nation 7 · podium-first  
 **User submits only** — never HackOS / Google Form / email final send / `git push` unless explicitly asked.
 
