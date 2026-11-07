@@ -1,0 +1,60 @@
+{
+  "track": "demo",
+  "segments": [
+    {
+      "id": "01-intro",
+      "narration": "This is LeaseLaw Navigator on the live site. At the top you see not legal advice, information only.",
+      "action": { "type": "home_intro" }
+    },
+    {
+      "id": "02-scores",
+      "narration": "Our change tests pass five of five on all sample addresses, with ten gold checks. That score panel updates from the same report judges can download.",
+      "action": { "type": "show_scores" }
+    },
+    {
+      "id": "03-t1-before",
+      "narration": "Under try an example, I pick California before the new twenty twenty six rules. The address fills in and results load. Statewide algorithm pricing rule CA dash ALG dash zero one shows not in effect yet for this date.",
+      "action": { "type": "click_test", "test": "T1" }
+    },
+    {
+      "id": "04-quote",
+      "narration": "I open read the original text so you see the exact statute excerpt we matched from the corpus, not a paraphrase.",
+      "action": { "type": "expand_rule", "ruleId": "CA-ALG-01" }
+    },
+    {
+      "id": "05-t1-after",
+      "narration": "Now California after January first twenty twenty six. Same address. The same rule shows applies. That date flip is change test T one.",
+      "action": { "type": "click_test", "test": "T1b" }
+    },
+    {
+      "id": "06-sf",
+      "narration": "San Francisco next. Local rent control applies and the statewide cap shows replaced by a local rule.",
+      "action": { "type": "click_city", "city": "San Francisco" }
+    },
+    {
+      "id": "07-hoboken",
+      "narration": "Hoboken shows local tenant rules for that city, not Jersey City rules. That is change test T two boundary logic.",
+      "action": { "type": "click_test", "test": "T2" }
+    },
+    {
+      "id": "08-boston",
+      "narration": "Boston shows bills still pending and no active rent cap applied to this address. That is T four and T five behavior.",
+      "action": { "type": "click_test", "test": "T4" }
+    },
+    {
+      "id": "09-spanish",
+      "narration": "I switch to Spanish so labels and summaries change for tenants who prefer E S.",
+      "action": { "type": "toggle_lang" }
+    },
+    {
+      "id": "10-how",
+      "narration": "How we decided opens plain notes for each rule on this address, not a black box.",
+      "action": { "type": "how_decided" }
+    },
+    {
+      "id": "11-eval-json",
+      "narration": "Here is the full eval report JSON linked from the site. Passed five of five, gold ten of ten. Again, research and demos only, not a substitute for a lawyer.",
+      "action": { "type": "eval_report" }
+    }
+  ]
+}

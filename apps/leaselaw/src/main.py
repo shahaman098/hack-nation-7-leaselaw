@@ -8,10 +8,11 @@ from datetime import datetime, timezone
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 
 from .data import load_addresses, load_change_tests, load_rules, starter_stats
 from .engine import lookup_address
-from .ui_html import _LOGO, home_page, pipeline_page_html
+from .ui_html import _LOGO, home_page, pipeline_page_html, scores_page_html
 
 _APP_ROOT = Path(__file__).resolve().parents[1]
 
@@ -181,6 +182,16 @@ def api_eval() -> dict:
     return data
 
 
+@app.get("/scores", response_class=HTMLResponse)
+def scores_page() -> str:
+    path = _OUT / "eval-report.json"
+    if not path.exists():
+        report = {"note": "Run: python -m src.eval_harness"}
+    else:
+        report = json.loads(path.read_text(encoding="utf-8"))
+    return scores_page_html(report)
+
+
 @app.get("/api/lookup")
 def api_lookup(
     address_id: str = Query(...),
@@ -270,6 +281,36 @@ def api_pipeline() -> dict:
         "recent_audit_lines": lines,
         "disclaimer": "Not legal advice.",
     }
+
+
+class LiveExtractRequest(BaseModel):
+    text: str
+    title: str = "Live Extracted Ordinance"
+    city: str = "Cambridge"
+    state: str = "MA"
+    citation: str = ""
+    url: str = ""
+    as_of: str = "2026-10-01"
+
+
+@app.get("/api/sample-ordinances")
+def api_sample_ordinances() -> dict:
+    from src.live_ingest import SAMPLE_ORDINANCES
+    return SAMPLE_ORDINANCES
+
+
+@app.post("/api/extract-live")
+def api_extract_live(req: LiveExtractRequest) -> dict:
+    from src.live_ingest import extract_ordinance_live
+    return extract_ordinance_live(
+        text=req.text,
+        title=req.title,
+        city=req.city,
+        state=req.state,
+        citation=req.citation,
+        url=req.url,
+        as_of=req.as_of,
+    )
 
 
 @app.get("/api/compare")

@@ -33,14 +33,14 @@ async function main() {
   </body></html>`;
 
   await page.setContent(html);
-  await sleep(12000);
+  await sleep(15000);
   await page.evaluate(() => {
     document.body.innerHTML = `<div><h1>One address. One date.</h1>
     <p>Which rental housing rules apply?</p><p style="margin-top:2rem;font-size:1rem">Not legal advice</p></div>`;
   });
   await sleep(8000);
   await page.goto(LIVE, { waitUntil: "networkidle" });
-  await sleep(12000);
+  await sleep(15000);
 
   const video = page.video();
   await context.close();

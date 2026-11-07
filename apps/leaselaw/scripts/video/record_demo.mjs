@@ -26,13 +26,13 @@ async function main() {
 
   console.log("Opening", LIVE);
   await page.goto(LIVE, { waitUntil: "networkidle" });
-  await sleep(5000);
+  await sleep(6000);
 
   await page.click('button[data-test="T1"]');
-  await sleep(7000);
+  await sleep(8000);
 
   await page.click('button[data-test="T1b"]');
-  await sleep(7000);
+  await sleep(8000);
 
   await page.click('button[data-test="T2"]');
   await sleep(6000);
@@ -44,7 +44,7 @@ async function main() {
   await sleep(4000);
 
   await page.click("#how-btn");
-  await sleep(7000);
+  await sleep(8000);
 
   await page.evaluate(async (base) => {
     const r = await fetch(`${base}/api/eval`);

@@ -1,0 +1,35 @@
+{
+  "track": "technical",
+  "segments": [
+    {
+      "id": "01-intro",
+      "narration": "Technical walkthrough for LeaseLaw Navigator, track two RealPage.",
+      "action": { "type": "pipeline_top" }
+    },
+    {
+      "id": "02-module-a",
+      "narration": "Module A is extraction. We scan the official starter corpus, propose rules, and drop any quote that is not a literal substring of the source file.",
+      "action": { "type": "pipeline_step", "step": "extract" }
+    },
+    {
+      "id": "03-module-b",
+      "narration": "Module B matches addresses. We map postal cities to legal cities, then evaluate year built, units, and certificate dates. Missing facts yield need more information, not a guess.",
+      "action": { "type": "pipeline_step", "step": "lookup" }
+    },
+    {
+      "id": "04-module-c",
+      "narration": "Module C exports changes dot JSON for tests T one through T five on five hundred addresses, plus rules and lookups in submission shape.",
+      "action": { "type": "pipeline_step", "step": "changes" }
+    },
+    {
+      "id": "05-harness",
+      "narration": "In the terminal, python three minus m src dot eval harness exits zero with five of five tests and ten of ten gold cases. The Docker image bundles the starter pack and runs the same check.",
+      "action": { "type": "terminal_harness" }
+    },
+    {
+      "id": "06-live",
+      "narration": "Production is on Render. The public repo includes output JSON and a README with reproduce steps. Live API and UI serve the same engine.",
+      "action": { "type": "eval_live" }
+    }
+  ]
+}

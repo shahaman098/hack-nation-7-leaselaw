@@ -4,4 +4,4 @@ If you manage rentals, the hard part is not reading one law. It is knowing which
 
 I built LeaseLaw Navigator. You enter an address and a date. The app shows what applies, what does not apply yet, and what we cannot decide without more building information. Every answer links back to the original law text. It is not legal advice.
 
-In the demo I will walk through the live site and the checks we run on five hundred sample addresses.
+On five hundred sample addresses, our live score report shows five of five change tests and ten of ten gold checks passing.

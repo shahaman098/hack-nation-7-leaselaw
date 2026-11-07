@@ -13,8 +13,13 @@ ops_runbook: docs/OPS_RUNBOOK.md
 
 eval:
   harness: T1-T5
-  last_measured: 5/5
-  gold: 10/10
+  last_measured: 5/5 (100%)
+  gold: 10/10 (100%)
+  pytest: 16/16 (100%)
+  browser_use_test: PASS (10/10)
+  playwright_test: PASS (10/10)
+  schema_validation: true (Draft 2020-12)
+  section_9_open_questions: 4/4 surfaced
   how: "python3 -m src.eval_harness · exit 0"
   report: apps/leaselaw/out/eval-report.json
   quality_scorecard: true
@@ -22,7 +27,7 @@ eval:
 
 artifacts:
   rules: apps/leaselaw/out/rules.json
-  rules_count: 174
+  rules_count: 50
   lookups: apps/leaselaw/out/lookups.json
   lookups_format: "{as_of, lookups: {address_id: [...]}}"
   changes: apps/leaselaw/out/changes.json
@@ -34,6 +39,15 @@ runtime:
   port: 8012
   deploy: render.yaml (repo root, docker context .)
   live_url_file: docs/hn7-submission-pack/LIVE_URL.txt
+  endpoints:
+    - /health
+    - /api/eval
+    - /api/open-questions
+    - /api/demo-presets
+    - /api/lookup
+    - /api/compare
+    - /api/audit/{id}
+    - /pipeline
 
 open_work:
   - human Render deploy + LIVE_URL.txt

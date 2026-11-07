@@ -345,6 +345,188 @@ async function toggleOpenQPanel() {
   }
 }
 
+let sampleOrdinances = null;
+
+async function toggleLiveIngestPanel() {
+  const panel = $("#live-ingest-panel");
+  if (!panel) return;
+  if (panel.style.display !== "none") {
+    panel.style.display = "none";
+    return;
+  }
+  panel.style.display = "block";
+  panel.innerHTML = `<p class="empty">${esc(t(lang, "loading"))}</p>`;
+
+  if (!sampleOrdinances) {
+    try {
+      sampleOrdinances = await fetch("/api/sample-ordinances").then((r) => r.json());
+    } catch {
+      sampleOrdinances = {};
+    }
+  }
+
+  const cambridge = sampleOrdinances["cambridge_hour16"] || {};
+
+  panel.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem">
+      <div>
+        <h3 style="margin:0;font-size:1.15rem;color:var(--accent)">⚡ Live Ordinance Ingestion & Extension Studio</h3>
+        <p class="meta-row" style="margin:0.25rem 0 0">
+          Paste any statute or ordinance to run automated extraction, 100% schema validation, and address resolution.
+        </p>
+      </div>
+      <button type="button" class="btn-icon" id="close-live-ingest" aria-label="Close">✕</button>
+    </div>
+
+    <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap">
+      <span class="meta-row" style="align-self:center;font-weight:600">Quick-Load Presets:</span>
+      <button type="button" class="chip" id="load-cambridge-btn">🏛️ Hour-16 Cambridge (T6)</button>
+      <button type="button" class="chip" id="load-seattle-btn">🌲 Seattle Algorithmic Ban</button>
+      <button type="button" class="chip" id="load-austin-btn">🤠 Austin Tenant Relocation</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:0.75rem;margin-bottom:0.75rem">
+      <div>
+        <label style="font-size:0.8rem;font-weight:600">Document Title</label>
+        <input type="text" id="live-title" class="input" style="width:100%;margin-top:0.25rem;box-sizing:border-box" value="${esc(cambridge.title || '')}"/>
+      </div>
+      <div>
+        <label style="font-size:0.8rem;font-weight:600">City</label>
+        <input type="text" id="live-city" class="input" style="width:100%;margin-top:0.25rem;box-sizing:border-box" value="${esc(cambridge.city || 'Cambridge')}"/>
+      </div>
+      <div>
+        <label style="font-size:0.8rem;font-weight:600">State</label>
+        <input type="text" id="live-state" class="input" style="width:100%;margin-top:0.25rem;box-sizing:border-box" value="${esc(cambridge.state || 'MA')}"/>
+      </div>
+      <div>
+        <label style="font-size:0.8rem;font-weight:600">Citation</label>
+        <input type="text" id="live-citation" class="input" style="width:100%;margin-top:0.25rem;box-sizing:border-box" value="${esc(cambridge.citation || '')}"/>
+      </div>
+    </div>
+
+    <div style="margin-bottom:0.75rem">
+      <label style="font-size:0.8rem;font-weight:600">Statutory / Ordinance Text</label>
+      <textarea id="live-text" class="input" rows="7" style="width:100%;font-family:monospace;font-size:0.82rem;margin-top:0.25rem;box-sizing:border-box">${esc(cambridge.text || '')}</textarea>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-bottom:1rem">
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <label style="font-size:0.8rem;font-weight:600">Evaluate As-Of:</label>
+        <input type="date" id="live-asof" value="2026-10-01" class="input"/>
+      </div>
+      <button type="button" class="btn-primary" id="run-live-extract-btn" style="padding:0.5rem 1.25rem">⚡ Extract, Validate & Resolve</button>
+    </div>
+
+    <div id="live-extract-output"></div>
+  `;
+
+  $("#close-live-ingest")?.addEventListener("click", () => {
+    panel.style.display = "none";
+  });
+
+  const setPreset = (p) => {
+    if (!p) return;
+    $("#live-title").value = p.title || "";
+    $("#live-city").value = p.city || "";
+    $("#live-state").value = p.state || "";
+    $("#live-citation").value = p.citation || "";
+    $("#live-text").value = p.text || "";
+    $("#live-extract-output").innerHTML = "";
+  };
+
+  $("#load-cambridge-btn")?.addEventListener("click", () => setPreset(sampleOrdinances["cambridge_hour16"]));
+  $("#load-seattle-btn")?.addEventListener("click", () => setPreset(sampleOrdinances["seattle_algo"]));
+  $("#load-austin-btn")?.addEventListener("click", () => setPreset(sampleOrdinances["austin_relocation"]));
+
+  $("#run-live-extract-btn")?.addEventListener("click", async () => {
+    const btn = $("#run-live-extract-btn");
+    const out = $("#live-extract-output");
+    btn.disabled = true;
+    out.innerHTML = `<p class="empty">${esc(t(lang, "loading"))}</p>`;
+
+    try {
+      const payload = {
+        title: $("#live-title")?.value || "",
+        city: $("#live-city")?.value || "",
+        state: $("#live-state")?.value || "",
+        citation: $("#live-citation")?.value || "",
+        text: $("#live-text")?.value || "",
+        as_of: $("#live-asof")?.value || "2026-10-01",
+      };
+      const res = await fetch("/api/extract-live", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }).then((r) => r.json());
+
+      if (!res.success) throw new Error("Extraction failed");
+
+      const r = res.rule_record;
+      const schemaPill = res.schema_valid
+        ? `<span class="pill" style="background:#10b981;color:#fff;padding:0.2rem 0.5rem;border-radius:4px;font-size:0.75rem">✓ SCHEMA VALID (Draft 2020-12)</span>`
+        : `<span class="pill" style="background:#ef4444;color:#fff;padding:0.2rem 0.5rem;border-radius:4px;font-size:0.75rem">⚠ SCHEMA ERROR</span>`;
+      const quotePill = res.quoted_span_verified
+        ? `<span class="pill" style="background:#10b981;color:#fff;padding:0.2rem 0.5rem;border-radius:4px;font-size:0.75rem">✓ QUOTED SPAN VERIFIED (Literal Substring)</span>`
+        : `<span class="pill" style="background:#f59e0b;color:#fff;padding:0.2rem 0.5rem;border-radius:4px;font-size:0.75rem">UNVERIFIED SPAN</span>`;
+      const statusPill = `<span class="result-badge ${esc(res.status_as_of)}">${esc(res.status_as_of)}</span>`;
+
+      const sampleAddrsHtml = (res.sample_affected_addresses || [])
+        .map(
+          (a) =>
+            `<li><strong>${esc(a.street || a.address_id)}</strong> (${esc(a.city)}, ${esc(a.state)}) — ${a.units || "?"} units, built ${a.year_built || "?"}</li>`
+        )
+        .join("");
+
+      out.innerHTML = `
+        <div style="border-top:1px solid var(--border);padding-top:1rem;margin-top:1rem">
+          <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.75rem">
+            ${schemaPill}
+            ${quotePill}
+            ${statusPill}
+            <span class="stack-chip" style="font-weight:600">${res.affected_addresses_count} Buildings Affected</span>
+          </div>
+
+          <article class="rule-card" style="margin-bottom:1rem">
+            <div class="rule-top">
+              <div>
+                <div class="rule-id">${esc(r.team_rule_id)} · ${esc(r.category)}</div>
+                <div class="rule-title">${esc(r.title)}</div>
+              </div>
+            </div>
+            <p class="plain">${esc(r.requirement)}</p>
+            <p class="plain" style="font-style:italic;color:var(--text-muted)">ES: ${esc(r.plain_es)}</p>
+            <div class="meta-row">
+              <span><strong>Effective:</strong> ${esc(r.effective_date || "N/A")}</span>
+              <span><strong>Citation:</strong> ${esc(r.citation)}</span>
+            </div>
+            <details class="source" open style="margin-top:0.5rem">
+              <summary>Verbatim Quoted Span</summary>
+              <div class="quote">${esc(r.quoted_span)}</div>
+            </details>
+          </article>
+
+          ${
+            sampleAddrsHtml
+              ? `
+            <div style="background:var(--card);border:1px solid var(--border);padding:0.75rem;border-radius:6px">
+              <strong style="font-size:0.85rem">Affected Buildings in Dataset (${res.affected_addresses_count} total):</strong>
+              <ul style="font-size:0.85rem;margin:0.5rem 0 0 1rem;padding:0">
+                ${sampleAddrsHtml}
+              </ul>
+            </div>
+          `
+              : `<p class="meta-row">No sample addresses in dataset for ${esc(payload.city)}, ${esc(payload.state)} (Live new jurisdiction simulation).</p>`
+          }
+        </div>
+      `;
+    } catch (e) {
+      out.innerHTML = `<p class="empty" style="color:var(--warn)">Error during extraction: ${esc(e.message)}</p>`;
+    } finally {
+      btn.disabled = false;
+    }
+  });
+}
+
 function bindEvents() {
   $("#search-input")?.addEventListener("input", (e) => showSuggestions(e.target.value));
   $("#search-input")?.addEventListener("focus", (e) => showSuggestions(e.target.value));
@@ -355,6 +537,7 @@ function bindEvents() {
   $("#compare-dates-btn")?.addEventListener("click", runCompare);
   $("#how-btn")?.addEventListener("click", runHowDecided);
   $("#open-q-btn")?.addEventListener("click", toggleOpenQPanel);
+  $("#live-ingest-btn")?.addEventListener("click", toggleLiveIngestPanel);
   $("#theme-toggle")?.addEventListener("click", () => {
     theme = theme === "dark" ? "light" : "dark";
     applyTheme();
@@ -393,11 +576,38 @@ function bindEvents() {
   });
 }
 
+async function loadScorecard() {
+  const big = $("#score-big");
+  if (!big) return;
+  try {
+    const d = await fetch("/api/eval").then((r) => r.json());
+    const passed = d.passed ?? 0;
+    const total = d.total ?? 5;
+    const goldP = d.gold_passed ?? 0;
+    const goldT = d.gold_total ?? 10;
+    big.textContent = `${passed}/${total} change tests pass`;
+    const sub = $("#score-gold");
+    if (sub) sub.textContent = `${goldP}/${goldT} gold checks · not official score.py`;
+    const pills = $("#score-pills");
+    if (pills && d.change_tests) {
+      pills.innerHTML = d.change_tests
+        .map(
+          (t) =>
+            `<span class="pill ${t.pass ? "pass" : ""}">${esc(t.test_id)} ${t.pass ? "PASS" : "FAIL"}</span>`
+        )
+        .join("");
+    }
+  } catch {
+    big.textContent = "Run eval harness locally";
+  }
+}
+
 export async function initApp() {
   applyTheme();
   applyI18n();
   await loadAddresses();
   bindEvents();
+  loadScorecard();
   const demo = addresses.find((a) => a.address_id === "A0016") || addresses[0];
   if (demo) {
     selectedId = demo.address_id;

@@ -1,107 +1,73 @@
 # Hack Nation 7 — three submission videos
 
 Track 02 asks for **Team**, **Demo**, and **Technical** uploads (HackOS + Google Form).  
-**You** upload the final MP4 files. This folder holds scripts and automation.
+**You** upload the final MP4 files:
 
-Live demo URL: https://leaselaw-navigator.onrender.com  
-(LIVE_URL.txt at repo root of submission pack.)
+| File | Label on HackOS | Length |
+|------|-----------------|--------|
+| `out/final/hn7-team.mp4` | Team | ~36s |
+| `out/final/hn7-demo.mp4` | Demo | ~69s |
+| `out/final/hn7-technical.mp4` | Technical | ~74s |
+
+Live demo URL: https://leaselaw-navigator.onrender.com (recordings drive the live site).
 
 ---
 
-## Step 1 — Clone your voice in ElevenLabs (once)
+## How the videos are made
 
-1. Sign in at [elevenlabs.io](https://elevenlabs.io) (Hack Nation Creator tier if you claimed it).
-2. **Voices → Add voice → Instant Voice Clone** (or Professional if you have samples).
-3. Upload **1–3 minutes** of your speech (clear mic, no music). Use your normal speaking voice.
-4. Name it e.g. `aman-hn7`.
-5. Open the voice → copy **Voice ID** (32-char hex).
-6. **Profile → API Keys** → create key.
+1. **Voice:** `narrations/{team,demo,technical}.txt` → ElevenLabs (your cloned voice) via the
+   `with-timestamps` endpoint, which also returns per-character timing (`out/audio/<track>.alignment.json`).
+2. **Screen:** `record_cursor.mjs` drives headless Chromium on the live site with a visible cursor
+   (eased moves, click ripple, real clicks/typing). Every action waits for a phrase in the narration,
+   so the cursor lands on what the voice is describing.
+   - Technical video: terminal output is captured from the real commands at record time
+     (`python3 -m src.eval_harness` must exit 0 or recording aborts); GitHub is preloaded in a
+     second tab and spliced in.
+3. **Mux:** `assemble.sh` trims each capture to the moment narration starts and encodes 1920×1080 H.264.
 
-In Cursor terminal:
+---
+
+## Step 1 — ElevenLabs env (once)
 
 ```bash
 export ELEVENLABS_API_KEY="your_key"
 export ELEVENLABS_VOICE_ID="your_voice_id"
 ```
 
-Optional: model (default `eleven_multilingual_v2`):
-
-```bash
-export ELEVENLABS_MODEL_ID="eleven_multilingual_v2"
-```
+Do not commit keys. Rotate if pasted in chat.
 
 ---
 
-## Step 2 — Generate voiceovers (your voice only)
+## Step 2 — Full pipeline
 
 ```bash
-cd /Users/efi/Hackathons/Hack-Nation-7/apps/leaselaw
-pip install requests   # if needed
-python3 scripts/video/generate_voiceover.py --all
+cd /Users/efi/Hackathons/Hack-Nation-7/apps/leaselaw/scripts/video
+bash run_all.sh
 ```
 
-Outputs:
-
-- `docs/hn7-submission-pack/videos/out/audio/team.mp3`
-- `docs/hn7-submission-pack/videos/out/audio/demo.mp3`
-- `docs/hn7-submission-pack/videos/out/audio/technical.mp3`
-
----
-
-## Step 3 — Record screen (no mic; video only)
+Or step by step:
 
 ```bash
 cd apps/leaselaw/scripts/video
-npm install
-npx playwright install chromium
-LIVE_URL=https://leaselaw-navigator.onrender.com node record_demo.mjs
-node record_technical.mjs
-node record_team_slides.mjs
+python3 generate_voiceover.py --all --timestamps     # only needed after editing narrations
+npm install && npx playwright install chromium
+node record_cursor.mjs all                           # or: team | demo | technical (real time, ~4 min total)
+bash assemble.sh                                     # or: bash assemble.sh demo
 ```
 
-Raw WebM files land in `docs/hn7-submission-pack/videos/out/screen/`.
-
-**Tip:** Wake Render first (open the live URL in a tab, wait ~60s if it slept).
-
----
-
-## Step 4 — Mux voice + video
+Debug a scene quickly (no waiting on narration, logs every click target):
 
 ```bash
-cd /Users/efi/Hackathons/Hack-Nation-7/apps/leaselaw
-bash scripts/video/assemble.sh
-```
-
-Final files (upload these):
-
-| File | Label on HackOS |
-|------|-----------------|
-| `videos/out/final/hn7-team.mp4` | Team |
-| `videos/out/final/hn7-demo.mp4` | Demo |
-| `videos/out/final/hn7-technical.mp4` | Technical |
-
-Verify:
-
-```bash
-for f in docs/hn7-submission-pack/videos/out/final/*.mp4; do
-  ffprobe -v error -show_entries format=duration -of default=nw=1 "$f"
-done
+FAST=1 DEBUG=1 node record_cursor.mjs demo
 ```
 
 ---
 
-## One command (after Step 1 env vars)
+## Edit narrations
 
-```bash
-cd apps/leaselaw && bash scripts/video/run_all.sh
-```
+Edit `narrations/*.txt`, regenerate with `--timestamps`, then re-record. Cues in `record_cursor.mjs`
+reference exact phrases (`d.cue("I click Check my address")`); if you reword a cued phrase, update
+the matching cue or the recorder stops with "phrase not in narration".
 
----
-
-## What each video shows (matches current UI)
-
-- **Team:** Logo + bullet slides + your ElevenLabs voice (no score panel on home; that is intentional).
-- **Demo:** Live site, example buttons, Spanish toggle, How we decided, `eval-report.json` with passed 5.
-- **Technical:** About page, terminal harness, optional code scroll.
-
-Narration text is in `narrations/*.txt`. Edit there, re-run generate + assemble.
+Superseded experiments (not used by `run_all.sh`): `record_beats.mjs`, `beat_actions.mjs`, `beats/*.json`,
+and the old fixed-sleep `record_demo.mjs` / `record_technical.mjs` / `record_team_slides.mjs`.

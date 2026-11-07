@@ -36,7 +36,7 @@ async function main() {
     const d = await r.json();
     document.body.innerHTML = `<pre style="font:14px/1.4 monospace;padding:2rem">${JSON.stringify(d, null, 2)}</pre>`;
   }, LIVE);
-  await sleep(15000);
+  await sleep(18000);
 
   const video = page.video();
   await context.close();

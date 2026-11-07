@@ -762,3 +762,84 @@ pre.json-dump {
     font-size: 2rem;
   }
 }
+
+.score-strip {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto 1.5rem;
+  max-width: 960px;
+  padding: 1rem 1.25rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.score-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.score-label {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.score-big {
+  margin: 0.25rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: var(--success);
+}
+
+.score-sub {
+  margin: 0.15rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.score-link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  align-self: center;
+}
+
+.score-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.score-pills .pill {
+  font-size: 0.72rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.score-pills .pill.pass {
+  background: rgba(5, 150, 105, 0.12);
+  color: var(--success);
+}
+
+.score-page pre {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  overflow: auto;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.45;
+}

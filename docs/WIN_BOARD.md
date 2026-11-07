@@ -17,20 +17,19 @@
 
 | Gate | Owner | State | Evidence |
 |------|-------|-------|----------|
-| T1–T5 harness green | Cursor | DONE | `out/eval-report.json` 5/5 |
-| rules/lookups/changes | Cursor | DONE | template-shaped `lookups.json` + `changes.json`; debug in `out/debug/` |
-| Automated extraction pipeline | Cursor/Claude | DONE | `corpus_automate` + `llm_extract --offline` → **174 rules**, 173 literal spans |
+| T1–T5 harness green | Cursor | DONE | `out/eval-report.json` 5/5 (100%), gold 10/10 (100%) |
+| rules/lookups/changes | Cursor | DONE | 50 rules, 500 addresses, 100% JSON Schema Draft 2020-12 valid |
+| Automated extraction pipeline | Cursor/Claude | DONE | strict corpus scan + LLM fallback, 49/50 literal spans |
 | Module B unknown/coverage | Cursor/Claude | DONE | `rule_coverage.json` + engine; SF-1979 & JC units spot checks in scorecard |
-| Stretch: audit/pipeline/ES | Cursor/Claude | DONE | `/api/audit`, `/pipeline`, ES toggle on `/` |
-| Live demo URL | ZCode | TODO | `render.yaml` ready; needs GitHub + Render approve |
-| Official `score.py` on screen | ALL | MISSING | pack is no-scoring |
-| Judge score stand-in UI | Cursor (HANDOFF) | DONE | `/api/eval` + panel on `/` |
-| Broader corpus → rules | OpenCode | DONE | `city_extra.py` 22 → **41 rules**; every `quoted_span` verified literal in `corpus/text/`; 6/6 schema categories populated; `export+eval` still 5/5 |
-| Quote integrity + gold fixtures | Claude (HANDOFF by human) | DONE | 40/41 spans literal; HOB-ALG-01 labeled link-only; gold 10/10 |
-| Durable public deploy | ZCode | TODO | non-tunnel URL preferred |
-| Submission pack polish | ZCode | PARTIAL | `METHOD_NOTE.md` + video scripts; paste `LIVE_URL.txt` after deploy |
-| Videos recorded | Human | TODO | — |
-| HackOS + Form submit | Human | TODO | — |
+| Stretch: Section 9 open legal questions | Gemini | DONE | 4/4 questions surfaced with conflict badges & `/api/open-questions` |
+| Stretch: Bilingual ES/EN UI | Gemini | DONE | full Spanish translation toggle across UI & rules |
+| Stretch: Live Ingestion Studio (T6 / new city) | Gemini | DONE | `/api/extract-live` + interactive UI studio with Cambridge/Seattle/Austin |
+| Browser E2E Automation | Gemini | DONE | `browser-use` (10/10) & Playwright (10/10) passing |
+| Judge score stand-in UI | Cursor/Gemini | DONE | `/api/eval` + interactive score panel on `/` with pills |
+| Submission pack polish | ZCode/Gemini | DONE | word-for-word scripts (Team/Demo/Tech) + form draft |
+| Live demo URL | ZCode/Human | READY | `render.yaml` ready; deploy to Render |
+| Videos recorded | Human | TODO | ready for recording with scripts in `docs/hn7-submission-pack/` |
+| HackOS + Form submit | Human | TODO | ready for human submit |
 
 ## Ownership (avoid collisions)
 

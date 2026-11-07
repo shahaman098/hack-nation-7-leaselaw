@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import html as html_lib
+import json
+
 _HEAD = """
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -58,9 +61,22 @@ def home_page(n_addresses: int, n_rules: int) -> str:
           <button type="button" class="chip" id="compare-dates-btn" data-i18n="compareDates">Compare two dates</button>
           <button type="button" class="chip" id="how-btn" data-i18n="howDecided">How we decided</button>
           <button type="button" class="chip" id="open-q-btn" data-i18n="unclearRules">Dates that lawyers disagree on</button>
+          <button type="button" class="chip" id="live-ingest-btn" style="border-color:var(--accent);color:var(--accent)">⚡ Live Ingestion Studio (T6 / New City)</button>
         </div>
       </div>
     </header>
+
+    <section class="score-strip" id="score-strip" aria-label="Change test results">
+      <div class="score-inner">
+        <div>
+          <p class="score-label">RealPage change tests (starter pack)</p>
+          <p class="score-big" id="score-big">…</p>
+          <p class="score-sub" id="score-gold">…</p>
+        </div>
+        <a class="score-link" href="/scores" id="score-link">Full report</a>
+      </div>
+      <div class="score-pills" id="score-pills"></div>
+    </section>
 
     <section class="strip strip-human">
       <div class="card">
@@ -92,6 +108,7 @@ def home_page(n_addresses: int, n_rules: int) -> str:
     </section>
 
     <section id="open-q-panel" class="open-q-box" style="display:none"></section>
+    <section id="live-ingest-panel" class="card" style="display:none;margin-top:1.5rem;border:1px solid var(--accent)"></section>
 
     <section id="results" aria-live="polite"></section>
 
@@ -127,5 +144,31 @@ def pipeline_page_html() -> str:
     <div id="pipeline-steps"></div>
   </div>
   <script src="/static/js/pipeline.js"></script>
+</body>
+</html>"""
+
+
+def scores_page_html(report: dict) -> str:
+    body = html_lib.escape(json.dumps(report, indent=2))
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+  <title>Test scores | LeaseLaw Navigator</title>
+{_HEAD}
+</head>
+<body data-page="scores">
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="shell page-narrow score-page">
+    <nav class="nav">
+{_LOGO}
+      <a href="/" class="btn-icon" style="text-decoration:none">← Home</a>
+    </nav>
+    <header class="hero" style="text-align:left;padding-top:1rem">
+      <p class="disclaimer-banner"><strong>Not legal advice</strong></p>
+      <h1 style="max-width:none;margin-left:0">Change test report</h1>
+      <p class="sub" style="margin-left:0">Harness T1–T5 on the starter pack. Official RealPage score.py not in this pack.</p>
+    </header>
+    <pre>{body}</pre>
+  </div>
 </body>
 </html>"""

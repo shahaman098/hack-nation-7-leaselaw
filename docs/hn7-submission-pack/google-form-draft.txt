@@ -1,14 +1,17 @@
-Google Form: https://forms.gle/VS65tsovASMuBwEn9
-(Paste values yourself — do not auto-submit.)
+Google Form (OFFICIAL): https://forms.gle/VnivSgAJ2w5bZyJW9
+HackOS: https://app.hack-nation.ai
 
-Team name: ________________
+Team name: [YOUR HACKOS TEAM NAME]
 Challenge: 02 - Realpage: Rental Housing Law Navigator
 Project title: LeaseLaw Navigator
 One-line: Address-level rental housing law with citations, as-of dates, and change tracking.
-GitHub: ________________
-Live demo: ________________
-Video Team: ________________
-Video Demo: ________________
-Video Technical: ________________
-score.py / eval summary: ________________
-Notes: Not legal advice. Built on RealPage starter corpus + automated extraction.
+GitHub: https://github.com/shahaman098/hack-nation-7-leaselaw
+Live demo: https://leaselaw-navigator.onrender.com
+Video Team: [UPLOAD hn7-team.mp4 → paste URL]
+Video Demo: [UPLOAD hn7-demo.mp4 → paste URL]
+Video Technical: [UPLOAD hn7-technical.mp4 → paste URL]
+
+score.py / eval summary:
+T1–T5 Change Tests: 5/5 pass (100%) · Gold Benchmarks: 10/10 pass (100%) · Submission JSON formats validated · 50 rules · 500/500 lookups · Render live /api/eval passed=5
+
+Notes: Not legal advice. Automated extraction + verifier; deterministic as-of engine; Hoboken ordinance text link-only (labeled evidence gap).

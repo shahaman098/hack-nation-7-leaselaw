@@ -24,7 +24,9 @@ async def run_browser_test():
         assert "Not legal advice" in disclaimer
 
         await page.wait_for_selector(".rule-card")
-        assert await page.locator("#score-big").count() == 0
+        assert await page.locator("#score-big").count() == 1
+        score_text = await page.locator("#score-big").text_content()
+        assert "5/5" in (score_text or ""), f"Expected 5/5 on score strip, got: {score_text}"
 
         await page.click('button[data-test="T1"]')
         await page.wait_for_timeout(400)
@@ -54,6 +56,17 @@ async def run_browser_test():
         await page.wait_for_timeout(300)
         es = await page.locator(".disclaimer-banner").first.text_content()
         assert "No es asesoramiento legal" in es
+
+        # Step: Live Ingestion Studio (T6 & Extension)
+        print("⚡ Testing Live Ingestion Studio...")
+        await page.click("#live-ingest-btn")
+        await page.wait_for_selector("#run-live-extract-btn")
+        await page.click("#run-live-extract-btn")
+        await page.wait_for_selector("#live-extract-output .rule-card")
+        out_text = await page.locator("#live-extract-output").text_content()
+        assert "SCHEMA VALID" in out_text
+        assert "50 Buildings Affected" in out_text
+        print("   ✓ Live Ingestion Studio verified: Schema Valid & 50 buildings affected")
 
         SCREENSHOT_PATH.parent.mkdir(parents=True, exist_ok=True)
         await page.screenshot(path=str(SCREENSHOT_PATH), full_page=True)

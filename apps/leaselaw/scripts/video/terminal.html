@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Terminal · LeaseLaw</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #e9ecf3; font-family: system-ui, -apple-system, sans-serif; }
+  .win { position: absolute; inset: 28px 40px; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;
+    background: #0f1420; box-shadow: 0 24px 60px rgba(15, 20, 32, .28), 0 0 0 1px rgba(0, 0, 0, .25); }
+  .bar { height: 34px; flex: none; display: flex; align-items: center; gap: 8px; padding: 0 14px; background: #1b2232; color: #9aa4b8; font-size: 13px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .title { flex: 1; text-align: center; margin-right: 52px; }
+  #out { flex: 1; margin: 0; padding: 16px 20px; overflow: hidden; color: #d7deea;
+    font: 14.5px/1.5 "SF Mono", Menlo, Consolas, monospace; white-space: pre-wrap; word-break: break-word; }
+  .p { color: #7ee2a8; } .c { color: #ffffff; } .ok { color: #7ee2a8; font-weight: 600; } .k { color: #8cb4ff; }
+  .caret { display: inline-block; width: 8px; height: 1.05em; background: #d7deea; vertical-align: -2px; animation: b 1s steps(1) infinite; }
+  @keyframes b { 50% { opacity: 0; } }
+</style>
+</head>
+<body>
+  <div class="win">
+    <div class="bar">
+      <span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>
+      <span class="title" id="title">Hack-Nation-7/apps/leaselaw · zsh</span>
+    </div>
+    <pre id="out"></pre>
+  </div>
+<script>
+  const out = document.getElementById("out");
+  const caret = document.createElement("span");
+  caret.className = "caret";
+  const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const keep = () => { out.appendChild(caret); out.scrollTop = out.scrollHeight; };
+  const hl = (line) =>
+    esc(line)
+      .replace(/("passed": 5|"total": 5|"pass": true|exit code 0|RUN python3 -m src\.eval_harness)/g, '<span class="ok">$1</span>')
+      .replace(/(\b[\w-]+\.json\b)/g, '<span class="k">$1</span>');
+  window.term = {
+    prompt() { out.insertAdjacentHTML("beforeend", '<span class="p">leaselaw %</span> '); keep(); },
+    async type(cmd, ms = 1400) {
+      const per = ms / Math.max(1, cmd.length);
+      for (const ch of cmd) { caret.remove(); out.insertAdjacentHTML("beforeend", '<span class="c">' + esc(ch) + "</span>"); keep(); await sleep(per); }
+      caret.remove(); out.insertAdjacentHTML("beforeend", "\n"); keep();
+    },
+    /** Print captured output; long output streams over `ms`. */
+    async print(text, ms = 0) {
+      const lines = text.replace(/\n$/, "").split("\n");
+      const per = ms / Math.max(1, lines.length);
+      for (const line of lines) { caret.remove(); out.insertAdjacentHTML("beforeend", hl(line) + "\n"); keep(); if (per) await sleep(per); }
+    },
+    clear() { out.innerHTML = ""; keep(); },
+  };
+  keep();
+</script>
+</body>
+</html>

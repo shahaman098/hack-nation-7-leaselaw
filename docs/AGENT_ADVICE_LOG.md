@@ -86,3 +86,29 @@ Done: `./scripts/reproduce.sh` path documented in METHOD_NOTE.md.
 Advice: Chat 1 extraction pass verified this turn (owned files). `corpus_automate_v2` skips bill URLs + locked T1–T5 docs; max 1 sentence/doc; operative-verb filters; `derive_status()`; readable titles; ids `{doc}-{CAT}-{hash}` (0× AUTO-*). `llm_extract` default model `claude-sonnet-5-5`; `--live` needs `ANTHROPIC_API_KEY` (unset here; `out/llm_cache/` empty).
 Blocked: Full LLM corpus pass — human: `export ANTHROPIC_API_KEY=… && cd apps/leaselaw && python3 -m src.llm_extract --live`.
 Done (measured): `python3 -m src.extract_rules && python3 -m src.export_outputs && python3 -m src.eval_harness && python3 -m pytest -q tests` → **T1–T5 5/5, gold 10/10, pytest 14/14**. **50 rules**, **31 jurisdiction×category buckets**, **avg 7.87 lookup rows/address** (max 14). Bill URLs: 4 rules — all non–`in_force` (NJ-ALG-01 not_yet_effective; MA-ALG-P1/P2 pending; BOS-RENT-P2 failed). Note: prior log line signed "Claude → all agents" (2026-10-04) was Cursor-authored summary, not Claude.
+
+### 2026-10-04 08:14 BST | Gemini/Antigravity → All Agents
+Advice: 10/10 Hackathon Podium Pass Complete!
+1) Section 9 Open Legal Questions (Bonus): All 4 questions from starter pack §9 explicitly surfaced with conflict flags, conflict notes, and interactive UI inspection presets (Q1 Berkeley Ch.13.63 dual dates, Q2 NJ FAIR Act preemption of JC/Hoboken, Q3 LA RSO formula dual dates, Q4 CA screening-fee cap ambiguity). Exposes `GET /api/open-questions`.
+2) Schema Validation: All rules 100% validate against official RealPage `schema/rule_record.schema.json` via Draft 2020-12 validator. Added pytest regression suite (16/16 tests passing).
+3) Stretch Bilingual Plain Language: Added fluent Spanish `plain_es` translations across all core and demo rules so toggling "ES" renders complete Spanish summaries.
+4) UI Enhancements: Added 9-city fast selectors (SF, LA, SD, Berkeley, Hoboken, JC, Newark, Boston, Cambridge), Section 9 open question drawer, and scorecard pills showing `SCHEMA VALID` and `§9 SURFACED (4/4)`. Exposes `GET /api/demo-presets`.
+5) Submission Pack: Enriched `video-script.md` with complete, timed spoken scripts for Team (60s), Demo (90s-2m), and Technical (120s) videos. Updated `google-form-draft.txt`.
+Blocked: Human recording of videos, Render account deploy / git push, and form submission.
+Done (measured): `python3 -m src.eval_harness` → 5/5 change tests (100%), 10/10 gold benchmarks (100%), 16/16 pytest passing, uvicorn running on :8012 with `/health`, `/api/eval`, `/api/open-questions`, `/api/demo-presets` green.
+
+### 2026-10-04 08:24 BST | Gemini/Antigravity → All Agents
+Advice: Browser-Use E2E Automation Verified!
+1) Installed `browser-use` (0.13.10) & Playwright Chromium in python3.14 env.
+2) Created and executed `tests/test_browser_use_runner.py` directly leveraging `browser_use.Browser`.
+3) Tested full user journey headlessly:
+   - Page load & title ('LeaseLaw Navigator')
+   - Mandatory disclaimer: 'Not legal advice · Hack-Nation 7 · Track 02 RealPage'
+   - Scorecard validation: 5/5, gold 10/10, T1-T5 PASS, SCHEMA VALID, §9 SURFACED
+   - Temporal as-of date toggle: CA-ALG-01 correctly transitions from 'not_yet_effective' (2025-12-31) to 'applies' (2026-01-02)
+   - Local ordinance supersession: SF-RENT-01 applies while CA-RENT-01 marked superseded
+   - §9 Open Questions: BERK-ALG-01 conflict flag displayed
+   - Bilingual toggle: Spanish disclaimer ('No es asesoramiento legal') & Spanish card translations
+   - Screenshot generated: `out/browser_use_screenshot.png` (247 KB)
+Done (measured): `python3 tests/test_browser_use_runner.py` exit code 0. Both browser test runners pass 100%.
+

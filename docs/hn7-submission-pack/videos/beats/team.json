@@ -1,0 +1,25 @@
+{
+  "track": "team",
+  "segments": [
+    {
+      "id": "01-hello",
+      "narration": "Hi. I am Aman, competing solo in Hack Nation seven, track two, the RealPage rental housing law challenge.",
+      "action": { "type": "slide", "title": "LeaseLaw Navigator", "sub": "Hack Nation 7 · Track 02 RealPage · Solo" }
+    },
+    {
+      "id": "02-problem",
+      "narration": "If you manage rentals, the hard part is not reading one law. It is knowing which city, county, and state rules apply to one address on one date when your building facts might be incomplete.",
+      "action": { "type": "slide", "title": "One address. One date.", "sub": "Which rules apply?" }
+    },
+    {
+      "id": "03-product",
+      "narration": "I built LeaseLaw Navigator. You enter an address and a date. The app shows what applies, what is not in effect yet, and what we cannot decide without more information. Every answer links to the original law text. It is not legal advice.",
+      "action": { "type": "slide", "title": "Cited answers", "sub": "Not legal advice · Information only" }
+    },
+    {
+      "id": "04-proof",
+      "narration": "Five hundred starter addresses, fifty extracted rules, and five of five automated change tests. The demo video walks the live site. The technical video covers extraction, matching, and deploy.",
+      "action": { "type": "live_teaser" }
+    }
+  ]
+}
